@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - type: bind
+        source: ./Backend/db-init.sql
+        target: /docker-entrypoint-initdb.d/db-init.sql
