@@ -2,14 +2,14 @@ CREATE DATABASE UnderStance;
 USE UnderStance;
 
 CREATE TABLE Issue (
-    IssueID int,
+    IssueID int NOT NULL AUTO_INCREMENT,
     Description varchar(300),
     Summary varchar(50),
     PRIMARY KEY (IssueID)
 );
 
 CREATE TABLE Stance (
-    StanceID int,
+    StanceID int NOT NULL AUTO_INCREMENT,
     Stand boolean,
     Reason varchar(1000),
     IssueID int,
@@ -21,7 +21,7 @@ CREATE TABLE Stance (
 
 
 CREATE TABLE Party (
-    PartyID int,
+    PartyID int NOT NULL AUTO_INCREMENT,
     Name varchar(100),
     ShortNames varchar(5),
     Icon blob,

@@ -6,9 +6,13 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - type: bind
-        source: ./Backend/10-db-init.sql
+        source: ../../10-db-init.sql
+        target: /docker-entrypoint-initdb.d/db-init.sql
+      - type: bind
+        source: ./20-pop-db.sql
         target: /docker-entrypoint-initdb.d/db-init.sql
   backend:
-    build: Backend/
+    build: ../../
     ports:
-      - 3000:3000
+      - 3001:3000
+
