@@ -18,3 +18,9 @@ To that extent, I created the config file for the database, including the initia
 Thaddaeus started learning React in order to implement the frontend.
 
 We also decided to use the [Github Flow](https://docs.github.com/en/get-started/using-github/github-flow) for our branching strategy.
+
+## 22nd May
+I started creating docker compose files for the database. I also began on the first feature of the backend, the GET endpoint for quiz questions. I followed TDD, creating a test suite using Jest for Node. I created some unit tests.
+
+## 23rd May
+I created an integration test that would spin up the docker instances and then query the endpoint, ensuring that the correct result was outputted. With the test cases done, I began implementing the feature. Upon doing so, I realized some issues with the integration test - particularly, the setup script wasn't working well and the test would run before the servers were even ready. However, as I would be following this template for future tests, this was a problem I only had to fix once. I believe now the TDD workflow will be smoother. After fixing the test case and coding the feature, I pushed to the branch
