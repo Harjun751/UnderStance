@@ -1,3 +1,5 @@
+# config secrets for docker
+.config/.prod
 # Logs
 logs
 *.log

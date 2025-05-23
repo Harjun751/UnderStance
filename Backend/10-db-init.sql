@@ -1,4 +1,3 @@
-CREATE DATABASE UnderStance;
 USE UnderStance;
 
 CREATE TABLE Issue (
@@ -6,6 +5,14 @@ CREATE TABLE Issue (
     Description varchar(300),
     Summary varchar(50),
     PRIMARY KEY (IssueID)
+);
+
+CREATE TABLE Party (
+    PartyID int NOT NULL AUTO_INCREMENT,
+    Name varchar(100),
+    ShortNames varchar(5),
+    Icon blob,
+    PRIMARY KEY (PartyID)
 );
 
 CREATE TABLE Stance (
@@ -17,13 +24,4 @@ CREATE TABLE Stance (
     PRIMARY KEY (StanceID),
     FOREIGN KEY (IssueID) REFERENCES Issue(IssueID),
     FOREIGN KEY (PartyID) REFERENCES Party(PartyID)
-);
-
-
-CREATE TABLE Party (
-    PartyID int NOT NULL AUTO_INCREMENT,
-    Name varchar(100),
-    ShortNames varchar(5),
-    Icon blob,
-    PRIMARY KEY (PartyID)
 );

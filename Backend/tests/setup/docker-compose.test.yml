@@ -3,16 +3,34 @@ services:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_pw
+      MYSQL_USER_FILE: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_DATABASE: UnderStance
     volumes:
       - type: bind
         source: ../../10-db-init.sql
-        target: /docker-entrypoint-initdb.d/db-init.sql
+        target: /docker-entrypoint-initdb.d/10-db-init.sql
       - type: bind
         source: ./20-pop-db.sql
-        target: /docker-entrypoint-initdb.d/db-init.sql
+        target: /docker-entrypoint-initdb.d/20-db-init.sql
+    secrets:
+      - mysql_root_pw
+      - mysql_user
+      - mysql_password
   backend:
     build: ../../
     ports:
       - 3001:3000
-
+    environment:
+      DB_ENDPOINT: "db:3006"
+    secrets:
+      - mysql_user
+      - mysql_password
+secrets:
+  mysql_root_pw: 
+    file: ../../.config/.dev/mysql-root-password
+  mysql_user:
+    file: ../../.config/.dev/mysql-user
+  mysql_password:
+    file: ../../.config/.dev/mysql-password
