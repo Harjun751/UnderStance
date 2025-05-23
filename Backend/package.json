@@ -7,10 +7,11 @@
   "type": "commonjs",
   "main": "backend.js",
   "scripts": {
-    "test": "jest"
+    "test": "ENV=test jest"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",

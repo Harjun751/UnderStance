@@ -23,10 +23,15 @@ services:
     ports:
       - 3001:3000
     environment:
-      DB_ENDPOINT: "db:3006"
+      DB_HOST: "db"
+      DB_PORT: 3306
     secrets:
       - mysql_user
       - mysql_password
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
+    # wait for DB service to be complete
+    entrypoint: /wait-for-it.sh db:3306 -t 30 -- node backend.js
 secrets:
   mysql_root_pw: 
     file: ../../.config/.dev/mysql-root-password

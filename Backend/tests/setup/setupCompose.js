@@ -7,9 +7,9 @@ module.exports = async function setupCompose() {
 
     console.log("Waiting on service...");
     await waitOn({
-        resources: ["tcp:3001"],
+        resources: ["http-get://localhost:3001/"],
         timeout: 30000,
+        validateStatus: status => status === 200
     });
-
-    console.log("Ready!");
+    console.log("Backend Ready!");
 };

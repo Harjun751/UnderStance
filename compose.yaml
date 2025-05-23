@@ -18,7 +18,8 @@ services:
   backend:
     build: Backend/
     environment:
-      DB_ENDPOINT: "db:3006"
+      DB_HOST: "db"
+      DB_PORT: 3306
     ports:
       - 3000:3000
     secrets:
