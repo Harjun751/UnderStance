@@ -8,9 +8,9 @@ node backend.js
 
 Or use docker compose:
 ```
-docker compose up -f ../compose.yaml // binds to port 3000 on host
+docker compose -f ../compose.yaml up // binds to port 3000 on host
 // or use the test config:
-docker compose up -f ./tests/setup/docker-compose.test.yml // binds to port 3001
+docker compose -f ./tests/setup/docker-compose.test.yml up // binds to port 3001
 ```
 
 ## Testing
