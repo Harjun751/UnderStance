@@ -12,7 +12,7 @@ afterAll(() => {
 });
 
 describe('GET quiz question', () => {
-    test('should return 200 OK', async () => {
+    test('docker should return 200 OK', async () => {
         const response = await request("http://localhost:3001")
             .get("/questions");
         expect(response.statusCode).toBe(200);

@@ -1,6 +1,8 @@
 const express = require('express')
 const db = require('./services/DAL')
+const logger = require('./logger')
 const app = express()
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

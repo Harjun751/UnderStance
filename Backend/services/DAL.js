@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const secrets = require('./secrets')
+const logger = require('../logger')
 
 const user = secrets.getUser();
 const pw = secrets.getPassword();
@@ -20,7 +21,7 @@ async function getQuestions() {
         const [rows, fields] = await pool.query('SELECT * FROM Issue');
         return rows;
     } catch (err) {
-        console.error('DB Err :', err);
+        logger.error(err.stack);
         throw err;
     }
 }
