@@ -36,8 +36,8 @@ Coverage files are generated in ./coverage
 Logging is done using Winston and Morgan. Error files are located in ./logs/error.log
 
 ## API reference
-| Method    | Endpoint   |   Description   | Example Output |
+| Method    | Endpoint   |   Description   | Example Output | 
 |-----------|------------|-----------------|----------------|
-|GET        | /questions | Returns whole list of issues (questions) | [{"IssueID":1,"Description":"Change national anthem to hip's don't lie","Summary":"On the anthem"}] | 
+|GET        | /questions(?ID={}) | Returns whole list of issues (questions) | [{"IssueID":1,"Description":"Change national anthem to hip's don't lie","Summary":"On the anthem"}] | 
 
 (I'll make this nicer soon (tm))
