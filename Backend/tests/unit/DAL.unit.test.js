@@ -34,4 +34,39 @@ describe('mock GET question', () => {
         mockQuery.mockRejectedValueOnce(new Error('DB kaput'));
         await expect(dal.getQuestions()).rejects.toThrow('DB kaput');
     });
+
+});
+
+describe('mock GET question with filter', () => {
+    test('should return 1 row from Issue', async () => {
+        mockQuery.mockResolvedValueOnce([
+            [{IssueID: 1, Description: 'Test Issue', Summary: 'Summary' }],
+            []
+        ]);
+        const result = await dal.getQuestionWithID(1);
+        expect(result).toEqual(
+            [{IssueID: 1, Description: 'Test Issue', Summary: 'Summary' }]
+        );
+        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue WHERE IssueID = 1');
+    });
+
+    test('should return 0 rows from Issue', async () => {
+        mockQuery.mockResolvedValueOnce([
+            [],
+            []
+        ]);
+        const result = await dal.getQuestionWithID(2);
+        expect(result).toEqual([]);
+        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue WHERE IssueID = 2');
+    });
+
+    test('should error due to invalid argument', async () => {
+        await expect(dal.getQuestionWithID('abc')).rejects.toThrow(new Error('Invalid Argument'));
+    });
+
+    test('should throw error on DB fail', async () => {
+        mockQuery.mockRejectedValueOnce(new Error('DB kaput'));
+        await expect(dal.getQuestionWithID(123)).rejects.toThrow('DB kaput');
+    });
+
 });
