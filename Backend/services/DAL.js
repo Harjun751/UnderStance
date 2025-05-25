@@ -26,6 +26,22 @@ async function getQuestions() {
     }
 }
 
+async function getQuestionWithID(id) {
+    if (!isNaN(id)) {
+        const val = parseInt(id);
+        try {
+            const [rows, fields] = await pool.query(`SELECT * FROM Issue WHERE IssueID = ${val}`);
+            return rows;
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
 module.exports = {
     getQuestions,
+    getQuestionWithID
 };
