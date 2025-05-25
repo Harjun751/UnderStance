@@ -22,19 +22,6 @@ const Navbar = () => {
       {/* Navbar content will go here */}
       <nav className='nav-links'>
         <ul class='main menu'>
-          
-          {/* <li className='nav-item'>
-            <a className='nav-icon'>
-            <span className='nav-icon'><FaBuildingColumns /></span>
-            {isExpanded && <span className="nav-text">Home</span>}
-            </a>
-          </li>
-          <li className='nav-item'>
-            <a className='nav-icon'>
-            <span className='nav-icon'><PiBookOpenTextFill /></span>
-            {isExpanded && <span className="nav-text">Read Stances</span>}
-            </a>
-          </li> */}
           <Link to='/' className='nav-item'>
             <span className='nav-icon'><FaBuildingColumns /></span>
             {isExpanded && <span className="nav-text">Home</span>}
@@ -49,15 +36,6 @@ const Navbar = () => {
             <span className='nav-icon'><PiBookOpenTextFill /></span>
             {isExpanded && <span className="nav-text">Read Stances</span>}
           </Link>
-
-          {/* <Link to="/" className="nav-item">
-          <span className="nav-icon">LOL</span>
-          {isExpanded && <span className="nav-text">Home</span>}
-        </Link>
-        <Link to="/read-stances" className="nav-item">
-          <span className="nav-icon">LOL</span>
-          {isExpanded && <span className="nav-text">Read Stances</span>}
-        </Link> */}
         </ul>
       </nav>
     </div>
