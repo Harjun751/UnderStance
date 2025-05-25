@@ -9,26 +9,33 @@ services:
       MYSQL_DATABASE: UnderStance
     volumes:
       - type: bind
-        source: ./Backend/10-db-init.sql
+        source: ../../10-db-init.sql
         target: /docker-entrypoint-initdb.d/10-db-init.sql
+      - type: bind
+        source: ./20-pop-db.sql
+        target: /docker-entrypoint-initdb.d/20-db-init.sql
     secrets:
       - mysql_root_pw
       - mysql_user
       - mysql_password
   backend:
-    build: Backend/
+    build: ../../
+    ports:
+      - 3001:3000
     environment:
       DB_HOST: "db"
       DB_PORT: 3306
-    ports:
-      - 3000:3000
     secrets:
       - mysql_user
       - mysql_password
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
+    # wait for DB service to be complete
+    entrypoint: /wait-for-it.sh db:3306 -t 30 -- node backend.js
 secrets:
-  mysql_root_pw:
-    file: ./Backend/.config/.dev/mysql-root-password
+  mysql_root_pw: 
+    file: ../../.config/.dev/mysql-root-password
   mysql_user:
-    file: ./Backend/.config/.dev/mysql-user
+    file: ../../.config/.dev/mysql-user
   mysql_password:
-    file: ./Backend/.config/.dev/mysql-password
+    file: ../../.config/.dev/mysql-password
