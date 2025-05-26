@@ -14,6 +14,13 @@ const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    typeCast: function (field, next) {
+        if (field.type === 'TINY' && field.length === 1) {
+            // convert 1/0 to JS boolean types
+            return field.string() === '1';
+        }
+        return next();
+    }
 });
 
 async function getQuestions() {
@@ -41,7 +48,45 @@ async function getQuestionWithID(id) {
     }
 }
 
+async function getStances() {
+    try {
+        const [rows, fields] = await pool.query('SELECT * FROM Stance');
+        return rows;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function getStancesFiltered(StanceID, IssueID, PartyID) {
+    if (isNaN(StanceID) || isNaN(IssueID) || isNaN(PartyID)) {
+        throw new Error("Invalid Argument");
+    }
+    if (StanceID != null) { StanceID = parseInt(StanceID); }
+    if (IssueID != null) { IssueID = parseInt(IssueID); }
+    if (PartyID != null) { PartyID = parseInt(PartyID); }
+    console.log(StanceID);
+    console.log(PartyID);
+    console.log(IssueID);
+    try {
+        const [rows, fields] = await pool.execute(
+            `SELECT * FROM Stance
+            WHERE (? IS NULL OR StanceID = ?)
+            AND (? IS NULL OR IssueID = ?)
+            AND (? IS NULL OR PartyID = ?)`,
+            [StanceID, StanceID, IssueID, IssueID, PartyID, PartyID]
+        );
+        return rows;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
 module.exports = {
+    getStancesFiltered,
+    getStances,
+    getQuestionWithID,
     getQuestions,
-    getQuestionWithID
-};
+}
+

@@ -31,8 +31,47 @@ app.get('/questions',  async (req, res) => {
         } else {
             res.status(400).send({error: 'Invalid Arguments'});
         }
-
     }
 })
+
+app.get('/stances', async (req, res) => {
+    var StanceID = req.query.StanceID;
+    var IssueID = req.query.IssueID;
+    var PartyID = req.query.PartyID;
+    if (StanceID === undefined && IssueID === undefined && PartyID === undefined) {
+        // return all
+        try {
+            const data = await db.getStances();
+            res.status(200).send(data);
+        } catch (error) {
+            logger.error(error.stack);
+            res.status(500).send({error: 'Failed to fetch stances'});
+        }
+    } else {
+        // Convert undefined values into null
+        StanceID = StanceID ?? null;
+        IssueID = IssueID ?? null;
+        PartyID = PartyID ?? null;
+        // Check if they are invalid as numbers
+        if (isNaN(StanceID) || isNaN(IssueID) || isNaN(PartyID)) {
+            res.status(400).send({error: 'Invalid Arguments'});
+        } else {
+            try {
+                // parseInt(null) == NaN
+                // We want to pass null if filter is not being used
+                // so coerce into null if required with ||
+                const data = await db.getStancesFiltered(
+                    parseInt(StanceID) || null,
+                    parseInt(IssueID) || null,
+                    parseInt(PartyID) || null
+                );
+                res.status(200).send(data);
+            } catch(error) {
+                logger.error(error.stack);
+                res.status(500).send({error: 'Failed to fetch stances'});
+            }
+        }
+    }
+});
 
 module.exports = app;
