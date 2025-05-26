@@ -2,6 +2,11 @@ const express = require('express')
 const db = require('./services/DAL')
 const logger = require('./logger')
 const app = express()
+const cors = require('cors')
+app.use(cors({
+  origin: 'http://localhost:5174', // your React app origin
+  methods: ['GET', 'POST'], // allowed methods
+}))
 
 
 app.get('/', (req, res) => {
