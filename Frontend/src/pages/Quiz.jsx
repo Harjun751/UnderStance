@@ -2,36 +2,37 @@ import { React, useEffect, useState} from 'react';
 import Navbar from '../components/Navbar/Navbar';
 
 const Quiz = () => {
-  const [questions, setQuestions] = useState([]);
+  const [issues, setIssues] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/questions')
+    fetch('/questions')
       .then(res => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
         return res.json();
       })
-      .then(data => setQuestions(data))
+      .then(data => setIssues(data))
       .catch(err => setError(err.message));
   }, []);
 
   if (error) return <div className='content'>Error: {error}</div>;
-  if (!questions.length) return <div>Loading...</div>;
+  if (!issues.length) return <div>Loading...</div>;
   
   return (
     <div className="quiz">
       <Navbar />
-      <div className="content">
-        <h1>Quiz(TBC)</h1>
-        <p>This is where we implement quiz</p>
-        <ul>
-          {data.map((item, i) => (
-            <li key={q.id}>{q.text}</li>
-          ))}
-      </ul>
-      </div>
+      
+      {issues.map(issue => (
+        <div className='content' key={issue.IssueID}>
+          <h1>Quiz</h1>
+          <h2>Question: {issue.IssueID} / {issues.length}</h2>
+          <h3>Summary: {issue.Summary}</h3>
+          <p>{issue.Description}</p>
+          <footer>Testing</footer>
+       </div>
+      ))}
     </div>
   );
 };
