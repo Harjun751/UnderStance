@@ -52,7 +52,7 @@ describe('mock GET stance with filter', () => {
             .then(response => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeStance);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(1,null,null);
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(2,null,null);
             });
     });
 

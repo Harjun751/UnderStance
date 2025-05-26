@@ -22,14 +22,14 @@ describe('mock GET question', () => {
         expect(result).toEqual([
           { IssueID: 1, Description: 'Test Issue', Summary: 'Summary' }
         ]);
-        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue');
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Issue');
     });
 
     test('should return [] from Issue', async () => {
         mockQuery.mockResolvedValueOnce([[],[]]);
         const result = await dal.getQuestions();
         expect(result).toEqual([]);
-        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue');
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Issue');
     });
 
     test('should throw error on DB fail', async () => {
@@ -49,7 +49,7 @@ describe('mock GET question with filter', () => {
         expect(result).toEqual(
             [{IssueID: 1, Description: 'Test Issue', Summary: 'Summary' }]
         );
-        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue WHERE IssueID = 1');
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Issue WHERE IssueID = 1');
     });
 
     test('should return 0 rows from Issue', async () => {
@@ -59,7 +59,7 @@ describe('mock GET question with filter', () => {
         ]);
         const result = await dal.getQuestionWithID(2);
         expect(result).toEqual([]);
-        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Issue WHERE IssueID = 2');
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Issue WHERE IssueID = 2');
     });
 
     test('should error due to invalid argument', async () => {
@@ -96,13 +96,13 @@ describe('mock GET stance', () => {
         ];
         mockQuery.mockResolvedValueOnce(fakeStances);
         const result = await dal.getStances();
-        expect(result).toEqual(fakeStances);
-        expect(mockQuery).toHaveBeenCalledWith('SELECT * FROM Stances');
+        expect(result).toEqual(fakeStances[0]);
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Stance');
     });
     
     test('should throw error on DB fail', async () => {
         mockQuery.mockRejectedValueOnce(new Error('DB exploded'));
-        await expect(dal.getQuestions()).rejects.toThrow('DB exploded');
+        await expect(dal.getStances()).rejects.toThrow('DB exploded');
     });
 });
 
@@ -116,8 +116,8 @@ describe('mock GET stance with filter', () => {
             PartyID: 1
         }
         mockExecute.mockResolvedValueOnce([[fakeStance], []]);
-        const result = await dal.getStanceFiltered(1, null, null);
-        expect(result).toEqual(fakeStance);
+        const result = await dal.getStancesFiltered(1, null, null);
+        expect(result).toEqual([fakeStance]);
     });
 
     test('should return 2 stances with issue filter', async () => {
@@ -138,7 +138,7 @@ describe('mock GET stance with filter', () => {
                 }
             ];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(null, 1, null);
+        const result = await dal.getStancesFiltered(null, 1, null);
         expect(result).toEqual(fakeStances);
     });
 
@@ -153,7 +153,7 @@ describe('mock GET stance with filter', () => {
                 }
             ];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(null, null, 2);
+        const result = await dal.getStancesFiltered(null, null, 2);
         expect(result).toEqual(fakeStances);
     });
 
@@ -168,15 +168,14 @@ describe('mock GET stance with filter', () => {
                 }
             ];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(null, 1, 2);
+        const result = await dal.getStancesFiltered(null, 1, 2);
         expect(result).toEqual(fakeStances);
     });
 
     test('should return 0 stance with combined party and issue filter', async () => {
-        const fakeStances = [
-            ];
+        const fakeStances = [];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(null, 2, 2);
+        const result = await dal.getStancesFiltered(null, 2, 2);
         expect(result).toEqual(fakeStances);
     });
 
@@ -191,7 +190,7 @@ describe('mock GET stance with filter', () => {
                 }
             ];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(2, 1, null);
+        const result = await dal.getStancesFiltered(2, 1, null);
         expect(result).toEqual(fakeStances);
     });
 
@@ -206,8 +205,12 @@ describe('mock GET stance with filter', () => {
                 }
             ];
         mockExecute.mockResolvedValueOnce([fakeStances, []]);
-        const result = await dal.getStanceFiltered(2, null, 2);
+        const result = await dal.getStancesFiltered(2, null, 2);
         expect(result).toEqual(fakeStances);
+    });
+
+    test('should error due to invalid argument', async () => {
+        await expect(dal.getQuestionWithID('abc', 'def', 'hij')).rejects.toThrow(new Error('Invalid Argument'));
     });
 
 });

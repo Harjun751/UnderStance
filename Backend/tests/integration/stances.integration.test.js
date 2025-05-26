@@ -2,14 +2,14 @@ const app = require('../../app');
 const request = require('supertest');
 const setupCompose = require('../setup/setupCompose');
 const teardownCompose = require('../setup/teardownCompose');
-const appPort = 3002;
+const appPort = 3003;
 
 beforeAll(async () => {
-    await setupCompose(3002);
+    await setupCompose(appPort);
 }, 60_000);
 
 afterAll(() => {
-    teardownCompose();
+    teardownCompose(appPort);
 });
 
 const fakeStances = [
@@ -64,7 +64,28 @@ describe('GET stances', () => {
         const response = await request(`http://localhost:${appPort}`)
             .get("/stances?StanceID=1");
         expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual(fakeStances);
+        expect(response.body).toEqual([fakeStances[0]]);
+    });
+
+    test('200 OK GET combined Issue Stance filtered', async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances?StanceID=2&IssueID=1");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([fakeStances[1]]);
+    });
+
+    test('200 OK GET combined Issue Party filtered', async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances?PartyID=2&IssueID=1");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([fakeStances[1]]);
+    });
+
+    test('200 OK GET combined Stance Party filtered', async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances?PartyID=1&StanceID=1");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([fakeStances[0]]);
     });
 
     test('200 OK GET combined filtered', async () => {
@@ -72,6 +93,20 @@ describe('GET stances', () => {
             .get("/stances?StanceID=1&PartyID=1&IssueID=1");
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([fakeStances[0]]);
+    });
+
+    test('200 OK GET combined filtered alt', async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances?StanceID=2&PartyID=2&IssueID=1");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([fakeStances[1]]);
+    });
+
+    test('200 OK GET combined filtered empty', async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances?StanceID=2&PartyID=2&IssueID=2");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([]);
     });
     
     test('400 Invalid Arguments with bad query params', async () => {

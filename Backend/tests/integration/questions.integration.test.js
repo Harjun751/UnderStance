@@ -2,14 +2,14 @@ const app = require('../../app');
 const request = require('supertest');
 const setupCompose = require('../setup/setupCompose');
 const teardownCompose = require('../setup/teardownCompose');
-const appPort = 3001;
+const appPort = 3002;
 
 beforeAll(async () => {
     await setupCompose(appPort);
 }, 60_000);
 
 afterAll(() => {
-    teardownCompose();
+    teardownCompose(appPort);
 });
 
 describe('GET quiz question', () => {
