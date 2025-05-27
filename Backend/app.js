@@ -82,4 +82,32 @@ app.get('/stances', async (req, res) => {
     }
 });
 
+app.get('/parties',  async (req, res) => {
+    const id = req.query.ID;
+    if (id === undefined) {
+        // simply return all
+        try {
+            const data = await db.getParties();
+            res.status(200).send(data);
+        } catch (error) {
+            logger.error(error.stack);
+            res.status(500).send({error : 'Failed to fetch parties' });
+        }
+    } else {
+        if (!isNaN(id)) {
+            try {
+                const data = await db.getPartyWithID(parseInt(id));
+                res.status(200).send(data);
+            } catch(error) {
+                logger.error(error.stack);
+                res.status(500).send({error : 'Failed to fetch parties' });
+            }
+        } else {
+            res.status(400).send({error: 'Invalid Arguments'});
+        }
+    }
+})
+
+
+
 module.exports = app;
