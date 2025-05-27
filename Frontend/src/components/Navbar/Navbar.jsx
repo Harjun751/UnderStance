@@ -21,7 +21,7 @@ const Navbar = () => {
       </button>
       {/* Navbar content will go here */}
       <nav className='nav-links'>
-        <ul class='main menu'>
+        <ul className='main menu'>
           <Link to='/' className='nav-item'>
             <span className='nav-icon'><FaBuildingColumns /></span>
             {isExpanded && <span className="nav-text">Home</span>}
@@ -36,6 +36,7 @@ const Navbar = () => {
             <span className='nav-icon'><PiBookOpenTextFill /></span>
             {isExpanded && <span className="nav-text">Read Stances</span>}
           </Link>
+
         </ul>
       </nav>
     </div>
