@@ -76,6 +76,7 @@ paths:
                     type: string
                     enum: ['Failed to fetch questions']
                     description: Error message
+
   /stances:
     get:
       summary: Get all stances
@@ -204,6 +205,85 @@ paths:
                   error:
                     type: string
                     enum: ['Failed to fetch stances']
+                    description: Error message
+
+  /parties:
+    get:
+      summary: Get all party data
+      description: Retrieves all the parties from the database
+      parameters:
+        - name: ID
+          in: query
+          description: Unique ID identifying party
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful GET
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                items:
+                  type: object
+                  properties:
+                    PartyID:
+                      type: integer
+                      description: ID of party object
+                    Name:
+                      type: string
+                      description: Full name of party
+                    ShortName:
+                      type: string
+                      description: Abbreviated name of party
+                    Icon:
+                      type: string
+                      description: A link to an icon representing the party
+              examples:
+                    /parties:
+                      value:
+                        - PartyID: 1
+                          Name: "Coalition for Shakira"
+                          ShortName: "CFS"
+                          Icon: "https://url.com/image.jpg"
+                        - PartyID: 2
+                          Name: "Coalition against Shakira"
+                          ShortName: "CAS"
+                          Icon: "https://url.com/image.jpg"
+                    /parties?ID=1:
+                      value:
+                        - PartyID: 1
+                          Name: "Coalition for Shakira"
+                          ShortName: "CFS"
+                          Icon: "https://url.com/image.jpg"
+                    /parties?ID=2:
+                      value:
+                        - PartyID: 2
+                          Name: "Coalition against Shakira"
+                          ShortName: "CAS"
+                          Icon: "https://url.com/image.jpg"
+        "400":
+          description: Bad request - incorrect parameters passed into query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Invalid Arguments']
+                    description: Error message
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Failed to fetch parties']
                     description: Error message
 servers:
 - url: "404.com" #Update once we have a actual server
