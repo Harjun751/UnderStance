@@ -16,6 +16,12 @@
                 box-shadow 0.2s ease;;
 }
 
+.button-group .btn.selected {
+  background-color: #0056b3;
+  color: white;
+  border: 2px solid #003d80;
+}
+
 /* Individual button colors */
 .button-group .agree {
     background-color: #356939;
@@ -66,4 +72,37 @@
 .issue-description {
     font-size: 50;
     white-space: pre-wrap;
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
 }
