@@ -11,6 +11,9 @@ services:
       - type: bind
         source: ./Backend/10-db-init.sql
         target: /docker-entrypoint-initdb.d/10-db-init.sql
+      - type: bind
+        source: ./Backend/tests/setup/20-pop-db.sql
+        target: /docker-entrypoint-initdb.d/20-pop-db.sql
     secrets:
       - mysql_root_pw
       - mysql_user
