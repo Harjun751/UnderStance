@@ -214,3 +214,57 @@ describe('mock GET stance with filter', () => {
     });
 
 });
+
+const parties = [
+    {
+        PartyID: 1,
+        Name: "Coalition for Shakira",
+        ShortName: "CFS",
+        Icon: "https://cfs.com/icon.jpg"
+    },
+    {
+        PartyID: 2,
+        Name: "Traditionalist's Party",
+        ShortName: "TP",
+        Icon: "https://tp.com/icon.jpg"
+    }
+];
+
+describe('mock GET party', () => {
+    test('should return stances', async () => {
+        mockQuery.mockResolvedValueOnce([parties, []]);
+        const result = await dal.getParties();
+        expect(result).toEqual(parties);
+        expect(mockQuery).toHaveBeenLastCalledWith('SELECT * FROM Party');
+    });
+    
+    test('should throw error on DB fail', async () => {
+        mockQuery.mockRejectedValueOnce(new Error('DB exploded'));
+        await expect(dal.getParties()).rejects.toThrow('DB exploded');
+    });
+});
+
+describe('mock GET party filtered', () => {
+    test('should return party with ID=1', async () => {
+        mockExecute.mockResolvedValueOnce([[parties[0]], []]);
+        const result = await dal.getPartyWithID(1);
+        expect(result).toEqual([parties[0]]);
+    });
+    test('should return party with ID=2', async () => {
+        mockExecute.mockResolvedValueOnce([[parties[1]], []]);
+        const result = await dal.getPartyWithID(2);
+        expect(result).toEqual([parties[1]]);
+    });
+    test('should return empty array if no match', async () => {
+        mockExecute.mockResolvedValueOnce([[], []]);
+        const result = await dal.getPartyWithID(3);
+        expect(result).toEqual([]);
+    });
+    test('should error due to invalid argument', async () => {
+        await expect(dal.getPartyWithID('abc')).rejects.toThrow(new Error('Invalid Argument'));
+    });
+    test('should throw error on DB fail', async () => {
+        mockExecute.mockRejectedValueOnce(new Error('DB exploded'));
+        await expect(dal.getPartyWithID(2)).rejects.toThrow('DB exploded');
+    });
+});

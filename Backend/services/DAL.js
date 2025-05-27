@@ -65,9 +65,6 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
     if (StanceID != null) { StanceID = parseInt(StanceID); }
     if (IssueID != null) { IssueID = parseInt(IssueID); }
     if (PartyID != null) { PartyID = parseInt(PartyID); }
-    console.log(StanceID);
-    console.log(PartyID);
-    console.log(IssueID);
     try {
         const [rows, fields] = await pool.execute(
             `SELECT * FROM Stance
@@ -83,10 +80,41 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
     }
 }
 
+async function getParties() {
+    try {
+        const [rows, fields] = await pool.query('SELECT * FROM Party');
+        return rows;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function getPartyWithID(id) {
+    if (!isNaN(id)) {
+        const val = parseInt(id);
+        try {
+            const [rows, fields] = await pool.execute(
+                `SELECT * FROM Party WHERE PartyID = ?`,
+                [val]
+            );
+            return rows;
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
+
 module.exports = {
     getStancesFiltered,
     getStances,
     getQuestionWithID,
     getQuestions,
+    getParties,
+    getPartyWithID,
 }
 
