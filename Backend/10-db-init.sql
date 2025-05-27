@@ -11,7 +11,7 @@ CREATE TABLE Party (
     PartyID int NOT NULL AUTO_INCREMENT,
     Name varchar(100),
     ShortName varchar(5),
-    Icon blob,
+    Icon varchar(2083),
     PRIMARY KEY (PartyID)
 );
 
