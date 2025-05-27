@@ -1,3 +1,6 @@
+# API Docs
+View API documentation on [swaggerhub here](https://app.swaggerhub.com/apis/harjun7517/under-stance_backend_api/0.1.0)
+
 # UnderStance Backend
 Built with ExpressJS. Run with:
 ```
@@ -34,10 +37,3 @@ Coverage files are generated in ./coverage
 
 ## Logging
 Logging is done using Winston and Morgan. Error files are located in ./logs/error.log
-
-## API reference
-| Method    | Endpoint   |   Description   | Example Output | 
-|-----------|------------|-----------------|----------------|
-|GET        | /questions(?ID={}) | Returns whole list of issues (questions) | [{"IssueID":1,"Description":"Change national anthem to hip's don't lie","Summary":"On the anthem"}] | 
-
-(I'll make this nicer soon (tm))

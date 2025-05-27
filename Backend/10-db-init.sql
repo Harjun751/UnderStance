@@ -10,7 +10,7 @@ CREATE TABLE Issue (
 CREATE TABLE Party (
     PartyID int NOT NULL AUTO_INCREMENT,
     Name varchar(100),
-    ShortNames varchar(5),
+    ShortName varchar(5),
     Icon blob,
     PRIMARY KEY (PartyID)
 );

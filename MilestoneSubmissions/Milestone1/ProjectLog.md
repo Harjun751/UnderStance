@@ -24,3 +24,6 @@ I started creating docker compose files for the database. I also began on the fi
 
 ## 23rd May
 I created an integration test that would spin up the docker instances and then query the endpoint, ensuring that the correct result was outputted. With the test cases done, I began implementing the feature. Upon doing so, I realized some issues with the integration test - particularly, the setup script wasn't working well and the test would run before the servers were even ready. However, as I would be following this template for future tests, this was a problem I only had to fix once. I believe now the TDD workflow will be smoother. After fixing the test case and coding the feature, I pushed to the branch
+
+## 24th - 26th
+Continued following TDD workflow to create tests and then implement. Had to refine scripts to allow the docker setups to spin up in parallel for different test suites, preventing port collision. Merged first backend task into main branch, now working on 2nd task for the other endpoint for this sprint.

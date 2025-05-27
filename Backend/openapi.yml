@@ -1,0 +1,209 @@
+openapi: 3.0.4
+info:
+  title: UnderStance Backend API
+  description: >
+    Backend API for the UnderStance web app. See our project page for more information: https://github.com/Harjun751/UnderStance
+  version: 0.1.0
+paths:
+  /questions:
+    get:
+      summary: Get all questions/issues
+      description: Retrieves all the issues from the database
+      parameters:
+        - name: ID
+          in: query
+          description: Unique ID identifying issue
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful GET
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                items:
+                  type: object
+                  properties:
+                    IssueID:
+                      type: integer
+                      description: ID of issue object
+                    Description:
+                      type: string
+                      description: Full description of issue
+                    Summary:
+                      type: string
+                      description: Short one line summary of issue
+              examples:
+                    /questions:
+                      value:
+                        - IssueID: 23
+                          Description: "Introduce doing backflips into school curriculum"
+                          Summary: "Teaching backflips"
+                        - IssueID: 24
+                          Description: "Allow bringing durians into public buses"
+                          Summary: "Durians in Buses"
+                    /questions?ID=23:
+                      value:
+                        - IssueID: 23
+                          Description: "Introduce doing backflips into school curriculum"
+                          Summary: "Teaching backflips"
+                    /questions?ID=24:
+                      value:
+                        - IssueID: 24
+                          Description: "Allow bringing durians into public buses"
+                          Summary: "Durians in Buses"
+        "400":
+          description: Bad request - incorrect parameters passed into query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Invalid Arguments']
+                    description: Error message
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Failed to fetch questions']
+                    description: Error message
+  /stances:
+    get:
+      summary: Get all stances
+      description: Retrieves all the issues from the database
+      parameters:
+        - name: StanceID
+          in: query
+          description: Unique ID identifying the Stance
+          schema:
+            type: integer
+        - name: IssueID
+          in: query
+          description: Unique ID identifying the Issue
+          schema:
+            type: integer
+        - name: PartyID
+          in: query
+          description: Unique ID identifying the Party
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful GET
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                items:
+                  type: object
+                  properties:
+                    StanceID:
+                      type: integer
+                      description: ID of stance object
+                    Stand:
+                      type: boolean
+                      description: Whether the party agrees with the issue or not
+                    Reason:
+                      type: string
+                      description: Explanation by party on their stance
+                    IssueID:
+                      type: integer
+                      description: The ID of the issue discussed
+                    PartyID:
+                      type: integer
+                      description: The ID of the party whose stance is described
+              examples:
+                /stances:
+                  value:
+                    - StanceID: 1
+                      Stand: false
+                      Description: "Backflips are not educationally required"
+                      IssueID: 23
+                      PartyID: 1
+                    - StanceID: 2
+                      Stand: true
+                      Description: "School should teach cool things. Backflips are cool."
+                      IssueID: 23
+                      PartyID: 2
+                    - StanceID: 3
+                      Stand: false
+                      Description: "The smell inconveniences other travellers"
+                      IssueID: 24
+                      PartyID: 1
+                    - StanceID: 4
+                      Stand: true
+                      Description: "I like the smell."
+                      IssueID: 24
+                      PartyID: 2
+                /stances?StanceID=1:
+                  value:
+                    - StanceID: 1
+                      Stand: false
+                      Description: "Backflips are not educationally required"
+                      IssueID: 23
+                      PartyID: 1
+                /stances?IssueID=23:
+                  value:
+                    - StanceID: 1
+                      Stand: false
+                      Description: "Backflips are not educationally required"
+                      IssueID: 23
+                      PartyID: 1
+                    - StanceID: 2
+                      Stand: true
+                      Description: "School should teach cool things. Backflips are cool."
+                      IssueID: 23
+                      PartyID: 2
+                /stances?PartyID=2:
+                  value:
+                    - StanceID: 2
+                      Stand: true
+                      Description: "School should teach cool things. Backflips are cool."
+                      IssueID: 23
+                      PartyID: 2
+                    - StanceID: 4
+                      Stand: true
+                      Description: "I like the smell."
+                      IssueID: 24
+                      PartyID: 2
+                /stances?PartyID=2&IssueID=23:
+                  value:
+                    - StanceID: 2
+                      Stand: true
+                      Description: "School should teach cool things. Backflips are cool."
+                      IssueID: 23
+                      PartyID: 2
+        "400":
+          description: Bad request - incorrect parameters passed into query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Invalid Arguments']
+                    description: Error message
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Failed to fetch stances']
+                    description: Error message
+servers:
+- url: "404.com" #Update once we have a actual server
