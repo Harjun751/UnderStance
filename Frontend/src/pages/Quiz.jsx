@@ -1,10 +1,13 @@
 import { React, useEffect, useState} from 'react';
 import Navbar from '../components/Navbar/Navbar';
+import './Quiz.css';
+import Header from '../components/Header/Header';
 
 const Quiz = () => {
   const [issues, setIssues] = useState([]);
   const [error, setError] = useState(null);
 
+  
   useEffect(() => {
     fetch('/questions')
       .then(res => {
@@ -23,14 +26,21 @@ const Quiz = () => {
   return (
     <div className="quiz">
       <Navbar />
-      
       {issues.map(issue => (
         <div className='content' key={issue.IssueID}>
-          <h1>Quiz</h1>
-          <h2>Question: {issue.IssueID} / {issues.length}</h2>
+          <Header />
           <h3>Summary: {issue.Summary}</h3>
-          <p>{issue.Description}</p>
-          <footer>Testing</footer>
+          <p className='issue-description'>{issue.Description}</p>
+          <div className="button-group">
+            <button className='btn disagree'>Disagree</button>
+            <button className='btn skip'>Skip</button>
+            <button className='btn agree'>Agree</button>
+          </div>
+          <footer>
+            <button className='back-btn'>back</button>            
+            Question: {issue.IssueID} / {issues.length}
+            <button className='forward-btn'>forward</button>
+          </footer>
        </div>
       ))}
     </div>
