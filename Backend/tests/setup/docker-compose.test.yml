@@ -25,6 +25,7 @@ services:
     environment:
       DB_HOST: "db"
       DB_PORT: 3306
+      CORS_ORIGIN: "http://localhost:5174"
     secrets:
       - mysql_user
       - mysql_password
