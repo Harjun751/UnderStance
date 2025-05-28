@@ -32,7 +32,7 @@ const Quiz = () => {
     const isLast = currentIndex === issues.length - 1;
 
     setAnswers(prev => {
-      const updated = { ...prev, [currentIndex]: answerType };
+      const updated = { ...prev, [currentIssue.IssueID]: answerType };
       
       // If this is the last question, show confirmation
       // Else move to next question if not last
@@ -81,7 +81,7 @@ const Quiz = () => {
             <h2>Submit Quiz?</h2>
             <p>Are you sure you want to submit your answers?</p>
             <div className="modal-buttons">
-              <button onClick={() => navigate('/read-stances')}>Yes, Submit</button>
+              <button onClick={() => navigate('/read-stances', {state: {answers}})}>Yes, Submit</button>
               <button onClick={() => setShowConfirmation(false)}>Cancel</button>
             </div>
           </div>

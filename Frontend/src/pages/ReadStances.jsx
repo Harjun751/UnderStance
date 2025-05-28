@@ -2,6 +2,7 @@ import { React, useEffect, useState} from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import './ReadStances.css'
+import { useLocation } from 'react-router-dom';
 
 
 const ReadStances = () => {
@@ -60,6 +61,11 @@ const ReadStances = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const location = useLocation();
+  const userAnswers = location.state?.answers || {};
+
+  
+
   return (
     <div className="read-stances">
       <Navbar />
@@ -73,41 +79,79 @@ const ReadStances = () => {
           <div
             key={question.IssueID}
             className={`question-container ${expandedQuestionId === question.IssueID ? 'expanded' : ''}`}
-            /*onClick={() => toggleExpand(question.IssueID)}*/
           >
             <div className='question-header'>
-              <h3>{question.Summary}</h3>
-              <button
-                className="toggle-button"
-                onClick={() => toggleExpand(question.IssueID)}
-              >
-                {expandedQuestionId === question.IssueID ? '▲' : '▼'}
-              </button>
+              <h3>Q{question.IssueID}: {question.Description}</h3>
+              <div className='header-right'>
+                {userAnswers[question.IssueID] && (
+                  <span
+                    className={`user-answer ${
+                      userAnswers[question.IssueID] === 'agree'
+                        ? 'agree'
+                        : userAnswers[question.IssueID] === 'disagree'
+                        ? 'disagree'
+                        : 'skip'
+                    }`}
+                  >
+                    {userAnswers[question.IssueID].charAt(0).toUpperCase() + userAnswers[question.IssueID].slice(1)}
+                  </span>
+                )}
+                <button
+                  className="toggle-button"
+                  onClick={() => toggleExpand(question.IssueID)}
+                >
+                  {expandedQuestionId === question.IssueID ? '▲' : '▼'}
+                </button>
+              </div>
+
+              
             </div>
 
-            {expandedQuestionId === question.IssueID && (
-              <div className="stances-list">
-                {parties.map(party => {
-                  const stance = stancesForQuestion.find(s => s.PartyID === party.PartyID);
-                  return (
-                    <div 
-                      key={party.PartyID} 
-                      className={`stance-item ${stance ? (stance.Stand ? 'agree' : 'disagree') : ''}`}
-                    >
-                      <img
-                        src={party.Icon}
-                        alt={party.ShortName}
-                        className="party-icon"
-                      />
-                      <div className="party-info">
-                        <strong>{party.Name}</strong> — Stance: {stance ? (stance.Stand ? 'Agree' : 'Disagree') : 'N/A'}
-                        <p>Reason: {stance ? stance.Reason : 'No reason provided'}</p>
-                      </div>
+            {expandedQuestionId === question.IssueID && (() => {
+              const userAnswer = userAnswers[question.IssueID];
+              const matchingParties = parties.filter(party => {
+                const stance = stancesForQuestion.find(s => s.PartyID === party.PartyID);
+                if (!stance || userAnswer === 'skip') return false;
+                return (userAnswer === 'agree' && stance.Stand === true) ||
+                      (userAnswer === 'disagree' && stance.Stand === false);
+              });
+
+              return (
+                <>
+                  {userAnswer && userAnswer !== 'skip' && (
+                    <div className="alignment-info">
+                      <em>
+                        {matchingParties.length > 0
+                          ? `Your stance aligns with the: ${matchingParties.map(p => p.Name).join(' & ')}`
+                          : `No parties matched your stance on this issue.`}
+                      </em>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                  )}
+
+                  <div className="stances-list">
+                    {parties.map(party => {
+                      const stance = stancesForQuestion.find(s => s.PartyID === party.PartyID);
+                      return (
+                        <div
+                          key={party.PartyID}
+                          className={`stance-item ${stance ? (stance.Stand ? 'agree' : 'disagree') : ''}`}
+                        >
+                          <img
+                            src={party.Icon}
+                            alt={party.ShortName}
+                            className="party-icon"
+                          />
+                          <div className="party-info">
+                            <strong>{party.Name}</strong> — Stance: {stance ? (stance.Stand ? 'Agree' : 'Disagree') : 'N/A'}
+                            <p>Reason: {stance ? stance.Reason : 'No reason provided'}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              );
+            })()}
           </div>
         );
       })}
