@@ -9,8 +9,11 @@ const backendPort = process.env.BACKEND_PORT || '3001'
 export default defineConfig({
   plugins: [react()],
   server: {
+    port: 5174,
     proxy: {
       '/questions': `http://${backendHost}:${backendPort}`,
+      '/stances': `http://${backendHost}:${backendPort}`,
+      '/parties': `http://${backendHost}:${backendPort}`,
     },
   },
 })
