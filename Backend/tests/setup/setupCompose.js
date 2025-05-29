@@ -8,7 +8,7 @@ module.exports = async function setupCompose(port) {
 
     console.log("Waiting on service...");
     await waitOn({
-        resources: [`http-get://localhost:${intPort}/`],
+        resources: [`http-get://localhost:${intPort}/questions`],
         timeout: 30000,
         validateStatus: status => status === 200
     });
