@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import './ReadStances.css'
 import { useLocation } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+
 
 
 const ReadStances = () => {
@@ -58,11 +60,65 @@ const ReadStances = () => {
     setExpandedQuestionId(expandedQuestionId === issueId ? null : issueId);
   };
 
+  // Show loading or error messages before rendering data
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  // Retrieve user answers passed via navigation state
   const location = useLocation();
   const userAnswers = location.state?.answers || {};
+
+  // Calculate alignment percentages between user's answers and each party
+  const alignmentData = parties.map(party => {
+    let alignedCount = 0;
+    let totalAnswered = 0;
+
+    questions.forEach(question => {
+      const userAnswer = userAnswers[question.IssueID];
+      if (userAnswer === 'agree' || userAnswer === 'disagree') {
+        totalAnswered++;
+        const stance = stances.find(s => s.IssueID === question.IssueID && s.PartyID === party.PartyID);
+        if (stance && ((userAnswer === 'agree' && stance.Stand === true) || (userAnswer === 'disagree' && stance.Stand === false))) {
+          alignedCount++;
+        }
+      }
+    });
+
+    return {
+      name: party.ShortName,
+      alignment: totalAnswered > 0 ? Math.round((alignedCount / totalAnswered) * 100) : 0
+    };
+  });
+
+  // Custom tick component for rendering party icons and names on the X axis
+  const CustomYAxisTick = ({ x, y, payload, parties }) => {
+    const party = parties.find(p => p.ShortName === payload.value);
+
+    return (
+      <g transform={`translate(${x},${y + 20})`}>
+        {party && (
+          <>
+            <image
+              href={party.Icon}
+              x={-19}  // half icon width to center horizontally
+              y={-28}  // move it above the text
+              width={35}
+              height={35}
+            />
+            <text
+            x={0}
+            y={5}
+            textAnchor="middle"
+            fontSize={12}
+            dy="1.2em"  // moves text down a bit below axis line
+          >
+            {party.ShortName}
+          </text>
+          </>
+        )}
+      </g>
+    );
+  };
 
   
 
@@ -70,6 +126,35 @@ const ReadStances = () => {
     <div className="read-stances">
       <Navbar />
       <Header />
+
+      {Object.keys(userAnswers).length > 0 && (
+        <div className="alignment-chart">
+          <h4>Party Alignment with Your Answers (%)</h4>
+          <ResponsiveContainer Width={600} height={300}>
+            <BarChart
+              data={alignmentData}
+              layout="horizontal"
+              margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                type="category" 
+                dataKey="name" 
+                width={80}
+                tick={(props) => <CustomYAxisTick {...props} parties={parties} />}
+                interval={0}
+              />
+              <YAxis 
+                type="number" 
+                domain={[0, 100]} 
+                tickFormatter={(tick) => `${tick}%`}
+              />
+              <Tooltip formatter={(value) => `${value.toFixed(1)}%`} />
+              <Bar dataKey="alignment" fill="#4CAF50" barSize={50} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {questions.map(question => {
         // Filter stances for this question
@@ -96,6 +181,7 @@ const ReadStances = () => {
                     {userAnswers[question.IssueID].charAt(0).toUpperCase() + userAnswers[question.IssueID].slice(1)}
                   </span>
                 )}
+
                 <button
                   className="toggle-button"
                   onClick={() => toggleExpand(question.IssueID)}
@@ -103,8 +189,6 @@ const ReadStances = () => {
                   {expandedQuestionId === question.IssueID ? '▲' : '▼'}
                 </button>
               </div>
-
-              
             </div>
 
             {expandedQuestionId === question.IssueID && (() => {
