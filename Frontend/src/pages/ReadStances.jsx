@@ -27,9 +27,9 @@ const ReadStances = () => {
     const fetchData = async () => {
       try {
         const [stancesRes, partiesRes, questionsRes] = await Promise.all([
-          fetch('/stances'),
-          fetch('/parties'),
-          fetch('/questions')
+          fetch(`${import.meta.env.VITE_API_URL}/stances`),
+          fetch(`${import.meta.env.VITE_API_URL}/parties`),
+          fetch(`${import.meta.env.VITE_API_URL}/questions`)
         ]);
 
         if (!stancesRes.ok || !partiesRes.ok || !questionsRes.ok) {
