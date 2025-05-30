@@ -10,5 +10,5 @@ VALUES ('Traditionalists'' Party', 'TP', 'https://external-content.duckduckgo.co
 INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
 VALUES (1, 1, true, 'It''s a certified bop');
 
-INSERT INTO Stance (IssueID, PartyID, Stand, Reason)
+INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
 VALUES (1, 2, false, "The current one is good enough TBH");
