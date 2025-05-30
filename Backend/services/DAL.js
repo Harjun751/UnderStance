@@ -13,7 +13,11 @@ if (process.env.SECRET_DB_CONN_PATH) {
         port: process.env.DB_PORT,
         user: secrets.getUser(),
         password: secrets.getPassword(),
-        database: "UnderStance",
+        database: "understance",
+        ssl: {
+          rejectUnauthorized: false
+        }
+
     });
 }
 
