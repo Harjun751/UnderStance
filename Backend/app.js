@@ -5,10 +5,10 @@ const app = express()
 const cors = require('cors')
 
 //const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5174';
-const corsOrigin = process.env.CORS_ORIGIN || 'https://understance-frontend.onrender.com';
+const corsOrigin = process.env.CORS_ORIGIN || 'https://understance.onrender.com';
 
 app.use(cors({
-  origin: '*',
+  origin: corsOrigin,
   methods: ['GET', 'POST'],
 }))
 
