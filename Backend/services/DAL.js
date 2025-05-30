@@ -23,7 +23,9 @@ if (process.env.SECRET_DB_CONN_PATH) {
 
 async function getQuestions() {
   try {
+    console.log("Connecting to DB..."); //debugging
     const rows = await pool.query(`SELECT * FROM "Issue"`);
+    console.log("Query Successful:", rows.rows); //debugging
     return rows.rows;
   } catch (err) {
     logger.error(err.stack);
