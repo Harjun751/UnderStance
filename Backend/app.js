@@ -4,12 +4,13 @@ const logger = require('./logger')
 const app = express()
 const cors = require('cors')
 
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5174';
+//const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5174';
+const corsOrigin = process.env.CORS_ORIGIN || 'https://understance-frontend.onrender.com';
 
 app.use(cors({
-  origin: corsOrigin,
+  origin: '*',
   methods: ['GET', 'POST'],
-}));
+}))
 
 
 app.get('/', (req, res) => {
