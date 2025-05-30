@@ -1,12 +1,11 @@
 services:
   db:
-    image: mysql
+    image: postgres
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_pw
-      MYSQL_USER_FILE: /run/secrets/mysql_user
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
-      MYSQL_DATABASE: UnderStance
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: UnderStance
     volumes:
       - type: bind
         source: ../../10-db-init.sql
@@ -15,27 +14,29 @@ services:
         source: ./20-pop-db.sql
         target: /docker-entrypoint-initdb.d/20-db-init.sql
     secrets:
-      - mysql_root_pw
-      - mysql_user
-      - mysql_password
+      - db_root_pw
+      - db_user
+      - db_password
   backend:
     build: ../../
     ports:
       - "${BACKEND_UNDERSTANCE_PORT:-3001}:3000"
     environment:
       DB_HOST: "db"
-      DB_PORT: 3306
+      DB_PORT: 5432
+      SECRET_USER_PATH: "/run/secrets/db_user"
+      SECRET_PASSWORD_PATH: "/run/secrets/db_password"
     secrets:
-      - mysql_user
-      - mysql_password
+      - db_user
+      - db_password
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
     # wait for DB service to be complete
-    entrypoint: /wait-for-it.sh db:3306 -t 30 -- node backend.js
+    entrypoint: /wait-for-it.sh db:5432 -t 30 -- node backend.js
 secrets:
-  mysql_root_pw: 
+  db_root_pw: 
     file: ../../.config/.dev/mysql-root-password
-  mysql_user:
+  db_user:
     file: ../../.config/.dev/mysql-user
-  mysql_password:
+  db_password:
     file: ../../.config/.dev/mysql-password

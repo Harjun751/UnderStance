@@ -14,15 +14,20 @@ function getSecret(path) {
 }
 
 function getUser() {
-    return getSecret('/run/secrets/mysql_user');
+    return getSecret(process.env.SECRET_USER_PATH);
 }
 
 function getPassword() {
-    return getSecret('/run/secrets/mysql_password');
+    return getSecret(process.env.SECRET_PASSWORD_PATH);
+}
+
+function getConnString() {
+  return getSecret(process.env.SECRET_DB_CONN_PATH);
 }
 
 module.exports = {
     getUser,
     getPassword,
+    getConnString
 }
 
