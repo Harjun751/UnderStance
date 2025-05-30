@@ -13,16 +13,33 @@ function getSecret(path) {
     }
 }
 
+// Change your backend code to read DB credentials 
+// from environment variables directly if secret file paths are not provided.
 function getUser() {
-    return getSecret(process.env.SECRET_USER_PATH);
+    if (process.env.SECRET_USER_PATH) {
+        return getSecret(process.env.SECRET_USER_PATH);
+    } else if (process.env.DB_USER) {
+        return process.env.DB_USER;
+    }
+    return null;
 }
 
 function getPassword() {
-    return getSecret(process.env.SECRET_PASSWORD_PATH);
+    if (process.env.SECRET_PASSWORD_PATH) {
+        return getSecret(process.env.SECRET_PASSWORD_PATH);
+    } else if (process.env.DB_PASSWORD) {
+        return process.env.DB_PASSWORD;
+    }
+    return null;
 }
 
 function getConnString() {
-  return getSecret(process.env.SECRET_DB_CONN_PATH);
+    if (process.env.SECRET_DB_CONN_PATH) {
+        return getSecret(process.env.SECRET_DB_CONN_PATH);
+    } else if (process.env.DB_HOST && process.env.DB_PORT && process.env.DB_USER && process.env.DB_PASSWORD && process.env.DB_NAME) {
+        return `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+    }
+    return null;
 }
 
 module.exports = {
