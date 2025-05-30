@@ -120,4 +120,15 @@ describe('mock GET stance with filter', () => {
                 expect(response.body).toEqual({ error: "Invalid Arguments" });
             });
     });
+
+
+      test("should return 500 if DB error with filter", () => {
+        db.getStancesFiltered.mockRejectedValue(new Error("DB error"));
+        return request(app)
+            .get("/stances?PartyID=12")
+            .then((response) => {
+                expect(response.statusCode).toBe(500);
+                expect(response.body).toEqual({ error: "Failed to fetch stances" });
+          });
+      });
 });
