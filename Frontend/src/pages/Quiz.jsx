@@ -81,7 +81,10 @@ const Quiz = () => {
             <h2>Submit Quiz?</h2>
             <p>Are you sure you want to submit your answers?</p>
             <div className="modal-buttons">
-              <button onClick={() => navigate('/read-stances', {state: {answers}})}>Yes, Submit</button>
+              <button onClick={() => {
+                localStorage.setItem('quizAnswers', JSON.stringify(answers));
+                navigate('/read-stances', { state: { answers } });
+              }}>Yes, Submit</button>
               <button onClick={() => setShowConfirmation(false)}>Cancel</button>
             </div>
           </div>

@@ -11,4 +11,4 @@ INSERT INTO Stance (IssueID, PartyID, Stand, Reason)
 VALUES (1, 1, true, "It's a certified bop");
 
 INSERT INTO Stance (IssueID, PartyID, Stand, Reason)
-VALUES (1, 2, true, "The current one is good enough TBH");
+VALUES (1, 2, false, "The current one is good enough TBH");
