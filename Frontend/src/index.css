@@ -5,7 +5,11 @@
 
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
-  background-color: #ecd9c6;
+  
+  background-color: #ffffff;
+  background-image: url('45-degree-fabric-light.png');
+  
+  
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

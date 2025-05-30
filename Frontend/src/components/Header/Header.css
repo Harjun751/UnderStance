@@ -1,0 +1,22 @@
+.UnderStance-header {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.UnderStance-Under {
+  color: #000000; /* Green */
+}
+
+.UnderStance-Stance {
+  color: #BC0001; /* Default/dark */
+}
+
+.UnderStance-underline {
+  width: 100%;
+  height: 4px;
+  background-color: #000000;
+  margin: 0 auto;
+  border-radius: 2px;
+  margin-top: -0.3rem;
+}

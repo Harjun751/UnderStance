@@ -1,0 +1,112 @@
+.button-group {
+    display: flex;
+    gap: 1rem; /* adds spacing between buttons */
+    margin-top: 1rem;
+}
+
+.button-group .btn {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;;
+}
+
+.button-group .btn.selected {
+    background-color: #0056b3;
+    color: white;
+    border: 2px solid #003d80;
+}
+
+/* Individual button colors */
+.button-group .agree {
+    background-color: #356939;
+}
+
+.button-group .agree:hover {
+    background-color: #45a049;
+}
+
+.button-group .skip {
+    color:#000000;
+    background-color: #FFFFFF;
+}
+
+.button-group .skip:hover {
+    background-color: #bfbfbf;
+}
+
+.button-group .disagree {
+    background-color: #983737;
+}
+
+.button-group .disagree:hover {
+    background-color: #d32f2f;
+}
+
+/* Creates Hover effect*/
+.button-group .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Back/Forward button styling */
+.back-btn {
+    color: #FFFFFF;
+    margin-right: 1rem;
+}
+
+.back-btn:hover {
+    background-color: #bfbfbf;
+}
+
+.forward-btn {
+    color: #FFFFFF;
+    margin-left: 1rem;
+}
+
+.forward-btn:hover {
+    background-color: #bfbfbf;
+}
+
+.issue-description {
+    font-size: 50;
+    white-space: pre-wrap;
+}
+
+/* Modal styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
