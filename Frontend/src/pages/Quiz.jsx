@@ -17,7 +17,8 @@ const Quiz = () => {
   // Fetch questions on component mount
   useEffect(() => {
     //fetch('/questions') //for development
-    fetch(`${import.meta.env.VITE_API_URL}/questions`)
+    //fetch(`${import.meta.env.VITE_API_URL}/questions`) 
+    fetch('https://understance-backend.onrender.com/questions') //debugging
       .then(res => {
         if (!res.ok) {
           throw new Error('Network response was not ok');
