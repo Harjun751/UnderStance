@@ -5,6 +5,7 @@ import Header from '../components/Header/Header';
 import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
+  //
   const [issues, setIssues] = useState([]); // State to store quiz questions
   const [error, setError] = useState(null); // State to store any errors during fetch
 
