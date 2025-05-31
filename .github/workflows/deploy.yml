@@ -3,7 +3,7 @@ name: Deploy to Render
 on:
   push:
     branches:
-      - thad/JIRA-21-create-github-action
+      - main
 
 jobs:
   deploy:

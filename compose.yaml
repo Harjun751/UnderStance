@@ -22,8 +22,7 @@ services:
     environment:
       DB_HOST: "db"
       DB_PORT: 5432
-      CORS_ORIGIN: "https://understance.onrender.com"
-      # CORS_ORIGIN: "http://localhost:5174" #For development
+      CORS_ORIGIN: "http://localhost:5174"
       SECRET_USER_PATH: "/run/secrets/db_user"
       SECRET_PASSWORD_PATH: "/run/secrets/db_password"
     ports:
