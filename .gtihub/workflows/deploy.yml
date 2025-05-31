@@ -1,0 +1,19 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - thad/JIRA-21-create-github-action
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Frontend Deploy
+        run: |
+          curl -X POST ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}
+
+      # - name: Trigger Render Backend Deploy
+      #   run: |
+      #     curl -X POST ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
