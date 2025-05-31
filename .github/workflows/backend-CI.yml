@@ -31,11 +31,7 @@ jobs:
         id: lint
         continue-on-error: true
         run: |
-          {
-            echo 'output='
-            npx standard --env=jest Backend/ 2>&1
-            echo '"'
-          } >> $GITHUB_OUTPUT
+          echo "lintMessage=$(npx standard --env=jest Backend/)" >> $GITHUB_OUTPUT
 
       - name : Create comment
         if: steps.lint.outcome == 'failure'
@@ -44,7 +40,7 @@ jobs:
           message: |
             **There is one or more linting errors**
             ```
-            ${{steps.lint.outputs.output}}
+            ${{ steps.lint.outputs.lintMessage }}
             ```
             🌏
 
