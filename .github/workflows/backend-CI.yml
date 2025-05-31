@@ -31,7 +31,7 @@ jobs:
         id: lint
         continue-on-error: true
         run: |
-          echo "lintMessage=$(npx standard --env=jest Backend/)" >> $GITHUB_OUTPUT
+          echo "lintMessage=\"$(npx standard --env=jest Backend/)\"" >> $GITHUB_OUTPUT
 
       - name : Create comment
         if: steps.lint.outcome == 'failure'
