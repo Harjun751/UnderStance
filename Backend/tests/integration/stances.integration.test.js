@@ -1,4 +1,3 @@
-const app = require('../../app')
 const request = require('supertest')
 const setupCompose = require('../setup/setupCompose')
 const teardownCompose = require('../setup/teardownCompose')
