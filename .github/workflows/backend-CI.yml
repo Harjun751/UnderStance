@@ -39,7 +39,7 @@ jobs:
         with:
           message: |
             **There is one or more linting errors**
-            ${{join(steps.run_tests.outputs.*, '\n')}}
+            ${{join(steps.lint.outputs.*, '\n')}}
             🌏
 
       - name: Push changed code if lint fails
