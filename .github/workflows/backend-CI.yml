@@ -54,7 +54,7 @@ jobs:
 
 
       - name: Begin running tests
-        run: ENV=test npx jest unit --coverage
+        run: ENV=test npm run testall
         working-directory: ./Backend/
 
       - name: Publish test results
