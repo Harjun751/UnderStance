@@ -45,7 +45,7 @@ jobs:
           exit 1
 
       - name : Create comment
-        if: steps.lint.outcome === 'failure'
+        if: steps.lint.outcome == 'failure'
         uses: mshick/add-pr-comment@v2
         with:
           message: |
