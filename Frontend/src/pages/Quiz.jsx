@@ -5,7 +5,6 @@ import Header from '../components/Header/Header';
 import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
-  //
   const [issues, setIssues] = useState([]); // State to store quiz questions
   const [error, setError] = useState(null); // State to store any errors during fetch
 
@@ -17,9 +16,7 @@ const Quiz = () => {
   
   // Fetch questions on component mount
   useEffect(() => {
-    //fetch('/questions') //for development
-    fetch(`${import.meta.env.VITE_API_URL}/questions`) 
-    //fetch('https://understance-backend.onrender.com/questions') //debugging
+    fetch('/questions')
       .then(res => {
         if (!res.ok) {
           throw new Error('Network response was not ok');

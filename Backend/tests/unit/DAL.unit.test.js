@@ -3,7 +3,7 @@ const { Pool } = require("pg");
 jest.mock("pg");
 
 // Mock db.query call that returns [rows,fields]
-const mockQuery = jest.fn().mockResolvedValue({
+let mockQuery = jest.fn().mockResolvedValue({
   rows: [{ IssueID: 1, Description: "Test Issue", Summary: "Summary" }],
 });
 
