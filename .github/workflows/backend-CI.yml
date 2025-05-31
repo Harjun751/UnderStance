@@ -31,7 +31,7 @@ jobs:
         id: lint
         continue-on-error: true
         run: |
-          npx standard --env=jest Backend/ 
+          npx standard --env=jest Backend/ >> $GITHUB_OUTPUT
 
       - name: Push changed code if lint fails
         if: steps.lint.outcome == 'failure'
@@ -43,6 +43,16 @@ jobs:
           git push
           echo "Exiting workflow due to remaining lint errors"
           exit 1
+
+      - name : Create comment
+        if: steps.lint.outcome === 'failure'
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **There is one or more linting errors**
+            ${{join(steps.run_tests.outputs.*, '\n')}}
+            🌏
+          
 
 
 
