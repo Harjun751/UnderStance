@@ -21,7 +21,7 @@ const fakeStances = [
   },
   {
     StanceID: 2,
-    Stand: true,
+    Stand: false,
     Reason: 'The current one is good enough TBH',
     IssueID: 1,
     PartyID: 2
