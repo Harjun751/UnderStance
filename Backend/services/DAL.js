@@ -1,25 +1,25 @@
 const { Pool } = require("pg");
-const secrets = require('./secrets')
-const logger = require('../logger')
+const secrets = require("./secrets");
+const logger = require("../logger");
 
-var pool;
+let pool;
 
 if (process.env.SECRET_DB_CONN_PATH) {
-    let connectionString = secrets.getConnString();
-    pool = new Pool({ connectionString, });
+  const connectionString = secrets.getConnString();
+  pool = new Pool({ connectionString });
 } else {
-    pool = new Pool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: secrets.getUser(),
-        password: secrets.getPassword(),
-        database: "UnderStance",
-    });
+  pool = new Pool({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: secrets.getUser(),
+    password: secrets.getPassword(),
+    database: "UnderStance",
+  });
 }
 
 async function getQuestions() {
   try {
-    const rows = await pool.query(`SELECT * FROM "Issue"`);
+    const rows = await pool.query('SELECT * FROM "Issue"');
     return rows.rows;
   } catch (err) {
     logger.error(err.stack);
@@ -32,7 +32,7 @@ async function getQuestionWithID(id) {
     const val = parseInt(id);
     try {
       const rows = await pool.query(
-        `SELECT * FROM "Issue" WHERE "IssueID" = $1`,
+        'SELECT * FROM "Issue" WHERE "IssueID" = $1',
         [val],
       );
       return rows.rows;
@@ -41,13 +41,13 @@ async function getQuestionWithID(id) {
       throw err;
     }
   } else {
-    throw new Error(`Invalid Argument`);
+    throw new Error("Invalid Argument");
   }
 }
 
 async function getStances() {
   try {
-    const rows = await pool.query(`SELECT * FROM "Stance"`);
+    const rows = await pool.query('SELECT * FROM "Stance"');
     return rows.rows;
   } catch (err) {
     logger.error(err.stack);
@@ -57,7 +57,7 @@ async function getStances() {
 
 async function getStancesFiltered(StanceID, IssueID, PartyID) {
   if (isNaN(StanceID) || isNaN(IssueID) || isNaN(PartyID)) {
-    throw new Error(`Invalid Argument`);
+    throw new Error("Invalid Argument");
   }
   if (StanceID != null) {
     StanceID = parseInt(StanceID);
@@ -85,7 +85,7 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
 
 async function getParties() {
   try {
-    const rows = await pool.query(`SELECT * FROM "Party"`);
+    const rows = await pool.query('SELECT * FROM "Party"');
     return rows.rows;
   } catch (err) {
     logger.error(err.stack);
@@ -98,7 +98,7 @@ async function getPartyWithID(id) {
     const val = parseInt(id);
     try {
       const rows = await pool.query(
-        `SELECT * FROM "Party" WHERE "PartyID" = $1::integer`,
+        'SELECT * FROM "Party" WHERE "PartyID" = $1::integer',
         [val],
       );
       return rows.rows;
@@ -107,7 +107,7 @@ async function getPartyWithID(id) {
       throw err;
     }
   } else {
-    throw new Error(`Invalid Argument`);
+    throw new Error("Invalid Argument");
   }
 }
 

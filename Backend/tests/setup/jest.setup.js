@@ -1,6 +1,6 @@
-const winston = require('winston');
+const winston = require("winston");
 
-jest.spyOn(winston, 'createLogger').mockImplementation(() => ({
+jest.spyOn(winston, "createLogger").mockImplementation(() => ({
   log: jest.fn(),
   info: jest.fn(),
   error: jest.fn(),

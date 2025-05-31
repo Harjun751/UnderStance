@@ -1,0 +1,77 @@
+name: CI script for backend
+permissions:
+  checks: write
+  pull-requests: write
+  contents: write
+
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - run: npm i
+        working-directory: Backend/
+
+      - name: Lint & Fix using Standard
+        continue-on-error: true
+        run: |
+          npx standard --fix --env=jest Backend/ 
+      
+      - name: Check for remainding lint errors
+        id: lint
+        continue-on-error: true
+        run: |
+          npx standard --env=jest Backend/
+
+      - name : Create comment
+        if: steps.lint.outcome == 'failure'
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **There is one or more linting errors**
+            🌏
+
+      - name: Push changed code if lint fails
+        if: steps.lint.outcome == 'failure'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Fixed some lint errors"
+          git push
+          echo "Exiting workflow due to remaining lint errors"
+          exit 1
+
+
+      - name: Begin running tests
+        run: ENV=test npm run testcov
+        working-directory: ./Backend/
+
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled())
+        with:
+          files: |
+            Backend/coverage/results.xml
+
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: Backend/coverage/lcov.info
+
+      - name: Format code using prettier
+        uses: creyD/prettier_action@v4.5
+        with:
+          prettier_options: --write /home/runner/work/UnderStance/UnderStance/Backend/**/*.{js,jsx,ts,tsx}
+          file_pattern: "*.js"
