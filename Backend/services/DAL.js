@@ -7,17 +7,14 @@ var pool;
 if (process.env.SECRET_DB_CONN_PATH) {
     let connectionString = secrets.getConnString();
     pool = new Pool({ connectionString, });
+
 } else {
     pool = new Pool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: secrets.getUser(),
-        password: secrets.getPassword(),
-        database: "understance",
-        ssl: {
-          rejectUnauthorized: false
-        }
-
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: secrets.getUser(),
+      password: secrets.getPassword(),
+      database: "UnderStance",
     });
 }
 
