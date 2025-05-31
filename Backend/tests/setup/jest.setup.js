@@ -1,4 +1,4 @@
-const winston = require('winston');
+const winston = require('winston')
 
 jest.spyOn(winston, 'createLogger').mockImplementation(() => ({
   log: jest.fn(),
@@ -7,5 +7,5 @@ jest.spyOn(winston, 'createLogger').mockImplementation(() => ({
   warn: jest.fn(),
   debug: jest.fn(),
   clear: jest.fn(),
-  add: jest.fn(),
-}));
+  add: jest.fn()
+}))
