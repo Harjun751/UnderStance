@@ -19,8 +19,8 @@ if (process.env.SECRET_DB_CONN_PATH) {
 
 async function getQuestions() {
   try {
-    const rows = await pool.query('SELECT * FROM "Issue"')
-    return rows.rows
+    const rows = await pool.query('SELECT * FROM "Issue"');
+    return rows.rows;
   } catch (err) {
     logger.error(err.stack);
     throw err;
