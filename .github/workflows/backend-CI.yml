@@ -31,7 +31,11 @@ jobs:
         id: lint
         continue-on-error: true
         run: |
-          npx standard --env=jest Backend/ >> $GITHUB_OUTPUT
+          {
+            echo 'output<<EOF'
+            npx standard --env=jest Backend/ 2>&1
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
       - name : Create comment
         if: steps.lint.outcome == 'failure'
@@ -39,7 +43,9 @@ jobs:
         with:
           message: |
             **There is one or more linting errors**
-            ${{join(steps.lint.outputs.*, '\n')}}
+            ```
+            ${{steps.lint.outputs.output}}
+            ```
             🌏
 
       - name: Push changed code if lint fails
