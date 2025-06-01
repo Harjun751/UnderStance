@@ -6,7 +6,7 @@ permissions:
 
 on:
   workflow_run:
-    worflows: ["CI script for Frontend"]
+    workflows: ["CI script for Frontend"]
     types:
       - completed
 
@@ -47,11 +47,12 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **There is one or more linting errors**
+            **There is one or more linting errors (Backend)**
             ```
             ${{ steps.lint.outputs.lint_output }}
             ```
             🌏
+          message-id: Backend
 
       - name: Push changed code if lint fails
         if: steps.lint.outputs.exit_code != '0'

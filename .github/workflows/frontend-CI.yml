@@ -46,11 +46,12 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **There is one or more linting errors**
+            **There is one or more linting errors (Frontend)**
             ```
             ${{ steps.lint.outputs.lint_output }}
             ```
             🌏
+          message-id: Frontend
 
       - name: Push changed code if lint fails
         if: steps.lint.outputs.exit_code != '0'
