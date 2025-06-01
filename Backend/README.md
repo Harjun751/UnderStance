@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/Harjun751/UnderStance/graph/badge.svg?token=8ROQPVNQY8)](https://codecov.io/gh/Harjun751/UnderStance)
+[![codecov](https://codecov.io/gh/Harjun751/UnderStance/graph/badge.svg?token=6X3T280OTJ)](https://codecov.io/gh/Harjun751/UnderStance)
 # API Docs
 View API documentation on [swaggerhub here](https://app.swaggerhub.com/apis/harjun7517/under-stance_backend_api/0.1.0)
 TODO: Action to update API Docs on push to main or something
