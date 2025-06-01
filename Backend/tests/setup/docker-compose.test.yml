@@ -11,7 +11,7 @@ services:
         source: ../../10-db-init.sql
         target: /docker-entrypoint-initdb.d/10-db-init.sql
       - type: bind
-        source: ./20-pop-db.sql
+        source: ./20-pop-db-test-only.sql
         target: /docker-entrypoint-initdb.d/20-db-init.sql
     secrets:
       - db_root_pw

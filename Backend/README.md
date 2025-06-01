@@ -1,14 +1,13 @@
 [![codecov](https://codecov.io/gh/Harjun751/UnderStance/graph/badge.svg?token=6X3T280OTJ)](https://codecov.io/gh/Harjun751/UnderStance)
 # API Docs
 View API documentation on [swaggerhub here](https://app.swaggerhub.com/apis/harjun7517/under-stance_backend_api/0.1.0)
-TODO: Action to update API Docs on push to main or something
 # UnderStance Backend
 Built with ExpressJS. Run with:
 ```
 npm install
 node backend.js
 ```
-(requires mysql database running on host 3306)
+(requires postgres database running)
 
 Or use docker compose:
 ```
