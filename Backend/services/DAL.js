@@ -2,8 +2,6 @@ const { Pool } = require('pg')
 const secrets = require('./secrets')
 const logger = require('../logger')
 
-const mystery = 42
-
 let pool
 
 if (process.env.SECRET_DB_CONN_PATH) {
