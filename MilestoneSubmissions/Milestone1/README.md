@@ -9,10 +9,14 @@ Apollo
 # Motivation
 The Singapore General Elections recently completed. From conversations with friends and discourse online, we have found out that some voters are left unsure on how parties represent their interests. We have also noticed that there were not much great resources on choosing a party in Singapore. 
 
+As first time voters in GE2025, we too felt loss when navigating Singapore's political sphere. This issue likely arose as politics has never been a regular topic of discussion for us. In fact, a significant population of Singaporeans are just like us. A study by the Institute of Policy Studies (2021) found that nearly 40% of Singaporeans never discuss politics, reflecting widespread political apathy and low engagement. Furthermore, a YouGov survey (2025) found that GenZ voters were especially undecided going into the election, with only 30% of them having decided on who they were going to vote for.
+
+These statistics clearly highlight a growing disconnect been Singapore's youngest eligible voting generation with its political landscape. It is this very disconnect can and will weaken democratic participation. A strong democracy thrives on deliberate participation by informed voters. Understanding and valuing our vote is essential—it's how we shape national decisions, hold leaders accountable, and ensure our voices are heard.
+
 From there, the motivation behind the project was born: to provide an extremely simple way for anybody, regardless of how versed they are in local politics, to find out which party best represents them. We decided that this would be easiest in a quiz-style app where users answer questions on pertinent issues in Singapore today.
 
 # Aim
-We were inspired by Germany's [Wahl-o-mat](https://www.wahl-o-mat.de/bundestagswahl2025/app/main_app.html), a tool for anyone to use to see how Germany's political parties compare. We thus would like to make a similar tool, a website that anyone may access online. It thus would be in a quiz-like format. There would be a breakdown of party stances at the end of the quiz
+We were inspired by Germany's [Wahl-o-mat](https://www.wahl-o-mat.de/bundestagswahl2025/app/main_app.html), a tool for anyone to use to see how Germany's political parties compare. We thus would like to make a similar tool, a website that anyone may access online. It thus would be in a quiz-like format. There would be a breakdown of party stances at the end of the quiz.
 
 # User Stories
 1. As a Singaporean who wants to figure out which political party best represents my interests, I want to complete a questionnaire which helps me evaluate my political stance by covering the most relevant political views.
