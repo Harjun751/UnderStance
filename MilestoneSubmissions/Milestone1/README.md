@@ -163,7 +163,7 @@ For the Frontend, the primary focus was on delivering a Minimum Viable Product t
 The Frontend was made using React.
 
 ## Code Quality
-Code quality was maintined throughout the repository using formatters and linters. This ensures that the code is readable and maintains several coding standards. These tools are also run in workflows to ensure that any and all code in the main branch is up to standard.
+Code quality was maintined throughout the repository using formatters and linters. This ensures that the code is readable and maintains coding standards. These tools are also run in workflows to ensure that any and all code in the main branch is up to standard.
 
 ## Version Control
 Git was used for version control, with Github as the remote repository. Branch protections were set in place such that code cannot be directly commited to main - all changes must be done through pull requests. Additionally, code reviews must be done in Github before any pull request can be merged. To keep branches clean and well-organized, we followed the Github flow, naming our branches <#name>/JIRA-<#issueNumber>-<#briefDescription>.
