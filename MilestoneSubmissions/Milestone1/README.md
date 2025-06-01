@@ -140,17 +140,16 @@ With this sequence diagram complete, it was easy for us to visualize how to impl
 
 This entity resource diagram shows how the data is modelled. This was useful for database.
 
+## Use case diagram
+![Use Case Diagram](images/usecase.jpg "Use Case Diagram")
+
+The use case diagram shows how different users interact with the system in different ways.
+
 # Software Development
 ## Backend
 For the Backend a strong emphasis on correctness was made, as it was important that any logic done on the data being sent out should be correct for the Frontend to use. As such, test-driven development was used from the onset to ensure code quality and correctness. Unit tests targeting individual components were made, mocking components that were dependencies. The unit tests cover >90% of lines in the backend app. Additionally, integration tests were made that would use docker compose to create minimal test environments. Queries would be run on these environments to ensure that the individual components worked together expectedly, and that the results returned were correct. These tests were integrated with CI scripts to ensure that a strong focus on testing would be maintained throughout the project.
 
 ![Continuous Integration](images/ci.jpg "Continuous Integration")
-
-
-## Use case diagram
-![Use Case Diagram](images/usecase.jpg "Use Case Diagram")
-
-The use case diagram shows how different users interact with the system in different ways.
 
 # External Documentation
 The Backend component also has API documentation hosted on SwaggerHub, using the OpenAPI spec file located in the Backend folder. The documentation is [available publicly](https://app.swaggerhub.com/apis-docs/harjun7517/under-stance_backend_api/0.1.0)
