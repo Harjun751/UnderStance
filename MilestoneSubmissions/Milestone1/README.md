@@ -16,11 +16,17 @@ We were inspired by Germany's [Wahl-o-mat](https://www.wahl-o-mat.de/bundestagsw
 
 # User Stories
 1. As a Singaporean who wants to figure out which political party best represents my interests, I want to complete a questionnaire which helps me evaluate my political stance by covering the most relevant political views.
-2. As a Singaporean who wants to figure out which political party best represents my interest, I want to see a detailed breakdown for which parties’ issues I best align with so that I can make a more informed decision when voting.
-3. As a Singaporean who wants to figure out which political party best represents my interest, I want to assign different weightages to issues I feel are more important.
+2. As a Singaporean who wants to figure out which political party best represents my interest, I want to view a comparison of my stances against the various political parties
+3. As a Singaporean who wants to figure out which political party best represents my interests, I want to weigh questions which I feel stronger about heavier, so that the party breakdown is accurate.
 4. As a Singaporean who wants to figure out which political party best represents my interest, I want to read about the positions parties have on issues.
 5. As a Singaporean who wants to figure out which political party best represents my interest, I want to search for particular issues and view parties’ stances on them
-6. As an admin who wants to keep the site relevant and updated, I want to be able to update the set of questions in the app to ensure its validity.
+6. As a Singaporean who wants to figure out which political party best represents my interest, I want to see a visual breakdown for which parties’ issues I best align with so that I can make a more informed decision when voting.
+7. As a Singaporean who wants to figure out which political party best represents my interest, I want to read up-to-date stances of political parties on various topics
+8. As a Singaporean who wants to figure out which political party best represents my interest, I want to include bonus questions to add more issues that I care about that are not in the core set of questions.
+9. As an Admin, I want to login to the dashboard so that I may make changes
+10. As an admin, I want to view all the questions that are in the questionnaire so that I may manage them if required.
+11. As an admin who wants to keep the site relevant and updated, I want to be able to update the set of questions in the app to ensure its validity and relevance.
+12. As an admin who wants accurate updated stances in the database, I want to approve or deny stances which are relevant and valid.
 
 
 # Features
@@ -39,29 +45,29 @@ For Milestone 1, the quiz page is functional. Users can agree/disagree/skip, and
 ### Proposed Feature
 This feature would be displayed upon completing the quiz. It would involve a bar chart showing how the parties' stances compare, sorted in descending order. Additionally, scrolling down would show  an issue-by-issue breakdown on their stances, and whether they agree or disagree. This section would also involve more detailed party responses for users to understand their points of view.
 
-[!Party Breakdown](images/breakdown.png "Party Breakdown")
+![Party Breakdown](images/breakdown.png "Party Breakdown")
 
 ## Current Progress
 The bar chart showing how the stances compare is complete, along with the issue-by-issue breakdown. Similarly to above, work is to be done on making the page mobile-friendly and implementing the Figma design as above.
 
-[!Party Breakdown Live](images/breakdownlive.jpg "Live Party Breakdown")
+![Party Breakdown Live](images/breakdownlive.jpg "Live Party Breakdown")
 
 ## Core Feat 3: Read Stances
 ### Proposed Feature
 This feature would allow any user, regardless if they have finished the quiz or not, to read on the stances that the parties have on the issues in the quiz. It would simply show the issue in question, and then the response of the party and their overall stance. The page would additionally have a search bar.
 
-[!Read Stances](images/readstances.png "Read Stances")
+![Read Stances](images/readstances.png "Read Stances")
 
 ### Current Progress
 The basic page is complete. Yet to be implemented are the search bars and styling for mobile.
 
-[!Read Stances Live](images/readstanceslive.jpg "Live Read Stances")
+![Read Stances Live](images/readstanceslive.jpg "Live Read Stances")
 
 ## Core Feat 4: Admin Dashboard
 ### Proposed Feature
 The admin dashboard would be its own page requiring authentication to access. The dashboard will support standard CRUD operations on the various items in the database such as issues and stances. This will allow proper management of the quiz
 
-[!Dashboard](images/dashboard.png "Dashboard")
+![Dashboard](images/dashboard.png "Dashboard")
 
 ### Current Progress
 As of milestone 1, this feature was not worked on yet.
