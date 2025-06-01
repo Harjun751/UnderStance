@@ -59,7 +59,7 @@
   <tr>
     <td class="tg-0pky">29th May</td>
     <td class="tg-0pky"></td>
-    <td class="tg-0pky">I sleep. Weather too good</td>
+    <td class="tg-0pky"></td>
   </tr>
   <tr>
     <td class="tg-0pky">30th May</td>
