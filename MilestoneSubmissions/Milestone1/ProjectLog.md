@@ -49,22 +49,22 @@
   <tr>
     <td class="tg-0pky">27th May</td>
     <td class="tg-0pky">Finished up on task. Created PR. Worked on next task, endpoint for party stances. Finished up and created PR.</td>
-    <td class="tg-0pky">Resolved the few remaining issues from connecting the backend to the frontend. Created PR and began next task, creating the quiz page for the application</td>
+    <td class="tg-0pky">Resolved the few remaining issues from connecting the backend to the frontend. Created PR and began next task, creating the quiz page for the application. Implemented the basic quiz structure.</td>
   </tr>
   <tr>
     <td class="tg-0pky">28th May</td>
     <td class="tg-0pky">Finished up on tasks for this sprint. Started researching on (free) hosting options.</td>
-    <td class="tg-0pky">Worked on quiz page</td>
+    <td class="tg-0pky">Began implementation of the read stances page. Implemented tracking of the user's answer to each question and redirect from quiz page to readstances page to display user's answer. Stored the user's answer in local storage so that they won't need to redo the quiz. Implemented basic looking visual breakdown of user's answers.</td>
   </tr>
   <tr>
     <td class="tg-0pky">29th May</td>
     <td class="tg-0pky"></td>
-    <td class="tg-0pky">Worked on quiz page</td>
+    <td class="tg-0pky">I sleep. Weather too good</td>
   </tr>
   <tr>
     <td class="tg-0pky">30th May</td>
     <td class="tg-0pky">Did code review for Thad's PR and approved changes. Migrated DB to postgres for <a href="https://github.com/Harjun751/UnderStance/issues/6" target="_blank" rel="noopener noreferrer">reasons listed in this issue</a></td>
-    <td class="tg-0pky">Created PR for quiz page task</td>
+    <td class="tg-0pky">Created PR for quiz page task. Began work on deploying the frontend, backend and database to render.</td>
   </tr>
   <tr>
     <td class="tg-0pky">31st May</td>
