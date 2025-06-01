@@ -68,12 +68,13 @@ jobs:
         run: ENV=test npm test
         working-directory: ./Frontend/src/utils/tests
 
-      - name: Publish test results
+      - name: Publish Frontend test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
           files: |
             Frontend/coverage/results.xml
+          comment_title: "🧪 Frontend Unit Test Results"
 
       # - name: Upload coverage report to codecov
       #   uses: codecov/codecov-action@v5

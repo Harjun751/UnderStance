@@ -69,12 +69,13 @@ jobs:
         run: ENV=test npm run testcov
         working-directory: ./Backend/
 
-      - name: Publish test results
+      - name: Publish Backend test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
           files: |
             Backend/coverage/results.xml
+          comment_title: "🧪 Backend Unit Test Results"
 
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v5
