@@ -75,11 +75,11 @@ jobs:
           files: |
             Frontend/coverage/results.xml
 
-      - name: Upload coverage report to codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: Frontend/coverage/lcov.info
+      # - name: Upload coverage report to codecov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: Frontend/coverage/lcov.info
 
       - name: Format code using prettier
         uses: creyD/prettier_action@v4.5
