@@ -1,4 +1,4 @@
-<p align=center>Milestone 1 Submission</p>
+<h1 align=center>Milestone 1 Submission</h1>
 
 # Team Name:
 Tharjun
@@ -149,11 +149,36 @@ This entity resource diagram shows how the data is modelled. This was useful for
 
 The use case diagram shows how different users interact with the system in different ways.
 
-# Software Development
+# Software Development & Practices
 ## Backend
 For the Backend a strong emphasis on correctness was made, as it was important that any logic done on the data being sent out should be correct for the Frontend to use. As such, test-driven development was used from the onset to ensure code quality and correctness. Unit tests targeting individual components were made, mocking components that were dependencies. The unit tests cover >90% of lines in the backend app. Additionally, integration tests were made that would use docker compose to create minimal test environments. Queries would be run on these environments to ensure that the individual components worked together expectedly, and that the results returned were correct. These tests were integrated with CI scripts to ensure that a strong focus on testing would be maintained throughout the project.
 
 ![Continuous Integration](images/ci.jpg "Continuous Integration")
+
+The Backend server was made using the ExpressJS framework. For accountability and error-tracking, the server was also set up with structured logging, logging errors to files and information to standard output.
+
+## Frontend
+For the Frontend, the primary focus was on delivering a Minimum Viable Product to allow early user feedback. As such, development was prioritised on speed and core functionality over exhaustive testing. In its stead, manual testing was done to ensure that the MVP was reliable. In further milestones, UI testing will be conducted using Jest. Furthermore, end to end testing will be conducted to ensure reliability of the system as a whole.
+
+The Frontend was made using React.
+
+## Code Quality
+Code quality was maintined throughout the repository using formatters and linters. This ensures that the code is readable and maintains several coding standards. These tools are also run in workflows to ensure that any and all code in the main branch is up to standard.
+
+## Version Control
+Git was used for version control, with Github as the remote repository. Branch protections were set in place such that code cannot be directly commited to main - all changes must be done through pull requests. Additionally, code reviews must be done in Github before any pull request can be merged. To keep branches clean and well-organized, we followed the Github flow, naming our branches <name>/JIRA-<#issueNumber>-<#briefDescription>.
+
+![Github flow](images/githubflow.jpg "Github flow")
+(Branches that I did not delete locally^)
+
+This reduced the cognitive load when switching between branches or reviewing pull requests, as the naming scheme and workflow made the development process easy to follow.
+
+## Collaboration
+As previously mentioned, we used Scrum with 2 week sprints as our collaborative framework. We conducted pre-sprint meetings, planning pokers, and daily scrums in our process for Milestone 1. We used JIRA to host our product backlog and conduct sprint planning.
+
+Scrum has allowed us to set clear goals for Milestone 1, while leaving some flexibility on which developer does which task. Daily scrums kept us on-track and up-to-date regarding any pertinent information. It had also allowed us an avenue to clarify any doubts we had in specific implementation details with each other.
+
+![JIRA board](images/scrum.jpg "JIRA Board")
 
 # External Documentation
 The Backend component also has API documentation hosted on SwaggerHub, using the OpenAPI spec file located in the Backend folder. The documentation is [available publicly](https://app.swaggerhub.com/apis-docs/harjun7517/under-stance_backend_api/0.1.0)
