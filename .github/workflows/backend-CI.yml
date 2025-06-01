@@ -5,10 +5,11 @@ permissions:
   contents: write
 
 on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
+  workflow_run:
+    worflows: ["CI script for Frontend"]
+    types:
+      - completed
+
 jobs:
   build:
     runs-on: ubuntu-latest

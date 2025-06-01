@@ -13,7 +13,7 @@ export default defineConfig({
     proxy: {
       '/questions': `http://${backendHost}:${backendPort}`,
       '/stances': `http://${backendHost}:${backendPort}`,
-      '/parties': `http://${backendHost}:${backendPort}`
-    }
-  }
+      '/parties': `http://${backendHost}:${backendPort}`,
+    },
+  },
 })
