@@ -94,6 +94,8 @@ This feature would allow users, before doing the questionaire, to view the bonus
 As of milestone 1, this feature was not worked on yet.
 
 # Timeline
+As we are using Scrum, deadlines are not assigned on a task-basis. Instead, they were assigned for sprints, each sprint being 2 weeks. The milestone submission deadlines are still in-place. For upcoming milestones and sprints, sprint planning meetings will be held to decide which items in backlog will be included in the sprint. Backlog refinement will also be done to further distill features into tasks for optimal splitting of work (e.g. Dashboard login to be split into Backend implement auth and frontend create page)
+
 <table style="border-collapse:collapse;border-color:#aaa;border-spacing:0" class="tg"><thead>
 <tr><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:right;vertical-align:top;word-break:normal">Sprint #</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Task</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Description</th>
 <th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Assigned</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Deadline</th></tr>
@@ -123,8 +125,35 @@ As of milestone 1, this feature was not worked on yet.
 <tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal" colspan="4"><b>MILESTONE 2</b> - Fully-fledged core system. Quiz fully featured with weightage. Breakdown of leanings is detailed. Backend API <br>complete. Dashboard completely implemented.</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"><span style="font-weight:400;font-style:normal;text-decoration:none">30th June</span></td></tr>
 <tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal" colspan="4"><b>MILESTONE 3</b><span style="font-weight:400;font-style:normal;text-decoration:none"> - Extended system. Web scraping + AI component complete. Dashboard with bonus questions complete. </span></td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">28th July</td></tr></tbody></table>
 
-Deadlines are assigned on a sprint basis. For upcoming milestones and sprints, sprint planning meeting will be held to decide which items in backlog will be included in the sprint. Backlog refinement will also be done to further distill features into tasks for optimal splitting of work (e.g. Dashboard login to be split into Backend implement auth and frontend create page)
+# Systems Design
+To ensure our system was logical and flowed well, we created several diagrams.
 
-# Work log
+## Sequence Diagram of main quiz flow
+![Quiz Flow](images/quizflow.jpg "Quiz Flow")
 
-# SE evidence?
+This sequence diagram shows the flow of how a user would initiate a quiz, complete the quiz, and then view their results. It additionally shows a key consideration we had when thinking of the idea - privacy. It was important to be transparent and trustable, that user data would not be leaked or sent anywhere as this could be a rather sensitive topic.
+
+With this sequence diagram complete, it was easy for us to visualize how to implement the application.
+
+## Entity Resource Diagram
+![ERD](images/erd.jpg "ERD")
+
+This entity resource diagram shows how the data is modelled. This was useful for database.
+
+# Software Development
+## Backend
+For the Backend a strong emphasis on correctness was made, as it was important that any logic done on the data being sent out should be correct for the Frontend to use. As such, test-driven development was used from the onset to ensure code quality and correctness. Unit tests targeting individual components were made, mocking components that were dependencies. The unit tests cover >90% of lines in the backend app. Additionally, integration tests were made that would use docker compose to create minimal test environments. Queries would be run on these environments to ensure that the individual components worked together expectedly, and that the results returned were correct. These tests were integrated with CI scripts to ensure that a strong focus on testing would be maintained throughout the project.
+
+![Continuous Integration](images/ci.jpg "Continuous Integration")
+
+
+## Use case diagram
+![Use Case Diagram](images/usecase.jpg "Use Case Diagram")
+
+The use case diagram shows how different users interact with the system in different ways.
+
+# External Documentation
+The Backend component also has API documentation hosted on SwaggerHub, using the OpenAPI spec file located in the Backend folder. The documentation is [available publicly](https://app.swaggerhub.com/apis-docs/harjun7517/under-stance_backend_api/0.1.0)
+
+# Project log
+View the project log for Milestone 1 [on github here](https://github.com/Harjun751/UnderStance/blob/main/MilestoneSubmissions/Milestone1/ProjectLog.md)
