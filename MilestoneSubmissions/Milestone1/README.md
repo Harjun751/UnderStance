@@ -1,5 +1,9 @@
 <h1 align=center>Milestone 1 Submission</h1>
 
+[Repository Link](https://github.com/Harjun751/UnderStance)
+[Technical Proof of Concept (drive)](https://drive.google.com/file/d/1oU5gNQOGLaAdHc5UH6IQ1UcIsvinkht7/view?usp=sharing)
+[Proof of Concept website link](https://understance.onrender.com/)
+
 # Team Name:
 Tharjun
 
