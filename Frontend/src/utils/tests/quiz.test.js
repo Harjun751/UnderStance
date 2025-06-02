@@ -20,10 +20,10 @@ export function calculateAlignmentData(
           ((userAnswer === "agree" && stance.Stand === true) ||
             (userAnswer === "disagree" && stance.Stand === false))
         ) {
-          alignedCount++
+          alignedCount++;
         }
       }
-    })
+    });
 
     return {
       name: party.ShortName,
@@ -55,7 +55,7 @@ describe("calculateAlignmentData", () => {
     {
       StanceID: 2,
       Stand: true,
-      Reason: 'The current one is good enough TBH',
+      Reason: "The current one is good enough TBH",
       IssueID: 1,
       PartyID: 2,
     },
