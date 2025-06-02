@@ -62,8 +62,8 @@ const ReadStances = () => {
   if (error) return <div>Error: {error}</div>
 
   // Retrieve user answers passed via navigation state
-  const location = useLocation()
-  const userAnswers = location.state?.answers || JSON.parse(localStorage.getItem('quizAnswers') || '{}')
+  const location = useLocation();
+  const userAnswers = location.state?.answers || JSON.parse(window.localStorage.getItem('quizAnswers') || '{}');
 
   // Calculate alignment percentages between user's answers and each party
   const alignmentData = parties.map(party => {

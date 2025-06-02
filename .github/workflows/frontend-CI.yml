@@ -1,15 +1,14 @@
-name: CI script for backend
+name: CI script for Frontend
 permissions:
   checks: write
   pull-requests: write
   contents: write
 
 on:
-  workflow_run:
-    workflows: ["CI script for Frontend"]
-    types:
-      - completed
-
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,19 +22,19 @@ jobs:
           node-version: 'latest'
 
       - run: npm i
-        working-directory: Backend/
+        working-directory: Frontend/
 
       - name: Lint & Fix using Standard
         continue-on-error: true
         run: |
-          npx standard --fix --env=jest Backend/ 
+          npx standard --fix --env=jest Frontend/ 
       
       - name: Check for remainding lint errors
         id: lint
         continue-on-error: true
         run: |
           set +e  # disable immediate exit on error
-          OUTPUT="$(npx standard --env=jest Backend/ 2>&1)"
+          OUTPUT="$(npx standard --env=jest Frontend/ 2>&1)"
           EXIT_CODE=$?
           echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$OUTPUT" >> $GITHUB_OUTPUT
@@ -47,12 +46,12 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **There is one or more linting errors (Backend)**
+            **There is one or more linting errors (Frontend)**
             ```
             ${{ steps.lint.outputs.lint_output }}
             ```
             🌏
-          message-id: Backend
+          message-id: Frontend
 
       - name: Push changed code if lint fails
         if: steps.lint.outputs.exit_code != '0'
@@ -67,25 +66,25 @@ jobs:
 
 
       - name: Begin running tests
-        run: ENV=test npm run testcov
-        working-directory: ./Backend/
+        run: ENV=test npm test
+        working-directory: ./Frontend/src/utils/tests
 
-      - name: Publish Backend test results
+      - name: Publish Frontend test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
           files: |
-            Backend/coverage/results.xml
-          comment_title: "🧪 Backend Unit Test Results"
+            Frontend/coverage/results.xml
+          comment_title: "🧪 Frontend Unit Test Results"
 
-      - name: Upload coverage report to codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: Backend/coverage/lcov.info
+      # - name: Upload coverage report to codecov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: Frontend/coverage/lcov.info
 
       - name: Format code using prettier
         uses: creyD/prettier_action@v4.5
         with:
-          prettier_options: --write /home/runner/work/UnderStance/UnderStance/Backend/**/*.{js,jsx,ts,tsx}
+          prettier_options: --write /home/runner/work/UnderStance/UnderStance/Frontend/**/*.{js,jsx,ts,tsx}
           file_pattern: "*.js"
