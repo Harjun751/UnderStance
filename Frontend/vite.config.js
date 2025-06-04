@@ -7,13 +7,13 @@ const backendHost = process.env.BACKEND_HOST || "127.0.0.1";
 const backendPort = process.env.BACKEND_PORT || "3000";
 
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 5174,
-    proxy: {
-      "/questions": `http://${backendHost}:${backendPort}`,
-      "/stances": `http://${backendHost}:${backendPort}`,
-      "/parties": `http://${backendHost}:${backendPort}`,
+    plugins: [react()],
+    server: {
+        port: 5174,
+        proxy: {
+            "/questions": `http://${backendHost}:${backendPort}`,
+            "/stances": `http://${backendHost}:${backendPort}`,
+            "/parties": `http://${backendHost}:${backendPort}`,
+        },
     },
-  },
 });
