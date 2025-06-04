@@ -15,7 +15,7 @@ const Quiz = () => {
   const [showConfirmation, setShowConfirmation] = useState(false) // Controls visibility of the confirmation modal
   const navigate = useNavigate() // Hook from React Router for navigation
 
-  // Fetch questions on component mount
+      // Fetch questions on component mount
   useEffect(() => {
     // fetch('/questions') //for development
     fetch(`${import.meta.env.VITE_API_URL}/questions`)
@@ -29,6 +29,7 @@ const Quiz = () => {
       .then(data => setIssues(data)) // Store fetched questions in state
       .catch(err => setError(err.message)) // Store any fetch error
   }, [])
+
 
   // Handles user's answer selection
   const handleAnswer = (answerType) => {
@@ -65,7 +66,8 @@ const Quiz = () => {
 
   // Render error or loading states
   if (error) return <div className='content'>Error: {error}</div>
-  if (!issues.length) return <div>Loading...</div>
+        console.log(issues);
+  if (!issues.length) return <div className='content'>Loading... The servers are all free-tier so the loading might be pretty long, give it patience :)</div>
 
   // Get current question and selected answer
   const currentIssue = issues[currentIndex]

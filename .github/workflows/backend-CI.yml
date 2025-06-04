@@ -87,5 +87,5 @@ jobs:
       - name: Format code using prettier
         uses: creyD/prettier_action@v4.5
         with:
-          prettier_options: --write /home/runner/work/UnderStance/UnderStance/Backend/**/*.{js,jsx,ts,tsx}
+          prettier_options: --tab-width 4 --use-tabs false --write /home/runner/work/UnderStance/UnderStance/Backend/**/*.{js,jsx,ts,tsx}
           file_pattern: "*.js"
