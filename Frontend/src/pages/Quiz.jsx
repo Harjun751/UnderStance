@@ -66,7 +66,6 @@ const Quiz = () => {
 
   // Render error or loading states
   if (error) return <div className='content'>Error: {error}</div>
-        console.log(issues);
   if (!issues.length) return <div className='content'>Loading... The servers are all free-tier so the loading might be pretty long, give it patience :)</div>
 
   // Get current question and selected answer
