@@ -12,6 +12,8 @@ const Navbar = () => {
     setIsExpanded(!isExpanded)
   }
 
+  return (<div></div>);
+
   return (
     <div className={`navbar ${isExpanded ? 'expanded' : ''}`}>
       <button className='toggle-btn' onClick={toggleNavbar}>

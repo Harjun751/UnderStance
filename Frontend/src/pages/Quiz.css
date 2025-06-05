@@ -1,44 +1,3 @@
-.button-group, .control-btns {
-    display: flex;
-    gap: 1rem; /* adds spacing between buttons */
-    margin-top: 1rem;
-    justify-content: space-evenly; /* for centering buttons */
-    width: 800px;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.button-group > .btn {
-    flex: none; /* set to none to prevent flex-grow */
-    width: 250px;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-}
-
-/* Floating quotes around text */
-.floaty-quotey {
-    position: absolute;
-}
-
-.floaty-quotey:nth-of-type(1) {
-    left: -40px;
-}
-
-.floaty-quotey:nth-of-type(2) {
-    right: -40px;
-}
-
-.control-btns {
-    justify-content: center;
-    gap: 2rem;
-}
 .control-btns > button {
     width: 150px;
 }
@@ -116,4 +75,91 @@
 .modal-buttons button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
+}
+
+
+/* Desktop breakpoint */
+@media only screen and (min-width: 1440px) {
+    .button-group, .control-btns {
+        display: flex;
+        gap: 1rem; /* adds spacing between buttons */
+        margin-top: 1rem;
+        justify-content: space-evenly; /* for centering buttons */
+        width: 800px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .button-group > .btn {
+        flex: none; /* set to none to prevent flex-grow */
+        width: 250px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.2s ease,
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+
+    /* Floating quotes around text */
+    .floaty-quotey {
+        position: absolute;
+    }
+
+    .floaty-quotey:nth-of-type(1) {
+        left: -40px;
+    }
+
+    .floaty-quotey:nth-of-type(2) {
+        right: -40px;
+    }
+
+    .control-btns {
+        justify-content: center;
+        gap: 2rem;
+    }
+}
+
+
+/* Small(er) screen breakpoint */
+@media only screen and (max-width: 1440px) {
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* adds spacing between buttons */
+        max-width: 350px;
+        width: 100%;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:50px;
+    }
+    .control-btns {
+        display: flex;
+        width: 100%;
+        max-width: 350px;
+        justify-content: space-around;
+        margin-top:50px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    /* Floating quotes around text */
+    .floaty-quotey {
+        position: absolute;
+    }
+
+    .floaty-quotey:nth-of-type(1) {
+        left: -10px;
+    }
+
+    .floaty-quotey:nth-of-type(2) {
+        right: -10px;
+    }
+
+    .control-btns {
+        justify-content: center;
+        gap: 2rem;
+    }
 }

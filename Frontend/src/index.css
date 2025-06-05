@@ -3,8 +3,19 @@
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
   
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,1);
+}
+body::before {
   background-image: url('45-degree-fabric-light.png');
+  content: "";
+  position: fixed;
+  z-index: -1;
+  background-size: auto;
+  background-repeat: repeat;
+  background-blend-mode: lighten;
+  filter: contrast(40%);
+  mix-blend-mode: multiply;
+  inset: 0;
 }
 
 a {
@@ -32,11 +43,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+.app-container > button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
+.app-container > button:focus,
+.app-container > button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -94,6 +105,28 @@ button:focus-visible {
 }
 
 /* Small(er) screen breakpoint */
-@media only screen and (max-width:1440) {
+@media only screen and (max-width: 1440px) {
+    #title {
+        font-size: 40px;
+    }
+    h1 {
+        font-size:22px;
+        margin: 0;
+    }
+    h2 {
+        font-size:20px;
+    }
+    * {
+        font-size: 18px;
+    }
+    .big-quote {
+        font-size: 24px;
+    }
 
+   .content > #content-container {
+       margin-top: 20px;
+       max-width: 500px;
+       width: 92%;
+       position: relative;
+   }
 }

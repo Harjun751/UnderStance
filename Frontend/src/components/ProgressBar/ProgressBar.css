@@ -23,3 +23,10 @@
     color: rgba(172,32,0,0.8);
     bottom:-3px;
 }
+
+
+@media only screen and (max-width: 1440px) {
+    .pbar-text {
+        bottom: 1px;
+    }
+}

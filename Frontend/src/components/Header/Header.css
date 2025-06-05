@@ -27,3 +27,9 @@
 #title > span > svg {
     font-size: 55px;
 }
+
+@media only screen and (max-width: 1440px) {
+    #title > span > svg {
+        font-size:30px;
+    }
+}
