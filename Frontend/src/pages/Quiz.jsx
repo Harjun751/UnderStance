@@ -96,37 +96,40 @@ const Quiz = () => {
       {/* Main Question Display */}
       <div className='content' key={currentIssue.IssueID}>
         <Header />
-        <h3>Summary: {currentIssue.Summary}</h3>
-        <p className='issue-description'>{currentIssue.Description}</p>
-        <div className='button-group'>
-          {['disagree', 'skip', 'agree'].map(option => (
-            <button
-              key={option}
-              className={`btn ${option} ${selected === option ? 'selected' : ''}`}
-              onClick={() => handleAnswer(option)}
-            >
-              {option.charAt(0).toUpperCase() + option.slice(1)}
-            </button>
-          ))}
-        </div>
+        <div id="content-container">
+            <h2>Question {currentIndex + 1}/{issues.length}</h2>
+            <span className="floaty-quotey big-quote">“</span>
+            <span className="floaty-quotey big-quote">”</span>
+            <p className='big-quote'>{currentIssue.Description}</p>
+            <div className='button-group'>
+              {['disagree', 'skip', 'agree'].map(option => (
+                <button
+                  key={option}
+                  className={`btn ${option} ${selected === option ? 'selected' : ''}`}
+                  onClick={() => handleAnswer(option)}
+                >
+                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                </button>
+              ))}
+            </div>
+            <div className='control-btns'>
+              <button
+                className='back-btn'
+                onClick={handleBack}
+                disabled={currentIndex === 0}
+              >
+                Back
+              </button>
+              <button
+                className='forward-btn'
+                onClick={handleForward}
+                disabled={answers[currentIndex + 1] === undefined}
+              >
+                Forward
+              </button>
+            </div>
+      </div>
         <footer>
-          <button
-            className='back-btn'
-            onClick={handleBack}
-            disabled={currentIndex === 0}
-          >
-            Back
-          </button>
-          <button
-            className='forward-btn'
-            onClick={handleForward}
-            disabled={answers[currentIndex + 1] === undefined}
-          >
-            Forward
-          </button>
-          <div>
-            Question: {currentIndex + 1} / {issues.length}
-          </div>
         </footer>
       </div>
     </div>

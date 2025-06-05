@@ -1,11 +1,13 @@
-.button-group {
+.button-group, .control-btns {
     display: flex;
     gap: 1rem; /* adds spacing between buttons */
     margin-top: 1rem;
+    justify-content: space-evenly; /* for centering buttons */
 }
 
-.button-group .btn {
-    flex: 1;
+.button-group > .btn {
+    flex: none; /* set to none to prevent flex-grow */
+    width: 250px;
     padding: 0.5rem 1rem;
     font-size: 1rem;
     cursor: pointer;
@@ -14,68 +16,76 @@
     transition: background-color 0.2s ease,
                 transform 0.2s ease,
                 box-shadow 0.2s ease;;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 
-.button-group .btn.selected {
+/* Floating quotes around text */
+.floaty-quotey {
+    position: absolute;
+}
+
+.floaty-quotey:nth-of-type(1) {
+    left: -40px;
+}
+
+.floaty-quotey:nth-of-type(2) {
+    right: -40px;
+}
+
+.control-btns {
+    justify-content: center;
+    gap: 2rem;
+}
+.control-btns > button {
+    width: 150px;
+}
+
+.button-group > .btn.selected {
     background-color: #0056b3;
     color: white;
     border: 2px solid #003d80;
 }
 
 /* Individual button colors */
-.button-group .agree {
+.button-group > .agree {
     background-color: #356939;
 }
 
-.button-group .agree:hover {
+.button-group > .agree:hover {
     background-color: #45a049;
 }
 
-.button-group .skip {
+.button-group > .skip {
     color:#000000;
     background-color: #FFFFFF;
 }
 
-.button-group .skip:hover {
+.button-group > .skip:hover {
     background-color: #bfbfbf;
 }
 
-.button-group .disagree {
+.button-group > .disagree {
     background-color: #983737;
 }
 
-.button-group .disagree:hover {
+.button-group > .disagree:hover {
     background-color: #d32f2f;
 }
 
 /* Creates Hover effect*/
-.button-group .btn:hover {
+.button-group > .btn:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Back/Forward button styling */
-.back-btn {
+.back-btn, .forward-btn {
     color: #FFFFFF;
-    margin-right: 1rem;
+    border: 0;
 }
 
-.back-btn:hover {
-    background-color: #bfbfbf;
-}
-
-.forward-btn {
-    color: #FFFFFF;
-    margin-left: 1rem;
-}
-
-.forward-btn:hover {
-    background-color: #bfbfbf;
-}
-
-.issue-description {
-    font-size: 50;
-    white-space: pre-wrap;
+.back-btn:hover, .forward-btn:hover {
+    background-color: #676767;
 }
 
 /* Modal styling */

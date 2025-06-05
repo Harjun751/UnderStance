@@ -30,14 +30,25 @@ services:
     secrets:
       - db_user
       - db_password
+    develop:
+      watch:
+        - action: rebuild
+          path: Backend/
   frontend:
     build: Frontend/
     environment:
-      BACKEND_HOST: "backend"
-      BACKEND_PORT: 3000
       VITE_API_URL: "http://localhost:3000"
     ports:
       - 5174:5174
+    develop:
+      watch:
+        - action: sync
+          path: ./Frontend/src/
+          target: /app/src/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: Frontend/package.json
 secrets:
   db_root_pw:
     file: ./Backend/.config/.dev/mysql-root-password

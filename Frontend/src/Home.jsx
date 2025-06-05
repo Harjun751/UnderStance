@@ -11,11 +11,12 @@ const Home = () => {
       <Navbar />
       <div className='content'>
         <Header />
-        {/* <h1> <FaBuildingColumns /> UnderStance</h1> */}
-        <p>Understand your political stance today!</p>
-        <Link to='/quiz'>
-          <button className='cta-button'>Try it Now!</button>
-        </Link>
+        <div id='content-container'>
+            <p>Understand your political stance today!</p>
+            <Link to='/quiz'>
+              <button className='cta-button'>Try it Now!</button>
+            </Link>
+        </div>
         <footer>Footer</footer>
       </div>
     </div>
