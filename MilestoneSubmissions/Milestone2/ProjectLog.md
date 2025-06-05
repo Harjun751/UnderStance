@@ -22,4 +22,11 @@
     <td class="tg-0pky" colspan="2">Before starting work on the next sprint, we decided to complete the peer evaluations on skylab first. We took the time to complete the evaluations.</td>
     <td class="tg-0pky" colspan="2">3</td>
   </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="2">5th June</td>
+    <td class="tg-0pky">Started working on updating the design for the Frontend + learning react along the way</td>
+    <td>-</td>
+    <td>4</td>
+    <td>-</td>
+  </tr>
 </tbody></table>
