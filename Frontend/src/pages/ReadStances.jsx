@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import Navbar from '../components/Navbar/Navbar'
 import Header from '../components/Header/Header'
 import './ReadStances.css'
 import { useLocation } from 'react-router-dom'
@@ -118,9 +117,8 @@ const ReadStances = () => {
   }
 
   return (
-    <div className='read-stances'>
-      <Navbar />
-      <Header />
+     <div className='content'>
+        <Header />
 
       {Object.keys(userAnswers).length > 0 && (
         <div className='alignment-chart'>

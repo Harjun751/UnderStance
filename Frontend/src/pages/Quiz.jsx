@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import Navbar from '../components/Navbar/Navbar'
 import ProgressBar from '../components/ProgressBar/ProgressBar'
 import './Quiz.css'
 import Header from '../components/Header/Header'
@@ -75,8 +74,6 @@ const Quiz = () => {
 
   return (
     <div className='quiz'>
-      <Navbar />
-
       {/* Confirmation Modal */}
       {showConfirmation && (
         <div className='modal-overlay'>
