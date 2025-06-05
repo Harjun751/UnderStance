@@ -119,7 +119,7 @@ const ReadStances = () => {
   return (
      <div className='content'>
         <Header />
-
+      <div id="content-container">
       {Object.keys(userAnswers).length > 0 && (
         <div className='alignment-chart'>
           <h4>Party Alignment with Your Answers (%)</h4>
@@ -149,6 +149,8 @@ const ReadStances = () => {
         </div>
       )}
 
+      <h1>Stance Breakdown</h1>
+
       {questions.map(question => {
         // Filter stances for this question
         const stancesForQuestion = stances.filter(s => s.IssueID === question.IssueID)
@@ -159,7 +161,7 @@ const ReadStances = () => {
             className={`question-container ${expandedQuestionId === question.IssueID ? 'expanded' : ''}`}
           >
             <div className='question-header'>
-              <h3>Q{question.IssueID}: {question.Description}</h3>
+              <h2>Question {question.IssueID}: {question.Summary}</h2>
               <div className='header-right'>
                 {userAnswers[question.IssueID] && (
                   <span
@@ -197,11 +199,19 @@ const ReadStances = () => {
                 <>
                   {userAnswer && userAnswer !== 'skip' && (
                     <div className='alignment-info'>
-                      <em>
                         {matchingParties.length > 0
-                          ? `Your stance aligns with the: ${matchingParties.map(p => p.Name).join(' & ')}`
-                          : 'No parties matched your stance on this issue.'}
-                      </em>
+                          ? <>
+                                Your Stance aligns with the:{" "}
+                                {matchingParties.map((party, idx) => (
+                                    <>
+                                    <strong key={party.ID}>
+                                        {party.Name}
+                                    </strong>
+                                    { idx < matchingParties.length - 1 ? ', ' : ''}
+                                    </>
+                                ))}
+                            </>
+                          : ( 'No parties matched your stance on this issue.' )}
                     </div>
                   )}
 
@@ -232,6 +242,7 @@ const ReadStances = () => {
           </div>
         )
       })}
+      </div>
     </div>
   )
 }

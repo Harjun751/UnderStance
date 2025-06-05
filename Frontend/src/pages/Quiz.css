@@ -77,6 +77,10 @@
     font-size: 1rem;
 }
 
+.control-btns > button,
+.button-group > button {
+    padding: 0.5rem 1rem;
+}
 
 /* Desktop breakpoint */
 @media only screen and (min-width: 1440px) {
@@ -93,7 +97,6 @@
     .button-group > .btn {
         flex: none; /* set to none to prevent flex-grow */
         width: 250px;
-        padding: 0.5rem 1rem;
         font-size: 1rem;
         cursor: pointer;
         border: none;
