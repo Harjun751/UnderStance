@@ -3,6 +3,9 @@
     gap: 1rem; /* adds spacing between buttons */
     margin-top: 1rem;
     justify-content: space-evenly; /* for centering buttons */
+    width: 800px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .button-group > .btn {
@@ -38,12 +41,6 @@
 }
 .control-btns > button {
     width: 150px;
-}
-
-.button-group > .btn.selected {
-    background-color: #0056b3;
-    color: white;
-    border: 2px solid #003d80;
 }
 
 /* Individual button colors */

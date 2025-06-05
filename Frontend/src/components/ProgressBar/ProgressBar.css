@@ -1,0 +1,25 @@
+.pbar-container {
+    height: 25px;
+    background: #BCBCBC;
+    width:100%;
+    position: fixed;
+    bottom:0px;
+}
+
+.pbar-progress {
+    height: 25px;
+    background: var(--red);
+    position: relative;
+    z-index: 1;
+    width: 0%;
+    transition: width 1s;
+}
+
+.pbar-text {
+    position: fixed;
+    z-index:2;
+    padding-left:5px;
+    transition: left 1s;
+    color: rgba(172,32,0,0.8);
+    bottom:-3px;
+}

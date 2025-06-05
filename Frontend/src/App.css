@@ -5,8 +5,7 @@
 
 .content {
   flex: 1;
-  padding: 20px;
-  margin-left: 60px; /* Same as navbar width */
+  /*margin-left: 60px; /* Same as navbar width */
   text-align: center;
   display: flex;
   flex-direction: column;

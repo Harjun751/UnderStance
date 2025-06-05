@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar/Navbar'
+import ProgressBar from '../components/ProgressBar/ProgressBar'
 import './Quiz.css'
 import Header from '../components/Header/Header'
 import { useNavigate } from 'react-router-dom'
@@ -94,9 +95,9 @@ const Quiz = () => {
       )}
 
       {/* Main Question Display */}
-      <div className='content' key={currentIssue.IssueID}>
+      <div className='content'>
         <Header />
-        <div id="content-container">
+        <div id="content-container" key={currentIssue.IssueID}>
             <h2>Question {currentIndex + 1}/{issues.length}</h2>
             <span className="floaty-quotey big-quote">“</span>
             <span className="floaty-quotey big-quote">”</span>
@@ -129,8 +130,9 @@ const Quiz = () => {
               </button>
             </div>
       </div>
-        <footer>
-        </footer>
+      <ProgressBar progress={(currentIndex)/issues.length} />
+    <footer>
+    </footer>
       </div>
     </div>
   )
