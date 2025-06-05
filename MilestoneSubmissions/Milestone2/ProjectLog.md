@@ -26,7 +26,7 @@
     <td class="tg-0pky" rowspan="2">5th June</td>
     <td class="tg-0pky">Started working on updating the design for the Frontend + learning react along the way</td>
     <td>-</td>
-    <td>4</td>
+    <td>7</td>
     <td>-</td>
   </tr>
 </tbody></table>
