@@ -51,8 +51,13 @@ jobs:
       - name: Lint & Fix using Biome (Frontend)
         continue-on-error: true
         run: |
+          npx @biomejs/biome lint --write ./Frontend/
+
+      - name: Check for remainding lint errors
+        continue-on-error: true
+        run: |
           set +e
-          SECOND_OUTPUT="$(npx @biomejs/biome lint --write ./Frontend/ 2>&1)"
+          SECOND_OUTPUT="$(npx @biomejs/biome lint ./Frontend/ 2>&1)"
           SECOND_EXIT_CODE=$?
           echo 'second_lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$SECOND_OUTPUT" >> $GITHUB_OUTPUT
@@ -75,7 +80,7 @@ jobs:
       - name: Wait on other checks to complete
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           check-name: 'clean'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
