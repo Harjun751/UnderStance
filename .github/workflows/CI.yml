@@ -19,17 +19,17 @@ jobs:
         with:
           node-version: 'latest'
 
-      - name: Lint & Fix using Standard
+      - name: Lint & Fix using Standard (Backend)
         continue-on-error: true
         run: |
-          npx standard --fix --env=jest ./
+          npx standard --fix --env=jest ./Backend/
       
       - name: Check for remainding lint errors
         id: lint
         continue-on-error: true
         run: |
           set +e  # disable immediate exit on error
-          OUTPUT="$(npx standard --env=jest ./ 2>&1)"
+          OUTPUT="$(npx standard --env=jest ./Backend/ 2>&1)"
           EXIT_CODE=$?
           echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$OUTPUT" >> $GITHUB_OUTPUT
@@ -41,14 +41,54 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **There is one or more linting errors**
+            **There is one or more linting errors (Backend)**
             ```
             ${{ steps.lint.outputs.lint_output }}
             ```
             🌏
 
+      - name: Lint & Fix using Biome (Frontend)
+        continue-on-error: true
+        run: |
+          set +e
+          SECOND_OUTPUT="$(npx @biomejs/biome lint --write ./Frontend/ 2>&1)"
+          SECOND_EXIT_CODE=$?
+          echo 'second_lint_output<<EOF' >> $GITHUB_OUTPUT
+          echo "$SECOND_OUTPUT" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+          echo "second_exit_code=$SECOND_EXIT_CODE" >> $GITHUB_OUTPUT
+          
+
+      - name : Create comment
+        if: steps.lint.outputs.second_exit_code != '0'
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **There is one or more linting errors (Frontend)**
+            ```
+            ${{ steps.lint.outputs.second_lint_output }}
+            ```
+            🌏
+
+
+      - name: Wait on publish tests (backend) to complete
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Publish Backend Test Results'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
+      - name: Wait on publish tests (frontned) to complete
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Publish Frontend Test Results'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - name: Push changed code if lint fails
-        if: steps.lint.outputs.exit_code != '0'
+        if: steps.lint.outputs.exit_code != '0' || steps.lint.outputs.second_exit_code != '0'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -64,7 +104,7 @@ jobs:
         
       - name: Format frontend using biome
         run: |
-          npx @biomejs/biome format ./Frontend/ --write
+          npx @biomejs/biome format --indent-width=4 --indent-style=space ./Frontend/ --write
 
       - name: Push formatted changes
         run: |
