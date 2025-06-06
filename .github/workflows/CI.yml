@@ -95,7 +95,7 @@ jobs:
 
       - name: Format backend using prettier
         run: |
-          npx prettier --tab-width 4 --use-tabs false --write /home/runner/work/UnderStance/UnderStance/Backend/**/*.{js,jsx,ts,tsx}
+          npx prettier --tab-width 4 --use-tabs false --write "./Backend/**/*.js"
         
       - name: Format frontend using biome
         run: |
