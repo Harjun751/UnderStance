@@ -1,22 +1,38 @@
 .UnderStance-header {
-  text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+    text-align: center;
 }
 
 .UnderStance-Under {
-  color: #000000; /* Green */
+    color: #000000; /* Green */
 }
 
 .UnderStance-Stance {
-  color: #BC0001; /* Default/dark */
+    color: #bc0001; /* Default/dark */
 }
 
 .UnderStance-underline {
-  width: 100%;
-  height: 4px;
-  background-color: #000000;
-  margin: 0 auto;
-  border-radius: 2px;
-  margin-top: -0.3rem;
+    width: 500px;
+    height: 7px;
+    background-color: #000000;
+    margin: 0 auto;
+    border-radius: 2px;
+    margin-top: -0.3rem;
+}
+
+#title > span {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#title > span > svg {
+    font-size: 55px;
+}
+
+@media only screen and (max-width: 1440px) {
+    #title > span > svg {
+        font-size: 30px;
+    }
+    .UnderStance-underline {
+        width: 280px;
+    }
 }
