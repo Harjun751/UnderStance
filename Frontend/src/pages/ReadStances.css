@@ -1,162 +1,201 @@
-#content-container {
-    width: 1200px;
+/* Allow fancy pantsy intrinsic size animations
+ * firefox apparently not supported but works
+ * fine on my end... */
+:root {
+    interpolate-size: allow-keywords;
 }
-h1 {
+/* General styles */
+#content-container.read-stances h1 {
+	text-align: left;
+	margin-bottom: 20px;
+}
+#content-container.read-stances h2 {
     text-align: left;
 }
-.read-stances {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
+/* Hide break line in question for large displays */
+#content-container.read-stances h2 > .qn-break {
+	display: none;
 }
 
+#content-container.read-stances {
+	/* force content-container to take up
+     * max width on large displays */
+	width: 1200px;
+}
+
+/* Question container styles */
 .question-container {
-    border: 1px solid #ccc;
-    height: 73px;
-    background: #F5F5F5;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    padding: 10px;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    width: 100%;
+	border: 1px solid #ccc;
+	background: #f5f5f5;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	padding: 10px;
+	cursor: pointer;
+	/* Take up 100% of content-container size */
+	width: 100%;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    height:65px;
+    overflow:hidden;
+    transition: height 0.5s;
 }
 
 .question-container.expanded {
-    height: unset;
+    /* set to a fixed 360px height with 
+     * scrollbar for more content */
+    height: 360px;
+    overflow-y: auto;
+	scrollbar-width: thin;
 }
-.question-container.expanded > .question-header {
-    height: unset;
+#content-container.unanswered .question-container.expanded {
+    /* If quiz is unanswered, we change the height of the 
+     * expanded container to reduce the white space */
+    height: 280px;
 }
 
-.question-container h3 {
-    margin: 0;
+
+.question-header {
+	display: flex;
+	justify-content: space-between;
+    align-items: flex-start;
+}
+.question-header > .header-right {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Inner stance scroll-box */
+.stances-list {
+	display: flex;
+	gap: 16px;
+	margin-top: 15px;
+	overflow-x: auto;
+    z-index: 10;
+    cursor: grab;
+
+	padding-bottom: 8px;
+	scrollbar-width: thin;
+}
+
+.stance-item {
+	flex: 1 1 250px; /* Grow/shrink with a base width of 250px */
+	border: 1px solid #ccc;
+	padding: 12px;
+	border-radius: 8px;
+	background-color: #fafafa;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	min-width: 200px; /* Minimum width for each container */
+	margin-right: 12px;
+	flex-shrink: 0;
     user-select: none;
 }
 
-.stances-list {
-    display: flex;
-    gap: 16px;
-    margin-top: 15px; 
-
-    padding-bottom: 8px;
-    scrollbar-width: thin;
-}
-
-.stance-item {
-    flex: 1 1 250px;         /* Grow/shrink with a base width of 250px */
-    border: 1px solid #ccc;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #fafafa;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    min-width: 200px;        /* Minimum width for each container */
-    margin-right: 12px;
-    margin-bottom: 12px;
-}
-
 .party-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .party-info strong {
-    display: block;
-    font-weight: bold;
+	display: block;
+	font-weight: bold;
 }
 
 .party-info p {
-    margin-top: 4px;
-    font-style: italic;
-    color: #555;
-    margin-bottom: 0;
-}
-
-.stance-item {
-    min-width: 220px;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #f4f4f4;
-    flex-shrink: 0;
+	margin-top: 4px;
+	font-style: italic;
+	color: #555;
+	margin-bottom: 0;
 }
 
 /* Green background for agreeing stance */
 .stance-item.agree {
-    background-color: #e0f7e9;
-    border-left: 4px solid #34a853;
+	background-color: #e0f7e9;
+	border-left: 4px solid #34a853;
 }
 
 /* Red background for disagreeing stance */
 .stance-item.disagree {
-    background-color: #fdecea;
-    border-left: 4px solid #ea4335;
-}
-
-.question-header {
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+	background-color: #fdecea;
+	border-left: 4px solid #ea4335;
 }
 
 .toggle-button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: #333;
+	background: none;
+	border: none;
+	font-size: 1.2rem;
+	cursor: pointer;
+	color: #333;
 }
 
 /* User's answerStyling*/
 .user-answer {
-    margin-right: 12px;
-    padding: 6px 0px;
-    width: 170px;
-    border-radius: 6px;
+	margin-right: 12px;
+	padding: 6px 0px;
+	width: 170px;
+	border-radius: 6px;
 }
 
 .user-answer.agree {
-    background-color: #d4edda;
-    color: #155724;
+	background-color: #d4edda;
+	color: #155724;
 }
 
 .user-answer.disagree {
-    background-color: #f8d7da;
-    color: #721c24;
+	background-color: #f8d7da;
+	color: #721c24;
 }
 
 .user-answer.skip {
-    background-color: #e2e3e5;
-    color: #383d41;
+	background-color: #e2e3e5;
+	color: #383d41;
 }
 
 .alignment-info {
-    margin-bottom: 12px;
-    padding: 10px 14px;
-    color: black;
-    text-align: left;
-    padding: 0;
-    margin: 30px 0px;
+	padding: 10px 14px;
+	color: black;
+	text-align: left;
+	padding: 0;
+	margin: 35px 0px;
 }
 
 /* Bar char styling */
 .alignment-chart {
-    margin: 2rem 0;
-    background-color: #f7f7f7;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    align-items: center;
+	margin: 2rem 0;
+	background-color: #f7f7f7;
+	padding: 1rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	flex-direction: column;
+	align-items: center;
+}
+
+/* Small(er) screen breakpoint */
+@media only screen and (max-width: 1440px) {
+	.question-container {
+		height: 45px;
+		position: relative;
+	}
+	.question-container.expanded {
+		height: 330px;
+	}
+    #content-container.unanswered .question-container.expanded {
+        /* If quiz is unanswered, we change the height of the 
+         * expanded container to reduce the white space */
+        height: 230px;
+    }
+	.toggle-button {
+		display: none;
+	}
+	.user-answer {
+		width: 90px;
+		padding: 3px 0;
+	}
+	.qn-break {
+		display: initial;
+	}
+	#content-container.read-stances h2 {
+		text-align: left;
+	}
 }

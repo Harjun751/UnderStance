@@ -1,19 +1,19 @@
 nav {
     display: flex;
     flex-direction: column;
-    width:0%;
+    width: 0%;
     max-width: 400px;
     padding-top: 70px;
     position: fixed;
     gap: 30px;
-    background: rgba(0,0,0,0.1);
-    height:100%;
+    background: rgba(0, 0, 0, 0.1);
+    height: 100%;
     transition: width 0.5s;
     overflow: clip;
     backdrop-filter: blur(10px);
-    z-index:1;
+    z-index: 1;
 }
-.burger{
+.burger {
     position: fixed;
     z-index: 2;
 }
@@ -25,10 +25,11 @@ nav > a {
     white-space: nowrap;
     color: black;
     height: 40px;
-    line-height:40px;
+    line-height: 40px;
 }
 
-nav > a.active, nav > a:hover {
+nav > a.active,
+nav > a:hover {
     color: var(--red);
     text-decoration: underline;
 }
@@ -36,13 +37,13 @@ nav > a.active, nav > a:hover {
 nav .nav-icon {
     margin-right: 6px;
 }
-.nav-item{
+.nav-item {
     display: flex;
     align-items: center;
     gap: 0.5em;
     text-decoration: none;
-    padding-left:40px;
+    padding-left: 40px;
 }
 .divider {
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
 }

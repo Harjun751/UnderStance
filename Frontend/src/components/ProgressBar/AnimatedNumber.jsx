@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 
 export default function AnimatedNumber({ from, to, text, className, style }) {
     from = Number.isFinite(from) ? from : 0;
@@ -21,8 +21,9 @@ export default function AnimatedNumber({ from, to, text, className, style }) {
             }
             const elapsed = timestamp - startTime;
 
-            const progress = Math.min(elapsed/duration, 1);
-            const currentStep = Math.round(progress * totalSteps) * incrementPolarity;
+            const progress = Math.min(elapsed / duration, 1);
+            const currentStep =
+                Math.round(progress * totalSteps) * incrementPolarity;
             const newValue = from + currentStep;
             setValue(newValue);
 
@@ -36,5 +37,10 @@ export default function AnimatedNumber({ from, to, text, className, style }) {
         return () => cancelAnimationFrame(ref.current);
     }, [from, to]);
 
-    return <span style={style} className={className}>{value}{text}</span>;
+    return (
+        <span style={style} className={className}>
+            {value}
+            {text}
+        </span>
+    );
 }

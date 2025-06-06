@@ -1,86 +1,85 @@
 :root {
-  --red: #AC0000;
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  
-  background-color: rgba(255,255,255,1);
+    --red: #ac0000;
+    color-scheme: light dark;
+    color: rgba(0, 0, 0, 0.87);
+
+    background-color: rgba(255, 255, 255, 1);
 }
 body::before {
-  background-image: url('45-degree-fabric-light.png');
-  content: "";
-  position: fixed;
-  z-index: -1;
-  background-size: auto;
-  background-repeat: repeat;
-  background-blend-mode: lighten;
-  filter: contrast(40%);
-  mix-blend-mode: multiply;
-  inset: 0;
+    background-image: url("45-degree-fabric-light.png");
+    content: "";
+    position: fixed;
+    z-index: -1;
+    background-size: auto;
+    background-repeat: repeat;
+    background-blend-mode: lighten;
+    filter: contrast(40%);
+    mix-blend-mode: multiply;
+    inset: 0;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+    color: #535bf2;
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }
-
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 .app-container > button:hover {
-  border-color: #646cff;
+    border-color: #646cff;
 }
 .app-container > button:focus,
 .app-container > button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+    a:hover {
+        color: #747bff;
+    }
+    button {
+        background-color: #f9f9f9;
+    }
 }
 
-
-
-#title, h1, h2, .big-quote {
+#title,
+h1,
+h2,
+.big-quote {
     font-family: "DM Serif Display", serif;
     font-style: normal;
     font-weight: unset;
 }
 * {
-  box-sizing: border-box;
-  font-family: "Roboto Flex", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+    box-sizing: border-box;
+    font-family: "Roboto Flex", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
-
 
 /* Desktop breakpoint */
 @media only screen and (min-width: 1440px) {
-    #title{
+    #title {
         font-size: 72px;
     }
     h1 {
@@ -89,20 +88,20 @@ button {
     }
     h2 {
         font-size: 32px;
-        margin:0;
+        margin: 0;
     }
     .big-quote {
         font-size: 50px;
     }
     * {
-       font-size: 24px;
-   }
+        font-size: 24px;
+    }
 
-   .content > #content-container {
-       margin-top: 80px;
-       max-width: 1200px;
-       position: relative;
-   }
+    .content > #content-container {
+        margin-top: 80px;
+        max-width: 1200px;
+        position: relative;
+    }
 }
 
 /* Small(er) screen breakpoint */
@@ -111,11 +110,11 @@ button {
         font-size: 40px;
     }
     h1 {
-        font-size:22px;
+        font-size: 22px;
         margin: 0;
     }
     h2 {
-        font-size:20px;
+        font-size: 20px;
         margin: 0;
     }
     * {
@@ -125,10 +124,11 @@ button {
         font-size: 24px;
     }
 
-   .content > #content-container {
-       margin-top: 20px;
-       max-width: 500px;
-       width: 92%;
-       position: relative;
-   }
+    .content > #content-container,
+    .content > #content-container.read-stances {
+        margin-top: 20px;
+        max-width: 500px;
+        width: 92%;
+        position: relative;
+    }
 }
