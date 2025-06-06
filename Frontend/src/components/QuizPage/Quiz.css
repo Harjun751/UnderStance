@@ -1,87 +1,87 @@
 .control-btns > button {
-	width: 150px;
+    width: 150px;
 }
 
 /* Individual button colors */
 .button-group > .agree {
-	background-color: #356939;
+    background-color: #356939;
 }
 
 .button-group > .agree:hover {
-	background-color: #45a049;
+    background-color: #45a049;
 }
 
 .button-group > .skip {
-	color: #000000;
-	background-color: #ffffff;
+    color: #000000;
+    background-color: #ffffff;
 }
 
 .button-group > .skip:hover {
-	background-color: #bfbfbf;
+    background-color: #bfbfbf;
 }
 
 .button-group > .disagree {
-	background-color: #983737;
+    background-color: #983737;
 }
 
 .button-group > .disagree:hover {
-	background-color: #d32f2f;
+    background-color: #d32f2f;
 }
 
 /* Creates Hover effect*/
 .button-group > .btn:hover {
-	transform: scale(1.05);
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Back/Forward button styling */
 .back-btn,
 .forward-btn {
-	color: #ffffff;
-	border: 0;
+    color: #ffffff;
+    border: 0;
 }
 
 .back-btn:hover,
 .forward-btn:hover {
-	background-color: #676767;
+    background-color: #676767;
 }
 
 /* Modal styling */
 .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal {
-	background: white;
-	padding: 2rem;
-	border-radius: 12px;
-	max-width: 400px;
-	text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    text-align: center;
 }
 
 .modal-buttons {
-	display: flex;
-	justify-content: space-around;
-	margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5rem;
 }
 
 .modal-buttons button {
-	padding: 0.5rem 1rem;
-	font-size: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
 }
 
 .control-btns > button,
 .button-group > button {
-	padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
 /* Desktop breakpoint */
@@ -89,88 +89,88 @@
     .quote-container {
         margin: 60px 0;
     }
-	.button-group,
-	.control-btns {
-		display: flex;
-		gap: 1rem; /* adds spacing between buttons */
-		margin-top: 1rem;
-		justify-content: space-evenly; /* for centering buttons */
-		width: 800px;
-		margin-left: auto;
-		margin-right: auto;
-	}
+    .button-group,
+    .control-btns {
+        display: flex;
+        gap: 1rem; /* adds spacing between buttons */
+        margin-top: 1rem;
+        justify-content: space-evenly; /* for centering buttons */
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-	.button-group > .btn {
-		flex: none; /* set to none to prevent flex-grow */
-		width: 250px;
-		font-size: 1rem;
-		cursor: pointer;
-		border: none;
-		border-radius: 5px;
-		transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s
-			ease;
-		box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-	}
+    .button-group > .btn {
+        flex: none; /* set to none to prevent flex-grow */
+        width: 250px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow
+            0.2s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+    }
 
-	/* Floating quotes around text */
-	.floaty-quotey {
-		position: absolute;
-	}
+    /* Floating quotes around text */
+    .floaty-quotey {
+        position: absolute;
+    }
 
-	.floaty-quotey:nth-of-type(1) {
-		left: -40px;
-	}
+    .floaty-quotey:nth-of-type(1) {
+        left: -40px;
+    }
 
-	.floaty-quotey:nth-of-type(2) {
-		right: -40px;
-	}
+    .floaty-quotey:nth-of-type(2) {
+        right: -40px;
+    }
 
-	.control-btns {
-		justify-content: center;
-		gap: 2rem;
-	}
+    .control-btns {
+        justify-content: center;
+        gap: 2rem;
+    }
 }
 
 /* Small(er) screen breakpoint */
 @media only screen and (max-width: 1440px) {
-	.button-group {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem; /* adds spacing between buttons */
-		max-width: 350px;
-		width: 100%;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 50px;
-	}
-	.control-btns {
-		display: flex;
-		width: 100%;
-		max-width: 350px;
-		justify-content: space-around;
-		margin-top: 50px;
-		margin-left: auto;
-		margin-right: auto;
-	}
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* adds spacing between buttons */
+        max-width: 350px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+    }
+    .control-btns {
+        display: flex;
+        width: 100%;
+        max-width: 350px;
+        justify-content: space-around;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .quote-container {
         display: flex;
         justify-content: center;
     }
 
-	.control-btns {
-		justify-content: center;
-		gap: 2rem;
-	}
+    .control-btns {
+        justify-content: center;
+        gap: 2rem;
+    }
 
-	.floaty-quotey {
-		position: relative;
-	}
+    .floaty-quotey {
+        position: relative;
+    }
 
-	.floaty-quotey:nth-of-type(1) {
-		left: -10px;
-	}
+    .floaty-quotey:nth-of-type(1) {
+        left: -10px;
+    }
 
-	.floaty-quotey:nth-of-type(3) {
-		right: -10px;
-	}
+    .floaty-quotey:nth-of-type(3) {
+        right: -10px;
+    }
 }
