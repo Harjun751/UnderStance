@@ -1,14 +1,10 @@
 import React from "react";
-import "./App.css";
-// import { FaBuildingColumns } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import Header from "./components/Header/Header";
 
 const Home = () => {
     return (
         <div className="App">
             <div className="content">
-                <Header />
                 <div id="content-container">
                     <p>Understand your political stance today!</p>
                     <Link to="/quiz">

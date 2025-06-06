@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from "react";
-import Header from "../components/Header/Header";
 import "./ReadStances.css";
 import AlignmentChart from "./AlignmentChart";
 import StanceItem from "./StanceItem";
@@ -66,11 +65,9 @@ const ReadStances = () => {
 	const userAnswers =
 		location.state?.answers ||
 		JSON.parse(window.localStorage.getItem("quizAnswers") || "{}");
-    console.log(userAnswers);
 
 	return (
 		<div className="content">
-			<Header />
 			<div id="content-container" className={`read-stances ${Object.keys(userAnswers).length===0 ? "unanswered" : ""}`}>
 				<AlignmentChart
 					parties={parties}
@@ -114,9 +111,7 @@ const ReadStances = () => {
 										</span>
 									)}
 
-									<button className="toggle-button">
-										{expandedQuestionId === question.IssueID ? "▲" : "▼"}
-									</button>
+									<button className="toggle-button">▲</button>
 								</div>
 							</div>
                         {(() => {

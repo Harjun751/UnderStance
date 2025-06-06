@@ -73,18 +73,18 @@
     color: #0e2431;
 }
 
-input[type="checkbox"]:checked ~ .menu-items {
+.burger.expanded .menu-items {
     transform: translateX(0);
 }
 
-input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+.burger.expanded .hamburger-lines .line1 {
     transform: rotate(45deg);
 }
 
-input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+.burger.expanded .hamburger-lines .line2 {
     transform: scaleY(0);
 }
 
-input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+.burger.expanded .hamburger-lines .line3 {
     transform: rotate(-45deg);
 }

@@ -15,10 +15,11 @@ const Navbar = () => {
 
     return (
         <div>
-            <Hamburger onClick={toggleNavbar} className={"burger"} />
+            <Hamburger onClick={toggleNavbar} className={`burger ${isExpanded ? "expanded" : ""}`} />
             <nav className={`navbar ${isExpanded ? "expanded" : ""}`}>
                 <span className="divider"></span>
-                <NavLink activeclassname="active" to="/" className="nav-item">
+                <NavLink activeclassname="active" to="/" className="nav-item"
+                   onClick={toggleNavbar} >
                     <span className="nav-icon">
                         <FaBuildingColumns />
                     </span>
@@ -29,6 +30,7 @@ const Navbar = () => {
                     activeclassname="active"
                     to="/quiz"
                     className="nav-item"
+                    onClick={toggleNavbar}
                 >
                     <span className="nav-icon">
                         <MdFactCheck />
@@ -40,6 +42,7 @@ const Navbar = () => {
                     activeclassname="active"
                     to="/read-stances"
                     className="nav-item"
+                    onClick={toggleNavbar}
                 >
                     <span className="nav-icon">
                         <PiBookOpenTextFill />

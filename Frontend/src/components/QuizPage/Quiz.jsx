@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
-import ProgressBar from "../components/ProgressBar/ProgressBar";
+import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
-import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
@@ -110,7 +109,6 @@ const Quiz = () => {
 
 			{/* Main Question Display */}
 			<div className="content">
-				<Header />
 				<div id="content-container" key={currentIssue.IssueID}>
 					<h2>
 						Question {currentIndex + 1}/{issues.length}

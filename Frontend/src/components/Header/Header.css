@@ -11,7 +11,7 @@
 }
 
 .UnderStance-underline {
-    width: 100%;
+    width: 500px;
     height: 7px;
     background-color: #000000;
     margin: 0 auto;
@@ -31,5 +31,8 @@
 @media only screen and (max-width: 1440px) {
     #title > span > svg {
         font-size: 30px;
+    }
+    .UnderStance-underline {
+        width: 280px;
     }
 }
