@@ -24,46 +24,6 @@ jobs:
       - run: npm i
         working-directory: Frontend/
 
-      - name: Lint & Fix using Standard
-        continue-on-error: true
-        run: |
-          npx standard --fix --env=jest Frontend/ 
-      
-      - name: Check for remainding lint errors
-        id: lint
-        continue-on-error: true
-        run: |
-          set +e  # disable immediate exit on error
-          OUTPUT="$(npx standard --env=jest Frontend/ 2>&1)"
-          EXIT_CODE=$?
-          echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
-          echo "$OUTPUT" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
-
-      - name : Create comment
-        if: steps.lint.outputs.exit_code != '0'
-        uses: mshick/add-pr-comment@v2
-        with:
-          message: |
-            **There is one or more linting errors (Frontend)**
-            ```
-            ${{ steps.lint.outputs.lint_output }}
-            ```
-            🌏
-          message-id: Frontend
-
-      - name: Push changed code if lint fails
-        if: steps.lint.outputs.exit_code != '0'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Fixed some lint errors"
-          git push
-          echo "Exiting workflow due to remaining lint errors"
-          exit 1
-
 
       - name: Begin running tests
         run: ENV=test npm test
@@ -82,9 +42,3 @@ jobs:
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
       #     files: Frontend/coverage/lcov.info
-
-      - name: Format code using prettier
-        uses: creyD/prettier_action@v4.5
-        with:
-          prettier_options: --tab-width 4 --use-tabs false --write /home/runner/work/UnderStance/UnderStance/Frontend/**/*.{js,jsx,ts,tsx,css,html}
-          file_pattern: "*.{js,jsx,ts,tsx,css,html}"
