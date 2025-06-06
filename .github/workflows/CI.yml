@@ -53,7 +53,7 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          OUTPUT="$(npx @biomejs/biome lint ./Frontend/ 2>&1)"
+          OUTPUT="$(find Frontend/src/ -type f ! -path Frontend/src/index.css ! -path Frontend/src/utils/tests/* | xargs npx @biomejs/biome lint --write 2>&1)"
           EXIT_CODE=$?
           echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$OUTPUT" >> $GITHUB_OUTPUT

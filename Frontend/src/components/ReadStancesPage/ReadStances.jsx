@@ -88,6 +88,7 @@ const ReadStances = () => {
   <div
     key={question.IssueID}
     className={`question-container ${expandedQuestionId === question.IssueID ? 'expanded' : ''}`}
+    onKeyPress={() => toggleExpand(question.IssueID)}
     onClick={() => toggleExpand(question.IssueID)}
   >
     <div className='question-header'>
@@ -111,7 +112,7 @@ const ReadStances = () => {
           </span>
         )}
 
-        <button className='toggle-button'>▲</button>
+        <button type="button" className='toggle-button'>▲</button>
       </div>
     </div>
     {(() => {

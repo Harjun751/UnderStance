@@ -1,9 +1,3 @@
-/* Allow fancy pantsy intrinsic size animations
- * firefox apparently not supported but works
- * fine on my end... */
-:root {
-    interpolate-size: allow-keywords;
-}
 /* General styles */
 #content-container.read-stances h1 {
 	text-align: left;

@@ -90,6 +90,7 @@ const Quiz = () => {
             <p>Are you sure you want to submit your answers?</p>
             <div className='modal-buttons'>
               <button
+                type="button"
                 onClick={() => {
 								  window.localStorage.setItem(
 								    'quizAnswers',
@@ -102,7 +103,7 @@ const Quiz = () => {
               >
                 Yes, Submit
               </button>
-              <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+              <button type="button" onClick={() => setShowConfirmation(false)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -122,6 +123,7 @@ const Quiz = () => {
           <div className='button-group'>
             {['disagree', 'skip', 'agree'].map((option) => (
               <button
+                type="button"
                 key={option}
                 className={`btn ${option} ${selected === option ? 'selected' : ''}`}
                 onClick={() => handleAnswer(option)}
@@ -132,6 +134,7 @@ const Quiz = () => {
           </div>
           <div className='control-btns'>
             <button
+              type="button"
               className='back-btn'
               onClick={handleBack}
               disabled={currentIndex === 0}
@@ -139,6 +142,7 @@ const Quiz = () => {
               Back
             </button>
             <button
+              type="button"
               className='forward-btn'
               onClick={handleForward}
               disabled={answers[currentIndex + 1] === undefined}

@@ -3,7 +3,7 @@
 import './Hamburger.css'
 export default function Hamburger ({ onClick, className }) {
   return (
-    <div onClick={onClick} className={className}>
+    <div onKeyPress={onClick} onClick={onClick} className={className}>
       <input
         className='hamburger-checkbox'
         type='checkbox'

@@ -20,7 +20,7 @@ export default function AlignmentChart ({
     let alignedCount = 0
     let totalAnswered = 0
 
-    questions.forEach((question) => {
+    for (const question of questions) {
       const userAnswer = userAnswers[question.IssueID]
       if (userAnswer === 'agree' || userAnswer === 'disagree') {
         totalAnswered++
@@ -35,7 +35,7 @@ export default function AlignmentChart ({
           alignedCount++
         }
       }
-    })
+    }
 
     iconLookup[party.ShortName] = party.Icon
 
@@ -102,7 +102,5 @@ export default function AlignmentChart ({
         </ResponsiveContainer>
       </div>
     )
-  } else {
-    return <></>
   }
 }

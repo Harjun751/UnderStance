@@ -8,7 +8,7 @@ const Home = () => {
         <div id='content-container'>
           <p>Understand your political stance today!</p>
           <Link to='/quiz'>
-            <button className='cta-button'>Try it Now!</button>
+            <button type="button" className='cta-button'>Try it Now!</button>
           </Link>
         </div>
         <footer>Footer</footer>

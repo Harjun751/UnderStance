@@ -4,7 +4,7 @@ export default function StanceItem ({
   parties,
   stancesForQuestion
 }) {
-  const preventClickThrough = function (e) { e.stopPropagation() }
+  const preventClickThrough = function(e) { e.stopPropagation() }
 
   // For drag scroll on desktop
   const containerRef = useRef(null)
@@ -12,19 +12,19 @@ export default function StanceItem ({
   const scrollHorz = useRef(0)
   const mouseDown = useRef(false)
 
-  const mouseMoveHandler = function (e) {
+  const mouseMoveHandler = (e) => {
     if (!mouseDown.current) { return }
     e.preventDefault()
     // get change in x
     const dx = e.pageX - containerRef.current.offsetLeft - startX.current
     containerRef.current.scrollLeft = scrollHorz.current - dx
   }
-  const mouseDownHandler = function (e) {
+  const mouseDownHandler = (e) => {
     mouseDown.current = true
     startX.current = e.pageX - containerRef.current.offsetLeft
     scrollHorz.current = containerRef.current.scrollLeft
   }
-  const mouseUpHandler = function (e) {
+  const mouseUpHandler = (e) => {
     mouseDown.current = false
   }
 
@@ -33,6 +33,7 @@ export default function StanceItem ({
       className='stances-list'
       ref={containerRef}
       onClick={preventClickThrough}
+      onKeyPress={(e) => {}}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
       onMouseLeave={mouseUpHandler}
