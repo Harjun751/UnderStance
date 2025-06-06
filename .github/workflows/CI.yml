@@ -46,6 +46,7 @@ jobs:
             ${{ steps.lint.outputs.lint_output }}
             ```
             🌏
+          message-id: backend
 
       - name: Lint & fix using Biome
         id: biomelint
@@ -70,13 +71,14 @@ jobs:
             ${{ steps.biomelint.outputs.lint_output }}
             ```
             🌏
+          message-id: frontend
 
 
       - name: Wait on other checks to complete
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          check-name: 'Publish Backend Test Results'
+          check-name: 'backend'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
