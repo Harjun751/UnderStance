@@ -9,7 +9,6 @@ on:
     branches: [main]
 jobs:
   build:
-    name: clean
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,31 +47,27 @@ jobs:
             ```
             🌏
 
-      - name: Lint & Fix using Biome (Frontend)
-        continue-on-error: true
-        run: |
-          npx @biomejs/biome lint --write ./Frontend/
-
-      - name: Check for remainding lint errors
+      - name: Lint & fix using Biome
+        id: biomelint
         continue-on-error: true
         run: |
           set +e
-          SECOND_OUTPUT="$(npx @biomejs/biome lint ./Frontend/ 2>&1)"
-          SECOND_EXIT_CODE=$?
-          echo 'second_lint_output<<EOF' >> $GITHUB_OUTPUT
-          echo "$SECOND_OUTPUT" >> $GITHUB_OUTPUT
+          OUTPUT="$(npx @biomejs/biome lint ./Frontend/ 2>&1)"
+          EXIT_CODE=$?
+          echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
+          echo "$OUTPUT" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
-          echo "second_exit_code=$SECOND_EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
           
 
       - name : Create comment
-        if: steps.lint.outputs.second_exit_code != '0'
+        if: steps.biomelint.outputs.exit_code != '0'
         uses: mshick/add-pr-comment@v2
         with:
           message: |
             **There is one or more linting errors (Frontend)**
             ```
-            ${{ steps.lint.outputs.second_lint_output }}
+            ${{ steps.biomelint.outputs.lint_output }}
             ```
             🌏
 
@@ -81,12 +76,12 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          check-name: 'clean'
+          check-name: 'Publish Backend Test Results'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
       - name: Push changed code if lint fails
-        if: steps.lint.outputs.exit_code != '0' || steps.lint.outputs.second_exit_code != '0'
+        if: steps.lint.outputs.exit_code != '0' || steps.biomelint.outputs.exit_code != '0'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
