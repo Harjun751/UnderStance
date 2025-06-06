@@ -9,6 +9,7 @@ on:
     branches: [main]
 jobs:
   build:
+    name: clean
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -71,19 +72,11 @@ jobs:
             🌏
 
 
-      - name: Wait on publish tests (backend) to complete
+      - name: Wait on other checks to complete
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           ref: ${{ github.ref }}
-          check-name: 'Publish Backend Test Results'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
-      - name: Wait on publish tests (frontned) to complete
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'Publish Frontend Test Results'
+          check-name: 'clean'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
