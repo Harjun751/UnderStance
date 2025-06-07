@@ -69,6 +69,7 @@ button {
 #title,
 h1,
 h2,
+h3,
 .big-quote {
     font-family: "DM Serif Display", serif;
     font-style: normal;
@@ -92,6 +93,9 @@ h2,
     }
     h2 {
         font-size: 32px;
+        margin: 0;
+    }
+    h3 {
         margin: 0;
     }
     .big-quote {

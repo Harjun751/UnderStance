@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import "./ReadStances.css";
 import AlignmentChart from "./AlignmentChart";
+import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
 
@@ -10,7 +11,8 @@ const ReadStances = () => {
     const [parties, setParties] = useState([]);
     // State for questions/issues
     const [questions, setQuestions] = useState([]);
-
+    // state for searching
+    const [searchVal, setSearch] = useState('');
     // State for loading and error
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -56,6 +58,8 @@ const ReadStances = () => {
     // Toggle expand/collapse of a question container
     const toggleExpand = (issueId) => {
         setExpandedQuestionId(expandedQuestionId === issueId ? null : issueId);
+        // Reset scroll of issue on collapse/expand (prevents issue with collapsed and ugly container)
+        document.querySelector(`.question-container[issueid='${issueId}']`).scroll(0,0);
     };
 
     // Show loading or error messages before rendering data
@@ -81,18 +85,27 @@ const ReadStances = () => {
                     stances={stances}
                 />
 
+                <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
-
+                <div id="question-containers-container">
                 {questions.map((question) => {
                     // Filter stances for this question
                     const stancesForQuestion = stances.filter(
                         (s) => s.IssueID === question.IssueID,
                     );
 
+                    // Check if search matches description/summary
+                    const isFilteredOut = (!question.Description.toLowerCase().includes(searchVal) && !question.Summary.toLowerCase().includes(searchVal))
+
                     return (
                         <div
                             key={question.IssueID}
-                            className={`question-container ${expandedQuestionId === question.IssueID ? "expanded" : ""}`}
+                            className={`
+                                question-container
+                                ${expandedQuestionId === question.IssueID ? "expanded" : ""}
+                                ${isFilteredOut ? "hide" : ""}
+                            `}
+                            issueid={question.IssueID}
                             onKeyPress={() => toggleExpand(question.IssueID)}
                             onClick={() => toggleExpand(question.IssueID)}
                         >
@@ -158,6 +171,10 @@ const ReadStances = () => {
                                         key={question.IssueID}
                                         className="question-details"
                                     >
+                                        <div className="full-question-details">
+                                            <h3>Full Question</h3>
+                                            <p>{question.Description}</p>
+                                        </div>
                                         {userAnswer &&
                                             userAnswer !== "skip" && (
                                                 <div className="alignment-info">
@@ -213,6 +230,7 @@ const ReadStances = () => {
                         </div>
                     );
                 })}
+                </div>
             </div>
         </div>
     );
