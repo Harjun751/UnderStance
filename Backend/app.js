@@ -67,7 +67,11 @@ app.get("/stances", async (req, res) => {
         IssueID = IssueID ?? null;
         PartyID = PartyID ?? null;
         // Check if they are invalid as numbers
-        if (Number.isNaN(Number(StanceID)) || Number.isNaN(Number(IssueID)) || Number.isNaN(Number(PartyID))) {
+        if (
+            Number.isNaN(Number(StanceID)) ||
+            Number.isNaN(Number(IssueID)) ||
+            Number.isNaN(Number(PartyID))
+        ) {
             res.status(400).send({ error: "Invalid Arguments" });
         } else {
             try {

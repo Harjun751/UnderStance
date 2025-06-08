@@ -119,7 +119,17 @@ const ReadStances = () => {
                             >
                                 <div className="question-header">
                                     {/* allow selection of header text only if this container is expanded */}
-                                    <h2 onClick={(e) => { if (expandedQuestionId === question.IssueID) { e.stopPropagation() }}} onKeyPress={() => {}}>
+                                    <h2
+                                        onClick={(e) => {
+                                            if (
+                                                expandedQuestionId ===
+                                                question.IssueID
+                                            ) {
+                                                e.stopPropagation();
+                                            }
+                                        }}
+                                        onKeyPress={() => {}}
+                                    >
                                         Q{question.IssueID}:{" "}
                                         <br className="qn-break" />{" "}
                                         {question.Description}
@@ -188,7 +198,15 @@ const ReadStances = () => {
                                         >
                                             {userAnswer &&
                                                 userAnswer !== "skip" && (
-                                                    <div className="alignment-info" onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+                                                    <div
+                                                        className="alignment-info"
+                                                        onKeyPress={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                        onClick={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                    >
                                                         {matchingParties.length >
                                                         0 ? (
                                                             <>

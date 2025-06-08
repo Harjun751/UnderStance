@@ -56,7 +56,11 @@ async function getStances() {
 }
 
 async function getStancesFiltered(StanceID, IssueID, PartyID) {
-    if (Number.isNaN(Number(StanceID)) || Number.isNaN(Number(IssueID)) || Number.isNaN(Number(PartyID))) {
+    if (
+        Number.isNaN(Number(StanceID)) ||
+        Number.isNaN(Number(IssueID)) ||
+        Number.isNaN(Number(PartyID))
+    ) {
         throw new Error("Invalid Argument");
     }
     const SID = Number.parseInt(StanceID) || StanceID;
