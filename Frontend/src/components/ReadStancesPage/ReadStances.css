@@ -21,6 +21,7 @@
  * set a min height so scrollbar doesn't jump */
 #question-containers-container {
     min-height: 800px;
+    padding-left: 0;
 }
 
 /* Question container styles */

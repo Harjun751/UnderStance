@@ -87,7 +87,7 @@ const ReadStances = () => {
 
                 <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
-                <div id="question-containers-container" role="list">
+                <ul id="question-containers-container">
                 {questions.map((question) => {
                     // Filter stances for this question
                     const stancesForQuestion = stances.filter(
@@ -98,7 +98,7 @@ const ReadStances = () => {
                     const isFilteredOut = (!question.Description.toLowerCase().includes(searchVal) && !question.Summary.toLowerCase().includes(searchVal))
 
                     return (
-                        <div
+                        <li
                             key={question.IssueID}
                             className={`
                                 question-container
@@ -108,7 +108,6 @@ const ReadStances = () => {
                             issueid={question.IssueID}
                             onKeyPress={() => toggleExpand(question.IssueID)}
                             onClick={() => toggleExpand(question.IssueID)}
-                            role="listitem"
                         >
                             <div className="question-header">
                                 <h2>
@@ -228,10 +227,10 @@ const ReadStances = () => {
                                     </div>
                                 );
                             })()}
-                        </div>
+                        </li>
                     );
                 })}
-                </div>
+                </ul>
             </div>
         </div>
     );
