@@ -35,15 +35,15 @@
     /* Take up 100% of content-container size */
     width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    height: 65px;
-    overflow: clip;
     transition: all 0.5s;
+    height: 55px;
+    overflow: hidden;
 }
 
 .question-container.expanded {
-    /* set to a fixed 450px height with 
+    /* set to a fixed 300px height with 
      * scrollbar for more content */
-    height: 450px;
+    height: 300px;
     overflow-y: auto;
     scrollbar-width: thin;
 }
@@ -68,10 +68,22 @@
     justify-content: space-between;
     align-items: flex-start;
 }
+.question-header > h2 {
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 80%;
+}
+#content-container.unanswered .question-header > h2 {
+    width: 97%;
+}
 .question-header > .header-right {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+.question-container.expanded .question-header > h2 {
+    white-space: unset;
+    overflow-x: unset;
 }
 
 /* User alignment text */
@@ -193,9 +205,9 @@
     height: 34px;
     width: 34px;
 }
-
 /* Small(er) screen breakpoint */
-@media only screen and (max-width: 1440px) {
+/*@media only screen and (max-width: 1440px) {*/
+@media only screen and (max-width: 1400px) {
     .question-container {
         height: 45px;
         position: relative;
@@ -223,5 +235,11 @@
     }
     #question-containers-container {
         min-height: 500px;
+    }
+    .question-header > h2 {
+        width: 77%;
+    }
+    #content-container.unanswered .question-header > h2 {
+        width: 100%;
     }
 }
