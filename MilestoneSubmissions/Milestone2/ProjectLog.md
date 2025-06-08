@@ -52,9 +52,9 @@
   </tr>
   <tr>
     <td class="tg-0pky" rowspan="2">8th June</td>
-    <td class="tg-0pky">Started learning how to UI test react.</td>
+    <td class="tg-0pky">Started learning how to UI test react. Created UI tests for search bar</td>
     <td>-</td>
-    <td>0</td>
+    <td>4</td>
     <td>-</td>
   </tr>
 </tbody></table>
