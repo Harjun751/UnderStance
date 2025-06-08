@@ -40,9 +40,7 @@ jobs:
             **There is one or more linting errors (Backend)**
             <details>
             <summary>Lint Issues</summary>
-            ```
             ${{ steps.lint.outputs.lint_output }}
-            ```
             </details>
             🌏
           message-id: backend
@@ -68,9 +66,7 @@ jobs:
             **There is one or more linting errors (Frontend)**
             <details>
             <summary>Lint Issues</summary>
-            ```
             ${{ steps.biomelint.outputs.lint_output }}
-            ```
             </details>
             🌏
           message-id: frontend
