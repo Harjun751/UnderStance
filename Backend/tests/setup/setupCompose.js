@@ -1,4 +1,4 @@
-const { execSync } = require("child_process");
+const { execSync } = require("node:child_process");
 const waitOn = require("wait-on");
 
 module.exports = async function setupCompose(port) {

@@ -28,7 +28,7 @@ async function getQuestions() {
 }
 
 async function getQuestionWithID(id) {
-    if (!isNaN(id)) {
+    if (!Number.isNaN(id)) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
@@ -56,25 +56,19 @@ async function getStances() {
 }
 
 async function getStancesFiltered(StanceID, IssueID, PartyID) {
-    if (isNaN(StanceID) || isNaN(IssueID) || isNaN(PartyID)) {
+    if (Number.isNaN(StanceID) || Number.isNaN(IssueID) || Number.isNaN(PartyID)) {
         throw new Error("Invalid Argument");
     }
-    if (StanceID != null) {
-        StanceID = Number.parseInt(StanceID);
-    }
-    if (IssueID != null) {
-        IssueID = Number.parseInt(IssueID);
-    }
-    if (PartyID != null) {
-        PartyID = Number.parseInt(PartyID);
-    }
+    const SID = Number.parseInt(StanceID) || StanceID;
+    const IID = Number.parseInt(IssueID) || IssueID;
+    const PID = Number.parseInt(PartyID) || PartyID;
     try {
         const rows = await pool.query(
             `SELECT * FROM "Stance"
             WHERE ($1::integer IS NULL OR "StanceID" = $1::integer)
             AND ($2::integer IS NULL OR "IssueID" = $2::integer)
             AND ($3::integer IS NULL OR "PartyID" = $3::integer)`,
-            [StanceID, IssueID, PartyID],
+            [SID, IID, PID],
         );
         return rows.rows;
     } catch (err) {
@@ -94,7 +88,7 @@ async function getParties() {
 }
 
 async function getPartyWithID(id) {
-    if (!isNaN(id)) {
+    if (!Number.isNaN(id)) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
