@@ -87,7 +87,7 @@ const ReadStances = () => {
 
                 <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
-                <div id="question-containers-container">
+                <div id="question-containers-container" role="list">
                 {questions.map((question) => {
                     // Filter stances for this question
                     const stancesForQuestion = stances.filter(
@@ -108,6 +108,7 @@ const ReadStances = () => {
                             issueid={question.IssueID}
                             onKeyPress={() => toggleExpand(question.IssueID)}
                             onClick={() => toggleExpand(question.IssueID)}
+                            role="listitem"
                         >
                             <div className="question-header">
                                 <h2>

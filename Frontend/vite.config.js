@@ -16,4 +16,17 @@ export default defineConfig({
             "/parties": `http://${backendHost}:${backendPort}`,
         },
     },
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        css: true,
+        setupFiles: './src/utils/tests/setup.jsx',
+        reporters: [
+            "default",
+            "junit",
+        ],
+        outputFile: {
+            junit: './coverage/results.xml'
+        },
+    },
 });

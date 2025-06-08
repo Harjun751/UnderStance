@@ -9,6 +9,7 @@ export default function SearchBar({
         <div className="search-container">
             <label htmlFor="search">Search</label>
             <input 
+                id="search"
                 type="text"
                 name="search"
                 placeholder="Enter a search term..."

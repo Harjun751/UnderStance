@@ -36,4 +36,25 @@
     <td>4</td>
     <td>-</td>
   </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="2">6th June</td>
+    <td class="tg-0pky">Finished working on updating the design. Updated action scripts. Made PR</td>
+    <td>-</td>
+    <td>7</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="2">7th June</td>
+    <td class="tg-0pky">Started working on JIRA task to implment search bar in page. Finished</td>
+    <td>-</td>
+    <td>2</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="2">8th June</td>
+    <td class="tg-0pky">Started learning how to UI test react.</td>
+    <td>-</td>
+    <td>0</td>
+    <td>-</td>
+  </tr>
 </tbody></table>
