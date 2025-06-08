@@ -121,7 +121,7 @@ const ReadStances = () => {
                                     <h2>
                                         Q{question.IssueID}:{" "}
                                         <br className="qn-break" />{" "}
-                                        {question.Summary}
+                                        {question.Description}
                                     </h2>
                                     <div className="header-right">
                                         {userAnswers[question.IssueID] && (
@@ -185,10 +185,6 @@ const ReadStances = () => {
                                             key={question.IssueID}
                                             className="question-details"
                                         >
-                                            <div className="full-question-details">
-                                                <h3>Full Question</h3>
-                                                <p>{question.Description}</p>
-                                            </div>
                                             {userAnswer &&
                                                 userAnswer !== "skip" && (
                                                     <div className="alignment-info">
