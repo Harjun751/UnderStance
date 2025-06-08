@@ -85,7 +85,7 @@
 }
 
 /* Desktop breakpoint */
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1400px) {
     .quote-container {
         margin: 60px 0;
     }
@@ -114,15 +114,15 @@
 
     /* Floating quotes around text */
     .floaty-quotey {
-        position: absolute;
+        position: relative;
     }
 
     .floaty-quotey:nth-of-type(1) {
-        left: -40px;
+        left: -10px;
     }
 
-    .floaty-quotey:nth-of-type(2) {
-        right: -40px;
+    .floaty-quotey:nth-of-type(3) {
+        right: -10px;
     }
 
     .control-btns {
@@ -132,7 +132,7 @@
 }
 
 /* Small(er) screen breakpoint */
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1400px) {
     .button-group {
         display: flex;
         flex-direction: column;
@@ -172,5 +172,13 @@
 
     .floaty-quotey:nth-of-type(3) {
         right: -10px;
+    }
+}
+/* Small(est) screen breakpoint */
+@media only screen and (max-width: 500px) {
+    /* Make the float quotes disappear on mobile
+     * they look odd :(                         */
+    .floaty-quotey {
+        display: none;
     }
 }

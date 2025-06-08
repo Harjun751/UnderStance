@@ -118,7 +118,8 @@ const ReadStances = () => {
                                 onClick={() => toggleExpand(question.IssueID)}
                             >
                                 <div className="question-header">
-                                    <h2>
+                                    {/* allow selection of header text only if this container is expanded */}
+                                    <h2 onClick={(e) => { if (expandedQuestionId === question.IssueID) { e.stopPropagation() }}}>
                                         Q{question.IssueID}:{" "}
                                         <br className="qn-break" />{" "}
                                         {question.Description}
@@ -187,7 +188,7 @@ const ReadStances = () => {
                                         >
                                             {userAnswer &&
                                                 userAnswer !== "skip" && (
-                                                    <div className="alignment-info">
+                                                    <div className="alignment-info" onClick={(e) => e.stopPropagation()}>
                                                         {matchingParties.length >
                                                         0 ? (
                                                             <>
