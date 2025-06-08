@@ -17,16 +17,13 @@ export default defineConfig({
         },
     },
     test: {
-        environment: 'jsdom',
+        environment: "jsdom",
         globals: true,
         css: true,
-        setupFiles: './src/utils/tests/setup.jsx',
-        reporters: [
-            "default",
-            "junit",
-        ],
+        setupFiles: "./src/utils/tests/setup.jsx",
+        reporters: ["default", "junit"],
         outputFile: {
-            junit: './coverage/results.xml'
+            junit: "./coverage/results.xml",
         },
     },
 });
