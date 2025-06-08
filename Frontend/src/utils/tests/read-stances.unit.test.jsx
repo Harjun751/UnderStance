@@ -43,12 +43,12 @@ beforeEach(() => {
                 Promise.resolve([
                     {
                         IssueID: 1,
-                        Description: "TEST: cool",
+                        Description: "First Test",
                         Summary: "First Test",
                     },
                     {
                         IssueID: 2,
-                        Description: "TEST: cool2",
+                        Description: "Second Test",
                         Summary: "Second Test",
                     },
                 ]),
