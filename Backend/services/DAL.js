@@ -28,7 +28,7 @@ async function getQuestions() {
 }
 
 async function getQuestionWithID(id) {
-    if (!Number.isNaN(id)) {
+    if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
@@ -56,7 +56,7 @@ async function getStances() {
 }
 
 async function getStancesFiltered(StanceID, IssueID, PartyID) {
-    if (Number.isNaN(StanceID) || Number.isNaN(IssueID) || Number.isNaN(PartyID)) {
+    if (Number.isNaN(Number(StanceID)) || Number.isNaN(Number(IssueID)) || Number.isNaN(Number(PartyID))) {
         throw new Error("Invalid Argument");
     }
     const SID = Number.parseInt(StanceID) || StanceID;
@@ -88,7 +88,7 @@ async function getParties() {
 }
 
 async function getPartyWithID(id) {
-    if (!Number.isNaN(id)) {
+    if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(

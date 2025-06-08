@@ -30,7 +30,7 @@ app.get("/questions", async (req, res) => {
             res.status(500).send({ error: "Failed to fetch questions" });
         }
     } else {
-        if (!Number.isNaN(id)) {
+        if (!Number.isNaN(Number(id))) {
             try {
                 const data = await db.getQuestionWithID(Number.parseInt(id));
                 res.status(200).send(data);
@@ -67,7 +67,7 @@ app.get("/stances", async (req, res) => {
         IssueID = IssueID ?? null;
         PartyID = PartyID ?? null;
         // Check if they are invalid as numbers
-        if (Number.isNaN(StanceID) || Number.isNaN(IssueID) || Number.isNaN(PartyID)) {
+        if (Number.isNaN(Number(StanceID)) || Number.isNaN(Number(IssueID)) || Number.isNaN(Number(PartyID))) {
             res.status(400).send({ error: "Invalid Arguments" });
         } else {
             try {
@@ -100,7 +100,7 @@ app.get("/parties", async (req, res) => {
             res.status(500).send({ error: "Failed to fetch parties" });
         }
     } else {
-        if (!Number.isNaN(id)) {
+        if (!Number.isNaN(Number(id))) {
             try {
                 const data = await db.getPartyWithID(Number.parseInt(id));
                 res.status(200).send(data);
