@@ -29,7 +29,7 @@ async function getQuestions() {
 
 async function getQuestionWithID(id) {
     if (!isNaN(id)) {
-        const val = parseInt(id);
+        const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
                 'SELECT * FROM "Issue" WHERE "IssueID" = $1',
@@ -60,13 +60,13 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
         throw new Error("Invalid Argument");
     }
     if (StanceID != null) {
-        StanceID = parseInt(StanceID);
+        StanceID = Number.parseInt(StanceID);
     }
     if (IssueID != null) {
-        IssueID = parseInt(IssueID);
+        IssueID = Number.parseInt(IssueID);
     }
     if (PartyID != null) {
-        PartyID = parseInt(PartyID);
+        PartyID = Number.parseInt(PartyID);
     }
     try {
         const rows = await pool.query(
@@ -95,7 +95,7 @@ async function getParties() {
 
 async function getPartyWithID(id) {
     if (!isNaN(id)) {
-        const val = parseInt(id);
+        const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
                 'SELECT * FROM "Party" WHERE "PartyID" = $1::integer',

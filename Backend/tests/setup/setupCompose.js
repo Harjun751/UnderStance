@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const waitOn = require("wait-on");
 
 module.exports = async function setupCompose(port) {
-    const intPort = parseInt(port);
+    const intPort = Number.parseInt(port);
     console.log("Starting Docker Compose...");
     execSync(
         `docker compose -p ${intPort} -f tests/setup/docker-compose.test.yml up --build -d`,
