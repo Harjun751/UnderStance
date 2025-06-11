@@ -1,3 +1,4 @@
+/* eslint-env vitest */
 export function calculateAlignmentData(
     userAnswers,
     questions,

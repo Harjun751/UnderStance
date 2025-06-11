@@ -58,7 +58,7 @@ export default function AlignmentChart({
     });
 
     // Custom tick component for rendering party icons and names on the X axis
-    const CustomYAxisTick = ({ x, y, payload, parties }) => {
+    const CustomYAxisTick = ({ x, y, payload }) => {
         const icon = iconLookup[payload.value];
         return (
             <g transform={`translate(${x},${y + 19})`}>
@@ -101,7 +101,7 @@ export default function AlignmentChart({
                         <XAxis
                             type="category"
                             dataKey="name"
-                            tick={(props, data) => (
+                            tick={(props) => (
                                 <CustomYAxisTick {...props} />
                             )}
                             interval={0}

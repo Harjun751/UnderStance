@@ -1,13 +1,14 @@
+/* eslint-env vitest */
 describe('some test', () => {
   test('does something', () => {
     expect(true).toBe(true);
   });
 });
 
-const parties = [
-  { partyId: 1, name: "Coalition for Shakira" },
-  { partyId: 2, name: "Traditionalists' Party" },
-];
+// const parties = [
+//   { partyId: 1, name: "Coalition for Shakira" },
+//   { partyId: 2, name: "Traditionalists' Party" },
+// ];
 
 // Stances: [IssueID, PartyID, Stand]
 const stances = [

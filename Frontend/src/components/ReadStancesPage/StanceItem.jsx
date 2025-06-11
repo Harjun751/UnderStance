@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 export default function StanceItem({ parties, stancesForQuestion, userAnswerForQuestion }) {
     const preventClickThrough = (e) => {
@@ -25,7 +25,7 @@ export default function StanceItem({ parties, stancesForQuestion, userAnswerForQ
         startX.current = e.pageX - containerRef.current.offsetLeft;
         scrollHorz.current = containerRef.current.scrollLeft;
     };
-    const mouseUpHandler = (e) => {
+    const mouseUpHandler = () => {
         mouseDown.current = false;
     };
 
@@ -34,7 +34,7 @@ export default function StanceItem({ parties, stancesForQuestion, userAnswerForQ
             className="stances-list"
             ref={containerRef}
             onClick={preventClickThrough}
-            onKeyPress={(e) => {}}
+            onKeyPress={() => {}}
             onMouseDown={mouseDownHandler}
             onMouseUp={mouseUpHandler}
             onMouseLeave={mouseUpHandler}

@@ -4,7 +4,7 @@ import AlignmentChart from "./AlignmentChart";
 import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
-import { importanceLabels, importanceColors } from "../WeightageSlider/WeightageSlider";
+import { importanceLabels, importanceColors } from "../WeightageSlider/WeightageSliderUtils";
 
 const ReadStances = () => {
     const [stances, setStances] = useState([]);
@@ -64,16 +64,16 @@ const ReadStances = () => {
             .querySelector(`.question-container[issueid='${issueId}']`)
             .scroll(0, 0);
     };
-
-    // Show loading or error messages before rendering data
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
+    
     // Retrieve user answers passed via navigation state
     const location = useLocation();
     const userAnswers =
         location.state?.answers ||
         JSON.parse(window.localStorage.getItem("quizAnswers") || "{}");
+
+    // Show loading or error messages before rendering data
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="content">
