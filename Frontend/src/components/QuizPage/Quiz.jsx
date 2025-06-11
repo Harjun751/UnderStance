@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
 import { useNavigate } from "react-router-dom";
+import WeightageSlider from "../WeightageSlider/WeightageSlider";
 
 const Quiz = () => {
     //
@@ -13,6 +14,8 @@ const Quiz = () => {
 
     const [showConfirmation, setShowConfirmation] = useState(false); // Controls visibility of the confirmation modal
     const navigate = useNavigate(); // Hook from React Router for navigation
+
+    const [weightage, setWeightage] = useState(3); // State to store Weightage
 
     // Fetch questions on component mount
     useEffect(() => {
@@ -140,6 +143,7 @@ const Quiz = () => {
                             </button>
                         ))}
                     </div>
+                    <WeightageSlider value={weightage} onChange={setWeightage} />
                     <div className="control-btns">
                         <button
                             type="button"
