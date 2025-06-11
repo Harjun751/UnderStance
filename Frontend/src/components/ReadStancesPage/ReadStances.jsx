@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import "./ReadStances.css";
 import AlignmentChart from "./AlignmentChart";
+import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
 
@@ -10,7 +11,8 @@ const ReadStances = () => {
     const [parties, setParties] = useState([]);
     // State for questions/issues
     const [questions, setQuestions] = useState([]);
-
+    // state for searching
+    const [searchVal, setSearch] = useState("");
     // State for loading and error
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -56,6 +58,10 @@ const ReadStances = () => {
     // Toggle expand/collapse of a question container
     const toggleExpand = (issueId) => {
         setExpandedQuestionId(expandedQuestionId === issueId ? null : issueId);
+        // Reset scroll of issue on collapse/expand (prevents issue with collapsed and ugly container)
+        document
+            .querySelector(`.question-container[issueid='${issueId}']`)
+            .scroll(0, 0);
     };
 
     // Show loading or error messages before rendering data
@@ -81,138 +87,179 @@ const ReadStances = () => {
                     stances={stances}
                 />
 
+                <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
+                <ul id="question-containers-container">
+                    {questions.map((question) => {
+                        // Filter stances for this question
+                        const stancesForQuestion = stances.filter(
+                            (s) => s.IssueID === question.IssueID,
+                        );
 
-                {questions.map((question) => {
-                    // Filter stances for this question
-                    const stancesForQuestion = stances.filter(
-                        (s) => s.IssueID === question.IssueID,
-                    );
+                        // Check if search matches description/summary
+                        const isFilteredOut =
+                            !question.Description.toLowerCase().includes(
+                                searchVal,
+                            ) &&
+                            !question.Summary.toLowerCase().includes(searchVal);
 
-                    return (
-                        <div
-                            key={question.IssueID}
-                            className={`question-container ${expandedQuestionId === question.IssueID ? "expanded" : ""}`}
-                            onKeyPress={() => toggleExpand(question.IssueID)}
-                            onClick={() => toggleExpand(question.IssueID)}
-                        >
-                            <div className="question-header">
-                                <h2>
-                                    Q{question.IssueID}:{" "}
-                                    <br className="qn-break" />{" "}
-                                    {question.Summary}
-                                </h2>
-                                <div className="header-right">
-                                    {userAnswers[question.IssueID] && (
-                                        <span
-                                            className={`user-answer ${
-                                                userAnswers[
-                                                    question.IssueID
-                                                ] === "agree"
-                                                    ? "agree"
-                                                    : userAnswers[
-                                                            question.IssueID
-                                                        ] === "disagree"
-                                                      ? "disagree"
-                                                      : "skip"
-                                            }`}
+                        return (
+                            <li
+                                key={question.IssueID}
+                                className={`
+                                question-container
+                                ${expandedQuestionId === question.IssueID ? "expanded" : ""}
+                                ${isFilteredOut ? "hide" : ""}
+                            `}
+                                issueid={question.IssueID}
+                                onKeyPress={() =>
+                                    toggleExpand(question.IssueID)
+                                }
+                                onClick={() => toggleExpand(question.IssueID)}
+                            >
+                                <div className="question-header">
+                                    {/* allow selection of header text only if this container is expanded */}
+                                    <h2
+                                        onClick={(e) => {
+                                            if (
+                                                expandedQuestionId ===
+                                                question.IssueID
+                                            ) {
+                                                e.stopPropagation();
+                                            }
+                                        }}
+                                        onKeyPress={() => {}}
+                                    >
+                                        Q{question.IssueID}:{" "}
+                                        <br className="qn-break" />{" "}
+                                        {question.Description}
+                                    </h2>
+                                    <div className="header-right">
+                                        {userAnswers[question.IssueID] && (
+                                            <span
+                                                className={`user-answer ${
+                                                    userAnswers[
+                                                        question.IssueID
+                                                    ] === "agree"
+                                                        ? "agree"
+                                                        : userAnswers[
+                                                                question.IssueID
+                                                            ] === "disagree"
+                                                          ? "disagree"
+                                                          : "skip"
+                                                }`}
+                                            >
+                                                {userAnswers[question.IssueID]
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                    userAnswers[
+                                                        question.IssueID
+                                                    ].slice(1)}
+                                            </span>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            className="toggle-button"
                                         >
-                                            {userAnswers[question.IssueID]
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                                userAnswers[
-                                                    question.IssueID
-                                                ].slice(1)}
-                                        </span>
-                                    )}
-
-                                    <button
-                                        type="button"
-                                        className="toggle-button"
-                                    >
-                                        ▲
-                                    </button>
+                                            ▲
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            {(() => {
-                                const userAnswer =
-                                    userAnswers[question.IssueID];
-                                const matchingParties = parties.filter(
-                                    (party) => {
-                                        const stance = stancesForQuestion.find(
-                                            (s) => s.PartyID === party.PartyID,
-                                        );
-                                        if (!stance || userAnswer === "skip")
-                                            return false;
-                                        return (
-                                            (userAnswer === "agree" &&
-                                                stance.Stand === true) ||
-                                            (userAnswer === "disagree" &&
-                                                stance.Stand === false)
-                                        );
-                                    },
-                                );
+                                {(() => {
+                                    const userAnswer =
+                                        userAnswers[question.IssueID];
+                                    const matchingParties = parties.filter(
+                                        (party) => {
+                                            const stance =
+                                                stancesForQuestion.find(
+                                                    (s) =>
+                                                        s.PartyID ===
+                                                        party.PartyID,
+                                                );
+                                            if (
+                                                !stance ||
+                                                userAnswer === "skip"
+                                            )
+                                                return false;
+                                            return (
+                                                (userAnswer === "agree" &&
+                                                    stance.Stand === true) ||
+                                                (userAnswer === "disagree" &&
+                                                    stance.Stand === false)
+                                            );
+                                        },
+                                    );
 
-                                return (
-                                    <div
-                                        key={question.IssueID}
-                                        className="question-details"
-                                    >
-                                        {userAnswer &&
-                                            userAnswer !== "skip" && (
-                                                <div className="alignment-info">
-                                                    {matchingParties.length >
-                                                    0 ? (
-                                                        <>
-                                                            Your Stance aligns
-                                                            with the:{" "}
-                                                            {matchingParties.map(
-                                                                (
-                                                                    party,
-                                                                    idx,
-                                                                ) => (
-                                                                    <span
-                                                                        key={
-                                                                            party.PartyID
-                                                                        }
-                                                                    >
-                                                                        <strong>
-                                                                            {
-                                                                                party.Name
+                                    return (
+                                        <div
+                                            key={question.IssueID}
+                                            className="question-details"
+                                        >
+                                            {userAnswer &&
+                                                userAnswer !== "skip" && (
+                                                    <div
+                                                        className="alignment-info"
+                                                        onKeyPress={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                        onClick={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                    >
+                                                        {matchingParties.length >
+                                                        0 ? (
+                                                            <>
+                                                                Your Stance
+                                                                aligns with the:{" "}
+                                                                {matchingParties.map(
+                                                                    (
+                                                                        party,
+                                                                        idx,
+                                                                    ) => (
+                                                                        <span
+                                                                            key={
+                                                                                party.PartyID
                                                                             }
-                                                                        </strong>
-                                                                        {idx <
-                                                                        matchingParties.length -
-                                                                            1
-                                                                            ? ", "
-                                                                            : ""}
-                                                                    </span>
-                                                                ),
-                                                            )}
-                                                        </>
-                                                    ) : (
-                                                        "No parties matched your stance on this issue."
-                                                    )}
+                                                                        >
+                                                                            <strong>
+                                                                                {
+                                                                                    party.Name
+                                                                                }
+                                                                            </strong>
+                                                                            {idx <
+                                                                            matchingParties.length -
+                                                                                1
+                                                                                ? ", "
+                                                                                : ""}
+                                                                        </span>
+                                                                    ),
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            "No parties matched your stance on this issue."
+                                                        )}
+                                                    </div>
+                                                )}
+                                            {userAnswer === "skip" && (
+                                                <div className="alignment-info">
+                                                    You did not answer this
+                                                    question.
                                                 </div>
                                             )}
-                                        {userAnswer === "skip" && (
-                                            <div className="alignment-info">
-                                                You did not answer this
-                                                question.
-                                            </div>
-                                        )}
-                                        <StanceItem
-                                            parties={parties}
-                                            stancesForQuestion={
-                                                stancesForQuestion
-                                            }
-                                        />
-                                    </div>
-                                );
-                            })()}
-                        </div>
-                    );
-                })}
+                                            <StanceItem
+                                                parties={parties}
+                                                stancesForQuestion={
+                                                    stancesForQuestion
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                })()}
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
         </div>
     );

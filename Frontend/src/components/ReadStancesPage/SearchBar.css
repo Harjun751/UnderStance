@@ -1,0 +1,44 @@
+.search-container {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.search-container > label {
+    display: block;
+    text-align: left;
+    font-family: "DM Serif Display", serif;
+    font-style: normal;
+    font-weight: unset;
+    margin-bottom: 5px;
+}
+
+.search-container > input {
+    width: 100%;
+    background: white;
+    padding-left: 10px;
+    color: black;
+    border: 1px solid #757575;
+}
+
+.search-container > input::placeholder {
+    color: #757575;
+}
+
+/* Larger screen breakpoint */
+@media only screen and (min-width: 1440px) {
+    .search-container > input {
+        height: 60px;
+        border-radius: 10px;
+    }
+    .search-container {
+        margin: 40px auto;
+    }
+}
+
+/* Small(er) screen breakpoint */
+@media only screen and (max-width: 1440px) {
+    .search-container > input {
+        height: 40px;
+        border-radius: 10px;
+    }
+}

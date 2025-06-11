@@ -69,6 +69,7 @@ button {
 #title,
 h1,
 h2,
+h3,
 .big-quote {
     font-family: "DM Serif Display", serif;
     font-style: normal;
@@ -82,23 +83,28 @@ h2,
 }
 
 /* Desktop breakpoint */
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1400px) {
     #title {
-        font-size: 72px;
+        font-size: 2.5em;
     }
     h1 {
-        font-size: 42px;
+        font-size: 2em;
         margin: 0;
     }
     h2 {
-        font-size: 32px;
+        font-size: 1.5em;
+        margin: 0;
+    }
+    h3,
+    label {
+        font-size: 1.25em;
         margin: 0;
     }
     .big-quote {
-        font-size: 50px;
+        font-size: 2em;
     }
     * {
-        font-size: 24px;
+        font-size: 1em;
     }
 
     .content > #content-container {
@@ -109,7 +115,7 @@ h2,
 }
 
 /* Small(er) screen breakpoint */
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1400px) {
     #title {
         font-size: 40px;
     }

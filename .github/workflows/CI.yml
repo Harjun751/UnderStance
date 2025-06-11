@@ -19,17 +19,13 @@ jobs:
         with:
           node-version: 'latest'
 
-      - name: Lint & Fix using Standard (Backend)
-        continue-on-error: true
-        run: |
-          npx standard --fix --env=jest ./Backend/
-      
-      - name: Check for remainding lint errors
+
+      - name: Lint & fix using Biome (Backend)
         id: lint
         continue-on-error: true
         run: |
-          set +e  # disable immediate exit on error
-          OUTPUT="$(npx standard --env=jest ./Backend/ 2>&1)"
+          set +e
+          OUTPUT="$(npx @biomejs/biome lint ./Backend/ --write 2>&1)"
           EXIT_CODE=$?
           echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$OUTPUT" >> $GITHUB_OUTPUT
@@ -42,18 +38,19 @@ jobs:
         with:
           message: |
             **There is one or more linting errors (Backend)**
-            ```
+            <details>
+            <summary>Lint Issues</summary>
             ${{ steps.lint.outputs.lint_output }}
-            ```
+            </details>
             🌏
           message-id: backend
 
-      - name: Lint & fix using Biome
+      - name: Lint & fix using Biome (Frontend)
         id: biomelint
         continue-on-error: true
         run: |
           set +e
-          OUTPUT="$(find Frontend/src/ -type f ! -path Frontend/src/index.css ! -path Frontend/src/utils/tests/* | xargs npx @biomejs/biome lint --write 2>&1)"
+          OUTPUT="$(find Frontend/src/ -type f ! -path 'Frontend/src/index.css' ! -path 'Frontend/src/utils/tests/*' | xargs npx @biomejs/biome lint --write 2>&1)"
           EXIT_CODE=$?
           echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
           echo "$OUTPUT" >> $GITHUB_OUTPUT
@@ -67,9 +64,10 @@ jobs:
         with:
           message: |
             **There is one or more linting errors (Frontend)**
-            ```
+            <details>
+            <summary>Lint Issues</summary>
             ${{ steps.biomelint.outputs.lint_output }}
-            ```
+            </details>
             🌏
           message-id: frontend
 
@@ -95,7 +93,7 @@ jobs:
 
       - name: Format backend using prettier
         run: |
-          npx prettier --tab-width 4 --use-tabs false --write "./Backend/**/*.js"
+          npx @biomejs/biome format --indent-width=4 --indent-style=space ./Backend/ --write
         
       - name: Format frontend using biome
         run: |
@@ -106,5 +104,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Prettified code 💅"
+          git commit -m "Prettified code 💅" || exit 0
           git push

@@ -30,9 +30,9 @@ app.get("/questions", async (req, res) => {
             res.status(500).send({ error: "Failed to fetch questions" });
         }
     } else {
-        if (!isNaN(id)) {
+        if (!Number.isNaN(Number(id))) {
             try {
-                const data = await db.getQuestionWithID(parseInt(id));
+                const data = await db.getQuestionWithID(Number.parseInt(id));
                 res.status(200).send(data);
             } catch (error) {
                 logger.error(error.stack);
@@ -67,7 +67,11 @@ app.get("/stances", async (req, res) => {
         IssueID = IssueID ?? null;
         PartyID = PartyID ?? null;
         // Check if they are invalid as numbers
-        if (isNaN(StanceID) || isNaN(IssueID) || isNaN(PartyID)) {
+        if (
+            Number.isNaN(Number(StanceID)) ||
+            Number.isNaN(Number(IssueID)) ||
+            Number.isNaN(Number(PartyID))
+        ) {
             res.status(400).send({ error: "Invalid Arguments" });
         } else {
             try {
@@ -75,9 +79,9 @@ app.get("/stances", async (req, res) => {
                 // We want to pass null if filter is not being used
                 // so coerce into null if required with ||
                 const data = await db.getStancesFiltered(
-                    parseInt(StanceID) || null,
-                    parseInt(IssueID) || null,
-                    parseInt(PartyID) || null,
+                    Number.parseInt(StanceID) || null,
+                    Number.parseInt(IssueID) || null,
+                    Number.parseInt(PartyID) || null,
                 );
                 res.status(200).send(data);
             } catch (error) {
@@ -100,9 +104,9 @@ app.get("/parties", async (req, res) => {
             res.status(500).send({ error: "Failed to fetch parties" });
         }
     } else {
-        if (!isNaN(id)) {
+        if (!Number.isNaN(Number(id))) {
             try {
-                const data = await db.getPartyWithID(parseInt(id));
+                const data = await db.getPartyWithID(Number.parseInt(id));
                 res.status(200).send(data);
             } catch (error) {
                 logger.error(error.stack);
