@@ -86,10 +86,14 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Fixed some lint errors"
-          git push
-          echo "Exiting workflow due to remaining lint errors"
-          exit 1
+          if git diff --cacheed --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Fixed some lint errors"
+            git push
+            echo "Exiting workflow due to remaining lint errors"
+            exit 1
+          fi
 
       - name: Format backend using prettier
         run: |
