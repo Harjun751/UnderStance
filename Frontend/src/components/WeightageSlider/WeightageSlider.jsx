@@ -1,9 +1,8 @@
 import React from "react";
-import "./WeightageSlider.css"
+import "./WeightageSlider.css";
 import { importanceLabels, getSliderBackground } from "./WeightageSliderUtils";
 
-
-const WeightageSlider = ({value, onChange}) => {
+const WeightageSlider = ({ value, onChange }) => {
     return (
         <div className="weightage-slider">
             <div className="slider-container">
@@ -18,13 +17,15 @@ const WeightageSlider = ({value, onChange}) => {
                     style={{ background: getSliderBackground(value) }}
                     className="slider"
                 />
-                <div className="tooltip">Slide to indicate how importance this issue is to you!</div>
+                <div className="tooltip">
+                    Slide to indicate how importance this issue is to you!
+                </div>
                 <label htmlFor="weightage" className="weightage-label">
                     <strong>{importanceLabels[value]}</strong>
                 </label>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default WeightageSlider;

@@ -101,9 +101,7 @@ export default function AlignmentChart({
                         <XAxis
                             type="category"
                             dataKey="name"
-                            tick={(props) => (
-                                <CustomYAxisTick {...props} />
-                            )}
+                            tick={(props) => <CustomYAxisTick {...props} />}
                             interval={0}
                         />
                         <YAxis

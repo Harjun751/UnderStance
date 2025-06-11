@@ -1,6 +1,10 @@
 import React, { useRef } from "react";
 
-export default function StanceItem({ parties, stancesForQuestion, userAnswerForQuestion }) {
+export default function StanceItem({
+    parties,
+    stancesForQuestion,
+    userAnswerForQuestion,
+}) {
     const preventClickThrough = (e) => {
         e.stopPropagation();
     };
@@ -50,7 +54,8 @@ export default function StanceItem({ parties, stancesForQuestion, userAnswerForQ
                 let weightMatch = null;
                 if (userAnswer && userAnswer !== "skip" && stance) {
                     const userAnswerBool = userAnswer === "agree";
-                    weightMatch = (userAnswerBool === stance.Stand) ? userWeightage : 0;
+                    weightMatch =
+                        userAnswerBool === stance.Stand ? userWeightage : 0;
                 }
                 return (
                     <div
@@ -74,9 +79,7 @@ export default function StanceItem({ parties, stancesForQuestion, userAnswerForQ
                                 {stance ? stance.Reason : "No reason provided"}
                             </p>
                             {weightMatch !== null && (
-                                <strong>
-                                    Party Alignment: +{weightMatch}
-                                </strong>
+                                <strong>Party Alignment: +{weightMatch}</strong>
                             )}
                         </div>
                     </div>

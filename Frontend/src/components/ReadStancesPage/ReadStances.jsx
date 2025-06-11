@@ -4,7 +4,10 @@ import AlignmentChart from "./AlignmentChart";
 import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
-import { importanceLabels, importanceColors } from "../WeightageSlider/WeightageSliderUtils";
+import {
+    importanceLabels,
+    importanceColors,
+} from "../WeightageSlider/WeightageSliderUtils";
 
 const ReadStances = () => {
     const [stances, setStances] = useState([]);
@@ -64,7 +67,7 @@ const ReadStances = () => {
             .querySelector(`.question-container[issueid='${issueId}']`)
             .scroll(0, 0);
     };
-    
+
     // Retrieve user answers passed via navigation state
     const location = useLocation();
     const userAnswers =
@@ -136,7 +139,8 @@ const ReadStances = () => {
                                         {question.Description}
                                     </h2>
                                     <div className="header-right">
-                                        {userAnswers[question.IssueID]?.answer && (
+                                        {userAnswers[question.IssueID]
+                                            ?.answer && (
                                             <span
                                                 className={`user-answer ${
                                                     userAnswers[
@@ -145,12 +149,15 @@ const ReadStances = () => {
                                                         ? "agree"
                                                         : userAnswers[
                                                                 question.IssueID
-                                                            ].answer === "disagree"
+                                                            ].answer ===
+                                                            "disagree"
                                                           ? "disagree"
                                                           : "skip"
                                                 }`}
                                             >
-                                                {userAnswers[question.IssueID].answer
+                                                {userAnswers[
+                                                    question.IssueID
+                                                ].answer
                                                     .charAt(0)
                                                     .toUpperCase() +
                                                     userAnswers[
@@ -244,18 +251,28 @@ const ReadStances = () => {
                                                         )}
                                                         <br />
                                                         <>
-                                                            You indicated that this issue was of
+                                                            You indicated that
+                                                            this issue was of
                                                             <strong
                                                                 style={{
-                                                                    color: importanceColors[userResponse?.weightage] || "inherit",
+                                                                    color:
+                                                                        importanceColors[
+                                                                            userResponse
+                                                                                ?.weightage
+                                                                        ] ||
+                                                                        "inherit",
                                                                 }}
                                                             >
-                                                                {" " + importanceLabels[userResponse?.weightage]}
+                                                                {" " +
+                                                                    importanceLabels[
+                                                                        userResponse
+                                                                            ?.weightage
+                                                                    ]}
                                                             </strong>
                                                         </>
                                                     </div>
                                                 )}
-                                                
+
                                             {userAnswer === "skip" && (
                                                 <div className="alignment-info">
                                                     You did not answer this
@@ -267,7 +284,9 @@ const ReadStances = () => {
                                                 stancesForQuestion={
                                                     stancesForQuestion
                                                 }
-                                                userAnswerForQuestion={userResponse}
+                                                userAnswerForQuestion={
+                                                    userResponse
+                                                }
                                             />
                                         </div>
                                     );

@@ -9,39 +9,39 @@ export default [
     {
         files: ["**/*.{js,jsx}"],
         languageOptions: {
-        ecmaVersion: 2020,
-        globals: globals.browser,
-        parserOptions: {
-            ecmaVersion: "latest",
-            ecmaFeatures: { jsx: true },
-            sourceType: "module",
-        },
+            ecmaVersion: 2020,
+            globals: globals.browser,
+            parserOptions: {
+                ecmaVersion: "latest",
+                ecmaFeatures: { jsx: true },
+                sourceType: "module",
+            },
         },
         plugins: {
-        "react-hooks": reactHooks,
-        "react-refresh": reactRefresh,
+            "react-hooks": reactHooks,
+            "react-refresh": reactRefresh,
         },
         rules: {
-        ...js.configs.recommended.rules,
-        ...reactHooks.configs.recommended.rules,
-        "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
-        "react-refresh/only-export-components": [
-            "warn",
-            { allowConstantExport: true },
-        ],
+            ...js.configs.recommended.rules,
+            ...reactHooks.configs.recommended.rules,
+            "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
+            "react-refresh/only-export-components": [
+                "warn",
+                { allowConstantExport: true },
+            ],
         },
     },
     {
         files: ["**/*.{test,spec}.{js,jsx}"],
         languageOptions: {
             globals: {
-            describe: "readonly",
-            test: "readonly",
-            expect: "readonly",
-            beforeEach: "readonly",
-            afterEach: "readonly",
-            vi: "readonly",
-            global: "readonly",
+                describe: "readonly",
+                test: "readonly",
+                expect: "readonly",
+                beforeEach: "readonly",
+                afterEach: "readonly",
+                vi: "readonly",
+                global: "readonly",
             },
         },
         plugins: {
@@ -51,13 +51,13 @@ export default [
     {
         files: ["vite.config.js", "vite.config.*.js"],
         languageOptions: {
-        globals: {
-            process: "readonly",
-            __dirname: "readonly",
-            require: "readonly",
-            module: "readonly",
-            exports: "readonly",
+            globals: {
+                process: "readonly",
+                __dirname: "readonly",
+                require: "readonly",
+                module: "readonly",
+                exports: "readonly",
+            },
         },
-        },
-  },
+    },
 ];

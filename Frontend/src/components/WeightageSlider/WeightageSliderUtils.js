@@ -7,7 +7,6 @@ export const importanceLabels = {
     5: "Highest Importance",
 };
 
-
 export const importanceColors = {
     1: "#ccc",
     2: "#6ba4ff",

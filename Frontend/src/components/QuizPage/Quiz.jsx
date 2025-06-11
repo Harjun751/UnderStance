@@ -38,11 +38,11 @@ const Quiz = () => {
         const isLast = currentIndex === issues.length - 1;
 
         setAnswers((prev) => {
-            const updated = { 
-                ...prev, 
+            const updated = {
+                ...prev,
                 [currentIssue.IssueID]: {
-                    answer: answerType, 
-                    weightage: answerType==="skip" ? 0 : weightage
+                    answer: answerType,
+                    weightage: answerType === "skip" ? 0 : weightage,
                 },
             };
 
@@ -150,7 +150,10 @@ const Quiz = () => {
                             </button>
                         ))}
                     </div>
-                    <WeightageSlider value={weightage} onChange={setWeightage} />
+                    <WeightageSlider
+                        value={weightage}
+                        onChange={setWeightage}
+                    />
                     <div className="control-btns">
                         <button
                             type="button"
