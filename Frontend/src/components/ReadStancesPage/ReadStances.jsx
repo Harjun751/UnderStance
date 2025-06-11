@@ -4,6 +4,7 @@ import AlignmentChart from "./AlignmentChart";
 import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
+import { importanceLabels, importanceColors } from "../WeightageSlider/WeightageSlider";
 
 const ReadStances = () => {
     const [stances, setStances] = useState([]);
@@ -241,8 +242,20 @@ const ReadStances = () => {
                                                         ) : (
                                                             "No parties matched your stance on this issue."
                                                         )}
+                                                        <br />
+                                                        <>
+                                                            You indicated that this issue was of
+                                                            <strong
+                                                                style={{
+                                                                    color: importanceColors[userResponse?.weightage] || "inherit",
+                                                                }}
+                                                            >
+                                                                {" " + importanceLabels[userResponse?.weightage]}
+                                                            </strong>
+                                                        </>
                                                     </div>
                                                 )}
+                                                
                                             {userAnswer === "skip" && (
                                                 <div className="alignment-info">
                                                     You did not answer this
@@ -254,7 +267,7 @@ const ReadStances = () => {
                                                 stancesForQuestion={
                                                     stancesForQuestion
                                                 }
-                                                userAnswerForQuestion={userAnswers[question.IssueID]}
+                                                userAnswerForQuestion={userResponse}
                                             />
                                         </div>
                                     );
