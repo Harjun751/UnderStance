@@ -20,6 +20,7 @@ const Quiz = () => {
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
+        setWeightage(3); // Auto-reset weightage when question changes
         fetch(`${import.meta.env.VITE_API_URL}/questions`)
             // fetch('https://understance-backend.onrender.com/questions') //debugging
             .then((res) => {
@@ -30,14 +31,20 @@ const Quiz = () => {
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
             .catch((err) => setError(err.message)); // Store any fetch error
-    }, []);
+    }, [currentIndex]);
 
     // Handles user's answer selection
     const handleAnswer = (answerType) => {
         const isLast = currentIndex === issues.length - 1;
 
         setAnswers((prev) => {
-            const updated = { ...prev, [currentIssue.IssueID]: answerType };
+            const updated = { 
+                ...prev, 
+                [currentIssue.IssueID]: {
+                    answer: answerType, 
+                    weightage: answerType==="skip" ? 0 : weightage
+                },
+            };
 
             // If this is the last question, show confirmation
             // Else move to next question if not last
@@ -81,7 +88,7 @@ const Quiz = () => {
 
     // Get current question and selected answer
     const currentIssue = issues[currentIndex];
-    const selected = answers[currentIndex];
+    const selected = answers[currentIssue.IssueID]?.answer;
 
     return (
         <div className="quiz">

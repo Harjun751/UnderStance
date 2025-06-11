@@ -17,24 +17,31 @@ export default function AlignmentChart({
     // Calculate alignment percentages between user's answers and each party
     const iconLookup = {};
     const alignmentData = parties.map((party) => {
-        let alignedCount = 0;
-        let totalAnswered = 0;
+        let alignedWeight = 0;
+        let totalWeight = 0;
 
         for (const question of questions) {
-            const userAnswer = userAnswers[question.IssueID];
-            if (userAnswer === "agree" || userAnswer === "disagree") {
-                totalAnswered++;
+            const userResponse = userAnswers[question.IssueID];
+            if (!userResponse) continue;
+
+            const { answer, weightage } = userResponse;
+
+            if (answer === "agree" || answer === "disagree") {
+                totalWeight += weightage;
+
                 const stance = stances.find(
                     (s) =>
                         s.IssueID === question.IssueID &&
                         s.PartyID === party.PartyID,
                 );
-                if (
+
+                const isAligned =
                     stance &&
-                    ((userAnswer === "agree" && stance.Stand === true) ||
-                        (userAnswer === "disagree" && stance.Stand === false))
-                ) {
-                    alignedCount++;
+                    ((answer === "agree" && stance.Stand === true) ||
+                        (answer === "disagree" && stance.Stand === false));
+
+                if (isAligned) {
+                    alignedWeight += weightage;
                 }
             }
         }
@@ -44,8 +51,8 @@ export default function AlignmentChart({
         return {
             name: party.ShortName,
             Alignment:
-                totalAnswered > 0
-                    ? Math.round((alignedCount / totalAnswered) * 100)
+                totalWeight > 0
+                    ? Math.round((alignedWeight / totalWeight) * 100)
                     : 0,
         };
     });

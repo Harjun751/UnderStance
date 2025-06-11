@@ -135,26 +135,26 @@ const ReadStances = () => {
                                         {question.Description}
                                     </h2>
                                     <div className="header-right">
-                                        {userAnswers[question.IssueID] && (
+                                        {userAnswers[question.IssueID]?.answer && (
                                             <span
                                                 className={`user-answer ${
                                                     userAnswers[
                                                         question.IssueID
-                                                    ] === "agree"
+                                                    ].answer === "agree"
                                                         ? "agree"
                                                         : userAnswers[
                                                                 question.IssueID
-                                                            ] === "disagree"
+                                                            ].answer === "disagree"
                                                           ? "disagree"
                                                           : "skip"
                                                 }`}
                                             >
-                                                {userAnswers[question.IssueID]
+                                                {userAnswers[question.IssueID].answer
                                                     .charAt(0)
                                                     .toUpperCase() +
                                                     userAnswers[
                                                         question.IssueID
-                                                    ].slice(1)}
+                                                    ].answer.slice(1)}
                                             </span>
                                         )}
 
@@ -167,8 +167,10 @@ const ReadStances = () => {
                                     </div>
                                 </div>
                                 {(() => {
-                                    const userAnswer =
+                                    const userResponse =
                                         userAnswers[question.IssueID];
+                                    const userAnswer = userResponse?.answer;
+
                                     const matchingParties = parties.filter(
                                         (party) => {
                                             const stance =
@@ -252,6 +254,7 @@ const ReadStances = () => {
                                                 stancesForQuestion={
                                                     stancesForQuestion
                                                 }
+                                                userAnswerForQuestion={userAnswers[question.IssueID]}
                                             />
                                         </div>
                                     );
