@@ -263,11 +263,10 @@ const ReadStances = () => {
                                                                         "inherit",
                                                                 }}
                                                             >
-                                                                {" " +
-                                                                    importanceLabels[
+                                                                {`·${importanceLabels[
                                                                         userResponse
                                                                             ?.weightage
-                                                                    ]}
+                                                                    ]}`}
                                                             </strong>
                                                         </>
                                                     </div>

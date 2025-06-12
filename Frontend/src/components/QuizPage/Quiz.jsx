@@ -20,7 +20,6 @@ const Quiz = () => {
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
-        setWeightage(3); // Auto-reset weightage when question changes
         fetch(`${import.meta.env.VITE_API_URL}/questions`)
             // fetch('https://understance-backend.onrender.com/questions') //debugging
             .then((res) => {
@@ -31,6 +30,11 @@ const Quiz = () => {
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
             .catch((err) => setError(err.message)); // Store any fetch error
+    }, []);
+
+    useEffect(() =>{
+        void currentIndex;
+        setWeightage(3); // Auto-reset weightage when question changes
     }, [currentIndex]);
 
     // Handles user's answer selection
