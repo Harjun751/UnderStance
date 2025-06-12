@@ -32,7 +32,7 @@ const Quiz = () => {
             .catch((err) => setError(err.message)); // Store any fetch error
     }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
         void currentIndex;
         setWeightage(3); // Auto-reset weightage when question changes
     }, [currentIndex]);
