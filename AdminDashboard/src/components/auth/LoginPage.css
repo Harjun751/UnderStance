@@ -1,0 +1,48 @@
+body:has(> #root > #login) {
+    background-image: linear-gradient(to right, #3F3AA2, #00D4FF);
+}
+body:has(> #root > #login)::before {
+    background-image: url('../../assets/gradient-squares.png');
+    content: "";
+    position: fixed;
+    z-index: -1;
+    background-size: 140px;
+    background-repeat: repeat;
+    mix-blend-mode: multiply;
+    inset: 0;
+    filter: contrast(40%);
+}
+#login {
+    background: var(--primary);
+    width: 900px;
+    height: 500px;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    flex-direction: row;
+}
+
+#login > #hero {
+    width: 50%;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#login > form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+    /* Hide hero on smaller devices */
+    #login > #hero {
+        display: none;
+    }
+    #login {
+        background: red;
+        width: 100%;
+    }
+}
