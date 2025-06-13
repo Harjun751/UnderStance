@@ -199,6 +199,10 @@
     overflow: scroll;
 }
 
+.alignment-text {
+    padding: 0.5rem;
+}
+
 .chart-party-icon {
     border-radius: 50px;
     object-fit: cover;

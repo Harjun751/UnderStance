@@ -57,6 +57,14 @@ export default function AlignmentChart({
         };
     });
 
+    //Find party with the highest alignment
+    const highestAlignment = alignmentData.reduce((max, party) =>
+        party.Alignment > max.Alignment ? party : max,
+        { name: "", Alignment: -1 }
+    );
+
+    const highestAlignmentIcon = iconLookup[highestAlignment.name];
+
     // Custom tick component for rendering party icons and names on the X axis
     const CustomYAxisTick = ({ x, y, payload }) => {
         const icon = iconLookup[payload.value];
@@ -89,37 +97,71 @@ export default function AlignmentChart({
 
     if (Object.keys(userAnswers).length > 0) {
         return (
-            <div className="alignment-chart">
-                <h4>Party Alignment with Your Answers (%)</h4>
-                <ResponsiveContainer height={300} minWidth={300}>
-                    <BarChart
-                        data={alignmentData}
-                        layout="horizontal"
-                        margin={{ top: 20, right: 30, left: 0, bottom: 25 }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis
-                            type="category"
-                            dataKey="name"
-                            tick={(props) => <CustomYAxisTick {...props} />}
-                            interval={0}
-                        />
-                        <YAxis
-                            type="number"
-                            domain={[0, 100]}
-                            tickFormatter={(tick) => `${tick}%`}
-                        />
-                        <Tooltip
-                            formatter={(value) => `${value.toFixed(1)}%`}
-                        />
-                        <Bar
-                            dataKey="Alignment"
-                            fill="#4CAF50"
-                            maxBarSize={50}
-                        />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+            <>
+                <h1>Party Alignment Breakdown (%)</h1>
+                <div className="alignment-chart">
+                    <div className="alignment-text">
+                        <h3>
+                            {highestAlignmentIcon && (
+                                <img
+                                    src={highestAlignmentIcon}
+                                    alt={`${highestAlignment.name} icon`}
+                                    width={34}
+                                    height={34}
+                                />
+                            )}
+                            <strong>{highestAlignment.name}</strong> best aligns with your stance!
+                        </h3>
+                        
+                    </div>
+                    <ResponsiveContainer height={300} minWidth={300}>
+                        <BarChart
+                            data={alignmentData}
+                            layout="horizontal"
+                            margin={{ top: 20, right: 30, left: 0, bottom: 25 }}
+                        >
+                            <CartesianGrid vertical={false} horizontal={true}/>
+                            <XAxis
+                                type="category"
+                                dataKey="name"
+                                tick={(props) => <CustomYAxisTick {...props} />}
+                                interval={0}
+                                tickLine={false}
+                                axisLine={false}
+                            />
+                            <YAxis
+                                type="number"
+                                domain={[0, 100]}
+                                tickFormatter={(tick) => `${tick}%`}
+                                axisLine={false}
+                                tickLine={false}
+                            />
+                            <Tooltip
+                                formatter={(value) => `${value.toFixed(1)}%`}
+                                cursor={false}
+                            />
+                            <Bar
+                                dataKey="Alignment"
+                                fill="#FFD700"
+                                maxBarSize={50}
+                                radius={8}
+                                label={({ value, x, y, width }) => (
+                                    <text
+                                    x={x + width / 2}
+                                    y={y - 6}
+                                    textAnchor="middle"
+                                    fill="#000000"
+                                    fontSize={12}
+                                    >
+                                    {value}%
+                                    </text>
+                                )}
+                            />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </>
+            
         );
     }
 }
