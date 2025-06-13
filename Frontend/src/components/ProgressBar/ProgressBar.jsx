@@ -1,6 +1,6 @@
 import "./ProgressBar.css";
 import AnimatedNumber from "./AnimatedNumber";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 function usePrevious(value) {
     const ref = useRef();

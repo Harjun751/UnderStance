@@ -1,11 +1,12 @@
+/* eslint-env vitest */
 import {
     waitFor,
-    cleanup,
+    //cleanup,
     fireEvent,
     render,
     screen,
 } from "@testing-library/react";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 
 import ReadStances from "../../components/ReadStancesPage/ReadStances";
 

@@ -4,6 +4,10 @@ import AlignmentChart from "./AlignmentChart";
 import SearchBar from "./SearchBar";
 import StanceItem from "./StanceItem";
 import { useLocation } from "react-router-dom";
+import {
+    importanceLabels,
+    importanceColors,
+} from "../WeightageSlider/WeightageSliderUtils";
 
 const ReadStances = () => {
     const [stances, setStances] = useState([]);
@@ -64,15 +68,15 @@ const ReadStances = () => {
             .scroll(0, 0);
     };
 
-    // Show loading or error messages before rendering data
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     // Retrieve user answers passed via navigation state
     const location = useLocation();
     const userAnswers =
         location.state?.answers ||
         JSON.parse(window.localStorage.getItem("quizAnswers") || "{}");
+
+    // Show loading or error messages before rendering data
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="content">
@@ -135,26 +139,30 @@ const ReadStances = () => {
                                         {question.Description}
                                     </h2>
                                     <div className="header-right">
-                                        {userAnswers[question.IssueID] && (
+                                        {userAnswers[question.IssueID]
+                                            ?.answer && (
                                             <span
                                                 className={`user-answer ${
                                                     userAnswers[
                                                         question.IssueID
-                                                    ] === "agree"
+                                                    ].answer === "agree"
                                                         ? "agree"
                                                         : userAnswers[
                                                                 question.IssueID
-                                                            ] === "disagree"
+                                                            ].answer ===
+                                                            "disagree"
                                                           ? "disagree"
                                                           : "skip"
                                                 }`}
                                             >
-                                                {userAnswers[question.IssueID]
+                                                {userAnswers[
+                                                    question.IssueID
+                                                ].answer
                                                     .charAt(0)
                                                     .toUpperCase() +
                                                     userAnswers[
                                                         question.IssueID
-                                                    ].slice(1)}
+                                                    ].answer.slice(1)}
                                             </span>
                                         )}
 
@@ -167,8 +175,10 @@ const ReadStances = () => {
                                     </div>
                                 </div>
                                 {(() => {
-                                    const userAnswer =
+                                    const userResponse =
                                         userAnswers[question.IssueID];
+                                    const userAnswer = userResponse?.answer;
+
                                     const matchingParties = parties.filter(
                                         (party) => {
                                             const stance =
@@ -239,8 +249,31 @@ const ReadStances = () => {
                                                         ) : (
                                                             "No parties matched your stance on this issue."
                                                         )}
+                                                        <br />
+                                                        <>
+                                                            You indicated that
+                                                            this issue was of
+                                                            <strong
+                                                                style={{
+                                                                    color:
+                                                                        importanceColors[
+                                                                            userResponse
+                                                                                ?.weightage
+                                                                        ] ||
+                                                                        "inherit",
+                                                                }}
+                                                            >
+                                                                {`·${
+                                                                    importanceLabels[
+                                                                        userResponse
+                                                                            ?.weightage
+                                                                    ]
+                                                                }`}
+                                                            </strong>
+                                                        </>
                                                     </div>
                                                 )}
+
                                             {userAnswer === "skip" && (
                                                 <div className="alignment-info">
                                                     You did not answer this
@@ -251,6 +284,9 @@ const ReadStances = () => {
                                                 parties={parties}
                                                 stancesForQuestion={
                                                     stancesForQuestion
+                                                }
+                                                userAnswerForQuestion={
+                                                    userResponse
                                                 }
                                             />
                                         </div>
