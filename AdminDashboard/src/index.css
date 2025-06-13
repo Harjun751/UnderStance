@@ -7,8 +7,11 @@
     /*--secondary: */
     --on-secondary: #FFFF;
 
+    --red: #AC0000;
+
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
+    box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {

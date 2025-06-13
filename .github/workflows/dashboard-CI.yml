@@ -1,0 +1,36 @@
+name: CI script for Admin Dashboard
+permissions:
+  checks: write
+  pull-requests: write
+  contents: write
+
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  admindashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - run: npm i
+        working-directory: AdminDashboard/
+
+
+      - name: Begin running tests
+        run: ENV=test npm test
+        working-directory: ./AdminDashboard/src/tests
+
+      - name: Publish Admin Dashboard Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled())
+        with:
+          files: |
+            AdminDashboard/coverage/results.xml
+          check_name: "🧪 Admin Dashboard Test Results"
