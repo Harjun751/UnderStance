@@ -1,13 +1,13 @@
 :root {
-    --primary: #E0DFDF;
+    --primary: #e0dfdf;
     --on-primary: #0000;
     --on-primary-alt: #333333;
-    --primary-container: #FFFF;
+    --primary-container: #ffff;
 
     /*--secondary: */
-    --on-secondary: #FFFF;
+    --on-secondary: #ffff;
 
-    --red: #AC0000;
+    --red: #ac0000;
 
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
@@ -60,7 +60,7 @@ h3 {
 }
 
 @media only screen and (max-width: 1200px) {
-    #title{
+    #title {
         font-size: 40px;
     }
     h1 {

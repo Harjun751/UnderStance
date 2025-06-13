@@ -1,4 +1,4 @@
-import "./Title.css"
+import "./Title.css";
 export default () => {
     return (
         <h1 id="title">
@@ -6,4 +6,4 @@ export default () => {
             <span>Stance</span>
         </h1>
     );
-}
+};

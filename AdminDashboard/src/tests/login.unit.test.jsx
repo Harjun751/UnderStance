@@ -8,7 +8,6 @@ import {
 
 import LoginPage from "../components/auth/LoginPage";
 
-
 /* TO BE TESTED: Successful/failed logins with auth module */
 describe("input form", () => {
     test("should be visible", async () => {
@@ -20,18 +19,11 @@ describe("input form", () => {
             expect(ele).toBeInTheDocument();
         });
 
+        expect(screen.getByRole("textbox", { name: /email/i })).toBeVisible();
+        expect(screen.getByLabelText(/password/i)).toBeVisible();
         expect(
-            screen.getByRole("textbox", { name: /email/i } )
-        ).toBeVisible()
-        expect(
-            screen.getByLabelText(/password/i)
-        ).toBeVisible()
-        expect(
-            screen.getByRole("checkbox", { name: /Remember me/i } )
-        ).toBeVisible()
-        expect(
-            screen.getByRole("button", { name: /Login/i } )
-        ).toBeVisible()
-
+            screen.getByRole("checkbox", { name: /Remember me/i }),
+        ).toBeVisible();
+        expect(screen.getByRole("button", { name: /Login/i })).toBeVisible();
     });
 });
