@@ -6,6 +6,7 @@ import {
     Tooltip,
     CartesianGrid,
     ResponsiveContainer,
+    Legend,
 } from "recharts";
 
 import { useState } from "react";
@@ -300,7 +301,6 @@ export default function AlignmentChart({
     };
 
     const renderCategory = () => (
-        
         <>
             <div className="alignment-text">
                 <strong>Alignment by Category</strong>
@@ -365,7 +365,7 @@ export default function AlignmentChart({
                         <button 
                             className={view === "table" ? "active" : ""}
                             onClick={() => setView("table")}>
-                            Show Comparison Table
+                            Table Breakdown
                         </button>
                     </div>
                     {view === "chart" ? (

@@ -281,6 +281,24 @@
     text-transform: capitalize;
 }
 
+.comparison-table td:first-child,
+.comparison-table th:first-child {
+    text-align: left;
+    white-space: nowrap;         /* Prevent text wrapping */
+    min-width: 200px;            /* Minimum width to preserve readability */
+    max-width: 400px;            /* Optional: cap max width for consistency */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comparison-table td:first-child:hover {
+    overflow: visible;
+    white-space: normal;
+    background-color: #f9f9f9;
+    z-index: 1;
+    position: relative;
+}
+
 .comparison-table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -338,14 +356,16 @@
     #content-container.unanswered .question-header > h2 {
         width: 100%;
     }
-    .alignment-toggle-buttons button {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-    }
     .comparison-table {
-        font-size: 6px;
+        font-size: 10px;
     }
+
     .comparison-table td:first-child {
-        max-width: 200px;
+        max-width: 180px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 6px 8px;
     }
 }
