@@ -1,0 +1,16 @@
+#title > span {
+    font-size: inherit;
+}
+
+#title > span:nth-child(2) {
+    color: var(--red);
+}
+
+#title:after {
+    content: "";
+    display: block;
+    width: 100%;
+    border: 3px solid black;
+    position: relative;
+    top: -5px;
+}

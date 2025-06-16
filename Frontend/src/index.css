@@ -14,7 +14,7 @@ body::before {
     content: "";
     position: fixed;
     z-index: -1;
-    background-size: auto;
+    background-size: 50%;
     background-repeat: repeat;
     background-blend-mode: lighten;
     filter: contrast(40%);
@@ -38,7 +38,7 @@ body {
 button {
     border-radius: 8px;
     border: 1px solid transparent;
-    font-size: 1em;
+    font-size: 1.25em;
     font-weight: 500;
     font-family: inherit;
     background-color: #1a1a1a;

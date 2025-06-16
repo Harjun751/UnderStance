@@ -1,5 +1,7 @@
 .control-btns > button {
     width: 150px;
+    height: 50px;
+    margin-top: 30px;
 }
 
 /* Individual button colors */
@@ -76,12 +78,13 @@
 
 .modal-buttons button {
     padding: 0.5rem 1rem;
-    font-size: 1rem;
 }
 
 .control-btns > button,
 .button-group > button {
     padding: 0.5rem 1rem;
+    height: 50px;
+    font-size: 20px;
 }
 
 /* Desktop breakpoint */
@@ -103,26 +106,12 @@
     .button-group > .btn {
         flex: none; /* set to none to prevent flex-grow */
         width: 250px;
-        font-size: 1rem;
         cursor: pointer;
         border: none;
         border-radius: 5px;
         transition: background-color 0.2s ease, transform 0.2s ease, box-shadow
             0.2s ease;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-    }
-
-    /* Floating quotes around text */
-    .floaty-quotey {
-        position: relative;
-    }
-
-    .floaty-quotey:nth-of-type(1) {
-        left: -10px;
-    }
-
-    .floaty-quotey:nth-of-type(3) {
-        right: -10px;
     }
 
     .control-btns {
@@ -160,25 +149,5 @@
     .control-btns {
         justify-content: center;
         gap: 2rem;
-    }
-
-    .floaty-quotey {
-        position: relative;
-    }
-
-    .floaty-quotey:nth-of-type(1) {
-        left: -10px;
-    }
-
-    .floaty-quotey:nth-of-type(3) {
-        right: -10px;
-    }
-}
-/* Small(est) screen breakpoint */
-@media only screen and (max-width: 500px) {
-    /* Make the float quotes disappear on mobile
-     * they look odd :(                         */
-    .floaty-quotey {
-        display: none;
     }
 }

@@ -71,6 +71,31 @@ jobs:
             🌏
           message-id: frontend
 
+      - name: Lint & fix using Biome (Admin Dashboard)
+        id: adminlint
+        continue-on-error: true
+        run: |
+          set +e
+          OUTPUT="$(find AdminDashboard/src/ -type f ! -path 'AdminDashboard/src/index.css' ! -path 'AdminDashboard/src/tests/*' | xargs npx @biomejs/biome lint --write 2>&1)"
+          EXIT_CODE=$?
+          echo 'lint_output<<EOF' >> $GITHUB_OUTPUT
+          echo "$OUTPUT" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+
+      - name : Create comment
+        if: steps.adminlint.outputs.exit_code != '0'
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **There is one or more linting errors (Admin FE)**
+            <details>
+            <summary>Lint Issues</summary>
+            ${{ steps.biomelint.outputs.lint_output }}
+            </details>
+            🌏
+          message-id: admin
+
 
       - name: Wait on other checks to complete
         uses: lewagon/wait-on-check-action@v1.3.4
@@ -98,6 +123,10 @@ jobs:
       - name: Format frontend using biome
         run: |
           npx @biomejs/biome format --indent-width=4 --indent-style=space ./Frontend/ --write
+
+      - name: Format frontend using biome
+        run: |
+          npx @biomejs/biome format --indent-width=4 --indent-style=space ./AdminDashboard/ --write
 
       - name: Push formatted changes
         run: |
