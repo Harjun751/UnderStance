@@ -209,6 +209,55 @@
     height: 34px;
     width: 34px;
 }
+
+/* Comparison Table Styling */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 10px 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.comparison-table thead {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.comparison-table tbody tr:hover {
+    background-color: #f1f7ff;
+}
+
+.comparison-table td:first-child {
+    text-align: left;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.comparison-table th:first-child {
+    text-align: left;
+}
+
+.comparison-table td {
+    text-transform: capitalize;
+}
+
+/* Optional: highlight matching/mismatching answers if you add classes later */
+.aligned {
+    background-color: #d4edda;
+    color: #155724;
+}
 /* Small(er) screen breakpoint */
 /*@media only screen and (max-width: 1440px) {*/
 @media only screen and (max-width: 1400px) {

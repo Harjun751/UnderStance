@@ -102,3 +102,43 @@ VALUES (10, 1, true, 'To settle debates with dance-offs');
 
 INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
 VALUES (10, 2, false, 'It''s Parliament, not a disco hall');
+
+
+-- Add category column to Issue table
+ALTER TABLE "Issue"
+ADD COLUMN "Category" varchar(50);
+
+-- Update existing issues with categories
+UPDATE "Issue" SET "Category" = 'National Identity' WHERE "IssueID" = 1;
+
+UPDATE "Issue" SET "Category" = 'Governance' WHERE "IssueID" = 2;
+
+UPDATE "Issue" SET "Category" = 'National Identity' WHERE "IssueID" = 3;
+
+UPDATE "Issue" SET "Category" = 'Cultural Policy' WHERE "IssueID" = 4;
+
+UPDATE "Issue" SET "Category" = 'Governance' WHERE "IssueID" = 5;
+
+UPDATE "Issue" SET "Category" = 'Public Engagement' WHERE "IssueID" = 6;
+
+UPDATE "Issue" SET "Category" = 'Cultural Policy' WHERE "IssueID" = 7;
+
+UPDATE "Issue" SET "Category" = 'Defense' WHERE "IssueID" = 8;
+
+UPDATE "Issue" SET "Category" = 'Public Engagement' WHERE "IssueID" = 9;
+
+UPDATE "Issue" SET "Category" = 'Governance' WHERE "IssueID" = 10;
+
+-- Add PartyColor column
+ALTER TABLE "Party"
+ADD COLUMN "PartyColor" varchar(7);
+
+-- Assign color to Coalition for Shakira (PartyID = 1)
+UPDATE "Party"
+SET "PartyColor" = '#FFD700'
+WHERE "PartyID" = 1;
+
+-- Assign color to Traditionalist Party (PartyID = 2)
+UPDATE "Party"
+SET "PartyColor" = '#1E90FF'
+WHERE "PartyID" = 2;
