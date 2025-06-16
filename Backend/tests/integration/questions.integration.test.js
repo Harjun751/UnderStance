@@ -22,6 +22,7 @@ describe("GET quiz question", () => {
                 IssueID: 1,
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
+                Category: "National Identity",
             },
         ]);
     });
@@ -36,6 +37,7 @@ describe("GET quiz question", () => {
                 IssueID: 1,
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
+                Category: "National Identity",
             },
         ]);
     });

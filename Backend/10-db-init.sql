@@ -2,6 +2,7 @@ CREATE TABLE "Issue" (
     "IssueID" serial,
     "Description" varchar(300),
     "Summary" varchar(50),
+    "Category" varchar(50),
     PRIMARY KEY ("IssueID")
 );
 
@@ -10,6 +11,7 @@ CREATE TABLE "Party" (
     "Name" varchar(100),
     "ShortName" varchar(5),
     "Icon" varchar(2083),
+    "PartyColor" varchar(7),
     PRIMARY KEY ("PartyID")
 );
 

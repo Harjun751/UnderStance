@@ -6,7 +6,12 @@ import {
     Tooltip,
     CartesianGrid,
     ResponsiveContainer,
+    Legend,
 } from "recharts";
+
+import { useState } from "react";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { GoSkip } from "react-icons/go";
 
 export default function AlignmentChart({
     parties,
@@ -14,6 +19,7 @@ export default function AlignmentChart({
     userAnswers,
     stances,
 }) {
+    const [view, setView] = useState("chart"); // chart or table
     // Calculate alignment percentages between user's answers and each party
     const iconLookup = {};
     const alignmentData = parties.map((party) => {
@@ -54,8 +60,73 @@ export default function AlignmentChart({
                 totalWeight > 0
                     ? Math.round((alignedWeight / totalWeight) * 100)
                     : 0,
+            fill: party.PartyColor,
         };
     });
+
+    //Find party with the highest alignment
+    const highestAlignment = alignmentData.reduce(
+        (max, party) => (party.Alignment > max.Alignment ? party : max),
+        { name: "", Alignment: -1 },
+    );
+
+    const highestAlignmentIcon = iconLookup[highestAlignment.name];
+
+    //Find Category Alignment
+    const categoryPartyAlignment = {}; // category -> { partyName: { aligned, total } }
+
+    for (const question of questions) {
+        const { Category, IssueID } = question;
+        const userResponse = userAnswers[IssueID];
+        if (!userResponse) continue;
+
+        const { answer, weightage } = userResponse;
+        if (answer !== "agree" && answer !== "disagree") continue;
+
+        if (!categoryPartyAlignment[Category]) {
+            categoryPartyAlignment[Category] = {};
+        }
+
+        for (const party of parties) {
+            const stance = stances.find(
+                (s) => s.IssueID === IssueID && s.PartyID === party.PartyID,
+            );
+
+            const isAligned =
+                stance &&
+                ((answer === "agree" && stance.Stand === true) ||
+                    (answer === "disagree" && stance.Stand === false));
+
+            if (!categoryPartyAlignment[Category][party.ShortName]) {
+                categoryPartyAlignment[Category][party.ShortName] = {
+                    aligned: 0,
+                    total: 0,
+                };
+            }
+
+            if (isAligned) {
+                categoryPartyAlignment[Category][party.ShortName].aligned +=
+                    weightage;
+            }
+
+            categoryPartyAlignment[Category][party.ShortName].total +=
+                weightage;
+        }
+    }
+
+    // Convert to Recharts-friendly array
+    const groupedCategoryData = Object.entries(categoryPartyAlignment).map(
+        ([category, partyData]) => {
+            const entry = { category };
+            for (const [partyName, { aligned, total }] of Object.entries(
+                partyData,
+            )) {
+                entry[partyName] =
+                    total > 0 ? Math.round((aligned / total) * 100) : 0;
+            }
+            return entry;
+        },
+    );
 
     // Custom tick component for rendering party icons and names on the X axis
     const CustomYAxisTick = ({ x, y, payload }) => {
@@ -87,39 +158,251 @@ export default function AlignmentChart({
         );
     };
 
+    /* comparison table */
+    const renderTable = () => (
+        <>
+            <div className="comparison-table-wrapper">
+                <table className="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Category</th>
+                            <th>Your Answer</th>
+                            <th>Importance</th>
+                            {parties.map((party) => (
+                                <th key={party.PartyID}>{party.ShortName}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {questions.map((question) => {
+                            const user = userAnswers[question.IssueID];
+                            if (!user) return null;
+
+                            const renderIcon = (val) => {
+                                if (val === "agree")
+                                    return <FaCheck color="green" />;
+                                if (val === "disagree")
+                                    return <FaTimes color="red" />;
+                                return <GoSkip color="gray" />;
+                            };
+
+                            return (
+                                <tr key={question.IssueID}>
+                                    <td>{question.Description}</td>
+                                    <td>{question.Category}</td>
+                                    <td>{renderIcon(user.answer)}</td>
+                                    <td>{user.weightage}</td>
+                                    {parties.map((party) => {
+                                        const stance = stances.find(
+                                            (s) =>
+                                                s.IssueID ===
+                                                    question.IssueID &&
+                                                s.PartyID === party.PartyID,
+                                        );
+                                        const stanceIcon =
+                                            stance?.Stand === true ? (
+                                                <FaCheck color="green" />
+                                            ) : stance?.Stand === false ? (
+                                                <FaTimes color="red" />
+                                            ) : (
+                                                <GoSkip color="gray" />
+                                            );
+                                        return (
+                                            <td key={party.PartyID}>
+                                                {stanceIcon}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    );
+
+    const renderChart = () => (
+        <>
+            <div className="alignment-text">
+                <h3>
+                    {highestAlignmentIcon && (
+                        <img
+                            src={highestAlignmentIcon}
+                            alt={`${highestAlignment.name} icon`}
+                            width={34}
+                            height={34}
+                        />
+                    )}
+                    <br />
+                    <strong> {highestAlignment.name} </strong> best aligns with
+                    your stance!
+                </h3>
+            </div>
+            <ResponsiveContainer height={300} minWidth={300}>
+                <BarChart
+                    data={alignmentData}
+                    layout="horizontal"
+                    margin={{ top: 20, right: 30, left: 0, bottom: 25 }}
+                >
+                    <CartesianGrid vertical={false} horizontal={true} />
+                    <XAxis
+                        type="category"
+                        dataKey="name"
+                        tick={(props) => <CustomYAxisTick {...props} />}
+                        interval={0}
+                        tickLine={false}
+                        axisLine={false}
+                    />
+                    <YAxis
+                        type="number"
+                        domain={[0, 100]}
+                        tickFormatter={(tick) => `${tick}%`}
+                        axisLine={false}
+                        tickLine={false}
+                    />
+                    <Tooltip
+                        formatter={(value) => `${value.toFixed(1)}%`}
+                        cursor={false}
+                    />
+                    <Bar
+                        dataKey="Alignment"
+                        maxBarSize={50}
+                        radius={8}
+                        label={({ value, x, y, width }) => (
+                            <text
+                                x={x + width / 2}
+                                y={y - 6}
+                                textAnchor="middle"
+                                fill="#000000"
+                                fontSize={12}
+                            >
+                                {value}%
+                            </text>
+                        )}
+                    />
+                </BarChart>
+            </ResponsiveContainer>
+        </>
+    );
+
+    const maxCategoryLength = Math.max(
+        groupedCategoryData.map((d) => d.category.length),
+    );
+    const leftMargin = Math.min(150, maxCategoryLength * 8); // max 150px
+
+    const Category_CustomXAxisTick = ({ x, y, payload }) => {
+        const words = payload.value.split(" ");
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text
+                    x={10}
+                    y={10}
+                    dy={16}
+                    textAnchor="end"
+                    transform="rotate(-30)"
+                    fontSize={11}
+                    fill="#333"
+                >
+                    {words.map((word, index) => (
+                        <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
+                            {word}
+                        </tspan>
+                    ))}
+                </text>
+            </g>
+        );
+    };
+
+    const renderCategory = () => (
+        <>
+            <div className="alignment-text">
+                <strong>Alignment by Category</strong>
+            </div>
+            <ResponsiveContainer height={300} minWidth={300}>
+                <BarChart
+                    data={groupedCategoryData}
+                    layout="horizontal"
+                    margin={{
+                        top: 20,
+                        right: 30,
+                        left: leftMargin,
+                        bottom: 60,
+                    }}
+                >
+                    <CartesianGrid vertical={false} horizontal={true} />
+                    <YAxis
+                        type="number"
+                        domain={[0, 100]}
+                        tickFormatter={(tick) => `${tick}%`}
+                        axisLine={false}
+                        tickLine={false}
+                    />
+                    <XAxis
+                        type="category"
+                        dataKey="category"
+                        tick={<Category_CustomXAxisTick />}
+                        interval={0}
+                        axisLine={false}
+                        tickLine={false}
+                    />
+                    <Tooltip
+                        formatter={(value) => `${value}%`}
+                        cursor={false}
+                    />
+                    {parties.map((party) => (
+                        <Bar
+                            key={party.ShortName}
+                            dataKey={party.ShortName}
+                            fill={party.PartyColor}
+                            barSize={20}
+                            radius={6}
+                        />
+                    ))}
+                </BarChart>
+            </ResponsiveContainer>
+        </>
+    );
+
     if (Object.keys(userAnswers).length > 0) {
         return (
-            <div className="alignment-chart">
-                <h4>Party Alignment with Your Answers (%)</h4>
-                <ResponsiveContainer height={300} minWidth={300}>
-                    <BarChart
-                        data={alignmentData}
-                        layout="horizontal"
-                        margin={{ top: 20, right: 30, left: 0, bottom: 25 }}
+            <>
+                <h1>Party Alignment Breakdown (%)</h1>
+                <div className="alignment-chart">
+                    <div
+                        className="alignment-toggle-buttons"
+                        style={{ marginBottom: "1rem" }}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis
-                            type="category"
-                            dataKey="name"
-                            tick={(props) => <CustomYAxisTick {...props} />}
-                            interval={0}
-                        />
-                        <YAxis
-                            type="number"
-                            domain={[0, 100]}
-                            tickFormatter={(tick) => `${tick}%`}
-                        />
-                        <Tooltip
-                            formatter={(value) => `${value.toFixed(1)}%`}
-                        />
-                        <Bar
-                            dataKey="Alignment"
-                            fill="#4CAF50"
-                            maxBarSize={50}
-                        />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+                        <button
+                            type="button"
+                            className={view === "chart" ? "active" : ""}
+                            onClick={() => setView("chart")}
+                        >
+                            Overall
+                        </button>
+                        <button
+                            type="button"
+                            className={view === "category" ? "active" : ""}
+                            onClick={() => setView("category")}
+                        >
+                            By Category
+                        </button>
+                        <button
+                            type="button"
+                            className={view === "table" ? "active" : ""}
+                            onClick={() => setView("table")}
+                        >
+                            Table Breakdown
+                        </button>
+                    </div>
+                    {view === "chart"
+                        ? renderChart()
+                        : view === "category"
+                          ? renderCategory()
+                          : renderTable()}
+                </div>
+            </>
         );
     }
 }
