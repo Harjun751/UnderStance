@@ -75,19 +75,19 @@ export default function AlignmentChart({
     //Find Category Alignment
     const categoryPartyAlignment = {}; // category -> { partyName: { aligned, total } }
 
-    questions.forEach((question) => {
+    for (const question of questions) {
         const { Category, IssueID } = question;
         const userResponse = userAnswers[IssueID];
-        if (!userResponse) return;
+        if (!userResponse) continue;
 
         const { answer, weightage } = userResponse;
-        if (answer !== "agree" && answer !== "disagree") return;
+        if (answer !== "agree" && answer !== "disagree") continue;
 
         if (!categoryPartyAlignment[Category]) {
             categoryPartyAlignment[Category] = {};
         }
 
-        parties.forEach((party) => {
+        for (const party of parties) {
             const stance = stances.find(
                 (s) => s.IssueID === IssueID && s.PartyID === party.PartyID
             );
@@ -106,8 +106,8 @@ export default function AlignmentChart({
             }
 
             categoryPartyAlignment[Category][party.ShortName].total += weightage;
-        });
-    });
+        };
+    };
 
     // Convert to Recharts-friendly array
     const groupedCategoryData = Object.entries(categoryPartyAlignment).map(
@@ -291,7 +291,7 @@ export default function AlignmentChart({
                     fill="#333"
                 >
                     {words.map((word, index) => (
-                    <tspan key={index} x={0} dy={index === 0 ? 0 : 12}>
+                    <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
                         {word}
                     </tspan>
                 ))}
@@ -352,19 +352,23 @@ export default function AlignmentChart({
                 <div className="alignment-chart">
                     <div className="alignment-toggle-buttons" style={{ marginBottom: "1rem" }}>
                         <button 
+                            type="button"
                             className={view === "chart" ? "active" : ""}
                             onClick={() => setView("chart")}
                         >
                             Overall
                         </button>
                         <button 
+                            type="button"
                             className={view === "category" ? "active" : ""}
                             onClick={() => setView("category")}>
                             By Category
                         </button>
                         <button 
+                            type="button"
                             className={view === "table" ? "active" : ""}
-                            onClick={() => setView("table")}>
+                            onClick={() => setView("table")}
+                        >
                             Table Breakdown
                         </button>
                     </div>
