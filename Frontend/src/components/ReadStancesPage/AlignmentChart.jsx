@@ -10,7 +10,7 @@ import {
 } from "recharts";
 
 import { useState } from "react";
-import { FaCheck, FaTimes  } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { GoSkip } from "react-icons/go";
 
 export default function AlignmentChart({
@@ -60,14 +60,14 @@ export default function AlignmentChart({
                 totalWeight > 0
                     ? Math.round((alignedWeight / totalWeight) * 100)
                     : 0,
-            fill: party.PartyColor
+            fill: party.PartyColor,
         };
     });
 
     //Find party with the highest alignment
-    const highestAlignment = alignmentData.reduce((max, party) =>
-        party.Alignment > max.Alignment ? party : max,
-        { name: "", Alignment: -1 }
+    const highestAlignment = alignmentData.reduce(
+        (max, party) => (party.Alignment > max.Alignment ? party : max),
+        { name: "", Alignment: -1 },
     );
 
     const highestAlignmentIcon = iconLookup[highestAlignment.name];
@@ -89,35 +89,43 @@ export default function AlignmentChart({
 
         for (const party of parties) {
             const stance = stances.find(
-                (s) => s.IssueID === IssueID && s.PartyID === party.PartyID
+                (s) => s.IssueID === IssueID && s.PartyID === party.PartyID,
             );
 
             const isAligned =
                 stance &&
                 ((answer === "agree" && stance.Stand === true) ||
-                (answer === "disagree" && stance.Stand === false));
+                    (answer === "disagree" && stance.Stand === false));
 
             if (!categoryPartyAlignment[Category][party.ShortName]) {
-                categoryPartyAlignment[Category][party.ShortName] = { aligned: 0, total: 0 };
+                categoryPartyAlignment[Category][party.ShortName] = {
+                    aligned: 0,
+                    total: 0,
+                };
             }
 
             if (isAligned) {
-                categoryPartyAlignment[Category][party.ShortName].aligned += weightage;
+                categoryPartyAlignment[Category][party.ShortName].aligned +=
+                    weightage;
             }
 
-            categoryPartyAlignment[Category][party.ShortName].total += weightage;
-        };
-    };
+            categoryPartyAlignment[Category][party.ShortName].total +=
+                weightage;
+        }
+    }
 
     // Convert to Recharts-friendly array
     const groupedCategoryData = Object.entries(categoryPartyAlignment).map(
         ([category, partyData]) => {
             const entry = { category };
-            for (const [partyName, { aligned, total }] of Object.entries(partyData)) {
-                entry[partyName] = total > 0 ? Math.round((aligned / total) * 100) : 0;
+            for (const [partyName, { aligned, total }] of Object.entries(
+                partyData,
+            )) {
+                entry[partyName] =
+                    total > 0 ? Math.round((aligned / total) * 100) : 0;
             }
             return entry;
-        }
+        },
     );
 
     // Custom tick component for rendering party icons and names on the X axis
@@ -172,8 +180,10 @@ export default function AlignmentChart({
                             if (!user) return null;
 
                             const renderIcon = (val) => {
-                                if (val === "agree") return <FaCheck color="green" />;
-                                if (val === "disagree") return <FaTimes color="red" />;
+                                if (val === "agree")
+                                    return <FaCheck color="green" />;
+                                if (val === "disagree")
+                                    return <FaTimes color="red" />;
                                 return <GoSkip color="gray" />;
                             };
 
@@ -186,16 +196,23 @@ export default function AlignmentChart({
                                     {parties.map((party) => {
                                         const stance = stances.find(
                                             (s) =>
-                                                s.IssueID === question.IssueID &&
-                                                s.PartyID === party.PartyID
+                                                s.IssueID ===
+                                                    question.IssueID &&
+                                                s.PartyID === party.PartyID,
                                         );
                                         const stanceIcon =
-                                            stance?.Stand === true
-                                                ? <FaCheck color="green" />
-                                                : stance?.Stand === false
-                                                ? <FaTimes color="red" />
-                                                : <GoSkip color="gray" />;
-                                        return <td key={party.PartyID}>{stanceIcon}</td>;
+                                            stance?.Stand === true ? (
+                                                <FaCheck color="green" />
+                                            ) : stance?.Stand === false ? (
+                                                <FaTimes color="red" />
+                                            ) : (
+                                                <GoSkip color="gray" />
+                                            );
+                                        return (
+                                            <td key={party.PartyID}>
+                                                {stanceIcon}
+                                            </td>
+                                        );
                                     })}
                                 </tr>
                             );
@@ -203,9 +220,7 @@ export default function AlignmentChart({
                     </tbody>
                 </table>
             </div>
-            
         </>
-        
     );
 
     const renderChart = () => (
@@ -220,9 +235,9 @@ export default function AlignmentChart({
                             height={34}
                         />
                     )}
-                    <br/>
-                    <strong> {highestAlignment.name} </strong> best aligns with your stance! 
-                    
+                    <br />
+                    <strong> {highestAlignment.name} </strong> best aligns with
+                    your stance!
                 </h3>
             </div>
             <ResponsiveContainer height={300} minWidth={300}>
@@ -231,7 +246,7 @@ export default function AlignmentChart({
                     layout="horizontal"
                     margin={{ top: 20, right: 30, left: 0, bottom: 25 }}
                 >
-                    <CartesianGrid vertical={false} horizontal={true}/>
+                    <CartesianGrid vertical={false} horizontal={true} />
                     <XAxis
                         type="category"
                         dataKey="name"
@@ -263,17 +278,17 @@ export default function AlignmentChart({
                                 fill="#000000"
                                 fontSize={12}
                             >
-                            {value}%
+                                {value}%
                             </text>
                         )}
                     />
                 </BarChart>
             </ResponsiveContainer>
         </>
-    )
+    );
 
     const maxCategoryLength = Math.max(
-        groupedCategoryData.map((d) => d.category.length)
+        groupedCategoryData.map((d) => d.category.length),
     );
     const leftMargin = Math.min(150, maxCategoryLength * 8); // max 150px
 
@@ -291,10 +306,10 @@ export default function AlignmentChart({
                     fill="#333"
                 >
                     {words.map((word, index) => (
-                    <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
-                        {word}
-                    </tspan>
-                ))}
+                        <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
+                            {word}
+                        </tspan>
+                    ))}
                 </text>
             </g>
         );
@@ -309,9 +324,14 @@ export default function AlignmentChart({
                 <BarChart
                     data={groupedCategoryData}
                     layout="horizontal"
-                    margin={{ top: 20, right: 30, left: leftMargin, bottom: 60 }}
+                    margin={{
+                        top: 20,
+                        right: 30,
+                        left: leftMargin,
+                        bottom: 60,
+                    }}
                 >
-                    <CartesianGrid vertical={false} horizontal={true}/>
+                    <CartesianGrid vertical={false} horizontal={true} />
                     <YAxis
                         type="number"
                         domain={[0, 100]}
@@ -327,8 +347,8 @@ export default function AlignmentChart({
                         axisLine={false}
                         tickLine={false}
                     />
-                    <Tooltip 
-                        formatter={(value) => `${value}%`} 
+                    <Tooltip
+                        formatter={(value) => `${value}%`}
                         cursor={false}
                     />
                     {parties.map((party) => (
@@ -343,28 +363,32 @@ export default function AlignmentChart({
                 </BarChart>
             </ResponsiveContainer>
         </>
-    )
+    );
 
     if (Object.keys(userAnswers).length > 0) {
         return (
             <>
                 <h1>Party Alignment Breakdown (%)</h1>
                 <div className="alignment-chart">
-                    <div className="alignment-toggle-buttons" style={{ marginBottom: "1rem" }}>
-                        <button 
+                    <div
+                        className="alignment-toggle-buttons"
+                        style={{ marginBottom: "1rem" }}
+                    >
+                        <button
                             type="button"
                             className={view === "chart" ? "active" : ""}
                             onClick={() => setView("chart")}
                         >
                             Overall
                         </button>
-                        <button 
+                        <button
                             type="button"
                             className={view === "category" ? "active" : ""}
-                            onClick={() => setView("category")}>
+                            onClick={() => setView("category")}
+                        >
                             By Category
                         </button>
-                        <button 
+                        <button
                             type="button"
                             className={view === "table" ? "active" : ""}
                             onClick={() => setView("table")}
@@ -372,16 +396,13 @@ export default function AlignmentChart({
                             Table Breakdown
                         </button>
                     </div>
-                    {view === "chart" ? (
-                        renderChart()
-                        ) : view === "category" ? (
-                            renderCategory()
-                        ) : (
-                            renderTable()
-                    )}
+                    {view === "chart"
+                        ? renderChart()
+                        : view === "category"
+                          ? renderCategory()
+                          : renderTable()}
                 </div>
             </>
-            
         );
     }
 }

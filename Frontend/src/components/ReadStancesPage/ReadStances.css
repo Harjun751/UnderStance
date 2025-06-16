@@ -284,9 +284,9 @@
 .comparison-table td:first-child,
 .comparison-table th:first-child {
     text-align: left;
-    white-space: nowrap;         /* Prevent text wrapping */
-    min-width: 200px;            /* Minimum width to preserve readability */
-    max-width: 400px;            /* Optional: cap max width for consistency */
+    white-space: nowrap; /* Prevent text wrapping */
+    min-width: 200px; /* Minimum width to preserve readability */
+    max-width: 400px; /* Optional: cap max width for consistency */
     overflow: hidden;
     text-overflow: ellipsis;
 }
