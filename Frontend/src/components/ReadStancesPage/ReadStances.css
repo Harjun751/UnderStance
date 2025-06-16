@@ -210,6 +210,34 @@
     width: 34px;
 }
 
+/* Alignment Chart button group styling */
+.alignment-toggle-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.alignment-toggle-buttons button {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #e5e7eb;
+    color: #4b5563;
+    transition: background-color 0.2s ease;
+}
+
+.alignment-toggle-buttons button:hover {
+    /* background-color: #d1d5db; */
+    background-color: #ceb2b2;
+}
+
+.alignment-toggle-buttons .active {
+    background-color: #bc0001;
+    color: white;
+}
+
 /* Comparison Table Styling */
 .comparison-table {
     width: 100%;
@@ -253,6 +281,21 @@
     text-transform: capitalize;
 }
 
+.comparison-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Improve touch scrolling on iOS */
+.comparison-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.comparison-table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 3px;
+}
+
 /* Optional: highlight matching/mismatching answers if you add classes later */
 .aligned {
     background-color: #d4edda;
@@ -294,5 +337,15 @@
     }
     #content-container.unanswered .question-header > h2 {
         width: 100%;
+    }
+    .alignment-toggle-buttons button {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    .comparison-table {
+        font-size: 6px;
+    }
+    .comparison-table td:first-child {
+        max-width: 200px;
     }
 }
