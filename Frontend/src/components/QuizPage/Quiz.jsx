@@ -135,11 +135,9 @@ const Quiz = () => {
                         Question {currentIndex + 1}/{issues.length}
                     </h2>
                     <div className="quote-container">
-                        <span className="floaty-quotey big-quote">“</span>
                         <span className="big-quote main-question">
                             {currentIssue.Description}
                         </span>
-                        <span className="floaty-quotey big-quote">”</span>
                     </div>
                     <div className="button-group">
                         {["disagree", "skip", "agree"].map((option) => (
