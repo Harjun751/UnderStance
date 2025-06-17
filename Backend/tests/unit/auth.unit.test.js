@@ -11,8 +11,6 @@ describe("authorized endpoint without mock", () => {
         request = require("supertest");
     });
 
-
-
     test("should return 401 if no credentials", () => {
         return request(app)
             .get("/authorized")
@@ -29,14 +27,14 @@ describe("mocked auth authorized endpoint", () => {
     beforeAll(() => {
         jest.resetModules();
 
-        jest.mock('express-oauth2-jwt-bearer', () => ({
-          auth: jest.fn(() => (req, res, next) => {
-              req.auth = {
-              sub: 'user-123',
-              scope: 'read:messages'
+        jest.mock("express-oauth2-jwt-bearer", () => ({
+            auth: jest.fn(() => (req, res, next) => {
+                req.auth = {
+                    sub: "user-123",
+                    scope: "read:messages",
                 };
                 next();
-              }),
+            }),
         }));
 
         app = require("../../app");
@@ -49,5 +47,5 @@ describe("mocked auth authorized endpoint", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
             });
-    })
+    });
 });
