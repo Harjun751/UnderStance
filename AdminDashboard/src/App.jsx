@@ -19,8 +19,8 @@ function App() {
             domain="dev-i0ksanu2a66behjf.us.auth0.com"
             clientId="epA5sJrx7Ja3wy7BK03v7nzlEASqTIzD"
             authorizationParams={{
-              redirect_uri: `${window.location.origin}/home`,
-              audience: "https://understance-backend.onrender.com/",
+                redirect_uri: `${window.location.origin}/home`,
+                audience: "https://understance-backend.onrender.com/",
             }}
         >
             <AuthLoadWrapper>
