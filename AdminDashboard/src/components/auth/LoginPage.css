@@ -1,5 +1,5 @@
 body:has(> #root > #login) {
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.9);
     /* background-image: linear-gradient(to right, #ce3f8f, #1b4dbe); */
     /* background-image: linear-gradient(to right, #3F3AA2, #00D4FF); */
     /* background-image: linear-gradient(to right, #3F3AA2, var(--red)); */
