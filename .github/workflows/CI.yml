@@ -91,7 +91,7 @@ jobs:
             **There is one or more linting errors (Admin FE)**
             <details>
             <summary>Lint Issues</summary>
-            ${{ steps.biomelint.outputs.lint_output }}
+            ${{ steps.adminlint.outputs.lint_output }}
             </details>
             🌏
           message-id: admin

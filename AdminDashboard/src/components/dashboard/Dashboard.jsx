@@ -7,7 +7,7 @@ export default () => {
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
 
-    useEffect(() => {
+    useEffect((getAccessTokenSilently) => {
         const fetchData = async () => {
             /* test if normal routes work */
             const testRes = await fetch(`${import.meta.env.VITE_API_URL}/questions`);
