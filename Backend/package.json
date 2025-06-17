@@ -7,13 +7,8 @@
     "type": "commonjs",
     "main": "backend.js",
     "jest": {
-        "setupFilesAfterEnv": [
-            "./tests/setup/jest.setup.js"
-        ],
-        "coverageReporters": [
-            "lcov",
-            "text-summary"
-        ],
+        "setupFilesAfterEnv": ["./tests/setup/jest.setup.js"],
+        "coverageReporters": ["lcov", "text-summary"],
         "reporters": [
             "default",
             [

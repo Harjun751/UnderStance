@@ -5,16 +5,12 @@ import "./LoginPage.css";
 import LoginButton from "./LoginButton";
 import Title from "../general/Title";
 
-
-
 export default () => {
-
     const { isAuthenticated } = useAuth0();
 
     if (isAuthenticated) {
         return <Navigate to="/home" />;
-    };
-
+    }
 
     return (
         <div id="login">
