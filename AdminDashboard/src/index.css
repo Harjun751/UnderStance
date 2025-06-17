@@ -27,14 +27,6 @@ h3 {
     font-weight: unset;
     margin: 0;
 }
-#root {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100vh;
-}
 
 /* Desktop Breakpoint */
 @media only screen and (min-width: 1200px) {
@@ -54,9 +46,6 @@ h3 {
     * {
         font-size: 1em;
     }
-    #root {
-        max-width: 1200px;
-    }
 }
 
 @media only screen and (max-width: 1200px) {
@@ -72,8 +61,9 @@ h3 {
     * {
         font-size: 18px;
     }
-    #root {
-        max-width: 500px;
-        width: 92%;
-    }
 }
+
+body {
+    margin: 0;
+}
+

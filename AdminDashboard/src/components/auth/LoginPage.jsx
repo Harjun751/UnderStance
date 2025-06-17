@@ -1,51 +1,29 @@
 import { useState } from "react";
+import { Navigate } from "react-router";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./LoginPage.css";
 import LoginButton from "./LoginButton";
 import Title from "../general/Title";
 
+
+
 export default () => {
+
+    const { isAuthenticated } = useAuth0();
+
+    if (isAuthenticated) {
+        return <Navigate to="/home" />;
+    };
+
+
     return (
         <div id="login">
-            <img
-                id="hero"
-                src="../../../src/assets/hdb.jpg"
-                alt="Singapore Apartment Buildings"
-            />
-            <form>
+            <div id="title-container">
                 <Title />
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input
-                        name="email"
-                        id="email"
-                        type="email"
-                        placeholder="email@email.com"
-                    />
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input
-                        name="password"
-                        id="password"
-                        placeholder="sick-password"
-                        type="password"
-                    />
-                </div>
-                <div class="input-group checkbox">
-                    <label for="remember-me">Remember me: </label>
-                    <input
-                        type="checkbox"
-                        name="remember-me"
-                        id="remember-me"
-                    />
-                </div>
-                <div class="input-group">
-                    <LoginButton />
-                </div>
-                <div class="input-group">
-                    <a href="/">Reset Password</a>
-                </div>
-            </form>
+            </div>
+            <div id="login-btn">
+                <LoginButton />
+            </div>
         </div>
     );
 };

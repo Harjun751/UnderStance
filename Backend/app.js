@@ -3,16 +3,30 @@ const db = require("./services/DAL");
 const logger = require("./logger");
 const app = express();
 const cors = require("cors");
+const { auth } = require('express-oauth2-jwt-bearer');
 
-const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5174";
-// const corsOrigin = process.env.CORS_ORIGIN || 'https://understance.onrender.com';
+const frontendOrigin = process.env.FRONTEND_ORIGIN || "http://localhost:5174";
+const adminOrigin = process.env.ADMIN_ORIGIN || "http://localhost:5173";
+const issuerBaseUrl = process.env.ISSUER_BASE_URL || "https://dev-i0ksanu2a66behjf.us.auth0.com/";
+const audience = process.env.AUDIENCE || "https://understance-backend.onrender.com/";
 
-app.use(
-    cors({
-        origin: corsOrigin,
-        methods: ["GET", "POST"],
-    }),
-);
+const corsConfig = {
+    origins: [adminOrigin, frontendOrigin]
+}
+
+/* Intercept all requests and check if valid origin in list
+ * Then set cors header accordingly                         */
+app.use((req,res,next) => {
+    let origin = req.headers.origin;
+    if (corsConfig.origins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+    }
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    return next();
+});
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
@@ -117,5 +131,27 @@ app.get("/parties", async (req, res) => {
         }
     }
 });
+
+const securedRoutes = express.Router();
+
+securedRoutes.use(
+    cors({
+        origin: adminOrigin,
+        methods: ["GET", "POST"],
+    }),
+    auth({
+        issuerBaseURL: issuerBaseUrl,
+        audience: audience,
+        tokenSigningAlg: 'RS256'
+    })
+);
+
+securedRoutes.get("/authorized", async (req, res) => {
+    const auth = req.auth;
+    res.status(200).send({ message: "successfully authorized!", token: auth.token });
+});
+
+
+app.use(securedRoutes);
 
 module.exports = app;
