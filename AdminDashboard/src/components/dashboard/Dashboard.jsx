@@ -7,7 +7,7 @@ export default () => {
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
 
-    useEffect((getAccessTokenSilently) => {
+    useEffect(() => {
         const fetchData = async () => {
             /* test if normal routes work */
             const testRes = await fetch(
@@ -36,7 +36,7 @@ export default () => {
             setLoading(false);
         };
         fetchData();
-    }, []);
+    }, [getAccessTokenSilently]);
 
     if (loading) return <div>getting auth info...</div>;
 
