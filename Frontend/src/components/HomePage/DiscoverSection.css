@@ -5,9 +5,8 @@
 }
 
 .discover-container {
-    max-width: 1120px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 1rem;
 }
 
 .discover-header {
@@ -28,9 +27,31 @@
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
 }
+
 .item {
     position: relative;
 }
+
+.item:hover {
+    /* box-shadow: 0 0 0 2px #ffffff; */
+    cursor: pointer;
+}
+
+/* For faded effect when moving hover from one item to another */
+.faded {
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.discover-items:hover .item {
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.discover-items .item:hover {
+    opacity: 1 !important;
+}
+/* ***************** */
 
 .discover-title {
     margin-top: 0.5rem;
@@ -48,11 +69,34 @@
     color: #6b7280;
 }
 
+.discover-card-wrapper {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
 .discover-card {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    text-align: left;
+    width: 1120px;
+}
+
+/* For Smooth fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .discover-card-content {
@@ -187,9 +231,11 @@
 @media (max-width: 720px) {
     .discover-items {
         grid-template-columns: 1fr;
+        gap: 0rem;
     }
     .discover-header {
         text-align: left;
+        padding-left: 1rem;
     }
     .discover-description{
         text-align: left;
@@ -199,5 +245,69 @@
     }
     .discover-card-content {
         padding: 1.5rem;
+    }
+}
+
+@media (min-width: 1080px) {
+    .discover-section {
+        padding: 4rem 0rem;
+    }
+
+    .discover-header {
+        margin-bottom: 4rem;
+    }
+
+    .discover-subtitle {
+        font-size: 1rem;
+    }
+
+    .discover-title {
+        font-size: 2.5rem;
+    }
+
+    .discover-description {
+        font-size: 1.5rem;
+        max-width: 800px;
+    }
+
+    .discover-items {
+        gap: 3rem;
+    }
+
+    .discover-card-content {
+        padding: 3.5rem;
+    }
+
+    .discover-heading {
+        font-size: 1.25rem;
+    }
+
+    .discover-detail {
+        font-size: 1rem;
+    }
+
+    .icon-lg {
+        font-size: 2rem;
+    }
+
+    .discover-box {
+        padding: 2rem;
+    }
+
+    .discover-box-title {
+        font-size: 1.25rem;
+    }
+
+    .discover-list li {
+        font-size: 1rem;
+    }
+
+    .btn-large {
+        padding: 1.25rem 2.5rem;
+        font-size: 1.25rem;
+    }
+
+    .discover-grid {
+        gap: 2rem;
     }
 }
