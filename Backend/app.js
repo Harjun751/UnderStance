@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("./services/DAL");
+const validator = require("./services/InputValidation");
 const logger = require("./logger");
 const app = express();
 const cors = require("cors");
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
     return next();
 });
 
+
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
@@ -59,6 +61,7 @@ app.get("/questions", async (req, res) => {
         }
     }
 });
+
 
 app.get("/stances", async (req, res) => {
     let StanceID = req.query.StanceID;
@@ -136,6 +139,9 @@ app.get("/parties", async (req, res) => {
 
 const securedRoutes = express.Router();
 
+/* middleware to parse req.body */
+securedRoutes.use(express.json());
+
 securedRoutes.use(
     cors({
         origin: adminOrigin,
@@ -155,6 +161,53 @@ securedRoutes.get("/authorized", async (req, res) => {
         token: auth.token,
     });
 });
+
+securedRoutes.post("/questions", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validateDescription(body.Description) ||
+        !validator.validateSummary(body.Summary) ||
+        !validator.validateCategory(body.Category)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    }
+    try {
+        const data = await db.insertQuestion(
+            body.Description, body.Summary, body.Category
+        );
+        res.status(200).send({ IssueID: data });
+    } catch (error) {
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert question" });
+    }
+});
+
+securedRoutes.put("/questions", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validateDescription(body.Description) ||
+        !validator.validateSummary(body.Summary) ||
+        !validator.validateCategory(body.Category) ||
+        !validator.validateIssueID(body.IssueID)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    }
+    try {
+        const data = await db.updateQuestion(
+            body.IssueID, body.Description, body.Summary, body.Category
+        );
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update Issue with requested ID"}); 
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update question" });
+        }
+    }
+});
+
+
 
 app.use(securedRoutes);
 

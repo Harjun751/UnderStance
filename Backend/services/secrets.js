@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 
 function getSecret(path) {
-    if (process.env.ENV === "test") {
+    if (process.env.NODE_ENV === "test") {
         return "dummy";
     }
     try {

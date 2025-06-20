@@ -45,6 +45,48 @@ async function getQuestionWithID(id) {
     }
 }
 
+async function insertQuestion(description, summary, category) {
+    try {
+        const rows = await pool.query(
+            `INSERT INTO "Issue" ("Description", "Summary", "Category")
+             VALUES ($1, $2, $3)
+             RETURNING "IssueID"
+            `, [description, summary, category]
+        );
+        return rows.rows[0].IssueID;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function updateQuestion(id, description, summary, category) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `UPDATE "Issue"
+                 SET "Description" = $1,
+                     "Summary" = $2,
+                     "Category" = $3
+                 WHERE "IssueID" = $4
+                 RETURNING *
+                `, [description, summary, category, val]
+            );
+            if (rows.rows.length === 0) {
+                throw new Error("Invalid Resource");
+            }
+            // TODO: Check if returned length more than 0?
+            return rows.rows[0];
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
 async function getStances() {
     try {
         const rows = await pool.query('SELECT * FROM "Stance"');
@@ -116,4 +158,6 @@ module.exports = {
     getQuestions,
     getParties,
     getPartyWithID,
+    insertQuestion,
+    updateQuestion
 };
