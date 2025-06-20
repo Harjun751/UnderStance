@@ -64,6 +64,52 @@ describe("mock GET question with filter", () => {
     });
 });
 
+describe("mock POST question", () => {
+    test("should add 1 row to Issue", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [
+                { IssueID: 1 }
+        ]});
+        await expect(dal.insertQuestion("Description", "Summary", "Category")).resolves.toBe(1);
+    });
+
+    test("should throw error on DB fail", async () => {
+        mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
+        await expect(dal.insertQuestion("","","")).rejects.toThrow("DB kaput");
+    });
+
+    // TODO: Validation for category?
+});
+
+describe("mock PATCH question", () => {
+    test("should update and return Issue", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [{ IssueID: 1, Description: "Test Issue2", Summary: "Summary2", Category: "Category2" }],
+        });
+        const result = await dal.updateQuestion(1, "Test Issue2", "Summary2", "Category2");
+        expect(result).toEqual(
+            { IssueID: 1, Description: "Test Issue2", Summary: "Summary2", Category: "Category2" },
+        );
+    });
+
+    test("should throw error if resource does not exist", async () => {
+        mockQuery.mockResolvedValueOnce({ rows: [] });
+        await expect(dal.updateQuestion(1, "", "", "")).rejects.toThrow("Invalid Resource");
+    });
+
+    test("should throw error with invalid arguments", async () => {
+        await expect(dal.updateQuestion("one","","","")).rejects.toThrow(
+            new Error("Invalid Argument")
+        );
+    });
+
+    test("should throw error on DB fail", async () => {
+        mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
+        await expect(dal.updateQuestion(1,"","","")).rejects.toThrow("DB kaput");
+    });
+
+});
+
 const fakeStances = [
     {
         StanceID: 1,

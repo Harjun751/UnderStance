@@ -98,3 +98,49 @@ describe("mock GET quiz question with filter", () => {
             });
     });
 });
+
+
+// represents ID of just-inserted object
+const insertReturnValue = 12;
+const fakeDescription = "Fake description"
+const fakeSummary = "Fake Summary"
+const fakeCategory = "Fake Category"
+const fakeBody = 
+    {
+        Description: fakeDescription,
+        Summary: fakeSummary,
+        Category: fakeCategory
+    };
+
+describe("unauthenticated POST quiz question", () => {
+    test("should return 401 unauthorized", () => {
+        db.insertQuestion.mockResolvedValue(12);
+        return request(app)
+            .post("/questions")
+            .send(fakeBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
+            });
+    });
+});
+
+const fakeIssueID = 12;
+const fakePutBody = {
+    IssueID: fakeIssueID,
+    Description: fakeDescription,
+    Summary: fakeSummary,
+    Category: fakeCategory
+}
+
+describe("unauthenticated PUT quiz question", () => {
+
+    test("should return 401 unauthorized", () => {
+        db.updateQuestion.mockResolvedValue(fakePutBody);
+        return request(app)
+            .put("/questions")
+            .send(fakePutBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
+            });
+    });
+});
