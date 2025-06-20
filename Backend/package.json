@@ -7,10 +7,10 @@
     "type": "commonjs",
     "main": "backend.js",
     "jest": {
-        "globalSetup": "./tests/setup/authSetup.js",
         "setupFilesAfterEnv": [
             "./tests/setup/jest.setup.js",
-            "dotenv/config"
+            "dotenv/config",
+            "./tests/setup/authSetup.js"
         ],
         "coverageReporters": [
             "lcov",

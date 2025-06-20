@@ -1,6 +1,6 @@
 // set up authentication
 require('dotenv').config({ path: "./.env.test"});
-module.exports = async function (globalConfig, projectConfig) {
+(async function() {
     var res = await fetch("https://dev-i0ksanu2a66behjf.us.auth0.com/oauth/token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -14,5 +14,5 @@ module.exports = async function (globalConfig, projectConfig) {
 
     var data = await res.json();
     const authToken = data.access_token;
-    globalThis.authToken = authToken;
-};
+    global.authToken = authToken;
+})()
