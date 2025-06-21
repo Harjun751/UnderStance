@@ -172,7 +172,7 @@ describe("authenticated mock PUT quiz question", () => {
             .then(response => {
                 expect(response.statusCode).toBe(404)
                 expect(response.body).toEqual({
-                    error: "Could not update Issue with requested ID"
+                    error: "Could not update question with requested ID"
                 });
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
                     fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
@@ -196,3 +196,43 @@ describe("authenticated mock PUT quiz question", () => {
             });
     });
 });
+
+describe("authenticated mock DELETE quiz question", () => {
+    test("should return 200 OK", () => {
+        db.deleteQuestion.mockResolvedValue({ rowCount: 1});
+        return request(app)
+            .delete("/questions/1")
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toEqual({ message: "Successfully deleted" });
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
+                     1 
+                );
+            });
+    });
+
+    test("should return 404 if no valid resource", () => {
+        db.deleteQuestion.mockResolvedValue({ rowCount: 0 });
+        return request(app)
+            .delete("/questions/13")
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
+                     13 
+                );
+            });
+    });
+
+    test("should return 500 if DB error", () => {
+        db.deleteQuestion.mockRejectedValue(new Error("DB error"));
+        return request(app)
+            .delete("/questions/1")
+            .then((response) => {
+                expect(response.statusCode).toBe(500);
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
+                    1
+                );
+            });
+    });
+});
+

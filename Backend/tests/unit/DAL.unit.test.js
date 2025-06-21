@@ -105,7 +105,7 @@ describe("mock POST question", () => {
     // TODO: Validation for category?
 });
 
-describe("mock PATCH question", () => {
+describe("mock PUT question", () => {
     test("should update and return Issue", async () => {
         mockQuery.mockResolvedValueOnce({
             rows: [{ IssueID: 1, Description: "Test Issue2", Summary: "Summary2", Category: "Category2" }],
