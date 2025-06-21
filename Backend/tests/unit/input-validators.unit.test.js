@@ -99,3 +99,40 @@ describe("issueid validator", () => {
         expect(validator.validateIssueID(id)).toBe(false);
     });
 });
+
+describe("active validator", () => {
+    test("should pass on valid boolean true string", async () => {
+        expect(validator.validateActive("true")).toBe(true);
+    });
+
+    test("should pass on valid boolean false string", async () => {
+        expect(validator.validateActive("false")).toBe(true);
+    });
+
+    test("should pass on valid boolean true", async () => {
+        expect(validator.validateActive(true)).toBe(true);
+    });
+
+    test("should pass on valid boolean false", async () => {
+        expect(validator.validateActive(false)).toBe(true);
+    });
+
+    test("should fail on null boolean", async () => {
+        expect(validator.validateActive(null)).toBe(false);
+    });
+
+    test("should fail on undefined", async () => {
+        let bool;
+        expect(validator.validateActive(bool)).toBe(false);
+    });
+});
+
+describe("boolean convertor", () => {
+    test("should convert true string to true", async () => {
+        expect(validator.convertToBoolean("true")).toBe(true);
+    });
+
+    test("should convert false string to false", async () => {
+        expect(validator.convertToBoolean("false")).toBe(false);
+    });
+});

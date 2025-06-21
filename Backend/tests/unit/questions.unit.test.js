@@ -60,7 +60,7 @@ describe("mock GET quiz question with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeQuestions);
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(1);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 1);
             });
     });
 
@@ -72,7 +72,7 @@ describe("mock GET quiz question with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeQuestions);
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(2);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 2);
             });
     });
 
@@ -94,7 +94,7 @@ describe("mock GET quiz question with filter", () => {
                 expect(response.body).toEqual({
                     error: "Failed to fetch questions",
                 });
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(3);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 3);
             });
     });
 });

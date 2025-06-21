@@ -8,7 +8,7 @@ paths:
   /questions:
     get:
       summary: Get all questions/issues
-      description: Retrieves all the issues from the database
+      description: Retrieves all the issues from the database. Response differs based on authentication status.
       parameters:
         - name: ID
           in: query

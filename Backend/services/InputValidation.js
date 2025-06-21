@@ -1,5 +1,5 @@
 function validateDescription(desc) {
-    if (typeof desc !== undefined && desc) {
+    if (typeof desc !== "undefined" && desc) {
         return desc.length <= 300;
     } else {
         return false;
@@ -7,7 +7,7 @@ function validateDescription(desc) {
 }
 
 function validateSummary(summary) {
-    if (typeof summary !== undefined && summary) {
+    if (typeof summary !== "undefined" && summary) {
         return summary.length <= 50;
     } else {
         return false;
@@ -15,7 +15,7 @@ function validateSummary(summary) {
 }
 
 function validateCategory(category) {
-    if (typeof category !== undefined && category) {
+    if (typeof category !== "undefined" && category) {
         return category.length <= 50;
     } else {
         return false;
@@ -23,15 +23,31 @@ function validateCategory(category) {
 }
 
 function validateIssueID(id) {
-    if (typeof id !== undefined && id && !Number.isNaN(Number(id))) {
+    if (typeof id !== "undefined" && id && !Number.isNaN(Number(id))) {
         return true;
     }
     return false;
+}
+
+function validateActive(active) {
+    if (typeof active !== "undefined" && active !== null) {
+        if (typeof active === "boolean") { return true; }
+        return active.toLowerCase() === 'true' || active.toLowerCase() === 'false';
+    }
+    return false;
+}
+
+function convertToBoolean(active) {
+    // assume input is clean
+    if (typeof active === "boolean") { return active; }
+    return active.toLowerCase() === 'true';
 }
 
 module.exports = {
     validateDescription,
     validateSummary,
     validateCategory,
-    validateIssueID
+    validateIssueID,
+    validateActive,
+    convertToBoolean
 }

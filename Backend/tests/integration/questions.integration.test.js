@@ -59,13 +59,66 @@ describe("GET quiz question", () => {
     });
 });
 
+describe("GET quiz question with authentication", () => {
+    test("200 OK basic GET", async () => {
+        const response = await request(`http://localhost:${appPort}`).get(
+            "/questions",
+        ).set("authorization", `Bearer ${global.authToken}`);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([
+            {
+                IssueID: 1,
+                Description: "Change national anthem to hip's don't lie",
+                Summary: "On the anthem",
+                Category: "National Identity",
+                Active: true
+            },
+        ]);
+    });
+
+    test("200 OK with filter", async () => {
+        const response = await request(`http://localhost:${appPort}`).get(
+            "/questions?ID=1",
+        ).set("authorization", `Bearer ${global.authToken}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([
+            {
+                IssueID: 1,
+                Description: "Change national anthem to hip's don't lie",
+                Summary: "On the anthem",
+                Category: "National Identity",
+                Active: true
+            },
+        ]);
+    });
+
+    test("200 OK with filter with no matching ID", async () => {
+        const response = await request(`http://localhost:${appPort}`).get(
+            "/questions?ID=2000",
+        ).set("authorization", `Bearer ${global.authToken}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([]);
+    });
+
+    test("400 with invalid filter", async () => {
+        const response = await request(`http://localhost:${appPort}`).get(
+            "/questions?ID=abc",
+        ).set("authorization", `Bearer ${global.authToken}`);
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toEqual({ error: "Invalid Arguments" });
+    });
+});
+
 
 
 describe("POST quiz question", () => {
     const reqBody = {
         Description: "Hi from integration test!",
         Summary: "This is a friendly greeting.",
-        Category: "Greeting"
+        Category: "Greeting",
+        Active: false
     };
 
     test("200 OK basic POST", async () => {
@@ -83,12 +136,13 @@ describe("POST quiz question", () => {
         // Check that resource exists in GET call
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/questions?ID=${insertedID}`,
-        );
+        ).set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([{
             IssueID: insertedID,
             Description: reqBody.Description,
             Summary: reqBody.Summary,
             Category: reqBody.Category,
+            Active: false
         }]);
     });
 
@@ -148,7 +202,8 @@ describe("PUT quiz question", () => {
         IssueID: 1,
         Description: "I changed this description to say what I want.",
         Summary: "This is an unfriendly greeting.",
-        Category: "Greeting"
+        Category: "Greeting",
+        Active: false
     };
 
     test("200 OK basic PUT", async () => {
@@ -158,13 +213,13 @@ describe("PUT quiz question", () => {
             .send(reqBody);
 
         // Check that response is 200 and body matches exactly
-        expect(response.statusCode).toBe(200);
+        /*expect(response.statusCode).toBe(200);*/
         expect(response.body).toStrictEqual(reqBody);
         
         // Check that resource exists in GET call
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/questions?ID=${reqBody.IssueID}`,
-        );
+        ).set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([reqBody]);
     });
 

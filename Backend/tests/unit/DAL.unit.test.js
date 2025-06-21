@@ -15,21 +15,33 @@ const dal = require("../../services/DAL");
 
 describe("mock GET question", () => {
     test("should return rows from Issue", async () => {
-        const result = await dal.getQuestions();
+        const result = await dal.getQuestions(false);
         expect(result).toEqual([
             { IssueID: 1, Description: "Test Issue", Summary: "Summary" },
         ]);
     });
 
+    test("should return rows and details from Issue", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [
+                { IssueID: 1, Description: "Test Issue", Summary: "Summary", Active: true },
+            ],
+        });
+        const result = await dal.getQuestions(true);
+        expect(result).toEqual([
+            { IssueID: 1, Description: "Test Issue", Summary: "Summary", Active: true },
+        ]);
+    });
+
     test("should return [] from Issue", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        const result = await dal.getQuestions();
+        const result = await dal.getQuestions(false);
         expect(result).toEqual([]);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.getQuestions()).rejects.toThrow("DB kaput");
+        await expect(dal.getQuestions(false)).rejects.toThrow("DB kaput");
     });
 });
 
@@ -40,27 +52,39 @@ describe("mock GET question with filter", () => {
                 { IssueID: 1, Description: "Test Issue", Summary: "Summary" },
             ],
         });
-        const result = await dal.getQuestionWithID(1);
+        const result = await dal.getQuestionWithID(false,1);
         expect(result).toEqual([
             { IssueID: 1, Description: "Test Issue", Summary: "Summary" },
         ]);
     });
 
+    test("should return 1 row with details from Issue", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [
+                { IssueID: 1, Description: "Test Issue", Summary: "Summary", Active: true },
+            ],
+        });
+        const result = await dal.getQuestionWithID(true,1);
+        expect(result).toEqual([
+            { IssueID: 1, Description: "Test Issue", Summary: "Summary", Active: true },
+        ]);
+    });
+
     test("should return 0 rows from Issue", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        const result = await dal.getQuestionWithID(2);
+        const result = await dal.getQuestionWithID(false,2);
         expect(result).toEqual([]);
     });
 
     test("should error due to invalid argument", async () => {
-        await expect(dal.getQuestionWithID("abc")).rejects.toThrow(
+        await expect(dal.getQuestionWithID(false,"abc")).rejects.toThrow(
             new Error("Invalid Argument"),
         );
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.getQuestionWithID(1)).rejects.toThrow("DB kaput");
+        await expect(dal.getQuestionWithID(false,1)).rejects.toThrow("DB kaput");
     });
 });
 

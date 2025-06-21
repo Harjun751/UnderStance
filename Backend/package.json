@@ -10,7 +10,7 @@
         "setupFilesAfterEnv": [
             "./tests/setup/jest.setup.js",
             "dotenv/config",
-            "./tests/setup/authSetup.js"
+            "./tests/setup/auth.setup.js"
         ],
         "coverageReporters": [
             "lcov",

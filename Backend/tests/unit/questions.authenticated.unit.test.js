@@ -12,16 +12,61 @@ const request = require("supertest");
 jest.mock("../../services/DAL");
 const db = require("../../services/DAL");
 
+describe("authenticated mock GET quiz question", () => {
+    test("should return 200 OK", () => {
+        const fakeQuestions = [
+            {
+                IssueID: 1,
+                Description: "Mock Question",
+                Summary: "nil",
+                Active: true
+            },
+        ];
+        db.getQuestions.mockResolvedValue(fakeQuestions);
+        return request(app)
+            .get("/questions")
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toEqual(fakeQuestions);
+                expect(db.getQuestions).toHaveBeenCalledWith(true);
+            });
+    });
+
+    test("should return 200 OK with filter", () => {
+        const fakeQuestions = [
+            {
+                IssueID: 1,
+                Description: "Mock Question",
+                Summary: "nil",
+                Active: true
+            },
+        ];
+        db.getQuestionWithID.mockResolvedValue(fakeQuestions);
+        return request(app)
+            .get("/questions?ID=1")
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toEqual(fakeQuestions);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(true, 1);
+            });
+    });
+});
+
+
+
+
 // represents ID of just-inserted object
 const insertReturnValue = 12;
 const fakeDescription = "Fake description"
 const fakeSummary = "Fake Summary"
 const fakeCategory = "Fake Category"
+const fakeActive = false;
 const fakeBody = 
     {
         Description: fakeDescription,
         Summary: fakeSummary,
-        Category: fakeCategory
+        Category: fakeCategory,
+        Active: fakeActive
     };
 
 describe("authenticated mock POST quiz question", () => {
@@ -34,7 +79,7 @@ describe("authenticated mock POST quiz question", () => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body.IssueID).toEqual(12);
                 expect(db.insertQuestion).toHaveBeenLastCalledWith(
-                    fakeDescription, fakeSummary, fakeCategory
+                    fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );
             });
     });
@@ -68,7 +113,7 @@ describe("authenticated mock POST quiz question", () => {
                     error: "Failed to insert question",
                 });
                 expect(db.insertQuestion).toHaveBeenLastCalledWith(
-                    fakeDescription, fakeSummary, fakeCategory
+                    fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );
             });
     });
@@ -79,7 +124,8 @@ const fakePutBody = {
     IssueID: fakeIssueID,
     Description: fakeDescription,
     Summary: fakeSummary,
-    Category: fakeCategory
+    Category: fakeCategory,
+    Active: fakeActive
 }
 
 describe("authenticated mock PUT quiz question", () => {
@@ -92,7 +138,7 @@ describe("authenticated mock PUT quiz question", () => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakePutBody);
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory
+                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );
             });
     });
@@ -109,7 +155,8 @@ describe("authenticated mock PUT quiz question", () => {
                     Dingle bingle went to the wingle shingle down at ringle road. There at the shingle, loud jingles were being played.tingle bingle, dingle bingle's sibling, shingled his hingles a little too fingley. Dingle bingle and tingle bingle were forced to leave the wingle shingle down at ringle road. Dismayed, both dingle and tingle head back home, single, to gingle fingle where their mom, mingle bingle cooked them a nice ningle lingle.
 
                 `,
-                Category: fakeCategory
+                Category: fakeCategory,
+                Active: fakeActive
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
@@ -128,7 +175,7 @@ describe("authenticated mock PUT quiz question", () => {
                     error: "Could not update Issue with requested ID"
                 });
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory
+                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );
             });
     });
@@ -144,7 +191,7 @@ describe("authenticated mock PUT quiz question", () => {
                     error: "Failed to update question",
                 });
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory
+                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );
             });
     });

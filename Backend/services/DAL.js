@@ -17,9 +17,17 @@ if (process.env.SECRET_DB_CONN_PATH) {
     });
 }
 
-async function getQuestions() {
+async function getQuestions(isAuthenticated) {
+    let query;
+    if (isAuthenticated) {
+        // Return all info
+        query = 'SELECT * FROM "Issue"';
+    } else {
+        // return only active questions
+        query = 'SELECT "IssueID", "Description", "Summary", "Category" FROM "Issue" WHERE "Active" = true';
+    }
     try {
-        const rows = await pool.query('SELECT * FROM "Issue"');
+        const rows = await pool.query(query);
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);
@@ -27,12 +35,18 @@ async function getQuestions() {
     }
 }
 
-async function getQuestionWithID(id) {
+async function getQuestionWithID(isAuthenticated, id) {
+    let query;
+    if (isAuthenticated) {
+        query = 'SELECT * FROM "Issue" WHERE "IssueID" = $1';
+    } else {
+        query = 'SELECT "IssueID", "Description", "Summary", "Category" FROM "Issue" WHERE "Active" = true AND "IssueID" = $1';
+    }
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                'SELECT * FROM "Issue" WHERE "IssueID" = $1',
+                query,
                 [val],
             );
             return rows.rows;
@@ -45,13 +59,13 @@ async function getQuestionWithID(id) {
     }
 }
 
-async function insertQuestion(description, summary, category) {
+async function insertQuestion(description, summary, category, active) {
     try {
         const rows = await pool.query(
-            `INSERT INTO "Issue" ("Description", "Summary", "Category")
-             VALUES ($1, $2, $3)
+            `INSERT INTO "Issue" ("Description", "Summary", "Category", "Active")
+             VALUES ($1, $2, $3, $4)
              RETURNING "IssueID"
-            `, [description, summary, category]
+            `, [description, summary, category, active]
         );
         return rows.rows[0].IssueID;
     } catch (err) {
@@ -60,7 +74,7 @@ async function insertQuestion(description, summary, category) {
     }
 }
 
-async function updateQuestion(id, description, summary, category) {
+async function updateQuestion(id, description, summary, category, active) {
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
@@ -68,15 +82,15 @@ async function updateQuestion(id, description, summary, category) {
                 `UPDATE "Issue"
                  SET "Description" = $1,
                      "Summary" = $2,
-                     "Category" = $3
-                 WHERE "IssueID" = $4
+                     "Category" = $3,
+                     "Active" = $4
+                 WHERE "IssueID" = $5
                  RETURNING *
-                `, [description, summary, category, val]
+                `, [description, summary, category, active, val]
             );
             if (rows.rows.length === 0) {
                 throw new Error("Invalid Resource");
             }
-            // TODO: Check if returned length more than 0?
             return rows.rows[0];
         } catch (err) {
             logger.error(err.stack);

@@ -31,17 +31,27 @@ app.use((req, res, next) => {
     return next();
 });
 
+// Auth middleware that doesn't enforce
+app.use(
+    auth({
+        issuerBaseURL: issuerBaseUrl,
+        audience: audience,
+        tokenSigningAlg: "RS256",
+        authRequired: false,
+    }),
+);
+
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
 app.get("/questions", async (req, res) => {
+    const isAuthenticated = (req.auth !== undefined);
     const id = req.query.ID;
     if (id === undefined) {
-        // simply return all
         try {
-            const data = await db.getQuestions();
+            const data = await db.getQuestions(isAuthenticated);
             res.status(200).send(data);
         } catch (error) {
             logger.error(error.stack);
@@ -50,7 +60,7 @@ app.get("/questions", async (req, res) => {
     } else {
         if (!Number.isNaN(Number(id))) {
             try {
-                const data = await db.getQuestionWithID(Number.parseInt(id));
+                const data = await db.getQuestionWithID(isAuthenticated, Number.parseInt(id));
                 res.status(200).send(data);
             } catch (error) {
                 logger.error(error.stack);
@@ -167,13 +177,14 @@ securedRoutes.post("/questions", async (req,res) => {
     if (
         !validator.validateDescription(body.Description) ||
         !validator.validateSummary(body.Summary) ||
-        !validator.validateCategory(body.Category)
+        !validator.validateCategory(body.Category) ||
+        !validator.validateActive(body.Active)
     ) {
         res.status(400).send({error: "Invalid Arguments"});
     }
     try {
         const data = await db.insertQuestion(
-            body.Description, body.Summary, body.Category
+            body.Description, body.Summary, body.Category, validator.convertToBoolean(body.Active)
         );
         res.status(200).send({ IssueID: data });
     } catch (error) {
@@ -188,13 +199,14 @@ securedRoutes.put("/questions", async (req,res) => {
         !validator.validateDescription(body.Description) ||
         !validator.validateSummary(body.Summary) ||
         !validator.validateCategory(body.Category) ||
-        !validator.validateIssueID(body.IssueID)
+        !validator.validateIssueID(body.IssueID) ||
+        !validator.validateActive(body.Active)
     ) {
         res.status(400).send({error: "Invalid Arguments"});
     }
     try {
         const data = await db.updateQuestion(
-            body.IssueID, body.Description, body.Summary, body.Category
+            body.IssueID, body.Description, body.Summary, body.Category, validator.convertToBoolean(body.Active)
         );
         res.status(200).send(data);
     } catch (error) {

@@ -3,6 +3,7 @@ CREATE TABLE "Issue" (
     "Description" varchar(300),
     "Summary" varchar(50),
     "Category" varchar(50),
+    "Active" boolean DEFAULT true,
     PRIMARY KEY ("IssueID")
 );
 
