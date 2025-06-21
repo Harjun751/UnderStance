@@ -275,3 +275,52 @@ describe("PUT quiz question", () => {
 
 });
 
+describe("DELETE quiz question", () => {
+    const reqBody = {
+        Description: "I exist to be deleted",
+        Summary: "My existence temporary",
+        Category: "My meaning meaningless",
+        Active: true
+    };
+
+    test("200 OK basic DELETE", async () => {
+        // ARRANGE: insert a dummy item to be deleted
+        let insert = await request(`http://localhost:${appPort}`)
+            .post("/questions")
+            .set("authorization", `Bearer ${global.authToken}`)
+            .send(reqBody);
+        let insertedID = insert.body.IssueID;
+
+        // ACT: delete the resource
+        const response = await request(`http://localhost:${appPort}`)
+            .delete(`/questions/${insertedID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
+
+        // ASSERT: check that response was 200
+        expect(response.statusCode).toBe(200);
+        // ASSERT: Check that resource does exists in GET call
+        const getResponse = await request(`http://localhost:${appPort}`).get(
+            `/questions?ID=${insertedID}`,
+        ).set("authorization", `Bearer ${global.authToken}`);
+        expect(getResponse.body).toEqual([]);
+    });
+
+    test("404 invalid DELETE for resource that does not exist", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete(`/questions/30000`)
+            .set("authorization", `Bearer ${global.authToken}`);
+
+        // ASSERT: check that response was 404
+        expect(response.statusCode).toBe(404);
+    });
+
+    test("400 DELETE for invalid resource identifier", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete(`/questions/dingus`)
+            .set("authorization", `Bearer ${global.authToken}`);
+
+        // ASSERT: check that response was 200
+        expect(response.statusCode).toBe(400);
+    });
+});
+

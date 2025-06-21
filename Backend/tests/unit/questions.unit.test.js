@@ -133,12 +133,21 @@ const fakePutBody = {
 }
 
 describe("unauthenticated PUT quiz question", () => {
-
     test("should return 401 unauthorized", () => {
         db.updateQuestion.mockResolvedValue(fakePutBody);
         return request(app)
             .put("/questions")
             .send(fakePutBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
+            });
+    });
+});
+
+describe("unauthenticated DELETE quiz question", () => {
+    test("should return 401 unauthorized", () => {
+        return request(app)
+            .delete("/questions")
             .then((response) => {
                 expect(response.statusCode).toBe(401);
             });

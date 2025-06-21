@@ -211,11 +211,30 @@ securedRoutes.put("/questions", async (req,res) => {
         res.status(200).send(data);
     } catch (error) {
         if (error.message === "Invalid Resource") {
-            res.status(404).send({error:"Could not update Issue with requested ID"}); 
+            res.status(404).send({error:"Could not update question with requested ID"}); 
         } else {
             logger.error(error.stack);
             res.status(500).send({ error: "Failed to update question" });
         }
+    }
+});
+
+securedRoutes.delete("/questions/:id", async (req, res) => {
+    const issueID = req.params.id;
+    if (!Number.isNaN(Number(req.params.id))) {
+        try {
+            await db.deleteQuestion(Number.parseInt(req.params.id));
+            res.status(200).send({ message: "Successfully deleted" });
+        } catch (err) {
+            if (err.message === "Invalid Resource") {
+                res.status(404).send({error:"Could not delete question with requested ID"}); 
+            } else {
+                logger.error(error.stack);
+                res.status(500).send({ error: "Failed to delete question" });
+            }
+        }
+    } else {
+        res.status(400).send({ error: "Invalid Arguments" });
     }
 });
 

@@ -211,6 +211,15 @@ describe("authenticated mock DELETE quiz question", () => {
             });
     });
 
+    test("should return 400 if invalid param", () => {
+        db.deleteQuestion.mockResolvedValue({ rowCount: 0 });
+        return request(app)
+            .delete("/questions/dingus")
+            .then((response) => {
+                expect(response.statusCode).toBe(400);
+            });
+    });
+
     test("should return 404 if no valid resource", () => {
         db.deleteQuestion.mockResolvedValue({ rowCount: 0 });
         return request(app)

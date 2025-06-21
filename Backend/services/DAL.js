@@ -101,6 +101,28 @@ async function updateQuestion(id, description, summary, category, active) {
     }
 }
 
+async function deleteQuestion(id) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `DELETE FROM "Issue" WHERE "IssueID" = $1`
+                , [val]
+            );
+            console.log(rows);
+            if (rows.rowCount === 0) {
+                throw new Error("Invalid Resource");
+            }
+            return;
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
 async function getStances() {
     try {
         const rows = await pool.query('SELECT * FROM "Stance"');
@@ -173,5 +195,6 @@ module.exports = {
     getParties,
     getPartyWithID,
     insertQuestion,
-    updateQuestion
+    updateQuestion,
+    deleteQuestion
 };
