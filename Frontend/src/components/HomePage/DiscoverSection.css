@@ -1,6 +1,6 @@
 .discover-section {
     /* background-color: #f9fafb; */
-    background:rgba(249, 250, 251, 0.5); /*adds transparency*/
+    background: rgba(249, 250, 251, 0.5); /*adds transparency*/
     padding: 3rem 1rem;
 }
 
@@ -16,7 +16,7 @@
 
 .discover-subtitle {
     font-size: 0.875rem;
-    color: #BC0001;
+    color: #bc0001;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -40,9 +40,10 @@
     border-radius: 0.5rem;
     padding: 1rem;
     box-sizing: border-box;
-    transition: opacity 0.5s ease, box-shadow 0.3s ease;
+    transition:
+        opacity 0.5s ease,
+        box-shadow 0.3s ease;
     text-align: center; /* so text inside aligns left */
-    
 }
 
 .item:hover {
@@ -122,7 +123,7 @@
 }
 
 .discover-icon {
-    background-color: #BC0001;
+    background-color: #bc0001;
     padding: 0.75rem;
     border-radius: 0.375rem;
     flex-shrink: 0;
@@ -209,7 +210,7 @@
 
 .icon-red {
     /* color: #f63b3b; */
-    color:#9b0202;
+    color: #9b0202;
 }
 
 .icon-gray {
@@ -250,7 +251,7 @@
         text-align: left;
         padding-left: 1rem;
     }
-    .discover-description{
+    .discover-description {
         text-align: left;
     }
     .discover-grid {
@@ -259,8 +260,8 @@
     .discover-card-content {
         padding: 1.5rem;
     }
-    
-    .item{
+
+    .item {
         text-align: left;
     }
 }

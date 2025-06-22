@@ -1,5 +1,5 @@
-import './HeroSection.css';
-import { Link } from 'react-router-dom';
+import "./HeroSection.css";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -9,8 +9,8 @@ const HeroSection = () => {
                     Understand your Political Stance!
                 </h1>
                 <p className="hero-subtitle">
-                    Take our simple Quiz and explore detailed political positions to
-                    understand your political stance today!
+                    Take our simple Quiz and explore detailed political
+                    positions to understand your political stance today!
                 </p>
                 <div className="hero-buttons">
                     <Link to="/quiz">
@@ -19,7 +19,10 @@ const HeroSection = () => {
                         </button>
                     </Link>
                     <Link to="/read-stances">
-                        <button type="button" className="button button-secondary">
+                        <button
+                            type="button"
+                            className="button button-secondary"
+                        >
                             Explore Stances!
                         </button>
                     </Link>

@@ -5,7 +5,12 @@ import "./Hamburger.css";
 export default function Hamburger({ onClick, className }) {
     const id = useId();
     return (
-        <button type="button" onKeyPress={onClick} onClick={onClick} className={className}>
+        <button
+            type="button"
+            onKeyPress={onClick}
+            onClick={onClick}
+            className={className}
+        >
             <input
                 className="hamburger-checkbox"
                 type="checkbox"

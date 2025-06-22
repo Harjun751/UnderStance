@@ -17,7 +17,7 @@ const Quiz = () => {
     const navigate = useNavigate(); // Hook from React Router for navigation
 
     const [weightage, setWeightage] = useState(3); // State to store Weightage
-    
+
     //useId
     const id = useId();
 
