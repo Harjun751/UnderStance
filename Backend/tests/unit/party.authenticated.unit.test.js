@@ -298,11 +298,11 @@ describe("authenticated mock DELETE party", () => {
     test("should return 404 if no valid resource", () => {
         db.deleteParty.mockResolvedValue({ rowCount: 0 });
         return request(app)
-            .delete("/parties/13")
+            .delete("/parties/13000")
             .then((response) => {
-                expect(response.statusCode).toBe(200);
+                expect(response.statusCode).toBe(404);
                 expect(db.deleteParty).toHaveBeenLastCalledWith(
-                     13 
+                     13000
                 );
             });
     });
