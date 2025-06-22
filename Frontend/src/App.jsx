@@ -5,6 +5,7 @@ import ReadStances from "./components/ReadStancesPage/ReadStances";
 import Quiz from "./components/QuizPage/Quiz";
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 function App() {

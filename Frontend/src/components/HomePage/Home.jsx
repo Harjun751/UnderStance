@@ -4,6 +4,7 @@ import "./Home.css";
 import DiscoverSection from "./DiscoverSection";
 import HeroSection from "./HeroSection";
 import FeatureSection from "./FeatureSection";
+import Footer from "../Footer/Footer";
 
 const Home = () => {
     return (
@@ -17,23 +18,12 @@ const Home = () => {
 
                 {/* Discover Section */}
                 <DiscoverSection />
-            </div>
-            
 
-            {/* <div className="content">
-                <div id="content-container">
-                    
-                    <p>Understand your political stance today!</p>
-                    <Link to="/discover">
-                        <button type="button" className="cta-button">
-                            Try it Now!
-                        </button>
-                    </Link>
-                </div>
-                <footer>Footer</footer>
-            </div> */}
-            
+                {/* Footer Section */}
+                <Footer />
+            </div>
         </div>
+        
         
     );
 };

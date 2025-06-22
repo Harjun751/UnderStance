@@ -14,13 +14,13 @@ const HeroSection = () => {
                 </p>
                 <div className="hero-buttons">
                     <Link to="/quiz">
-                        <button type="button" className="btn btn-outline">
-                            Take discover Now!
+                        <button type="button" className="button button-outline">
+                            Take Quiz!
                         </button>
                     </Link>
                     <Link to="/read-stances">
-                        <button type="button" className="btn btn-secondary">
-                            Explore Stances
+                        <button type="button" className="button button-secondary">
+                            Explore Stances!
                         </button>
                     </Link>
                 </div>
