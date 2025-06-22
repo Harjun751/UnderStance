@@ -136,3 +136,77 @@ describe("boolean convertor", () => {
         expect(validator.convertToBoolean("false")).toBe(false);
     });
 });
+
+describe("party name validator", () => {
+    test("should pass on valid name", async () => {
+        expect(validator.validatePartyName("Party party")).toBe(true);
+    });
+
+    test("should fail on invalid PartyName - > 100 chars", async () => {
+        expect(validator.validatePartyName(`
+        this description is > 100 chars long 
+        asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
+        asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
+sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
+adflkjasldkjflsdflsldkjflsdflsl
+sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
+adflkjasldkjflsdflsldkjflsdflsl
+            `)).toBe(false);
+    });
+
+    test("should fail on null PartyName", async () => {
+        expect(validator.validatePartyName(null)).toBe(false);
+    });
+
+    test("should fail on undefined PartyName", async () => {
+        let summ;
+        expect(validator.validatePartyName(summ)).toBe(false);
+    });
+});
+
+describe("short party name validator", () => {
+    test("should pass on valid name", async () => {
+        expect(validator.validateShortName("12345")).toBe(true);
+    });
+    test("should fail on invalid ShortName - > 100 chars", async () => {
+        expect(validator.validateShortName(`
+        this description is > 100 chars long 
+        asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
+        asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
+sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
+adflkjasldkjflsdflsldkjflsdflsl
+sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
+adflkjasldkjflsdflsldkjflsdflsl
+            `)).toBe(false);
+    });
+
+    test("should fail on null ShortName", async () => {
+        expect(validator.validateShortName(null)).toBe(false);
+    });
+
+    test("should fail on undefined ShortName", async () => {
+        let summ;
+        expect(validator.validateShortName(summ)).toBe(false);
+    });
+});
+
+describe("icon url validator", () => {
+    test("should pass on valid icon", async () => {
+        expect(validator.validateIcon("12345")).toBe(true);
+    });
+    test("should fail on invalid Icon - > 2083 chars", async () => {
+        expect(validator.validateIcon(`
+        this description is > 2083 chars long 
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            `)).toBe(false);
+    });
+
+    test("should fail on null Icon", async () => {
+        expect(validator.validateIcon(null)).toBe(false);
+    });
+
+    test("should fail on undefined Icon", async () => {
+        let summ;
+        expect(validator.validateIcon(summ)).toBe(false);
+    });
+});
