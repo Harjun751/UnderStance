@@ -95,7 +95,7 @@ describe("filters when search is input", () => {
         });
 
         // ACT: input value
-        const input = screen.getByRole("textbox", { name: /search/i });
+        const input = screen.getByPlaceholderText(/enter a search term/i);
         fireEvent.change(input, { target: { value: "First Test" } });
 
         const listItems = screen.getAllByRole("listitem", { hidden: true });
@@ -120,7 +120,7 @@ describe("filters when search is input", () => {
         });
 
         // ACT: input value
-        const input = screen.getByRole("textbox", { name: /search/i });
+        const input = screen.getByPlaceholderText(/enter a search term/i);
         fireEvent.change(input, { target: { value: "Second Test" } });
 
         const listItems = screen.getAllByRole("listitem", { hidden: true });
@@ -145,7 +145,7 @@ describe("filters when search is input", () => {
         });
 
         // ACT: input value
-        const input = screen.getByRole("textbox", { name: /search/i });
+        const input = screen.getByPlaceholderText(/enter a search term/i);
         fireEvent.change(input, { target: { value: "first test" } });
 
         const listItems = screen.getAllByRole("listitem", { hidden: true });
@@ -170,7 +170,7 @@ describe("filters when search is input", () => {
         });
 
         // ACT: input value
-        const input = screen.getByRole("textbox", { name: /search/i });
+        const input = screen.getByPlaceholderText(/enter a search term/i);
         fireEvent.change(input, { target: { value: "dingle wingle" } });
 
         const listItems = screen.getAllByRole("listitem", { hidden: true });
