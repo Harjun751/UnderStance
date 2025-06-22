@@ -135,11 +135,11 @@ describe("GET parties with authentication", () => {
 
 describe("POST party", () => {
     const reqBody = {
-        Name = "Integration Test party!",
-        ShortName = "IPS",
-        Icon = "localhost.com/icon.png",
-        PartyColor = "#FFFFFF",
-        Active = false
+        Name : "Integration Test party!",
+        ShortName : "IPS",
+        Icon : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png",
+        PartyColor : "#FFFFFF",
+        Active : false
     }
 
     test("200 OK basic POST", async () => {
@@ -159,7 +159,7 @@ describe("POST party", () => {
             `/parties?ID=${insertedID}`,
         ).set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([{
-            IssueID: insertedID,
+            PartyID: insertedID,
             Name: reqBody.Name,
             ShortName: reqBody.ShortName,
             Icon: reqBody.Icon,
@@ -188,7 +188,27 @@ describe("POST party", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/parties`,
         );
-        expect(getResponse.body.some(obj => obj.Description === longDescription)).toBe(false);
+        expect(getResponse.body.some(obj => obj.Name === longName)).toBe(false);
+    });
+
+    test("400 for invalid argument - invalid image url", async () => {
+        // create invalid request
+        let invalidBody = { ...reqBody };
+        let invalidURL = "https://image-fail.com";
+        invalidBody.Icon = invalidURL;
+
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/parties")
+            .set("authorization", `Bearer ${global.authToken}`)
+            .send(invalidBody);
+        // Check that 400 is returned
+        expect(response.statusCode).toBe(400);
+
+        // Check that resource does not exist
+        const getResponse = await request(`http://localhost:${appPort}`).get(
+            `/parties`,
+        );
+        expect(getResponse.body.some(obj => obj.Icon === invalidURL)).toBe(false);
     });
 
     test("400 for invalid argument - too long shortname", async () => {
@@ -208,7 +228,7 @@ describe("POST party", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/parties`,
         );
-        expect(getResponse.body.some(obj => obj.Description === longDescription)).toBe(false);
+        expect(getResponse.body.some(obj => obj.ShortName === longName)).toBe(false);
     });
 
     test("400 for invalid argument - too long url", async () => {
@@ -230,19 +250,19 @@ describe("POST party", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/parties`,
         );
-        expect(getResponse.body.some(obj => obj.Description === longDescription)).toBe(false);
+        expect(getResponse.body.some(obj => obj.Icon === longIconURL)).toBe(false);
     });
 
 });
 
 describe("PUT party", () => {
     const reqBody = {
-        PartyID = 1,
-        Name = "Integration Test party!",
-        ShortName = "IPS",
-        Icon = "localhost.com/icon.png",
-        PartyColor = "#FFFFFF",
-        Active = false
+        PartyID : 1,
+        Name : "Integration Test party!",
+        ShortName : "IPS",
+        Icon : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png",
+        PartyColor : "#FFFFFF",
+        Active : false
     }
 
     test("200 OK basic PUT", async () => {
@@ -250,8 +270,8 @@ describe("PUT party", () => {
             .put("/parties")
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
-        expect(response.statusCode).toBe(200);
         expect(response.body).toStrictEqual(reqBody);
+        expect(response.statusCode).toBe(200);
         // Check that resource exists in GET call
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/parties?ID=${reqBody.PartyID}`,
@@ -324,7 +344,7 @@ describe("DELETE party", () => {
     const reqBody = {
         Name: "I exist to be deleted",
         ShortName: ":(",
-        Icon: "My meaning meaningless",
+        Icon : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png",
         PartyColor: "#FFFFF",
         Active: true
     };
@@ -335,18 +355,19 @@ describe("DELETE party", () => {
             .post("/parties")
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
+        expect(insert.statusCode).toBe(200);
         let insertedID = insert.body.PartyID;
 
         // ACT: delete the resource
         const response = await request(`http://localhost:${appPort}`)
-            .delete(`/questions/${insertedID}`)
+            .delete(`/parties/${insertedID}`)
             .set("authorization", `Bearer ${global.authToken}`);
 
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(200);
         // ASSERT: Check that resource does exists in GET call
         const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/questions?ID=${insertedID}`,
+            `/parties?ID=${insertedID}`,
         ).set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([]);
     });

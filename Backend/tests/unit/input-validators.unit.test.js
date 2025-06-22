@@ -1,5 +1,9 @@
 const validator = require("../../services/InputValidation");
 
+// used for image validation
+global.fetch = jest.fn();
+
+
 describe("description validator", () => {
     test("should pass on valid description", async () => {
         expect(validator.validateDescription("hi!")).toBe(true);
@@ -83,20 +87,20 @@ adflkjasldkjflsdflsldkjflsdflsl
 
 describe("issueid validator", () => {
     test("should pass on valid IssueID", async () => {
-        expect(validator.validateIssueID(2)).toBe(true);
+        expect(validator.validateID(2)).toBe(true);
     });
 
     test("should fail on invalid IssueID - NaN", async () => {
-        expect(validator.validateIssueID(Number("hi"))).toBe(false);
+        expect(validator.validateID(Number("hi"))).toBe(false);
     });
 
     test("should fail on null IssueID", async () => {
-        expect(validator.validateIssueID(null)).toBe(false);
+        expect(validator.validateID(null)).toBe(false);
     });
 
     test("should fail on undefined IssueID", async () => {
         let id;
-        expect(validator.validateIssueID(id)).toBe(false);
+        expect(validator.validateID(id)).toBe(false);
     });
 });
 
@@ -191,22 +195,63 @@ adflkjasldkjflsdflsldkjflsdflsl
 });
 
 describe("icon url validator", () => {
-    test("should pass on valid icon", async () => {
-        expect(validator.validateIcon("12345")).toBe(true);
+    test("should pass on valid fetch", async () => {
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            headers: {
+                get: (header) => header === 'content-type' ? 'image/png' : null,
+            }
+        });
+        expect(await validator.validateIcon("https://image.com")).toBe(true);
     });
+
+    test("should fail on invalid icon", async () => {
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            headers: {
+                get: (header) => header === 'content-type' ? 'video/png' : null,
+            }
+        });
+        expect(await validator.validateIcon("12345")).toBe(false);
+    });
+
     test("should fail on invalid Icon - > 2083 chars", async () => {
-        expect(validator.validateIcon(`
+        expect(await validator.validateIcon(`
         this description is > 2083 chars long 
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             `)).toBe(false);
     });
 
     test("should fail on null Icon", async () => {
-        expect(validator.validateIcon(null)).toBe(false);
+        expect(await validator.validateIcon(null)).toBe(false);
     });
 
     test("should fail on undefined Icon", async () => {
         let summ;
-        expect(validator.validateIcon(summ)).toBe(false);
+        expect(await validator.validateIcon(summ)).toBe(false);
     });
+});
+
+describe("PartyColor validator", () => {
+    test("should pass for valid color", async () => {
+        expect(validator.validateColor("#FFFFFF")).toBe(true);
+    });
+
+    test("should fail for invalid color", async () => {
+        expect(validator.validateColor("red")).toBe(false);
+    });
+
+    test("should fail for invalid color", async () => {
+        expect(validator.validateColor("rgb(0,0,0,)")).toBe(false);
+    });
+
+    test("should fail for null", async () => {
+        expect(validator.validateColor(null)).toBe(false);
+    });
+
+    test("should fail for undefined", async () => {
+        let col;
+        expect(validator.validateColor(col)).toBe(false);
+    });
+
 });

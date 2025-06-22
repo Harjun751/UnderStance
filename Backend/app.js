@@ -122,11 +122,12 @@ app.get("/stances", async (req, res) => {
 });
 
 app.get("/parties", async (req, res) => {
+    const isAuthenticated = (req.auth !== undefined);
     const id = req.query.ID;
     if (id === undefined) {
         // simply return all
         try {
-            const data = await db.getParties();
+            const data = await db.getParties(isAuthenticated);
             res.status(200).send(data);
         } catch (error) {
             logger.error(error.stack);
@@ -135,7 +136,7 @@ app.get("/parties", async (req, res) => {
     } else {
         if (!Number.isNaN(Number(id))) {
             try {
-                const data = await db.getPartyWithID(Number.parseInt(id));
+                const data = await db.getPartyWithID(isAuthenticated, Number.parseInt(id));
                 res.status(200).send(data);
             } catch (error) {
                 logger.error(error.stack);
@@ -199,7 +200,7 @@ securedRoutes.put("/questions", async (req,res) => {
         !validator.validateDescription(body.Description) ||
         !validator.validateSummary(body.Summary) ||
         !validator.validateCategory(body.Category) ||
-        !validator.validateIssueID(body.IssueID) ||
+        !validator.validateID(body.IssueID) ||
         !validator.validateActive(body.Active)
     ) {
         res.status(400).send({error: "Invalid Arguments"});
@@ -238,7 +239,72 @@ securedRoutes.delete("/questions/:id", async (req, res) => {
     }
 });
 
+securedRoutes.post("/parties", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validatePartyName(body.Name) ||
+        !validator.validateShortName(body.ShortName) ||
+        !await validator.validateIcon(body.Icon) ||
+        !validator.validateColor(body.PartyColor) ||
+        !validator.validateActive(body.Active)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    }
+    try {
+        const data = await db.insertParty(
+            body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send({ PartyID: data });
+    } catch (error) {
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert party" });
+    }
+});
 
+securedRoutes.put("/parties", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validateID(body.PartyID) ||
+        !validator.validatePartyName(body.Name) ||
+        !validator.validateShortName(body.ShortName) ||
+        !await validator.validateIcon(body.Icon) ||
+        !validator.validateColor(body.PartyColor) ||
+        !validator.validateActive(body.Active)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    }
+    try {
+        const data = await db.updateParty(
+            body.PartyID, body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update party with requested ID"}); 
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update party" });
+        }
+    }
+});
+
+securedRoutes.delete("/parties/:id", async (req, res) => {
+    if (!Number.isNaN(Number(req.params.id))) {
+        try {
+            await db.deleteParty(Number.parseInt(req.params.id));
+            res.status(200).send({ message: "Successfully deleted" });
+        } catch (err) {
+            if (err.message === "Invalid Resource") {
+                res.status(404).send({error:"Could not delete party with requested ID"}); 
+            } else {
+                logger.error(error.stack);
+                res.status(500).send({ error: "Failed to delete question" });
+            }
+        }
+    } else {
+        res.status(400).send({ error: "Invalid Arguments" });
+    }
+});
 
 app.use(securedRoutes);
 

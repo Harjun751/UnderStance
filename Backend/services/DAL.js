@@ -109,7 +109,6 @@ async function deleteQuestion(id) {
                 `DELETE FROM "Issue" WHERE "IssueID" = $1`
                 , [val]
             );
-            console.log(rows);
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
             }
@@ -159,9 +158,17 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
     }
 }
 
-async function getParties() {
+async function getParties(isAuthenticated) {
+    let query;
+    if (isAuthenticated) {
+        // Return all info
+        query = 'SELECT * FROM "Party"';
+    } else {
+        // return only active questions
+        query = 'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true';
+    }
     try {
-        const rows = await pool.query('SELECT * FROM "Party"');
+        const rows = await pool.query(query);
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);
@@ -169,15 +176,87 @@ async function getParties() {
     }
 }
 
-async function getPartyWithID(id) {
+async function getPartyWithID(isAuthenticated, id) {
+    let query;
+    if (isAuthenticated) {
+        // Return all info
+        query = 'SELECT * FROM "Party" WHERE "PartyID" = $1::integer';
+    } else {
+        // return only active questions
+        query = 'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true AND "PartyID" = $1::integer';
+    }
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                'SELECT * FROM "Party" WHERE "PartyID" = $1::integer',
+                query,
                 [val],
             );
             return rows.rows;
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
+async function insertParty(name, shortName, icon, partyColor, active) {
+    try {
+        const rows = await pool.query(
+            `INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor", "Active")
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING "PartyID"
+            `, [name, shortName, icon, partyColor, active]
+        );
+        return rows.rows[0].PartyID;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function updateParty(id, name, shortName, icon, partyColor, active) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `UPDATE "Party"
+                 SET "Name" = $1,
+                     "ShortName" = $2,
+                     "Icon" = $3,
+                     "PartyColor" = $4,
+                     "Active" = $5
+                 WHERE "PartyID" = $6
+                 RETURNING *
+                `, [name, shortName, icon, partyColor, active, val]
+            );
+            if (rows.rows.length === 0) {
+                throw new Error("Invalid Resource");
+            }
+            return rows.rows[0];
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
+async function deleteParty(id) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `DELETE FROM "Party" WHERE "PartyID" = $1`
+                , [id]
+            );
+            if (rows.rowCount === 0) {
+                throw new Error("Invalid Resource");
+            }
+            return;
         } catch (err) {
             logger.error(err.stack);
             throw err;
@@ -196,5 +275,8 @@ module.exports = {
     getPartyWithID,
     insertQuestion,
     updateQuestion,
-    deleteQuestion
+    deleteQuestion,
+    deleteParty,
+    updateParty,
+    insertParty
 };

@@ -7,31 +7,42 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
         next();
     }),
 }));
+
+global.fetch = jest.fn();
+
+// For image validation
+fetch.mockResolvedValue({
+    ok: true,
+    headers: {
+        get: (header) => header === 'content-type' ? 'image/png' : null,
+    }
+});
+
 const app = require("../../app");
 const request = require("supertest");
 jest.mock("../../services/DAL");
 const db = require("../../services/DAL");
 
-describe("authenticated mock GET party data", () => {
-    const parties = [
-        {
-            PartyID: 1,
-            Name: "Coalition for Shakira",
-            ShortName: "CFS",
-            Icon: "https://cfs.com/icon.jpg",
-            PartyColor: "#FFFFFF",
-            Active: true
-        },
-        {
-            PartyID: 2,
-            Name: "Traditionalist's Party",
-            ShortName: "TP",
-            Icon: "https://tp.com/icon.jpg",
-            PartyColor: "#FFFFFF",
-            Active: true
-        },
-    ];
+const parties = [
+    {
+        PartyID: 1,
+        Name: "Coalition for Shakira",
+        ShortName: "CFS",
+        Icon: "https://cfs.com/icon.jpg",
+        PartyColor: "#FFFFFF",
+        Active: true
+    },
+    {
+        PartyID: 2,
+        Name: "Traditionalist's Party",
+        ShortName: "TP",
+        Icon: "https://tp.com/icon.jpg",
+        PartyColor: "#FFFFFF",
+        Active: true
+    },
+];
 
+describe("authenticated mock GET party data", () => {
     test("should return 200 OK", () => {
         db.getParties.mockResolvedValue(parties);
         return request(app)
@@ -162,7 +173,7 @@ describe("authenticated mock POST party", () => {
         db.insertParty.mockRejectedValue(new Error("DB error"));
         return request(app)
             .post("/parties")
-            .send(fakeBody)
+            .send(fakeParty)
             .then((response) => {
                 expect(response.statusCode).toBe(500);
                 expect(response.body).toEqual({
@@ -197,9 +208,9 @@ describe("authenticated mock PUT party", () => {
             .send(fakeParty)
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body.PartyID).toEqual(fakeParty);
+                expect(response.body).toEqual(fakeParty);
                 expect(db.updateParty).toHaveBeenLastCalledWith(
-                    fakeParty.PartyID
+                    fakeParty.PartyID,
                     fakeParty.Name,
                     fakeParty.ShortName,
                     fakeParty.Icon,
@@ -242,11 +253,11 @@ describe("authenticated mock PUT party", () => {
         db.updateParty.mockRejectedValue(new Error("DB error"));
         return request(app)
             .put("/parties")
-            .send(fakeBody)
+            .send(fakeParty)
             .then((response) => {
                 expect(response.statusCode).toBe(500);
                 expect(response.body).toEqual({
-                    error: "Failed to insert party",
+                    error: "Failed to update party",
                 });
                 expect(db.updateParty).toHaveBeenLastCalledWith(
                     fakeParty.PartyID,

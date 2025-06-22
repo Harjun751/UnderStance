@@ -13,6 +13,7 @@ CREATE TABLE "Party" (
     "ShortName" varchar(5),
     "Icon" varchar(2083),
     "PartyColor" varchar(7),
+    "Active" boolean DEFAULT true,
     PRIMARY KEY ("PartyID")
 );
 

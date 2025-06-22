@@ -239,39 +239,39 @@ const parties = [
 describe("mock GET party", () => {
     test("should return stances", async () => {
         mockQuery.mockResolvedValueOnce({ rows: parties });
-        const result = await dal.getParties();
+        const result = await dal.getParties(false);
         expect(result).toEqual(parties);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.getParties()).rejects.toThrow("DB exploded");
+        await expect(dal.getParties(false)).rejects.toThrow("DB exploded");
     });
 });
 
 describe("mock GET party filtered", () => {
     test("should return party with ID=1", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [parties[0]] });
-        const result = await dal.getPartyWithID(1);
+        const result = await dal.getPartyWithID(false, 1);
         expect(result).toEqual([parties[0]]);
     });
     test("should return party with ID=2", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [parties[1]] });
-        const result = await dal.getPartyWithID(2);
+        const result = await dal.getPartyWithID(false, 2);
         expect(result).toEqual([parties[1]]);
     });
     test("should return empty array if no match", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        const result = await dal.getPartyWithID(3);
+        const result = await dal.getPartyWithID(false, 3);
         expect(result).toEqual([]);
     });
     test("should error due to invalid argument", async () => {
-        await expect(dal.getPartyWithID("abc")).rejects.toThrow(
+        await expect(dal.getPartyWithID(false, "abc")).rejects.toThrow(
             new Error("Invalid Argument"),
         );
     });
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.getPartyWithID(2)).rejects.toThrow("DB exploded");
+        await expect(dal.getPartyWithID(false, 2)).rejects.toThrow("DB exploded");
     });
 });
