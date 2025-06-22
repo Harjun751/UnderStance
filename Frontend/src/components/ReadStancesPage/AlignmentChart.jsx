@@ -273,7 +273,12 @@ export default function AlignmentChart({
                     <XAxis
                         type="category"
                         dataKey="name"
-                        tick={(props) => <CustomYAxisTick {...props} iconLookup={iconLookup} />}
+                        tick={(props) => (
+                            <CustomYAxisTick
+                                {...props}
+                                iconLookup={iconLookup}
+                            />
+                        )}
                         interval={0}
                         tickLine={false}
                         axisLine={false}

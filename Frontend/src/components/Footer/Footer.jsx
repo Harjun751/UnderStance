@@ -11,20 +11,26 @@ const Footer = () => {
                         <h3 class="footer-heading">Navigation</h3>
                         <ul class="footer-list">
                             <Link to="/">
-                                <li><div class="footer-link">Home</div></li>
+                                <li>
+                                    <div class="footer-link">Home</div>
+                                </li>
                             </Link>
                             <Link to="/quiz">
-                                <li><div class="footer-link">Quiz</div></li>
+                                <li>
+                                    <div class="footer-link">Quiz</div>
+                                </li>
                             </Link>
                             <Link to="/read-stances">
-                                <li><div class="footer-link">Read Stances</div></li>
+                                <li>
+                                    <div class="footer-link">Read Stances</div>
+                                </li>
                             </Link>
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
                                 <li>
-                                    <a 
-                                        href="https://www.youtube.com/shorts/m_182DGEO5Y" 
-                                        target="_blank" 
+                                    <a
+                                        href="https://www.youtube.com/shorts/m_182DGEO5Y"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
                                     >
@@ -41,9 +47,9 @@ const Footer = () => {
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
                                 <li>
-                                    <a 
-                                        href="https://www.youtube.com/watch?v=JO334h_PhuU&pp=ygUSY29vbCBndXkgbWVtZSBzb25n0gcJCd4JAYcqIYzv" 
-                                        target="_blank" 
+                                    <a
+                                        href="https://www.youtube.com/watch?v=JO334h_PhuU&pp=ygUSY29vbCBndXkgbWVtZSBzb25n0gcJCd4JAYcqIYzv"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
                                     >
@@ -53,9 +59,9 @@ const Footer = () => {
                             </Link>
                             <Link>
                                 <li>
-                                    <a 
-                                        href="https://www.youtube.com/watch?v=KZoipAb2fo4&list=RDKZoipAb2fo4&start_radio=1&pp=ygUOYnJhaW5yb3QgYW5pbWWgBwE%3D" 
-                                        target="_blank" 
+                                    <a
+                                        href="https://www.youtube.com/watch?v=KZoipAb2fo4&list=RDKZoipAb2fo4&start_radio=1&pp=ygUOYnJhaW5yb3QgYW5pbWWgBwE%3D"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
                                     >
@@ -72,10 +78,10 @@ const Footer = () => {
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
                                 <li>
-                                    <a 
-                                        href="https://www.youtube.com/watch?v=OyDyOweu-PA&pp=ygUKcG9saXNoIGNvdw%3D%3D" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
+                                    <a
+                                        href="https://www.youtube.com/watch?v=OyDyOweu-PA&pp=ygUKcG9saXNoIGNvdw%3D%3D"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         class="footer-link"
                                     >
                                         Privacy
@@ -85,9 +91,9 @@ const Footer = () => {
                             <Link>
                                 <li>
                                     <a
-                                        href="https://www.youtube.com/watch?v=wRRsXxE1KVY&pp=ygUUam9obiBjZW5hIHByYW5rIGNhbGw%3D" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"  
+                                        href="https://www.youtube.com/watch?v=wRRsXxE1KVY&pp=ygUUam9obiBjZW5hIHByYW5rIGNhbGw%3D"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         class="footer-link"
                                     >
                                         Terms
@@ -100,27 +106,27 @@ const Footer = () => {
                     <div class="footer-column">
                         <h3 class="footer-heading">Connect</h3>
                         <div class="footer-social">
-                            <a 
-                                href="https://github.com/Harjun751/UnderStance" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                href="https://github.com/Harjun751/UnderStance"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 class="footer-icon"
                             >
                                 <FaGithub />
                             </a>
                             {/* add actual link next time, for now enjoy what i've left behind */}
-                            <a 
-                                href="https://www.youtube.com/watch?v=fWNaR-rxAic&pp=0gcJCdgAo7VqN5tD" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                href="https://www.youtube.com/watch?v=fWNaR-rxAic&pp=0gcJCdgAo7VqN5tD"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 class="footer-icon"
                             >
                                 <FaGoogleDrive />
                             </a>
-                            <a 
-                                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 class="footer-icon"
                             >
                                 <FaYoutube />
@@ -128,7 +134,7 @@ const Footer = () => {
                         </div>
                         <div class="footer-comment">
                             <p class="footer-note">
-                                HEY I JUST MET YOU <br/> 
+                                HEY I JUST MET YOU <br />
                                 AND THIS IS CRAZY <br />
                                 BUT HERE'S MY NUMBER <br />
                                 SO CALL ME MAYBE
@@ -142,7 +148,7 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
-    )
-}
+    );
+};
 
 export default Footer;

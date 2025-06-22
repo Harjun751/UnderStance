@@ -249,9 +249,8 @@ const ReadStances = () => {
                                                             "No parties matched your stance on this issue."
                                                         )}
                                                         <br />
-                                                        
-                                                        You indicated that
-                                                        this issue was of
+                                                        You indicated that this
+                                                        issue was of
                                                         <strong
                                                             style={{
                                                                 color:
@@ -269,7 +268,6 @@ const ReadStances = () => {
                                                                 ]
                                                             }`}
                                                         </strong>
-                                                        
                                                     </button>
                                                 )}
 

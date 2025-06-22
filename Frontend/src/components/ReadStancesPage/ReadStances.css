@@ -89,7 +89,7 @@
 }
 .question-container.expanded .question-header > h2 {
     white-space: unset !important;
-    overflow-x: visible  !important;
+    overflow-x: visible !important;
     text-overflow: unset !important;
     max-width: 100% !important;
 }
@@ -355,7 +355,7 @@
         width: 90px;
         padding: 3px 0;
     }
-    .read-stances h2 > .qn-break  {
+    .read-stances h2 > .qn-break {
         display: inline !important;
     }
     .read-stances h2 {
