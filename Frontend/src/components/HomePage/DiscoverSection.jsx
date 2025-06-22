@@ -12,32 +12,36 @@ const DiscoverSection = () => {
 
 
     return (
-        <div className="discover-section" id="discover">
+        <div className="discover-section">
             <div className="discover-container">
                 <div className="discover-header">
                     <h2 className="discover-subtitle">Discover</h2>
                     <div className="discover-items">
                         {/* Quiz Item */}
-                        <div 
+                        <button 
                             className={`item ${hoveredItem && hoveredItem !== "quiz" ? "faded" : ""}`}
                             onMouseEnter={() => setHoveredItem("quiz")}
+                            type="button"
+                            onFocus={() => setHoveredItem("quiz")}
                         >
                             <p className="discover-title">Take Our Quiz</p>
                             <p className="discover-description">
                                 Answer a series of questions to uncover your political party leanings.
                             </p>
-                        </div>
+                        </button>
 
                         {/* Read Stances Item */}
-                        <div 
+                        <button 
                             className={`item ${hoveredItem && hoveredItem !== "read" ? "faded" : ""}`}
                             onMouseEnter={() => setHoveredItem('read')}
+                            type="button"
+                            onFocus={() => setHoveredItem("read")}
                         >
                             <p className="discover-title">Read Party Stances</p>
                             <p className="discover-description">
                                 No time to complete the quiz? You can still read each party’s reply here!
                             </p>
-                        </div>
+                        </button>
                     </div>
                     
                 </div>
@@ -46,7 +50,6 @@ const DiscoverSection = () => {
                 {hoveredItem === "quiz" && (
                     <div 
                         className="discover-card-wrapper"
-                        onMouseEnter={() => setHoveredItem("quiz")}
                     >
                         <div className="discover-card">
                             <div className="discover-card-content">
@@ -100,7 +103,7 @@ const DiscoverSection = () => {
 
                                 <div className="discover-action">
                                     <Link to="/quiz">
-                                        <button className="btn btn-large btn-primary">
+                                        <button type="button" className="btn btn-large btn-primary">
                                             Start Quiz Now
                                         </button>
                                     </Link>
@@ -115,7 +118,6 @@ const DiscoverSection = () => {
                 {hoveredItem === "read" && (
                     <div 
                         className="discover-card-wrapper"
-                        onMouseEnter={() => setHoveredItem("read")}
                     >
                         <div className="discover-card">
                             <div className="discover-card-content">
@@ -162,7 +164,7 @@ const DiscoverSection = () => {
 
                                 <div className="discover-action">
                                     <Link to="/read-stances">
-                                        <button className="btn btn-large btn-primary">
+                                        <button type="button" className="btn btn-large btn-primary">
                                             Read Stances Now
                                         </button>
                                     </Link>

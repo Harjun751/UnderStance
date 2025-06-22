@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ReadStances.css";
 import AlignmentChart from "./AlignmentChart";
 import SearchBar from "./SearchBar";
@@ -81,7 +81,6 @@ const ReadStances = () => {
     return (
         <div className="content">
             <div
-                id="content-container"
                 className={`read-stances ${Object.keys(userAnswers).length === 0 ? "unanswered" : ""}`}
             >
                 <AlignmentChart
@@ -93,7 +92,7 @@ const ReadStances = () => {
 
                 <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
-                <ul id="question-containers-container">
+                <ul className={`question-containers`}>
                     {questions.map((question) => {
                         // Filter stances for this question
                         const stancesForQuestion = stances.filter(
@@ -135,7 +134,6 @@ const ReadStances = () => {
                                         onKeyPress={() => {}}
                                     >
                                         Q{question.IssueID}:{" "}
-                                        <br className="qn-break" />{" "}
                                         {question.Description}
                                     </h2>
                                     <div className="header-right">
@@ -208,8 +206,9 @@ const ReadStances = () => {
                                         >
                                             {userAnswer &&
                                                 userAnswer !== "skip" && (
-                                                    <div
+                                                    <button
                                                         className="alignment-info"
+                                                        type="button"
                                                         onKeyPress={(e) =>
                                                             e.stopPropagation()
                                                         }
@@ -250,28 +249,28 @@ const ReadStances = () => {
                                                             "No parties matched your stance on this issue."
                                                         )}
                                                         <br />
-                                                        <>
-                                                            You indicated that
-                                                            this issue was of
-                                                            <strong
-                                                                style={{
-                                                                    color:
-                                                                        importanceColors[
-                                                                            userResponse
-                                                                                ?.weightage
-                                                                        ] ||
-                                                                        "inherit",
-                                                                }}
-                                                            >
-                                                                {`·${
-                                                                    importanceLabels[
+                                                        
+                                                        You indicated that
+                                                        this issue was of
+                                                        <strong
+                                                            style={{
+                                                                color:
+                                                                    importanceColors[
                                                                         userResponse
                                                                             ?.weightage
-                                                                    ]
-                                                                }`}
-                                                            </strong>
-                                                        </>
-                                                    </div>
+                                                                    ] ||
+                                                                    "inherit",
+                                                            }}
+                                                        >
+                                                            {`·${
+                                                                importanceLabels[
+                                                                    userResponse
+                                                                        ?.weightage
+                                                                ]
+                                                            }`}
+                                                        </strong>
+                                                        
+                                                    </button>
                                                 )}
 
                                             {userAnswer === "skip" && (

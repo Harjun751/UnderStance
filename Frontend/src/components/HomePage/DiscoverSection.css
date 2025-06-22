@@ -29,7 +29,20 @@
 }
 
 .item {
+    /* position: relative; */
+    all: unset; /* Remove all default button styles */
+    display: block; /* Make it block or flex as needed */
     position: relative;
+    width: 100%;
+    cursor: pointer;
+    /* Preserve your original styles */
+    background: transparent;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease, box-shadow 0.3s ease;
+    text-align: center; /* so text inside aligns left */
+    
 }
 
 .item:hover {
@@ -245,6 +258,10 @@
     }
     .discover-card-content {
         padding: 1.5rem;
+    }
+    
+    .item{
+        text-align: left;
     }
 }
 

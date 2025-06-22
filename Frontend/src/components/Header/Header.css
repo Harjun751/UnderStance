@@ -19,17 +19,17 @@
     margin-top: -0.3rem;
 }
 
-#title > span {
+.UnderStance-title > span {
     font-family: inherit;
     font-size: inherit;
 }
 
-#title > span > svg {
+.UnderStance-title > span > svg {
     font-size: 0.75em;
 }
 
 @media only screen and (max-width: 1440px) {
-    #title > span > svg {
+    .UnderStance-title > span > svg {
         font-size: 30px;
     }
     .UnderStance-underline {

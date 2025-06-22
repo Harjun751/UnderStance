@@ -1,8 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
 import { useNavigate } from "react-router-dom";
 import WeightageSlider from "../WeightageSlider/WeightageSlider";
+//import { useId } from "react";
 
 const Quiz = () => {
     //
@@ -16,6 +17,9 @@ const Quiz = () => {
     const navigate = useNavigate(); // Hook from React Router for navigation
 
     const [weightage, setWeightage] = useState(3); // State to store Weightage
+    
+    //useId
+    const id = useId();
 
     // Fetch questions on component mount
     useEffect(() => {
@@ -94,6 +98,8 @@ const Quiz = () => {
     const currentIssue = issues[currentIndex];
     const selected = answers[currentIssue.IssueID]?.answer;
 
+    //useId
+    //const id = useId();
     return (
         <div className="quiz">
             {/* Confirmation Modal */}
@@ -130,7 +136,7 @@ const Quiz = () => {
 
             {/* Main Question Display */}
             <div className="content">
-                <div id="content-container" key={currentIssue.IssueID}>
+                <div id={`${id}-content-container`} key={currentIssue.IssueID}>
                     <h2>
                         Question {currentIndex + 1}/{issues.length}
                     </h2>

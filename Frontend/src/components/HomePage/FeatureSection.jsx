@@ -6,7 +6,7 @@ import { MdQuiz } from "react-icons/md";
 
 const FeatureSection = () => {
     return (
-        <div className="features-section" id="features">
+        <div className="features-section">
             <div className="features-container">
                 <div className="features-header">
                     <h2 className="features-subtitle">Features</h2>

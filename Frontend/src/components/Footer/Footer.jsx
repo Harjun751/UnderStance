@@ -11,13 +11,13 @@ const Footer = () => {
                         <h3 class="footer-heading">Navigation</h3>
                         <ul class="footer-list">
                             <Link to="/">
-                                <li><a class="footer-link">Home</a></li>
+                                <li><div class="footer-link">Home</div></li>
                             </Link>
                             <Link to="/quiz">
-                                <li><a class="footer-link">Quiz</a></li>
+                                <li><div class="footer-link">Quiz</div></li>
                             </Link>
                             <Link to="/read-stances">
-                                <li><a class="footer-link">Read Stances</a></li>
+                                <li><div class="footer-link">Read Stances</div></li>
                             </Link>
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
