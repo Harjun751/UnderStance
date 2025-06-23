@@ -59,13 +59,13 @@ describe("authenticated mock GET quiz question", () => {
 const insertReturnValue = 12;
 const fakeDescription = "Fake description"
 const fakeSummary = "Fake Summary"
-const fakeCategory = "Fake Category"
+const fakeCategory = 1
 const fakeActive = false;
 const fakeBody = 
     {
         Description: fakeDescription,
         Summary: fakeSummary,
-        Category: fakeCategory,
+        CategoryID: fakeCategory,
         Active: fakeActive
     };
 
@@ -102,6 +102,20 @@ describe("authenticated mock POST quiz question", () => {
             });
     });
 
+    test("should return 400 for invalid category id", () => {
+        db.insertQuestion.mockRejectedValue(new Error("Foreign Key Constraint Violation"));
+        return request(app)
+            .post("/questions")
+            .send({
+                Description: fakeDescription,
+                Summary: fakeSummary,
+                Category: 100000
+            })
+            .then((response) => {
+                expect(response.statusCode).toBe(400);
+            });
+    });
+
     test("should return 500 if DB error", () => {
         db.insertQuestion.mockRejectedValue(new Error("DB error"));
         return request(app)
@@ -124,7 +138,7 @@ const fakePutBody = {
     IssueID: fakeIssueID,
     Description: fakeDescription,
     Summary: fakeSummary,
-    Category: fakeCategory,
+    CategoryID: fakeCategory,
     Active: fakeActive
 }
 
@@ -135,6 +149,7 @@ describe("authenticated mock PUT quiz question", () => {
             .put("/questions")
             .send(fakePutBody)
             .then((response) => {
+                expect(response.body).toEqual(fakePutBody);
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakePutBody);
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(

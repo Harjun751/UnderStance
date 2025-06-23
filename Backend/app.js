@@ -179,17 +179,20 @@ securedRoutes.post("/questions", async (req,res) => {
     if (
         !validator.validateDescription(body.Description) ||
         !validator.validateSummary(body.Summary) ||
-        !validator.validateCategory(body.Category) ||
+        !validator.validateID(body.CategoryID) ||
         !validator.validateActive(body.Active)
     ) {
         res.status(400).send({error: "Invalid Arguments"});
     } else {
         try {
             const data = await db.insertQuestion(
-                body.Description, body.Summary, body.Category, validator.convertToBoolean(body.Active)
+                body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
             );
             res.status(200).send({ IssueID: data });
         } catch (error) {
+            if (error.message === "Foreign Key Constraint Violation") {
+                res.status(400).send({ error: "Invalid Arguments" });
+            }
             logger.error(error.stack);
             res.status(500).send({ error: "Failed to insert question" });
         }
@@ -201,7 +204,7 @@ securedRoutes.put("/questions", async (req,res) => {
     if (
         !validator.validateDescription(body.Description) ||
         !validator.validateSummary(body.Summary) ||
-        !validator.validateCategory(body.Category) ||
+        !validator.validateID(body.CategoryID) ||
         !validator.validateID(body.IssueID) ||
         !validator.validateActive(body.Active)
     ) {
@@ -209,12 +212,14 @@ securedRoutes.put("/questions", async (req,res) => {
     } else {
         try {
             const data = await db.updateQuestion(
-                body.IssueID, body.Description, body.Summary, body.Category, validator.convertToBoolean(body.Active)
+                body.IssueID, body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
             );
             res.status(200).send(data);
         } catch (error) {
             if (error.message === "Invalid Resource") {
                 res.status(404).send({error:"Could not update question with requested ID"}); 
+            } else if (error.message === "Foreign Key Constraint Violation") {
+                res.status(400).send({ error: "Invalid Arguments" });
             } else {
                 logger.error(error.stack);
                 res.status(500).send({ error: "Failed to update question" });

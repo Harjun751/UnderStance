@@ -70,7 +70,7 @@ describe("GET quiz question with authentication", () => {
                 IssueID: 1,
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
-                Category: "National Identity",
+                CategoryID: 1,
                 Active: true
             },
         ]);
@@ -87,7 +87,7 @@ describe("GET quiz question with authentication", () => {
                 IssueID: 1,
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
-                Category: "National Identity",
+                CategoryID: 1,
                 Active: true
             },
         ]);
@@ -117,7 +117,7 @@ describe("POST quiz question", () => {
     const reqBody = {
         Description: "Hi from integration test!",
         Summary: "This is a friendly greeting.",
-        Category: "Greeting",
+        CategoryID: 1,
         Active: false
     };
 
@@ -141,7 +141,7 @@ describe("POST quiz question", () => {
             IssueID: insertedID,
             Description: reqBody.Description,
             Summary: reqBody.Summary,
-            Category: reqBody.Category,
+            CategoryID: reqBody.CategoryID,
             Active: false
         }]);
     });
@@ -195,6 +195,25 @@ describe("POST quiz question", () => {
         );
         expect(getResponse.body.some(obj => obj.Summary === longSummary)).toBe(false);
     });
+
+    test("400 for invalid argument - invalid category ID", async () => {
+        // create invalid request
+        let invalidBody = { ...reqBody };
+        invalidBody.CategoryID = 100000;
+
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/questions")
+            .set("authorization", `Bearer ${global.authToken}`)
+            .send(invalidBody);
+        // Check that 400 is returned
+        expect(response.statusCode).toBe(400);
+
+        // Check that resource does not exist
+        const getResponse = await request(`http://localhost:${appPort}`).get(
+            `/questions`,
+        );
+        expect(getResponse.body.some(obj => obj.CategoryID === 100000)).toBe(false);
+    });
 });
 
 describe("PUT quiz question", () => {
@@ -202,7 +221,7 @@ describe("PUT quiz question", () => {
         IssueID: 1,
         Description: "I changed this description to say what I want.",
         Summary: "This is an unfriendly greeting.",
-        Category: "Greeting",
+        CategoryID: 1,
         Active: false
     };
 
@@ -261,6 +280,19 @@ describe("PUT quiz question", () => {
         expect(response.statusCode).toBe(400);
     });
 
+    test("400 for invalid argument - invalid categoryID", async () => {
+        // create invalid request
+        let invalidBody = { ...reqBody };
+        invalidBody.CategoryID = 13000;
+
+        const response = await request(`http://localhost:${appPort}`)
+            .put("/questions")
+            .set("authorization", `Bearer ${global.authToken}`)
+            .send(invalidBody);
+        // Check that 400 is returned
+        expect(response.statusCode).toBe(400);
+    });
+
     test("404 if resource does not exist", async () => {
         let invalidBody =  { ...reqBody };
         invalidBody.IssueID = 200000;
@@ -279,7 +311,7 @@ describe("DELETE quiz question", () => {
     const reqBody = {
         Description: "I exist to be deleted",
         Summary: "My existence temporary",
-        Category: "My meaning meaningless",
+        CategoryID: 1,
         Active: true
     };
 

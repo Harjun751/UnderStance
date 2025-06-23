@@ -1,5 +1,5 @@
 INSERT INTO "Category" ("Name") VALUES
-('Music');
+('National Identity');
 
 INSERT INTO "Issue" ("Description", "Summary", "CategoryID")
 VALUES ('Change national anthem to hip''s don''t lie', 'On the anthem', 1);

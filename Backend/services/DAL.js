@@ -24,7 +24,13 @@ async function getQuestions(isAuthenticated) {
         query = 'SELECT * FROM "Issue"';
     } else {
         // return only active questions
-        query = 'SELECT "IssueID", "Description", "Summary", "Category" FROM "Issue" WHERE "Active" = true';
+        query = `
+        SELECT
+        i."IssueID", i."Description", i."Summary", c."Name" AS "Category"
+        FROM "Issue" i
+        INNER JOIN "Category" c
+        ON i."CategoryID" = c."CategoryID"
+        WHERE "Active" = true`
     }
     try {
         const rows = await pool.query(query);
@@ -40,7 +46,15 @@ async function getQuestionWithID(isAuthenticated, id) {
     if (isAuthenticated) {
         query = 'SELECT * FROM "Issue" WHERE "IssueID" = $1';
     } else {
-        query = 'SELECT "IssueID", "Description", "Summary", "Category" FROM "Issue" WHERE "Active" = true AND "IssueID" = $1';
+        query = `
+            SELECT
+            i."IssueID", i."Description", i."Summary", c."Name" AS "Category"
+            FROM "Issue" i
+            INNER JOIN "Category" c
+            ON i."CategoryID" = c."CategoryID"
+            WHERE "Active" = true
+            AND "IssueID" = $1
+        `
     }
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
@@ -62,13 +76,17 @@ async function getQuestionWithID(isAuthenticated, id) {
 async function insertQuestion(description, summary, category, active) {
     try {
         const rows = await pool.query(
-            `INSERT INTO "Issue" ("Description", "Summary", "Category", "Active")
+            `INSERT INTO "Issue" ("Description", "Summary", "CategoryID", "Active")
              VALUES ($1, $2, $3, $4)
              RETURNING "IssueID"
             `, [description, summary, category, active]
         );
         return rows.rows[0].IssueID;
     } catch (err) {
+        // psql foreign key constraint violation error code
+        if (err.code == '23503') {
+            throw new Error("Foreign Key Constraint Violation");
+        }
         logger.error(err.stack);
         throw err;
     }
@@ -82,7 +100,7 @@ async function updateQuestion(id, description, summary, category, active) {
                 `UPDATE "Issue"
                  SET "Description" = $1,
                      "Summary" = $2,
-                     "Category" = $3,
+                     "CategoryID" = $3,
                      "Active" = $4
                  WHERE "IssueID" = $5
                  RETURNING *
@@ -93,6 +111,10 @@ async function updateQuestion(id, description, summary, category, active) {
             }
             return rows.rows[0];
         } catch (err) {
+            // psql foreign key constraint violation error code
+            if (err.code == '23503') {
+                throw new Error("Foreign Key Constraint Violation");
+            }
             logger.error(err.stack);
             throw err;
         }
