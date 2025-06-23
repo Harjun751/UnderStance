@@ -1,4 +1,9 @@
 // set up authentication
+console.log("ENV", {
+  CI: process.env.CI,
+  AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
+});
+
 if (!process.env.CI) {
     require("dotenv").config({ path: "./.env.test" });
 }
