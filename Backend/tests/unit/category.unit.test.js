@@ -6,11 +6,11 @@ const db = require("../../services/DAL");
 const categories = [
     {
         CategoryID: 1,
-        Name: "Governance"
+        Name: "Governance",
     },
     {
         CategoryID: 2,
-        Name: "Arts"
+        Name: "Arts",
     },
 ];
 

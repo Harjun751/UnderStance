@@ -33,7 +33,6 @@ const fakeStances = [
 ];
 
 describe("mock GET stances", () => {
-
     test("should return 200 OK", () => {
         db.getStances.mockResolvedValue(fakeStances);
         return request(app)
@@ -68,7 +67,8 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeStance);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(true,
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    true,
                     2,
                     null,
                     null,
@@ -83,7 +83,8 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeStances);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(true,
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    true,
                     null,
                     1,
                     null,
@@ -98,7 +99,8 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual([]);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(true,
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    true,
                     null,
                     2,
                     null,
@@ -114,7 +116,8 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(filteredStances);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(true,
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    true,
                     null,
                     null,
                     1,
@@ -130,19 +133,23 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(filteredStances);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(true,1, 1, 1);
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    true,
+                    1,
+                    1,
+                    1,
+                );
             });
     });
 });
 
 describe("authenticated mock POST stance", () => {
-    const fakeStance = 
-    {
+    const fakeStance = {
         Stand: true,
         Reason: "Who can argue against such a banger",
         IssueID: 1,
         PartyID: 1,
-    }
+    };
 
     test("should return 200 OK", () => {
         db.insertStance.mockResolvedValue(12);
@@ -165,16 +172,18 @@ describe("authenticated mock POST stance", () => {
         return request(app)
             .post("/stances")
             .send({
-                Name: fakeStance.Stand
+                Name: fakeStance.Stand,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeStance }
+        const fakeCopy = { ...fakeStance };
         fakeCopy.Reason = `
         This is a reason > 1000 characters long
 
@@ -187,7 +196,9 @@ describe("authenticated mock POST stance", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -209,7 +220,6 @@ describe("authenticated mock POST stance", () => {
                 );
             });
     });
-
 });
 
 describe("authenticated mock PUT party", () => {
@@ -219,7 +229,7 @@ describe("authenticated mock PUT party", () => {
         Reason: "Who can argue against such a banger",
         IssueID: 1,
         PartyID: 1,
-    }
+    };
 
     test("should return 200 OK", () => {
         db.updateStance.mockResolvedValueOnce(fakeStance);
@@ -243,17 +253,18 @@ describe("authenticated mock PUT party", () => {
         return request(app)
             .put("/stances")
             .send({
-                Name: fakeStance.Stand
+                Name: fakeStance.Stand,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
-
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeStance }
+        const fakeCopy = { ...fakeStance };
         fakeCopy.Reason = `
         This is a reason > 1000 characters long
 
@@ -266,7 +277,9 @@ describe("authenticated mock PUT party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -282,20 +295,19 @@ describe("authenticated mock PUT party", () => {
                 });
             });
     });
-
 });
 
 describe("authenticated mock DELETE stance", () => {
     test("should return 200 OK", () => {
-        db.deleteStance.mockResolvedValue({ rowCount: 1});
+        db.deleteStance.mockResolvedValue({ rowCount: 1 });
         return request(app)
             .delete("/stances/1")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body).toEqual({ message: "Successfully deleted" });
-                expect(db.deleteStance).toHaveBeenLastCalledWith(
-                     1 
-                );
+                expect(response.body).toEqual({
+                    message: "Successfully deleted",
+                });
+                expect(db.deleteStance).toHaveBeenLastCalledWith(1);
             });
     });
 
@@ -314,9 +326,7 @@ describe("authenticated mock DELETE stance", () => {
             .delete("/stances/13000")
             .then((response) => {
                 expect(response.statusCode).toBe(404);
-                expect(db.deleteStance).toHaveBeenLastCalledWith(
-                     13000
-                );
+                expect(db.deleteStance).toHaveBeenLastCalledWith(13000);
             });
     });
 
@@ -326,9 +336,7 @@ describe("authenticated mock DELETE stance", () => {
             .delete("/stances/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(db.deleteStance).toHaveBeenLastCalledWith(
-                    1
-                );
+                expect(db.deleteStance).toHaveBeenLastCalledWith(1);
             });
     });
 });

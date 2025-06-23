@@ -52,7 +52,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(parties[0]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(false,1);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(false, 1);
             });
     });
 
@@ -63,7 +63,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual([]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(false,3);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(false, 3);
             });
     });
 

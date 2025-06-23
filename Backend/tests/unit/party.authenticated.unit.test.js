@@ -14,8 +14,8 @@ global.fetch = jest.fn();
 fetch.mockResolvedValue({
     ok: true,
     headers: {
-        get: (header) => header === 'content-type' ? 'image/png' : null,
-    }
+        get: (header) => (header === "content-type" ? "image/png" : null),
+    },
 });
 
 const request = require("supertest");
@@ -30,7 +30,7 @@ const parties = [
         ShortName: "CFS",
         Icon: "https://cfs.com/icon.jpg",
         PartyColor: "#FFFFFF",
-        Active: true
+        Active: true,
     },
     {
         PartyID: 2,
@@ -38,7 +38,7 @@ const parties = [
         ShortName: "TP",
         Icon: "https://tp.com/icon.jpg",
         PartyColor: "#FFFFFF",
-        Active: true
+        Active: true,
     },
 ];
 
@@ -76,7 +76,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(parties[0]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(true,1);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(true, 1);
             });
     });
 
@@ -87,7 +87,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual([]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(true,3);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(true, 3);
             });
     });
 
@@ -96,7 +96,9 @@ describe("mock GET quiz party with filter", () => {
             .get("/parties?ID=abc")
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -119,8 +121,8 @@ describe("authenticated mock POST party", () => {
         ShortName: "DGP",
         Icon: "https://url.com",
         PartyColor: "#FFFFF",
-        Active: false
-    }
+        Active: false,
+    };
 
     test("should return 200 OK", () => {
         db.insertParty.mockResolvedValue(12);
@@ -135,7 +137,7 @@ describe("authenticated mock POST party", () => {
                     fakeParty.ShortName,
                     fakeParty.Icon,
                     fakeParty.PartyColor,
-                    fakeParty.Active
+                    fakeParty.Active,
                 );
             });
     });
@@ -144,17 +146,18 @@ describe("authenticated mock POST party", () => {
         return request(app)
             .post("/parties")
             .send({
-                Name: fakeParty.Name
+                Name: fakeParty.Name,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
-
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeParty }
+        const fakeCopy = { ...fakeParty };
         fakeCopy.Name = `
             This is a name > 100 characters long
 
@@ -165,7 +168,9 @@ describe("authenticated mock POST party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -184,11 +189,10 @@ describe("authenticated mock POST party", () => {
                     fakeParty.ShortName,
                     fakeParty.Icon,
                     fakeParty.PartyColor,
-                    fakeParty.Active
+                    fakeParty.Active,
                 );
             });
     });
-
 });
 
 describe("authenticated mock PUT party", () => {
@@ -198,8 +202,8 @@ describe("authenticated mock PUT party", () => {
         ShortName: "DGP",
         Icon: "https://url.com",
         PartyColor: "#FFFFF",
-        Active: false
-    }
+        Active: false,
+    };
 
     test("should return 200 OK", () => {
         db.updateParty.mockResolvedValue(fakeParty);
@@ -215,7 +219,7 @@ describe("authenticated mock PUT party", () => {
                     fakeParty.ShortName,
                     fakeParty.Icon,
                     fakeParty.PartyColor,
-                    fakeParty.Active
+                    fakeParty.Active,
                 );
             });
     });
@@ -224,17 +228,18 @@ describe("authenticated mock PUT party", () => {
         return request(app)
             .put("/parties")
             .send({
-                Name: fakeParty.Name
+                Name: fakeParty.Name,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
-
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeParty }
+        const fakeCopy = { ...fakeParty };
         fakeCopy.Name = `
             This is a name > 100 characters long
 
@@ -245,7 +250,9 @@ describe("authenticated mock PUT party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -265,24 +272,23 @@ describe("authenticated mock PUT party", () => {
                     fakeParty.ShortName,
                     fakeParty.Icon,
                     fakeParty.PartyColor,
-                    fakeParty.Active
+                    fakeParty.Active,
                 );
             });
     });
-
 });
 
 describe("authenticated mock DELETE party", () => {
     test("should return 200 OK", () => {
-        db.deleteParty.mockResolvedValue({ rowCount: 1});
+        db.deleteParty.mockResolvedValue({ rowCount: 1 });
         return request(app)
             .delete("/parties/1")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body).toEqual({ message: "Successfully deleted" });
-                expect(db.deleteParty).toHaveBeenLastCalledWith(
-                     1 
-                );
+                expect(response.body).toEqual({
+                    message: "Successfully deleted",
+                });
+                expect(db.deleteParty).toHaveBeenLastCalledWith(1);
             });
     });
 
@@ -300,10 +306,8 @@ describe("authenticated mock DELETE party", () => {
         return request(app)
             .delete("/parties/13000")
             .then((response) => {
-                    expect(response.statusCode).toBe(404);
-                expect(db.deleteParty).toHaveBeenLastCalledWith(
-                     13000
-                );
+                expect(response.statusCode).toBe(404);
+                expect(db.deleteParty).toHaveBeenLastCalledWith(13000);
             });
     });
 
@@ -313,9 +317,7 @@ describe("authenticated mock DELETE party", () => {
             .delete("/parties/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(db.deleteParty).toHaveBeenLastCalledWith(
-                    1
-                );
+                expect(db.deleteParty).toHaveBeenLastCalledWith(1);
             });
     });
 });

@@ -30,7 +30,7 @@ async function getQuestions(isAuthenticated) {
         FROM "Issue" i
         INNER JOIN "Category" c
         ON i."CategoryID" = c."CategoryID"
-        WHERE "Active" = true`
+        WHERE "Active" = true`;
     }
     try {
         const rows = await pool.query(query);
@@ -54,15 +54,12 @@ async function getQuestionWithID(isAuthenticated, id) {
             ON i."CategoryID" = c."CategoryID"
             WHERE "Active" = true
             AND "IssueID" = $1
-        `
+        `;
     }
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
-            const rows = await pool.query(
-                query,
-                [val],
-            );
+            const rows = await pool.query(query, [val]);
             return rows.rows;
         } catch (err) {
             logger.error(err.stack);
@@ -79,12 +76,13 @@ async function insertQuestion(description, summary, category, active) {
             `INSERT INTO "Issue" ("Description", "Summary", "CategoryID", "Active")
              VALUES ($1, $2, $3, $4)
              RETURNING "IssueID"
-            `, [description, summary, category, active]
+            `,
+            [description, summary, category, active],
         );
         return rows.rows[0].IssueID;
     } catch (err) {
         // psql foreign key constraint violation error code
-        if (err.code === '23503') {
+        if (err.code === "23503") {
             throw new Error("Foreign Key Constraint Violation");
         }
         logger.error(err.stack);
@@ -104,7 +102,8 @@ async function updateQuestion(id, description, summary, category, active) {
                      "Active" = $4
                  WHERE "IssueID" = $5
                  RETURNING *
-                `, [description, summary, category, active, val]
+                `,
+                [description, summary, category, active, val],
             );
             if (rows.rows.length === 0) {
                 throw new Error("Invalid Resource");
@@ -112,7 +111,7 @@ async function updateQuestion(id, description, summary, category, active) {
             return rows.rows[0];
         } catch (err) {
             // psql foreign key constraint violation error code
-            if (err.code === '23503') {
+            if (err.code === "23503") {
                 throw new Error("Foreign Key Constraint Violation");
             }
             logger.error(err.stack);
@@ -128,8 +127,8 @@ async function deleteQuestion(id) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                `DELETE FROM "Issue" WHERE "IssueID" = $1`
-                , [val]
+                `DELETE FROM "Issue" WHERE "IssueID" = $1`,
+                [val],
             );
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
@@ -194,10 +193,7 @@ async function getStancesFiltered(isAuthenticated, StanceID, IssueID, PartyID) {
     const IID = Number.parseInt(IssueID) || IssueID;
     const PID = Number.parseInt(PartyID) || PartyID;
     try {
-        const rows = await pool.query(
-            query,
-            [SID, IID, PID],
-        );
+        const rows = await pool.query(query, [SID, IID, PID]);
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);
@@ -212,7 +208,8 @@ async function getParties(isAuthenticated) {
         query = 'SELECT * FROM "Party"';
     } else {
         // return only active questions
-        query = 'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true';
+        query =
+            'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true';
     }
     try {
         const rows = await pool.query(query);
@@ -230,15 +227,13 @@ async function getPartyWithID(isAuthenticated, id) {
         query = 'SELECT * FROM "Party" WHERE "PartyID" = $1::integer';
     } else {
         // return only active questions
-        query = 'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true AND "PartyID" = $1::integer';
+        query =
+            'SELECT "PartyID", "Name", "ShortName", "Icon", "PartyColor" FROM "Party" WHERE "Active" = true AND "PartyID" = $1::integer';
     }
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
-            const rows = await pool.query(
-                query,
-                [val],
-            );
+            const rows = await pool.query(query, [val]);
             return rows.rows;
         } catch (err) {
             logger.error(err.stack);
@@ -255,7 +250,8 @@ async function insertParty(name, shortName, icon, partyColor, active) {
             `INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor", "Active")
              VALUES ($1, $2, $3, $4, $5)
              RETURNING "PartyID"
-            `, [name, shortName, icon, partyColor, active]
+            `,
+            [name, shortName, icon, partyColor, active],
         );
         return rows.rows[0].PartyID;
     } catch (err) {
@@ -277,7 +273,8 @@ async function updateParty(id, name, shortName, icon, partyColor, active) {
                      "Active" = $5
                  WHERE "PartyID" = $6
                  RETURNING *
-                `, [name, shortName, icon, partyColor, active, val]
+                `,
+                [name, shortName, icon, partyColor, active, val],
             );
             if (rows.rows.length === 0) {
                 throw new Error("Invalid Resource");
@@ -298,8 +295,8 @@ async function deleteParty(id) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                `DELETE FROM "Party" WHERE "PartyID" = $1`
-                , [val]
+                `DELETE FROM "Party" WHERE "PartyID" = $1`,
+                [val],
             );
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
@@ -320,12 +317,13 @@ async function insertStance(stand, reason, issueID, partyID) {
             `INSERT INTO "Stance" ("Stand", "Reason", "IssueID", "PartyID")
              VALUES ($1, $2, $3, $4)
              RETURNING "StanceID"
-            `, [stand, reason, issueID, partyID]
+            `,
+            [stand, reason, issueID, partyID],
         );
         return rows.rows[0].StanceID;
     } catch (err) {
         // psql unique key constraint violation error code
-        if (err.code === '23505') {
+        if (err.code === "23505") {
             throw new Error("Unique Constraint Violation");
         }
         logger.error(err.stack);
@@ -343,7 +341,8 @@ async function updateStance(stanceID, stand, reason, issueID, partyID) {
                  "PartyID" = $4
              WHERE "StanceID" = $5
              RETURNING *
-            `, [stand, reason, issueID, partyID, stanceID]
+            `,
+            [stand, reason, issueID, partyID, stanceID],
         );
         if (rows.rows.length === 0) {
             throw new Error("Invalid Resource");
@@ -351,7 +350,7 @@ async function updateStance(stanceID, stand, reason, issueID, partyID) {
         return rows.rows[0];
     } catch (err) {
         // psql unique key constraint violation error code
-        if (err.code === '23505') {
+        if (err.code === "23505") {
             throw new Error("Unique Constraint Violation");
         }
         logger.error(err.stack);
@@ -364,8 +363,8 @@ async function deleteStance(id) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                `DELETE FROM "Stance" WHERE "StanceID" = $1`
-                , [val]
+                `DELETE FROM "Stance" WHERE "StanceID" = $1`,
+                [val],
             );
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
@@ -386,7 +385,8 @@ async function insertCategory(name) {
             `INSERT INTO "Category" ("Name")
              VALUES ($1)
              RETURNING "CategoryID"
-            `, [name]
+            `,
+            [name],
         );
         return rows.rows[0].CategoryID;
     } catch (err) {
@@ -402,7 +402,8 @@ async function updateCategory(categoryID, name) {
              SET "Name" = $1
              WHERE "CategoryID" = $2
              RETURNING *
-            `, [name, categoryID]
+            `,
+            [name, categoryID],
         );
         if (rows.rows.length === 0) {
             throw new Error("Invalid Resource");
@@ -419,8 +420,8 @@ async function deleteCategory(id) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
-                `DELETE FROM "Category" WHERE "CategoryID" = $1`
-                , [val]
+                `DELETE FROM "Category" WHERE "CategoryID" = $1`,
+                [val],
             );
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
@@ -428,7 +429,7 @@ async function deleteCategory(id) {
             return;
         } catch (err) {
             // psql foreign key constraint violation error code
-            if (err.code === '23503') {
+            if (err.code === "23503") {
                 throw new Error("Foreign Key Constraint Violation");
             }
             logger.error(err.stack);
@@ -450,7 +451,6 @@ async function getCategories() {
     }
 }
 
-
 module.exports = {
     getStancesFiltered,
     getStances,
@@ -470,5 +470,5 @@ module.exports = {
     insertCategory,
     updateCategory,
     deleteCategory,
-    getCategories
+    getCategories,
 };

@@ -99,17 +99,15 @@ describe("mock GET quiz question with filter", () => {
     });
 });
 
-
 // represents ID of just-inserted object
-const fakeDescription = "Fake description"
-const fakeSummary = "Fake Summary"
-const fakeCategory = "Fake Category"
-const fakeBody = 
-    {
-        Description: fakeDescription,
-        Summary: fakeSummary,
-        Category: fakeCategory
-    };
+const fakeDescription = "Fake description";
+const fakeSummary = "Fake Summary";
+const fakeCategory = "Fake Category";
+const fakeBody = {
+    Description: fakeDescription,
+    Summary: fakeSummary,
+    Category: fakeCategory,
+};
 
 describe("unauthenticated POST quiz question", () => {
     test("should return 401 unauthorized", () => {
@@ -127,8 +125,8 @@ const fakePutBody = {
     IssueID: fakeIssueID,
     Description: fakeDescription,
     Summary: fakeSummary,
-    Category: fakeCategory
-}
+    Category: fakeCategory,
+};
 
 describe("unauthenticated PUT quiz question", () => {
     test("should return 401 unauthorized", () => {

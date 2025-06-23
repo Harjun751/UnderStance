@@ -61,9 +61,9 @@ describe("GET quiz question", () => {
 
 describe("GET quiz question with authentication", () => {
     test("200 OK basic GET", async () => {
-        const response = await request(`http://localhost:${appPort}`).get(
-            "/questions",
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/questions")
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
             {
@@ -71,15 +71,15 @@ describe("GET quiz question with authentication", () => {
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
                 CategoryID: 1,
-                Active: true
+                Active: true,
             },
         ]);
     });
 
     test("200 OK with filter", async () => {
-        const response = await request(`http://localhost:${appPort}`).get(
-            "/questions?ID=1",
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/questions?ID=1")
+            .set("authorization", `Bearer ${global.authToken}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -88,37 +88,35 @@ describe("GET quiz question with authentication", () => {
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
                 CategoryID: 1,
-                Active: true
+                Active: true,
             },
         ]);
     });
 
     test("200 OK with filter with no matching ID", async () => {
-        const response = await request(`http://localhost:${appPort}`).get(
-            "/questions?ID=2000",
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/questions?ID=2000")
+            .set("authorization", `Bearer ${global.authToken}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([]);
     });
 
     test("400 with invalid filter", async () => {
-        const response = await request(`http://localhost:${appPort}`).get(
-            "/questions?ID=abc",
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/questions?ID=abc")
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual({ error: "Invalid Arguments" });
     });
 });
-
-
 
 describe("POST quiz question", () => {
     const reqBody = {
         Description: "Hi from integration test!",
         Summary: "This is a friendly greeting.",
         CategoryID: 1,
-        Active: false
+        Active: false,
     };
 
     test("200 OK basic POST", async () => {
@@ -127,32 +125,34 @@ describe("POST quiz question", () => {
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
         expect(response.statusCode).toBe(200);
-        
+
         // Check that returned ID exists and is a number
         const insertedID = response.body.IssueID;
         expect(insertedID).not.toBeNaN();
         expect(typeof insertedID).toBe("number");
-        
+
         // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/questions?ID=${insertedID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
-        expect(getResponse.body).toEqual([{
-            IssueID: insertedID,
-            Description: reqBody.Description,
-            Summary: reqBody.Summary,
-            CategoryID: reqBody.CategoryID,
-            Active: false
-        }]);
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/questions?ID=${insertedID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
+        expect(getResponse.body).toEqual([
+            {
+                IssueID: insertedID,
+                Description: reqBody.Description,
+                Summary: reqBody.Summary,
+                CategoryID: reqBody.CategoryID,
+                Active: false,
+            },
+        ]);
     });
 
     test("400 for invalid argument - too long description", async () => {
         // create invalid request
         const invalidBody = { ...reqBody };
-        const longDescription  = `
+        const longDescription = `
         This is a description > 300 chars long:
 
-        I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
+        I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`;
         invalidBody.Description = longDescription;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -166,7 +166,9 @@ describe("POST quiz question", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/questions`,
         );
-        expect(getResponse.body.some(obj => obj.Description === longDescription)).toBe(false);
+        expect(
+            getResponse.body.some((obj) => obj.Description === longDescription),
+        ).toBe(false);
     });
 
     test("400 for invalid argument - too long summary", async () => {
@@ -179,7 +181,7 @@ describe("POST quiz question", () => {
         Got nothin' in my brain.
         Got nothin' in my brain.
         Got nothin' in my brain.
-        `
+        `;
         invalidBody.Summary = longSummary;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -193,7 +195,9 @@ describe("POST quiz question", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/questions`,
         );
-        expect(getResponse.body.some(obj => obj.Summary === longSummary)).toBe(false);
+        expect(
+            getResponse.body.some((obj) => obj.Summary === longSummary),
+        ).toBe(false);
     });
 
     test("400 for invalid argument - invalid category ID", async () => {
@@ -212,7 +216,9 @@ describe("POST quiz question", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/questions`,
         );
-        expect(getResponse.body.some(obj => obj.CategoryID === 100000)).toBe(false);
+        expect(getResponse.body.some((obj) => obj.CategoryID === 100000)).toBe(
+            false,
+        );
     });
 });
 
@@ -222,7 +228,7 @@ describe("PUT quiz question", () => {
         Description: "I changed this description to say what I want.",
         Summary: "This is an unfriendly greeting.",
         CategoryID: 1,
-        Active: false
+        Active: false,
     };
 
     test("200 OK basic PUT", async () => {
@@ -234,21 +240,21 @@ describe("PUT quiz question", () => {
         // Check that response is 200 and body matches exactly
         /*expect(response.statusCode).toBe(200);*/
         expect(response.body).toStrictEqual(reqBody);
-        
+
         // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/questions?ID=${reqBody.IssueID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/questions?ID=${reqBody.IssueID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([reqBody]);
     });
 
     test("400 for invalid argument - too long description", async () => {
         // create invalid request
         const invalidBody = { ...reqBody };
-        const longDescription  = `
+        const longDescription = `
         This is a description > 300 chars long:
 
-        I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
+        I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`;
         invalidBody.Description = longDescription;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -269,7 +275,7 @@ describe("PUT quiz question", () => {
         Got nothin' in my brain.
         Got nothin' in my brain.
         Got nothin' in my brain.
-        `
+        `;
         invalidBody.Summary = longSummary;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -294,7 +300,7 @@ describe("PUT quiz question", () => {
     });
 
     test("404 if resource does not exist", async () => {
-        const invalidBody =  { ...reqBody };
+        const invalidBody = { ...reqBody };
         invalidBody.IssueID = 200000;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -304,7 +310,6 @@ describe("PUT quiz question", () => {
         // Check that 404 is returned
         expect(response.statusCode).toBe(404);
     });
-
 });
 
 describe("DELETE quiz question", () => {
@@ -312,7 +317,7 @@ describe("DELETE quiz question", () => {
         Description: "I exist to be deleted",
         Summary: "My existence temporary",
         CategoryID: 1,
-        Active: true
+        Active: true,
     };
 
     test("200 OK basic DELETE", async () => {
@@ -331,9 +336,9 @@ describe("DELETE quiz question", () => {
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(200);
         // ASSERT: Check that resource does exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/questions?ID=${insertedID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/questions?ID=${insertedID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([]);
     });
 
@@ -355,4 +360,3 @@ describe("DELETE quiz question", () => {
         expect(response.statusCode).toBe(400);
     });
 });
-

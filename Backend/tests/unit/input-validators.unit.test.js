@@ -3,14 +3,14 @@ const validator = require("../../services/InputValidation");
 // used for image validation
 global.fetch = jest.fn();
 
-
 describe("description validator", () => {
     test("should pass on valid description", async () => {
         expect(validator.validateDescription("hi!")).toBe(null);
     });
 
     test("should fail on invalid description - > 300 chars", async () => {
-        expect(validator.validateDescription(`
+        expect(
+            validator.validateDescription(`
         this description is > 300 chars long 
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
@@ -18,7 +18,8 @@ sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
 sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
-            `)).toBe("Too long, >300 characters");
+            `),
+        ).toBe("Too long, >300 characters");
     });
 
     test("should fail on null description", async () => {
@@ -37,7 +38,8 @@ describe("summary validator", () => {
     });
 
     test("should fail on invalid summary - > 50 chars", async () => {
-        expect(validator.validateSummary(`
+        expect(
+            validator.validateSummary(`
         this description is > 50 chars long 
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
@@ -45,7 +47,8 @@ sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
 sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
-            `)).toBe("Too long, > 50 characters");
+            `),
+        ).toBe("Too long, > 50 characters");
     });
 
     test("should fail on null summary", async () => {
@@ -64,7 +67,8 @@ describe("category validator", () => {
     });
 
     test("should fail on invalid category - > 50 chars", async () => {
-        expect(validator.validateCategory(`
+        expect(
+            validator.validateCategory(`
         this description is > 50 chars long 
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
@@ -72,7 +76,8 @@ sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
 sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
-            `)).toBe("Too long, > 50 characters");
+            `),
+        ).toBe("Too long, > 50 characters");
     });
 
     test("should fail on null category", async () => {
@@ -147,7 +152,8 @@ describe("party name validator", () => {
     });
 
     test("should fail on invalid PartyName - > 100 chars", async () => {
-        expect(validator.validatePartyName(`
+        expect(
+            validator.validatePartyName(`
         this description is > 100 chars long 
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
@@ -155,7 +161,8 @@ sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
 sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
-            `)).toBe("Too long, >100 characters");
+            `),
+        ).toBe("Too long, >100 characters");
     });
 
     test("should fail on null PartyName", async () => {
@@ -173,7 +180,8 @@ describe("short party name validator", () => {
         expect(validator.validateShortName("12345")).toBe(null);
     });
     test("should fail on invalid ShortName - > 5 chars", async () => {
-        expect(validator.validateShortName(`
+        expect(
+            validator.validateShortName(`
         this description is > 5 chars long 
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
         asdlfkjaslkdjflsdjlkflsdlkjflsdlkjsdfadlkjfslakjdfkljsadfsadfaslkfasdfasdfasdfsadfjkflsdl
@@ -181,7 +189,8 @@ sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
 sdflsdlfkjasjlkdflsdflslsdfljasdfasdlkfjas
 adflkjasldkjflsdflsldkjflsdflsl
-            `)).toBe("Too long, >5 characters");
+            `),
+        ).toBe("Too long, >5 characters");
     });
 
     test("should fail on null ShortName", async () => {
@@ -199,8 +208,9 @@ describe("icon url validator", () => {
         fetch.mockResolvedValueOnce({
             ok: true,
             headers: {
-                get: (header) => header === 'content-type' ? 'image/png' : null,
-            }
+                get: (header) =>
+                    header === "content-type" ? "image/png" : null,
+            },
         });
         expect(await validator.validateIcon("https://image.com")).toBe(null);
     });
@@ -209,17 +219,22 @@ describe("icon url validator", () => {
         fetch.mockResolvedValueOnce({
             ok: null,
             headers: {
-                get: (header) => header === 'content-type' ? 'video/png' : null,
-            }
+                get: (header) =>
+                    header === "content-type" ? "video/png" : null,
+            },
         });
-        expect(await validator.validateIcon("12345")).toBe("Invalid URL - failed to reach");
+        expect(await validator.validateIcon("12345")).toBe(
+            "Invalid URL - failed to reach",
+        );
     });
 
     test("should fail on invalid Icon - > 2083 chars", async () => {
-        expect(await validator.validateIcon(`
+        expect(
+            await validator.validateIcon(`
         this description is > 2083 chars long 
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            `)).toBe("Too long, >2083 characters");
+            `),
+        ).toBe("Too long, >2083 characters");
     });
 
     test("should fail on null Icon", async () => {
@@ -238,11 +253,15 @@ describe("PartyColor validator", () => {
     });
 
     test("should fail for invalid color", async () => {
-        expect(validator.validateColor("red")).toBe("Not a valid hex color code");
+        expect(validator.validateColor("red")).toBe(
+            "Not a valid hex color code",
+        );
     });
 
     test("should fail for invalid color", async () => {
-        expect(validator.validateColor("rgb(0,0,0,)")).toBe("Not a valid hex color code");
+        expect(validator.validateColor("rgb(0,0,0,)")).toBe(
+            "Not a valid hex color code",
+        );
     });
 
     test("should fail for null", async () => {
@@ -253,7 +272,6 @@ describe("PartyColor validator", () => {
         let col;
         expect(validator.validateColor(col)).toBe("No value provided");
     });
-
 });
 
 describe("Reason validator", () => {
@@ -262,9 +280,11 @@ describe("Reason validator", () => {
     });
 
     test("should fail for reason > 1000chars long", async () => {
-        expect(validator.validateReason(`
+        expect(
+            validator.validateReason(`
 According to all known lawsof aviation,there is no way a beeshould be able to fly.Its wings are too small to getits fat little body off the ground.The bee, of course, flies anywaybecause bees don't carewhat humans think is impossible.Yellow, black. Yellow, black.Yellow, black. Yellow, black.Ooh, black and yellow!Let's shake it up a little.Barry! Breakfast is ready!Coming!Hang on a second.Hello?- Barry?- Adam?- Can you believe this is happening?- I can't. I'll pick you up.Looking sharp.Use the stairs. Your fatherpaid good money for those.Sorry. I'm excited.Here's the graduate.We're very proud of you, son.A perfect report card, all B's.Very proud.Ma! I got a thing going here.- You got lint on your fuzz.- Ow! That's me!- Wave to us! We'll be in row 118,000.- Bye!Barry, I told you,stop flying in the house!- Hey, Adam.- Hey, Barry.- Is that fuzz gel?- A little. Special day, graduation.Never thought I'd make it.Three days grade school,three days high school.Those were awkward.Three days college. I'm glad I tooka day and hitchhiked around the hive.
-            `)).toBe("Too long, >1000 characters");
+            `),
+        ).toBe("Too long, >1000 characters");
     });
 
     test("should fail for null", async () => {
@@ -275,5 +295,4 @@ According to all known lawsof aviation,there is no way a beeshould be able to fl
         let col;
         expect(validator.validateReason(col)).toBe("No value provided");
     });
-
 });

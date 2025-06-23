@@ -1,8 +1,11 @@
 function validateData(validators, data) {
     const invalidFields = Object.entries(validators)
-            .map(([fieldName, validator]) => [fieldName, validator(data[fieldName])])
-            .filter(([_fieldName, errorDetail]) => errorDetail != null)
-            .map(([fieldName, errorDetail]) => `${fieldName} (${errorDetail})`);
+        .map(([fieldName, validator]) => [
+            fieldName,
+            validator(data[fieldName]),
+        ])
+        .filter(([_fieldName, errorDetail]) => errorDetail != null)
+        .map(([fieldName, errorDetail]) => `${fieldName} (${errorDetail})`);
 
     if (!invalidFields.length) {
         return null;
@@ -57,8 +60,13 @@ function validateID(id) {
 
 function validateActive(active) {
     if (typeof active !== "undefined" && active !== null) {
-        if (typeof active === "boolean") { return null; }
-        if (active.toLowerCase() === 'true' || active.toLowerCase() === 'false') {
+        if (typeof active === "boolean") {
+            return null;
+        }
+        if (
+            active.toLowerCase() === "true" ||
+            active.toLowerCase() === "false"
+        ) {
             return null;
         }
         return "Invalid boolean value";
@@ -68,8 +76,10 @@ function validateActive(active) {
 
 function convertToBoolean(active) {
     // assume input is clean
-    if (typeof active === "boolean") { return active; }
-    return active.toLowerCase() === 'true';
+    if (typeof active === "boolean") {
+        return active;
+    }
+    return active.toLowerCase() === "true";
 }
 
 function validateShortName(name) {
@@ -86,20 +96,26 @@ function validateShortName(name) {
 
 async function validateIcon(icon) {
     if (typeof icon !== "undefined" && icon) {
-        if (icon.length > 2083) { return "Too long, >2083 characters" ; }
+        if (icon.length > 2083) {
+            return "Too long, >2083 characters";
+        }
         // Check that provided URL leads to a proper image resource
         // do this by doing a fetch and read metadata
         let response;
         try {
-            response = await fetch(icon, { method: 'HEAD' });
+            response = await fetch(icon, { method: "HEAD" });
         } catch (err) {
             logger.error(err.stack);
             return "Failed to reach";
         }
-        if (!response.ok) { return "Invalid URL - failed to reach"; }
-        const contentType = response.headers.get('content-type');
+        if (!response.ok) {
+            return "Invalid URL - failed to reach";
+        }
+        const contentType = response.headers.get("content-type");
         // check that content type is an image type
-        if (contentType?.startsWith('image/')) { return null }
+        if (contentType?.startsWith("image/")) {
+            return null;
+        }
         return "Invalid URL - not an image";
     } else {
         return "No value provided";
@@ -113,16 +129,16 @@ function validateColor(color) {
             return "Not a valid hex color code";
         }
         return null;
-    } else { 
+    } else {
         return "No value provided";
     }
-
 }
-
 
 function validatePartyName(name) {
     if (typeof name !== "undefined" && name) {
-        if (name.length > 100) { return "Too long, >100 characters" }
+        if (name.length > 100) {
+            return "Too long, >100 characters";
+        }
         return null;
     } else {
         return "No value provided";
@@ -131,16 +147,14 @@ function validatePartyName(name) {
 
 function validateReason(reason) {
     if (typeof reason !== "undefined" && reason) {
-        if (reason.length > 1000) { return "Too long, >1000 characters" }
+        if (reason.length > 1000) {
+            return "Too long, >1000 characters";
+        }
         return null;
     } else {
         return "No value provided";
     }
 }
-
-
-
-
 
 module.exports = {
     validateDescription,
@@ -154,5 +168,5 @@ module.exports = {
     validateIcon,
     validateShortName,
     validateReason,
-    validateData
-}
+    validateData,
+};

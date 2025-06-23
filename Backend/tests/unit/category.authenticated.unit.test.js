@@ -17,8 +17,8 @@ const app = require("../../app");
 
 describe("authenticated mock POST category", () => {
     const fakeCategory = {
-        Name: "Dingus Wingus"
-    }
+        Name: "Dingus Wingus",
+    };
 
     test("should return 200 OK", () => {
         db.insertCategory.mockResolvedValue(12);
@@ -37,17 +37,17 @@ describe("authenticated mock POST category", () => {
     test("should return 400 if missing arguments", () => {
         return request(app)
             .post("/categories")
-            .send({
-            })
+            .send({})
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
-
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeCategory }
+        const fakeCopy = { ...fakeCategory };
         fakeCopy.Name = `
             This is a name > 50 characters long
 
@@ -58,7 +58,9 @@ describe("authenticated mock POST category", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -77,14 +79,13 @@ describe("authenticated mock POST category", () => {
                 );
             });
     });
-
 });
 
 describe("authenticated mock PUT Category", () => {
     const fakeCategory = {
         CategoryID: 1,
-        Name: "New Dingus"
-    }
+        Name: "New Dingus",
+    };
 
     test("should return 200 OK", () => {
         db.updateCategory.mockResolvedValue(fakeCategory);
@@ -105,17 +106,18 @@ describe("authenticated mock PUT Category", () => {
         return request(app)
             .put("/categories")
             .send({
-                Name: fakeCategory.Name
+                Name: fakeCategory.Name,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
-
     });
 
     test("should return 400 if invalid argument", () => {
-        const fakeCopy = { ...fakeCategory }
+        const fakeCopy = { ...fakeCategory };
         fakeCopy.Name = `
             This is a name > 50 characters long
 
@@ -126,7 +128,9 @@ describe("authenticated mock PUT Category", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -146,20 +150,19 @@ describe("authenticated mock PUT Category", () => {
                 );
             });
     });
-
 });
 
 describe("authenticated mock DELETE Category", () => {
     test("should return 200 OK", () => {
-        db.deleteCategory.mockResolvedValue({ rowCount: 1});
+        db.deleteCategory.mockResolvedValue({ rowCount: 1 });
         return request(app)
             .delete("/categories/1")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body).toEqual({ message: "Successfully deleted" });
-                expect(db.deleteCategory).toHaveBeenLastCalledWith(
-                     1 
-                );
+                expect(response.body).toEqual({
+                    message: "Successfully deleted",
+                });
+                expect(db.deleteCategory).toHaveBeenLastCalledWith(1);
             });
     });
 
@@ -173,7 +176,9 @@ describe("authenticated mock DELETE Category", () => {
     });
 
     test("should return 400 if still has issues referencing category", () => {
-        db.deleteCategory.mockRejectedValue(new Error("Foreign Key Constraint Violation"));
+        db.deleteCategory.mockRejectedValue(
+            new Error("Foreign Key Constraint Violation"),
+        );
         return request(app)
             .delete("/categories/dingus")
             .then((response) => {
@@ -186,10 +191,8 @@ describe("authenticated mock DELETE Category", () => {
         return request(app)
             .delete("/categories/13000")
             .then((response) => {
-                    expect(response.statusCode).toBe(404);
-                expect(db.deleteCategory).toHaveBeenLastCalledWith(
-                     13000
-                );
+                expect(response.statusCode).toBe(404);
+                expect(db.deleteCategory).toHaveBeenLastCalledWith(13000);
             });
     });
 
@@ -199,9 +202,7 @@ describe("authenticated mock DELETE Category", () => {
             .delete("/categories/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(db.deleteCategory).toHaveBeenLastCalledWith(
-                    1
-                );
+                expect(db.deleteCategory).toHaveBeenLastCalledWith(1);
             });
     });
 });

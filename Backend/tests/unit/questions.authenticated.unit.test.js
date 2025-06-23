@@ -19,7 +19,7 @@ describe("authenticated mock GET quiz question", () => {
                 IssueID: 1,
                 Description: "Mock Question",
                 Summary: "nil",
-                Active: true
+                Active: true,
             },
         ];
         db.getQuestions.mockResolvedValue(fakeQuestions);
@@ -38,7 +38,7 @@ describe("authenticated mock GET quiz question", () => {
                 IssueID: 1,
                 Description: "Mock Question",
                 Summary: "nil",
-                Active: true
+                Active: true,
             },
         ];
         db.getQuestionWithID.mockResolvedValue(fakeQuestions);
@@ -52,22 +52,18 @@ describe("authenticated mock GET quiz question", () => {
     });
 });
 
-
-
-
 // represents ID of just-inserted object
 const insertReturnValue = 12;
-const fakeDescription = "Fake description"
-const fakeSummary = "Fake Summary"
-const fakeCategory = 1
+const fakeDescription = "Fake description";
+const fakeSummary = "Fake Summary";
+const fakeCategory = 1;
 const fakeActive = false;
-const fakeBody = 
-    {
-        Description: fakeDescription,
-        Summary: fakeSummary,
-        CategoryID: fakeCategory,
-        Active: fakeActive
-    };
+const fakeBody = {
+    Description: fakeDescription,
+    Summary: fakeSummary,
+    CategoryID: fakeCategory,
+    Active: fakeActive,
+};
 
 describe("authenticated mock POST quiz question", () => {
     test("should return 200 OK", () => {
@@ -79,7 +75,10 @@ describe("authenticated mock POST quiz question", () => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body.IssueID).toEqual(insertReturnValue);
                 expect(db.insertQuestion).toHaveBeenLastCalledWith(
-                    fakeDescription, fakeSummary, fakeCategory, fakeActive
+                    fakeDescription,
+                    fakeSummary,
+                    fakeCategory,
+                    fakeActive,
                 );
             });
     });
@@ -94,22 +93,26 @@ describe("authenticated mock POST quiz question", () => {
                     Once there were brook trout in the streams in the mountains. You could see them standing in the amber current where the white edges of their fins wimpled softly in the flow. They smelled of moss in your hand. Polished and muscular and torsional. On their backs were vermiculate patterns that were maps of the world in its becoming. Maps and mazes. Of a thing which could not be put back. Not be made right again. In the deep glens where they lived all things were older than man and they hummed of mystery.
                 `,
                 Summary: fakeSummary,
-                Category: fakeCategory
+                Category: fakeCategory,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
     test("should return 400 for invalid category id", () => {
-        db.insertQuestion.mockRejectedValue(new Error("Foreign Key Constraint Violation"));
+        db.insertQuestion.mockRejectedValue(
+            new Error("Foreign Key Constraint Violation"),
+        );
         return request(app)
             .post("/questions")
             .send({
                 Description: fakeDescription,
                 Summary: fakeSummary,
-                Category: 100000
+                Category: 100000,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
@@ -127,7 +130,10 @@ describe("authenticated mock POST quiz question", () => {
                     error: "Failed to insert question",
                 });
                 expect(db.insertQuestion).toHaveBeenLastCalledWith(
-                    fakeDescription, fakeSummary, fakeCategory, fakeActive
+                    fakeDescription,
+                    fakeSummary,
+                    fakeCategory,
+                    fakeActive,
                 );
             });
     });
@@ -139,8 +145,8 @@ const fakePutBody = {
     Description: fakeDescription,
     Summary: fakeSummary,
     CategoryID: fakeCategory,
-    Active: fakeActive
-}
+    Active: fakeActive,
+};
 
 describe("authenticated mock PUT quiz question", () => {
     test("should return 200 OK", () => {
@@ -153,7 +159,11 @@ describe("authenticated mock PUT quiz question", () => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakePutBody);
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
+                    fakeIssueID,
+                    fakeDescription,
+                    fakeSummary,
+                    fakeCategory,
+                    fakeActive,
                 );
             });
     });
@@ -171,11 +181,13 @@ describe("authenticated mock PUT quiz question", () => {
 
                 `,
                 Category: fakeCategory,
-                Active: fakeActive
+                Active: fakeActive,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
             });
     });
 
@@ -184,13 +196,17 @@ describe("authenticated mock PUT quiz question", () => {
         return request(app)
             .put("/questions")
             .send(fakePutBody)
-            .then(response => {
-                expect(response.statusCode).toBe(404)
+            .then((response) => {
+                expect(response.statusCode).toBe(404);
                 expect(response.body).toEqual({
-                    error: "Could not update question with requested ID"
+                    error: "Could not update question with requested ID",
                 });
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
+                    fakeIssueID,
+                    fakeDescription,
+                    fakeSummary,
+                    fakeCategory,
+                    fakeActive,
                 );
             });
     });
@@ -206,7 +222,11 @@ describe("authenticated mock PUT quiz question", () => {
                     error: "Failed to update question",
                 });
                 expect(db.updateQuestion).toHaveBeenLastCalledWith(
-                    fakeIssueID, fakeDescription, fakeSummary, fakeCategory, fakeActive
+                    fakeIssueID,
+                    fakeDescription,
+                    fakeSummary,
+                    fakeCategory,
+                    fakeActive,
                 );
             });
     });
@@ -214,15 +234,15 @@ describe("authenticated mock PUT quiz question", () => {
 
 describe("authenticated mock DELETE quiz question", () => {
     test("should return 200 OK", () => {
-        db.deleteQuestion.mockResolvedValue({ rowCount: 1});
+        db.deleteQuestion.mockResolvedValue({ rowCount: 1 });
         return request(app)
             .delete("/questions/1")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body).toEqual({ message: "Successfully deleted" });
-                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
-                     1 
-                );
+                expect(response.body).toEqual({
+                    message: "Successfully deleted",
+                });
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(1);
             });
     });
 
@@ -241,9 +261,7 @@ describe("authenticated mock DELETE quiz question", () => {
             .delete("/questions/13000")
             .then((response) => {
                 expect(response.statusCode).toBe(404);
-                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
-                     13000
-                );
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(13000);
             });
     });
 
@@ -253,10 +271,7 @@ describe("authenticated mock DELETE quiz question", () => {
             .delete("/questions/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(db.deleteQuestion).toHaveBeenLastCalledWith(
-                    1
-                );
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(1);
             });
     });
 });
-

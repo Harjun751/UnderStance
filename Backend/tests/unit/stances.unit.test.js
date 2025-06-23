@@ -119,7 +119,12 @@ describe("mock GET stance with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(filteredStances);
-                expect(db.getStancesFiltered).toHaveBeenCalledWith(false, 1, 1, 1);
+                expect(db.getStancesFiltered).toHaveBeenCalledWith(
+                    false,
+                    1,
+                    1,
+                    1,
+                );
             });
     });
 

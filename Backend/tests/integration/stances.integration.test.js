@@ -139,9 +139,9 @@ describe("authenticated GET stances", () => {
     });
 
     test("200 OK GET all", async () => {
-        const response = await request(`http://localhost:${appPort}`).get(
-            "/stances",
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const response = await request(`http://localhost:${appPort}`)
+            .get("/stances")
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(extendedFakeStances);
     });
@@ -153,7 +153,7 @@ describe("POST stance", () => {
         Reason: "Defunct Party's stance: we don't know.",
         IssueID: 1,
         PartyID: 4,
-    }
+    };
 
     test("200 OK basic POST", async () => {
         const response = await request(`http://localhost:${appPort}`)
@@ -161,24 +161,25 @@ describe("POST stance", () => {
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
         expect(response.statusCode).toBe(200);
-        
+
         // Check that returned ID exists and is a number
         const insertedID = response.body.StanceID;
         expect(insertedID).not.toBeNaN();
         expect(typeof insertedID).toBe("number");
-        
-        // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/stances?StanceID=${insertedID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
-        expect(getResponse.body).toEqual([{
-            StanceID: insertedID,
-            Stand: reqBody.Stand,
-            Reason: reqBody.Reason,
-            IssueID: reqBody.IssueID,
-            PartyID: reqBody.PartyID,
-        }]);
 
+        // Check that resource exists in GET call
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/stances?StanceID=${insertedID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
+        expect(getResponse.body).toEqual([
+            {
+                StanceID: insertedID,
+                Stand: reqBody.Stand,
+                Reason: reqBody.Reason,
+                IssueID: reqBody.IssueID,
+                PartyID: reqBody.PartyID,
+            },
+        ]);
     });
 
     test("400 for invalid argument - too long reason", async () => {
@@ -205,7 +206,6 @@ describe("POST stance", () => {
             .send(invalidBody);
         expect(response.statusCode).toBe(400);
     });
-
 });
 
 describe("PUT stance", () => {
@@ -215,7 +215,7 @@ describe("PUT stance", () => {
         Reason: "Changed my view.",
         IssueID: 1,
         PartyID: 1,
-    }
+    };
 
     test("200 OK basic PUT", async () => {
         const response = await request(`http://localhost:${appPort}`)
@@ -224,11 +224,11 @@ describe("PUT stance", () => {
             .send(reqBody);
         expect(response.body).toStrictEqual(reqBody);
         expect(response.statusCode).toBe(200);
-        
+
         // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/stances?StanceID=${reqBody.StanceID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/stances?StanceID=${reqBody.StanceID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([reqBody]);
     });
 
@@ -274,7 +274,7 @@ describe("DELETE stance", () => {
         Reason: "The current one is good enough TBH",
         IssueID: 1,
         PartyID: 2,
-    }
+    };
 
     test("200 OK basic DELETE", async () => {
         const response = await request(`http://localhost:${appPort}`)
@@ -284,9 +284,9 @@ describe("DELETE stance", () => {
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(200);
         // ASSERT: Check that resource does exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`).get(
-            `/stances?StanceID=${toBeDeleted.StanceID}`,
-        ).set("authorization", `Bearer ${global.authToken}`);
+        const getResponse = await request(`http://localhost:${appPort}`)
+            .get(`/stances?StanceID=${toBeDeleted.StanceID}`)
+            .set("authorization", `Bearer ${global.authToken}`);
         expect(getResponse.body).toEqual([]);
     });
 
