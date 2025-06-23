@@ -1,9 +1,4 @@
 // set up authentication
-console.log("ENV", {
-  CI: process.env.CI,
-  AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
-});
-
 if (!process.env.CI) {
     require("dotenv").config({ path: "./.env.test" });
 }
@@ -14,9 +9,9 @@ if (!process.env.CI) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                client_id: process.env.AUTH0_CLIENT_ID,
-                client_secret: process.env.AUTH0_CLIENT_SECRET,
-                audience: process.env.AUTH0_AUDIENCE,
+                client_id: process.env.AUTH0_CLIENT_ID?.trim(),
+                client_secret: process.env.AUTH0_CLIENT_SECRET?.trim(),
+                audience: process.env.AUTH0_AUDIENCE?.trim(),
                 grant_type: "client_credentials",
             }),
         },
