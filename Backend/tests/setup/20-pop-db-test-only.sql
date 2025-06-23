@@ -1,5 +1,8 @@
-INSERT INTO "Issue" ("Description", "Summary", "Category")
-VALUES ('Change national anthem to hip''s don''t lie', 'On the anthem', 'National Identity');
+INSERT INTO "Category" ("Name") VALUES
+('Music');
+
+INSERT INTO "Issue" ("Description", "Summary", "CategoryID")
+VALUES ('Change national anthem to hip''s don''t lie', 'On the anthem', 1);
 
 INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor")
 VALUES ('Coalition for Shakira', 'CFS', 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fm%2FnsIzrgTUb6sAAAAC%2Fmonday-left-me-broken-cat.gif&f=1&nofb=1&ipt=037bc199f0a9705f2ffda49a41302c4a674c8d69748df626cd8e70491f1f379d', '#FFD700');

@@ -1,10 +1,17 @@
+CREATE TABLE "Category" (
+    "CategoryID" serial,
+    "Name" varchar(50),
+    PRIMARY KEY ("CategoryID")
+);
+
 CREATE TABLE "Issue" (
     "IssueID" serial,
     "Description" varchar(300),
     "Summary" varchar(50),
-    "Category" varchar(50),
+    "CategoryID" int,
     "Active" boolean DEFAULT true,
-    PRIMARY KEY ("IssueID")
+    PRIMARY KEY ("IssueID"),
+    FOREIGN KEY ("CategoryID") REFERENCES "Category"("CategoryID")
 );
 
 CREATE TABLE "Party" (
