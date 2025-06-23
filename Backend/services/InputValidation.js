@@ -91,6 +91,15 @@ function validatePartyName(name) {
     }
 }
 
+function validateReason(reason) {
+    if (typeof reason !== "undefined" && reason) {
+        return reason.length <= 1000;
+    } else {
+        return false;
+    }
+}
+
+
 
 
 
@@ -104,5 +113,6 @@ module.exports = {
     validateColor,
     validatePartyName,
     validateIcon,
-    validateShortName
+    validateShortName,
+    validateReason
 }

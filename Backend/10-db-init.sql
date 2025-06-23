@@ -25,5 +25,6 @@ CREATE TABLE "Stance" (
     "PartyID" int,
     PRIMARY KEY ("StanceID"),
     FOREIGN KEY ("IssueID") REFERENCES "Issue"("IssueID"),
-    FOREIGN KEY ("PartyID") REFERENCES "Party"("PartyID")
+    FOREIGN KEY ("PartyID") REFERENCES "Party"("PartyID"),
+    UNIQUE ("IssueID", "PartyID")
 );

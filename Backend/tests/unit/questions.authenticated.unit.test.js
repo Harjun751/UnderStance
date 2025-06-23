@@ -221,13 +221,13 @@ describe("authenticated mock DELETE quiz question", () => {
     });
 
     test("should return 404 if no valid resource", () => {
-        db.deleteQuestion.mockResolvedValue({ rowCount: 0 });
+        db.deleteQuestion.mockRejectedValue(new Error("Invalid Resource"));
         return request(app)
-            .delete("/questions/13")
+            .delete("/questions/13000")
             .then((response) => {
-                expect(response.statusCode).toBe(200);
+                expect(response.statusCode).toBe(404);
                 expect(db.deleteQuestion).toHaveBeenLastCalledWith(
-                     13 
+                     13000
                 );
             });
     });

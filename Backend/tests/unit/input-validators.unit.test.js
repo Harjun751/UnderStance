@@ -255,3 +255,25 @@ describe("PartyColor validator", () => {
     });
 
 });
+
+describe("Reason validator", () => {
+    test("should pass for valid Reason", async () => {
+        expect(validator.validateReason("Cos i want it")).toBe(true);
+    });
+
+    test("should fail for reason > 1000chars long", async () => {
+        expect(validator.validateReason(`
+According to all known lawsof aviation,there is no way a beeshould be able to fly.Its wings are too small to getits fat little body off the ground.The bee, of course, flies anywaybecause bees don't carewhat humans think is impossible.Yellow, black. Yellow, black.Yellow, black. Yellow, black.Ooh, black and yellow!Let's shake it up a little.Barry! Breakfast is ready!Coming!Hang on a second.Hello?- Barry?- Adam?- Can you believe this is happening?- I can't. I'll pick you up.Looking sharp.Use the stairs. Your fatherpaid good money for those.Sorry. I'm excited.Here's the graduate.We're very proud of you, son.A perfect report card, all B's.Very proud.Ma! I got a thing going here.- You got lint on your fuzz.- Ow! That's me!- Wave to us! We'll be in row 118,000.- Bye!Barry, I told you,stop flying in the house!- Hey, Adam.- Hey, Barry.- Is that fuzz gel?- A little. Special day, graduation.Never thought I'd make it.Three days grade school,three days high school.Those were awkward.Three days college. I'm glad I tooka day and hitchhiked around the hive.
+            `)).toBe(false);
+    });
+
+    test("should fail for null", async () => {
+        expect(validator.validateReason(null)).toBe(false);
+    });
+
+    test("should fail for undefined", async () => {
+        let col;
+        expect(validator.validateReason(col)).toBe(false);
+    });
+
+});

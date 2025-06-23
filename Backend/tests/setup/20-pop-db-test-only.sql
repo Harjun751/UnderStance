@@ -7,8 +7,17 @@ VALUES ('Coalition for Shakira', 'CFS', 'https://external-content.duckduckgo.com
 INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor")
 VALUES ('Traditionalists'' Party', 'TP', 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpkbnews.in%2Fwp-content%2Fuploads%2F2023%2F09%2FBlue-Smurf-Cat-Meme.jpg&f=1&nofb=1&ipt=075c2e738b6abfc14555b49cfe8fe2d14433f12cdec84ab46b87516cca95278f', '#1E90FF');
 
+INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor", "Active")
+VALUES ('Inactive Party', 'IP', 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpkbnews.in%2Fwp-content%2Fuploads%2F2023%2F09%2FBlue-Smurf-Cat-Meme.jpg&f=1&nofb=1&ipt=075c2e738b6abfc14555b49cfe8fe2d14433f12cdec84ab46b87516cca95278f', '#1E90FF', false);
+
+INSERT INTO "Party" ("Name", "ShortName", "Icon", "PartyColor", "Active")
+VALUES ('Defunct Party', 'DFP', 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpkbnews.in%2Fwp-content%2Fuploads%2F2023%2F09%2FBlue-Smurf-Cat-Meme.jpg&f=1&nofb=1&ipt=075c2e738b6abfc14555b49cfe8fe2d14433f12cdec84ab46b87516cca95278f', '#1E90FF', false);
+
 INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
 VALUES (1, 1, true, 'It''s a certified bop');
 
 INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
 VALUES (1, 2, false, 'The current one is good enough TBH');
+
+INSERT INTO "Stance" ("IssueID", "PartyID", "Stand", "Reason")
+VALUES (1, 3, false, 'Our opinions are irrelevant');

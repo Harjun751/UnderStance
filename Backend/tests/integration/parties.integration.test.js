@@ -89,6 +89,22 @@ describe("GET parties with authentication", () => {
             PartyColor: "#1E90FF",
             Active: true
         },
+        {
+            PartyID: 3,
+            Name: "Inactive Party",
+            ShortName: "IP",
+            Icon: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpkbnews.in%2Fwp-content%2Fuploads%2F2023%2F09%2FBlue-Smurf-Cat-Meme.jpg&f=1&nofb=1&ipt=075c2e738b6abfc14555b49cfe8fe2d14433f12cdec84ab46b87516cca95278f",
+            PartyColor: "#1E90FF",
+            Active: false
+        },
+        {
+            PartyID: 4,
+            Name: "Defunct Party",
+            ShortName: "DFP",
+            Icon: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpkbnews.in%2Fwp-content%2Fuploads%2F2023%2F09%2FBlue-Smurf-Cat-Meme.jpg&f=1&nofb=1&ipt=075c2e738b6abfc14555b49cfe8fe2d14433f12cdec84ab46b87516cca95278f",
+            PartyColor: "#1E90FF",
+            Active: false
+        },
     ];
 
     test("200 OK GET all", async () => {
@@ -117,7 +133,7 @@ describe("GET parties with authentication", () => {
 
     test("200 OK GET IssueID empty filtered", async () => {
         const response = await request(`http://localhost:${appPort}`).get(
-            "/parties?ID=4",
+            "/parties?ID=400000",
         ).set("authorization", `Bearer ${global.authToken}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([]);

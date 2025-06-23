@@ -18,10 +18,10 @@ fetch.mockResolvedValue({
     }
 });
 
-const app = require("../../app");
 const request = require("supertest");
 jest.mock("../../services/DAL");
 const db = require("../../services/DAL");
+const app = require("../../app");
 
 const parties = [
     {
@@ -295,12 +295,12 @@ describe("authenticated mock DELETE party", () => {
             });
     });
 
-    test("should return 404 if no valid resource", () => {
-        db.deleteParty.mockResolvedValue({ rowCount: 0 });
+    test("should return 404 if no valid resource", async () => {
+        db.deleteParty.mockRejectedValue(new Error("Invalid Resource"));
         return request(app)
             .delete("/parties/13000")
             .then((response) => {
-                expect(response.statusCode).toBe(404);
+                    expect(response.statusCode).toBe(404);
                 expect(db.deleteParty).toHaveBeenLastCalledWith(
                      13000
                 );

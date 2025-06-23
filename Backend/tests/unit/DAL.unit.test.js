@@ -154,68 +154,68 @@ const fakeStances = [
 describe("mock GET stance", () => {
     test("should return stances", async () => {
         mockQuery.mockResolvedValueOnce({ rows: fakeStances });
-        const result = await dal.getStances();
+        const result = await dal.getStances(false);
         expect(result).toEqual(fakeStances);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.getStances()).rejects.toThrow("DB exploded");
+        await expect(dal.getStances(false)).rejects.toThrow("DB exploded");
     });
 });
 
 describe("mock GET stance with filter", () => {
     test("should return 1 stance with stance filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [fakeStances[0]] });
-        const result = await dal.getStancesFiltered(1, null, null);
+        const result = await dal.getStancesFiltered(false,1, null, null);
         expect(result).toEqual([fakeStances[0]]);
     });
 
     test("should return 2 stances with issue filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: fakeStances });
-        const result = await dal.getStancesFiltered(null, 1, null);
+        const result = await dal.getStancesFiltered(false,null, 1, null);
         expect(result).toEqual(fakeStances);
     });
 
     test("should return 1 stance with party filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [fakeStances[1]] });
-        const result = await dal.getStancesFiltered(null, null, 2);
+        const result = await dal.getStancesFiltered(false,null, null, 2);
         expect(result).toEqual([fakeStances[1]]);
     });
 
     test("should return 1 stance with combined party and issue filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [fakeStances[1]] });
-        const result = await dal.getStancesFiltered(null, 1, 2);
+        const result = await dal.getStancesFiltered(false,null, 1, 2);
         expect(result).toEqual([fakeStances[1]]);
     });
 
     test("should return 0 stance with combined party and issue filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        const result = await dal.getStancesFiltered(null, 2, 2);
+        const result = await dal.getStancesFiltered(false,null, 2, 2);
         expect(result).toEqual([]);
     });
 
     test("should return 1 stance with combined stance and issue filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [fakeStances[1]] });
-        const result = await dal.getStancesFiltered(2, 1, null);
+        const result = await dal.getStancesFiltered(false,2, 1, null);
         expect(result).toEqual([fakeStances[1]]);
     });
 
     test("should return 1 stance with combined stance and party filter", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [fakeStances[1]] });
-        const result = await dal.getStancesFiltered(2, null, 2);
+        const result = await dal.getStancesFiltered(false,2, null, 2);
         expect(result).toEqual([fakeStances[1]]);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.getStancesFiltered(1, null, null)).rejects.toThrow(
+        await expect(dal.getStancesFiltered(false,1, null, null)).rejects.toThrow(
             "DB exploded",
         );
     });
 
     test("should error due to invalid argument", async () => {
-        await expect(dal.getStancesFiltered("abc")).rejects.toThrow(
+        await expect(dal.getStancesFiltered(false,"abc")).rejects.toThrow(
             new Error("Invalid Argument"),
         );
     });

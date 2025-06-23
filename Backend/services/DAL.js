@@ -122,9 +122,20 @@ async function deleteQuestion(id) {
     }
 }
 
-async function getStances() {
+async function getStances(isAuthenticated) {
+    let query;
+    if (isAuthenticated) {
+        query = `SELECT * FROM "Stance"`;
+    } else {
+        query = `
+            SELECT s.* FROM "Stance" s
+            INNER JOIN "Party" p
+            ON s."PartyID" = p."PartyID"
+            WHERE p."Active" = true;
+        `;
+    }
     try {
-        const rows = await pool.query('SELECT * FROM "Stance"');
+        const rows = await pool.query(query);
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);
@@ -132,7 +143,24 @@ async function getStances() {
     }
 }
 
-async function getStancesFiltered(StanceID, IssueID, PartyID) {
+async function getStancesFiltered(isAuthenticated, StanceID, IssueID, PartyID) {
+    let query;
+    if (isAuthenticated) {
+        query = `SELECT * FROM "Stance"
+            WHERE ($1::integer IS NULL OR "StanceID" = $1::integer)
+            AND ($2::integer IS NULL OR "IssueID" = $2::integer)
+            AND ($3::integer IS NULL OR "PartyID" = $3::integer)`;
+    } else {
+        query = `
+            SELECT s.* FROM "Stance" s
+            INNER JOIN "Party" p
+            ON s."PartyID" = p."PartyID"
+            WHERE ($1::integer IS NULL OR s."StanceID" = $1::integer)
+            AND ($2::integer IS NULL OR s."IssueID" = $2::integer)
+            AND ($3::integer IS NULL OR s."PartyID" = $3::integer)
+            AND p."Active" = true;
+        `;
+    }
     if (
         Number.isNaN(Number(StanceID)) ||
         Number.isNaN(Number(IssueID)) ||
@@ -145,10 +173,7 @@ async function getStancesFiltered(StanceID, IssueID, PartyID) {
     const PID = Number.parseInt(PartyID) || PartyID;
     try {
         const rows = await pool.query(
-            `SELECT * FROM "Stance"
-            WHERE ($1::integer IS NULL OR "StanceID" = $1::integer)
-            AND ($2::integer IS NULL OR "IssueID" = $2::integer)
-            AND ($3::integer IS NULL OR "PartyID" = $3::integer)`,
+            query,
             [SID, IID, PID],
         );
         return rows.rows;
@@ -246,12 +271,13 @@ async function updateParty(id, name, shortName, icon, partyColor, active) {
 }
 
 async function deleteParty(id) {
+    console.log("I got called with: " + id);
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
             const rows = await pool.query(
                 `DELETE FROM "Party" WHERE "PartyID" = $1`
-                , [id]
+                , [val]
             );
             if (rows.rowCount === 0) {
                 throw new Error("Invalid Resource");
@@ -266,6 +292,73 @@ async function deleteParty(id) {
     }
 }
 
+async function insertStance(stand, reason, issueID, partyID) {
+    try {
+        const rows = await pool.query(
+            `INSERT INTO "Stance" ("Stand", "Reason", "IssueID", "PartyID")
+             VALUES ($1, $2, $3, $4)
+             RETURNING "StanceID"
+            `, [stand, reason, issueID, partyID]
+        );
+        return rows.rows[0].StanceID;
+    } catch (err) {
+        // psql unique key constraint violation error code
+        if (err.code == '23505') {
+            throw new Error("Unique Constraint Violation");
+        }
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function updateStance(stanceID, stand, reason, issueID, partyID) {
+    try {
+        const rows = await pool.query(
+            `UPDATE "Stance"
+             SET "Stand" = $1,
+                 "Reason" = $2,
+                 "IssueID" = $3,
+                 "PartyID" = $4
+             WHERE "StanceID" = $5
+             RETURNING *
+            `, [stand, reason, issueID, partyID, stanceID]
+        );
+        if (rows.rows.length === 0) {
+            throw new Error("Invalid Resource");
+        }
+        return rows.rows[0];
+    } catch (err) {
+        // psql unique key constraint violation error code
+        if (err.code == '23505') {
+            throw new Error("Unique Constraint Violation");
+        }
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function deleteStance(id) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `DELETE FROM "Stance" WHERE "StanceID" = $1`
+                , [val]
+            );
+            if (rows.rowCount === 0) {
+                throw new Error("Invalid Resource");
+            }
+            return;
+        } catch (err) {
+            logger.error(err.stack);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
+
 module.exports = {
     getStancesFiltered,
     getStances,
@@ -278,5 +371,8 @@ module.exports = {
     deleteQuestion,
     deleteParty,
     updateParty,
-    insertParty
+    insertParty,
+    insertStance,
+    updateStance,
+    deleteStance
 };
