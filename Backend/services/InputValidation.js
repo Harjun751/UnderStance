@@ -1,13 +1,13 @@
 function validateData(validators, data) {
     const invalidFields = Object.entries(validators)
             .map(([fieldName, validator]) => [fieldName, validator(data[fieldName])])
-            .filter(([fieldName, errorDetail]) => errorDetail != null)
+            .filter(([_fieldName, errorDetail]) => errorDetail != null)
             .map(([fieldName, errorDetail]) => `${fieldName} (${errorDetail})`);
 
     if (!invalidFields.length) {
         return null;
     }
-    return "There are invalid field(s): " + invalidFields.join(", ");
+    return `There are invalid field(s): ${invalidFields.join(", ")}`;
 }
 
 function validateDescription(desc) {
@@ -93,12 +93,13 @@ async function validateIcon(icon) {
         try {
             response = await fetch(icon, { method: 'HEAD' });
         } catch (err) {
+            logger.error(err.stack);
             return "Failed to reach";
         }
         if (!response.ok) { return "Invalid URL - failed to reach"; }
         const contentType = response.headers.get('content-type');
         // check that content type is an image type
-        if (contentType && contentType.startsWith('image/')) { return null }
+        if (contentType?.startsWith('image/')) { return null }
         return "Invalid URL - not an image";
     } else {
         return "No value provided";

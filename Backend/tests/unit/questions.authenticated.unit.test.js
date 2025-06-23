@@ -1,5 +1,5 @@
 jest.mock("express-oauth2-jwt-bearer", () => ({
-    auth: jest.fn(() => (req, res, next) => {
+    auth: jest.fn(() => (req, _res, next) => {
         req.auth = {
             sub: "user-123",
             scope: "read:messages",
@@ -71,13 +71,13 @@ const fakeBody =
 
 describe("authenticated mock POST quiz question", () => {
     test("should return 200 OK", () => {
-        db.insertQuestion.mockResolvedValue(12);
+        db.insertQuestion.mockResolvedValue(insertReturnValue);
         return request(app)
             .post("/questions")
             .send(fakeBody)
             .then((response) => {
                 expect(response.statusCode).toBe(200);
-                expect(response.body.IssueID).toEqual(12);
+                expect(response.body.IssueID).toEqual(insertReturnValue);
                 expect(db.insertQuestion).toHaveBeenLastCalledWith(
                     fakeDescription, fakeSummary, fakeCategory, fakeActive
                 );

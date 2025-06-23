@@ -129,7 +129,7 @@ describe("POST quiz question", () => {
         expect(response.statusCode).toBe(200);
         
         // Check that returned ID exists and is a number
-        let insertedID = response.body.IssueID;
+        const insertedID = response.body.IssueID;
         expect(insertedID).not.toBeNaN();
         expect(typeof insertedID).toBe("number");
         
@@ -148,8 +148,8 @@ describe("POST quiz question", () => {
 
     test("400 for invalid argument - too long description", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longDescription  = `
+        const invalidBody = { ...reqBody };
+        const longDescription  = `
         This is a description > 300 chars long:
 
         I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
@@ -171,8 +171,8 @@ describe("POST quiz question", () => {
 
     test("400 for invalid argument - too long summary", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longSummary = `
+        const invalidBody = { ...reqBody };
+        const longSummary = `
         This is a summary > 50 chars long:
         
         I stay out too late
@@ -198,7 +198,7 @@ describe("POST quiz question", () => {
 
     test("400 for invalid argument - invalid category ID", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
+        const invalidBody = { ...reqBody };
         invalidBody.CategoryID = 100000;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -244,8 +244,8 @@ describe("PUT quiz question", () => {
 
     test("400 for invalid argument - too long description", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longDescription  = `
+        const invalidBody = { ...reqBody };
+        const longDescription  = `
         This is a description > 300 chars long:
 
         I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
@@ -261,8 +261,8 @@ describe("PUT quiz question", () => {
 
     test("400 for invalid argument - too long summary", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longSummary = `
+        const invalidBody = { ...reqBody };
+        const longSummary = `
         This is a summary > 50 chars long:
         
         I stay out too late
@@ -282,7 +282,7 @@ describe("PUT quiz question", () => {
 
     test("400 for invalid argument - invalid categoryID", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
+        const invalidBody = { ...reqBody };
         invalidBody.CategoryID = 13000;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -294,7 +294,7 @@ describe("PUT quiz question", () => {
     });
 
     test("404 if resource does not exist", async () => {
-        let invalidBody =  { ...reqBody };
+        const invalidBody =  { ...reqBody };
         invalidBody.IssueID = 200000;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -317,11 +317,11 @@ describe("DELETE quiz question", () => {
 
     test("200 OK basic DELETE", async () => {
         // ARRANGE: insert a dummy item to be deleted
-        let insert = await request(`http://localhost:${appPort}`)
+        const insert = await request(`http://localhost:${appPort}`)
             .post("/questions")
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
-        let insertedID = insert.body.IssueID;
+        const insertedID = insert.body.IssueID;
 
         // ACT: delete the resource
         const response = await request(`http://localhost:${appPort}`)

@@ -61,7 +61,7 @@ describe("POST category", () => {
         expect(response.statusCode).toBe(200);
         
         // Check that returned ID exists and is a number
-        let insertedID = response.body.CategoryID;
+        const insertedID = response.body.CategoryID;
         expect(insertedID).not.toBeNaN();
         expect(typeof insertedID).toBe("number");
         
@@ -74,8 +74,8 @@ describe("POST category", () => {
 
     test("400 for invalid argument - too long name", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longName  = `
+        const invalidBody = { ...reqBody };
+        const longName  = `
         This is a description > 50 chars long:
 
         I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
@@ -119,8 +119,8 @@ describe("PUT category", () => {
 
     test("400 for invalid argument - too long name", async () => {
         // create invalid request
-        let invalidBody = { ...reqBody };
-        let longName  = `
+        const invalidBody = { ...reqBody };
+        const longName  = `
         This is a description > 50 chars long:
 
         I give you the mausoleum of all hope and desire...I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all of your breath trying to conquer it. Because no battle is ever won he said. They are not even fought. The field only reveals to man his own folly and despair, and victory is an illusion of philosophers and fools.`
@@ -135,7 +135,7 @@ describe("PUT category", () => {
     });
 
     test("404 if resource does not exist", async () => {
-        let invalidBody =  { ...reqBody };
+        const invalidBody =  { ...reqBody };
         invalidBody.CategoryID = 200000;
 
         const response = await request(`http://localhost:${appPort}`)
@@ -155,12 +155,12 @@ describe("DELETE category", () => {
 
     test("200 OK basic DELETE", async () => {
         // ARRANGE: insert a dummy item to be deleted
-        let insert = await request(`http://localhost:${appPort}`)
+        const insert = await request(`http://localhost:${appPort}`)
             .post("/categories")
             .set("authorization", `Bearer ${global.authToken}`)
             .send(reqBody);
         expect(insert.statusCode).toBe(200);
-        let insertedID = insert.body.CategoryID;
+        const insertedID = insert.body.CategoryID;
 
         // ACT: delete the resource
         const response = await request(`http://localhost:${appPort}`)

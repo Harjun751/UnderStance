@@ -101,7 +101,6 @@ describe("mock GET quiz question with filter", () => {
 
 
 // represents ID of just-inserted object
-const insertReturnValue = 12;
 const fakeDescription = "Fake description"
 const fakeSummary = "Fake Summary"
 const fakeCategory = "Fake Category"
@@ -114,7 +113,6 @@ const fakeBody =
 
 describe("unauthenticated POST quiz question", () => {
     test("should return 401 unauthorized", () => {
-        db.insertQuestion.mockResolvedValue(12);
         return request(app)
             .post("/questions")
             .send(fakeBody)

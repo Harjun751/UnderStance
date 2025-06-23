@@ -1,5 +1,5 @@
 jest.mock("express-oauth2-jwt-bearer", () => ({
-    auth: jest.fn(() => (req, res, next) => {
+    auth: jest.fn(() => (req, _res, next) => {
         req.auth = {
             sub: "user-123",
             scope: "read:messages",

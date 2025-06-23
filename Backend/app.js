@@ -42,7 +42,7 @@ app.use(
 );
 
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.send("Hello World!");
 });
 
@@ -149,7 +149,7 @@ app.get("/parties", async (req, res) => {
     }
 });
 
-app.get("/categories", async (req, res) => {
+app.get("/categories", async (_req, res) => {
     try {
         const data = await db.getCategories();
         res.status(200).send(data);
@@ -243,7 +243,6 @@ securedRoutes.put("/questions", async (req,res) => {
 });
 
 securedRoutes.delete("/questions/:id", async (req, res) => {
-    const issueID = req.params.id;
     if (!Number.isNaN(Number(req.params.id))) {
         try {
             await db.deleteQuestion(Number.parseInt(req.params.id));

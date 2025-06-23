@@ -84,7 +84,7 @@ async function insertQuestion(description, summary, category, active) {
         return rows.rows[0].IssueID;
     } catch (err) {
         // psql foreign key constraint violation error code
-        if (err.code == '23503') {
+        if (err.code === '23503') {
             throw new Error("Foreign Key Constraint Violation");
         }
         logger.error(err.stack);
@@ -112,7 +112,7 @@ async function updateQuestion(id, description, summary, category, active) {
             return rows.rows[0];
         } catch (err) {
             // psql foreign key constraint violation error code
-            if (err.code == '23503') {
+            if (err.code === '23503') {
                 throw new Error("Foreign Key Constraint Violation");
             }
             logger.error(err.stack);
@@ -293,7 +293,7 @@ async function updateParty(id, name, shortName, icon, partyColor, active) {
 }
 
 async function deleteParty(id) {
-    console.log("I got called with: " + id);
+    console.log(`I got called with: ${id}`);
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {
@@ -325,7 +325,7 @@ async function insertStance(stand, reason, issueID, partyID) {
         return rows.rows[0].StanceID;
     } catch (err) {
         // psql unique key constraint violation error code
-        if (err.code == '23505') {
+        if (err.code === '23505') {
             throw new Error("Unique Constraint Violation");
         }
         logger.error(err.stack);
@@ -351,7 +351,7 @@ async function updateStance(stanceID, stand, reason, issueID, partyID) {
         return rows.rows[0];
     } catch (err) {
         // psql unique key constraint violation error code
-        if (err.code == '23505') {
+        if (err.code === '23505') {
             throw new Error("Unique Constraint Violation");
         }
         logger.error(err.stack);
@@ -428,7 +428,7 @@ async function deleteCategory(id) {
             return;
         } catch (err) {
             // psql foreign key constraint violation error code
-            if (err.code == '23503') {
+            if (err.code === '23503') {
                 throw new Error("Foreign Key Constraint Violation");
             }
             logger.error(err.stack);
