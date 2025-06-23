@@ -1,5 +1,5 @@
 // set up authentication
-if (!process.ENV.GITHUB_ACTIONS) {
+if (!process.env.CI) {
     require("dotenv").config({ path: "./.env.test" });
 }
 (async () => {
