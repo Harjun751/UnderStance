@@ -370,6 +370,9 @@
     .read-stances.unanswered .question-header > h2 {
         width: 100%;
     }
+    .alignment-toggle-buttons {
+        font-size: 0.75rem;
+    }
     .comparison-table {
         font-size: 10px;
     }

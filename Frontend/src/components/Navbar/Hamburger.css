@@ -72,6 +72,10 @@
     color: #0e2431;
 }
 
+.ham-button {
+    background-color: rgba(255, 255, 255, 0.0);
+}
+
 .burger.expanded .menu-items {
     transform: translateX(0);
 }

@@ -9,7 +9,7 @@ export default function Hamburger({ onClick, className }) {
             type="button"
             onKeyPress={onClick}
             onClick={onClick}
-            className={className}
+            className={`ham-button bg-transparent ${className}`}
         >
             <input
                 className="hamburger-checkbox"
