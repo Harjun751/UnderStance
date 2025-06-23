@@ -1,5 +1,7 @@
 // set up authentication
-require("dotenv").config({ path: "./.env.test" });
+if (!process.ENV.GITHUB_ACTIONS) {
+    require("dotenv").config({ path: "./.env.test" });
+}
 (async () => {
     var res = await fetch(
         "https://dev-i0ksanu2a66behjf.us.auth0.com/oauth/token",
