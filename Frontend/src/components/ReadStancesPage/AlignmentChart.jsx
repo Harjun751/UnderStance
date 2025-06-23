@@ -6,12 +6,65 @@ import {
     Tooltip,
     CartesianGrid,
     ResponsiveContainer,
-    Legend,
 } from "recharts";
 
 import { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { GoSkip } from "react-icons/go";
+
+// (Category Alignment)
+const Category_CustomXAxisTick = ({ x, y, payload }) => {
+    const words = payload.value.split(" ");
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text
+                x={10}
+                y={10}
+                dy={16}
+                textAnchor="end"
+                transform="rotate(-30)"
+                fontSize={11}
+                fill="#333"
+            >
+                {words.map((word, index) => (
+                    <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
+                        {word}
+                    </tspan>
+                ))}
+            </text>
+        </g>
+    );
+};
+
+// (Overall Alignment) Custom tick component for rendering party icons and names on the X axis
+const CustomYAxisTick = ({ x, y, payload, iconLookup }) => {
+    const icon = iconLookup[payload.value];
+    return (
+        <g transform={`translate(${x},${y + 19})`}>
+            {icon && (
+                <>
+                    <image
+                        href={icon}
+                        x={-20} // half icon width to center horizontally
+                        y={-25} // move it above the text
+                        width={34}
+                        height={34}
+                        preserveAspectRatio="xMidYMid slice"
+                    />
+                    <text
+                        x={-1}
+                        y={22}
+                        textAnchor="middle"
+                        fontSize={11}
+                        dy="0.2em"
+                    >
+                        {payload.value}
+                    </text>
+                </>
+            )}
+        </g>
+    );
+};
 
 export default function AlignmentChart({
     parties,
@@ -128,36 +181,6 @@ export default function AlignmentChart({
         },
     );
 
-    // Custom tick component for rendering party icons and names on the X axis
-    const CustomYAxisTick = ({ x, y, payload }) => {
-        const icon = iconLookup[payload.value];
-        return (
-            <g transform={`translate(${x},${y + 19})`}>
-                {icon && (
-                    <>
-                        <image
-                            href={icon}
-                            x={-20} // half icon width to center horizontally
-                            y={-25} // move it above the text
-                            width={34}
-                            height={34}
-                            preserveAspectRatio="xMidYMid slice"
-                        />
-                        <text
-                            x={-1}
-                            y={22}
-                            textAnchor="middle"
-                            fontSize={11}
-                            dy="0.2em"
-                        >
-                            {payload.value}
-                        </text>
-                    </>
-                )}
-            </g>
-        );
-    };
-
     /* comparison table */
     const renderTable = () => (
         <>
@@ -250,7 +273,12 @@ export default function AlignmentChart({
                     <XAxis
                         type="category"
                         dataKey="name"
-                        tick={(props) => <CustomYAxisTick {...props} />}
+                        tick={(props) => (
+                            <CustomYAxisTick
+                                {...props}
+                                iconLookup={iconLookup}
+                            />
+                        )}
                         interval={0}
                         tickLine={false}
                         axisLine={false}
@@ -291,29 +319,6 @@ export default function AlignmentChart({
         groupedCategoryData.map((d) => d.category.length),
     );
     const leftMargin = Math.min(150, maxCategoryLength * 8); // max 150px
-
-    const Category_CustomXAxisTick = ({ x, y, payload }) => {
-        const words = payload.value.split(" ");
-        return (
-            <g transform={`translate(${x},${y})`}>
-                <text
-                    x={10}
-                    y={10}
-                    dy={16}
-                    textAnchor="end"
-                    transform="rotate(-30)"
-                    fontSize={11}
-                    fill="#333"
-                >
-                    {words.map((word, index) => (
-                        <tspan key={word} x={0} dy={index === 0 ? 0 : 12}>
-                            {word}
-                        </tspan>
-                    ))}
-                </text>
-            </g>
-        );
-    };
 
     const renderCategory = () => (
         <>

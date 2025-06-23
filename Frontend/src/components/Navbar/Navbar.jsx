@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Navbar.css";
 import Hamburger from "./Hamburger";
 import { FaBuildingColumns } from "react-icons/fa6";

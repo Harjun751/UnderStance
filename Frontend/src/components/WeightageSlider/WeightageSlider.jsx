@@ -1,14 +1,15 @@
-import React from "react";
+import { useId } from "react";
 import "./WeightageSlider.css";
 import { importanceLabels, getSliderBackground } from "./WeightageSliderUtils";
 
 const WeightageSlider = ({ value, onChange }) => {
+    const id = useId();
     return (
         <div className="weightage-slider">
             <div className="slider-container">
                 <input
                     type="range"
-                    id="weightage"
+                    id={`weightage-${id}`}
                     min="1"
                     max="5"
                     step="1"
