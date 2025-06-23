@@ -186,54 +186,58 @@ securedRoutes.get("/authorized", async (req, res) => {
 
 securedRoutes.post("/questions", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateDescription(body.Description) ||
-        !validator.validateSummary(body.Summary) ||
-        !validator.validateID(body.CategoryID) ||
-        !validator.validateActive(body.Active)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.insertQuestion(
-                body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
-            );
-            res.status(200).send({ IssueID: data });
-        } catch (error) {
-            if (error.message === "Foreign Key Constraint Violation") {
-                res.status(400).send({ error: "Invalid Arguments" });
-            }
-            logger.error(error.stack);
-            res.status(500).send({ error: "Failed to insert question" });
+    const validators = {
+        Description: validator.validateDescription,
+        Summary: validator.validateSummary,
+        CategoryID: validator.validateID,
+        Active: validator.validateActive
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+
+    try {
+        const data = await db.insertQuestion(
+            body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send({ IssueID: data });
+    } catch (error) {
+        if (error.message === "Foreign Key Constraint Violation") {
+            res.status(400).send({ error: "Invalid Arguments" });
         }
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert question" });
     }
 });
 
 securedRoutes.put("/questions", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateDescription(body.Description) ||
-        !validator.validateSummary(body.Summary) ||
-        !validator.validateID(body.CategoryID) ||
-        !validator.validateID(body.IssueID) ||
-        !validator.validateActive(body.Active)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.updateQuestion(
-                body.IssueID, body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
-            );
-            res.status(200).send(data);
-        } catch (error) {
-            if (error.message === "Invalid Resource") {
-                res.status(404).send({error:"Could not update question with requested ID"}); 
-            } else if (error.message === "Foreign Key Constraint Violation") {
-                res.status(400).send({ error: "Invalid Arguments" });
-            } else {
-                logger.error(error.stack);
-                res.status(500).send({ error: "Failed to update question" });
-            }
+    const validators = {
+        Description: validator.validateDescription,
+        Summary: validator.validateSummary,
+        CategoryID: validator.validateID,
+        IssueID: validator.validateID,
+        Active: validator.validateActive
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+
+    try {
+        const data = await db.updateQuestion(
+            body.IssueID, body.Description, body.Summary, body.CategoryID, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update question with requested ID"}); 
+        } else if (error.message === "Foreign Key Constraint Violation") {
+            res.status(400).send({ error: "Invalid Arguments" });
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update question" });
         }
     }
 });
@@ -259,51 +263,63 @@ securedRoutes.delete("/questions/:id", async (req, res) => {
 
 securedRoutes.post("/parties", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validatePartyName(body.Name) ||
-        !validator.validateShortName(body.ShortName) ||
-        !await validator.validateIcon(body.Icon) ||
-        !validator.validateColor(body.PartyColor) ||
-        !validator.validateActive(body.Active)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.insertParty(
-                body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
-            );
-            res.status(200).send({ PartyID: data });
-        } catch (error) {
-            logger.error(error.stack);
-            res.status(500).send({ error: "Failed to insert party" });
-        }
+    
+    const iconError = await validator.validateIcon(body.Icon) ;
+    if (iconError != null) {
+        return res.status(400).send({ error: "Invalid Arguments", details:`Invalid icon filed ${iconError}` });
+    }
+
+    const validators = {
+        Name: validator.validatePartyName,
+        ShortName: validator.validateShortName,
+        PartyColor: validator.validateColor,
+        Active: validator.validateActive
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.insertParty(
+            body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send({ PartyID: data });
+    } catch (error) {
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert party" });
     }
 });
 
 securedRoutes.put("/parties", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateID(body.PartyID) ||
-        !validator.validatePartyName(body.Name) ||
-        !validator.validateShortName(body.ShortName) ||
-        !await validator.validateIcon(body.Icon) ||
-        !validator.validateColor(body.PartyColor) ||
-        !validator.validateActive(body.Active)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.updateParty(
-                body.PartyID, body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
-            );
-            res.status(200).send(data);
-        } catch (error) {
-            if (error.message === "Invalid Resource") {
-                res.status(404).send({error:"Could not update party with requested ID"}); 
-            } else {
-                logger.error(error.stack);
-                res.status(500).send({ error: "Failed to update party" });
-            }
+    
+    const iconError = await validator.validateIcon(body.Icon) ;
+    if (iconError != null) {
+        return res.status(400).send({ error: "Invalid Arguments", details:`Invalid icon filed ${iconError}` });
+    }
+
+    const validators = {
+        PartyID: validator.validateID,
+        Name: validator.validatePartyName,
+        ShortName: validator.validateShortName,
+        PartyColor: validator.validateColor,
+        Active: validator.validateActive,
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.updateParty(
+            body.PartyID, body.Name, body.ShortName, body.Icon, body.PartyColor, validator.convertToBoolean(body.Active)
+        );
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update party with requested ID"}); 
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update party" });
         }
     }
 });
@@ -322,60 +338,65 @@ securedRoutes.delete("/parties/:id", async (req, res) => {
             }
         }
     } else {
-        res.status(400).send({ error: "Invalid Arguments" });
+        res.status(400).send({ error: "Invalid Arguments", details: "ID parameter is not a valid number" });
     }
 });
 
 securedRoutes.post("/stances", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateActive(body.Stand) ||
-        !validator.validateReason(body.Reason) ||
-        !validator.validateID(body.IssueID) ||
-        !validator.validateID(body.PartyID)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.insertStance(
-                validator.convertToBoolean(body.Stand), body.Reason, body.IssueID, body.PartyID
-            );
-            res.status(200).send({ StanceID: data });
-        } catch (error) {
-            if (error.message === "Unique Constraint Violation") {
-                res.status(400).send({ error: "Invalid Arguemnts - violates unique" });
-            }
-            logger.error(error.stack);
-            res.status(500).send({ error: "Failed to insert stance" });
+    const validators = {
+        Stand: validator.validateActive,
+        Reason: validator.validateReason,
+        IssueID: validator.validateID,
+        PartyID: validator.validateID
+    }
+    const errors = validator.validateData(validators, req.body);
+
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.insertStance(
+            validator.convertToBoolean(body.Stand), body.Reason, body.IssueID, body.PartyID
+        );
+        res.status(200).send({ StanceID: data });
+    } catch (error) {
+        if (error.message === "Unique Constraint Violation") {
+            res.status(400).send({ error: "Invalid Arguemnts - violates unique" });
         }
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert stance" });
     }
 });
 
 securedRoutes.put("/stances", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateID(body.StanceID) ||
-        !validator.validateActive(body.Stand) ||
-        !validator.validateReason(body.Reason) ||
-        !validator.validateID(body.IssueID) ||
-        !validator.validateID(body.PartyID)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.updateStance(
-                body.StanceID, validator.convertToBoolean(body.Stand), body.Reason, body.IssueID, body.PartyID
-            );
-            res.status(200).send(data);
-        } catch (error) {
-            if (error.message === "Invalid Resource") {
-                res.status(404).send({error:"Could not update stance with requested ID"}); 
-            } else if (error.message === "Unique Constraint Violation") {
-                res.status(400).send({ error: "Invalid Arguments - violates unique"});
-            } else {
-                logger.error(error.stack);
-                res.status(500).send({ error: "Failed to update stance" });
-            }
+
+    const validators = {
+        StanceID: validator.validateID,
+        Stand: validator.validateActive,
+        Reason: validator.validateReason,
+        IssueID: validator.validateID,
+        PartyID: validator.validateID
+    }
+    const errors = validator.validateData(validators, req.body);
+
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.updateStance(
+            body.StanceID, validator.convertToBoolean(body.Stand), body.Reason, body.IssueID, body.PartyID
+        );
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update stance with requested ID"}); 
+        } else if (error.message === "Unique Constraint Violation") {
+            res.status(400).send({ error: "Invalid Arguments", details: "Each party should only have 1 stance per issue." });
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update stance" });
         }
     }
 });
@@ -394,7 +415,7 @@ securedRoutes.delete("/stances/:id", async (req, res) => {
             }
         }
     } else {
-        res.status(400).send({ error: "Invalid Arguments" });
+        res.status(400).send({ error: "Invalid Arguments", details: "ID parameter is not a valid number" });
     }
 });
 
@@ -403,39 +424,41 @@ securedRoutes.delete("/stances/:id", async (req, res) => {
 
 securedRoutes.post("/categories", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateCategory(body.Name)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.insertCategory(body.Name);
-            res.status(200).send({ CategoryID: data });
-        } catch (error) {
-            logger.error(error.stack);
-            res.status(500).send({ error: "Failed to insert category" });
-        }
+    const validators = {
+        Name: validator.validateCategory
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.insertCategory(body.Name);
+        res.status(200).send({ CategoryID: data });
+    } catch (error) {
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to insert category" });
     }
 });
 
 securedRoutes.put("/categories", async (req,res) => {
     const body = req.body;
-    if (
-        !validator.validateCategory(body.Name) ||
-        !validator.validateID(body.CategoryID)
-    ) {
-        res.status(400).send({error: "Invalid Arguments"});
-    } else {
-        try {
-            const data = await db.updateCategory(body.CategoryID, body.Name);
-            res.status(200).send(data);
-        } catch (error) {
-            if (error.message === "Invalid Resource") {
-                res.status(404).send({error:"Could not update category with requested ID"}); 
-            } else {
-                logger.error(error.stack);
-                res.status(500).send({ error: "Failed to update category" });
-            }
+    const validators = {
+        CategoryID: validator.validateID,
+        Name: validator.validateCategory
+    }
+    const errors = validator.validateData(validators, req.body);
+    if (errors !== null) {
+        return res.status(400).send({ error: "Invalid Arguments", details: errors });
+    }
+    try {
+        const data = await db.updateCategory(body.CategoryID, body.Name);
+        res.status(200).send(data);
+    } catch (error) {
+        if (error.message === "Invalid Resource") {
+            res.status(404).send({error:"Could not update category with requested ID"}); 
+        } else {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to update category" });
         }
     }
 });
@@ -459,11 +482,6 @@ securedRoutes.delete("/categories/:id", async (req, res) => {
         res.status(400).send({ error: "Invalid Arguments" });
     }
 });
-
-
-
-
-
 
 app.use(securedRoutes);
 

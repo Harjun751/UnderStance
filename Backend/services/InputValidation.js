@@ -1,40 +1,69 @@
+function validateData(validators, data) {
+    const invalidFields = Object.entries(validators)
+            .map(([fieldName, validator]) => [fieldName, validator(data[fieldName])])
+            .filter(([fieldName, errorDetail]) => errorDetail != null)
+            .map(([fieldName, errorDetail]) => `${fieldName} (${errorDetail})`);
+
+    if (!invalidFields.length) {
+        return null;
+    }
+    return "There are invalid field(s): " + invalidFields.join(", ");
+}
+
 function validateDescription(desc) {
     if (typeof desc !== "undefined" && desc) {
-        return desc.length <= 300;
+        if (desc.length > 300) {
+            return "Too long, >300 characters";
+        } else {
+            return null;
+        }
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 function validateSummary(summary) {
     if (typeof summary !== "undefined" && summary) {
-        return summary.length <= 50;
+        if (summary.length > 50) {
+            return "Too long, > 50 characters";
+        } else {
+            return null;
+        }
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 function validateCategory(category) {
     if (typeof category !== "undefined" && category) {
-        return category.length <= 50;
+        if (category.length > 50) {
+            return "Too long, > 50 characters";
+        }
+        return null;
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 function validateID(id) {
-    if (typeof id !== "undefined" && id && !Number.isNaN(Number(id))) {
-        return true;
+    if (typeof id !== "undefined" && id) {
+        if (Number.isNaN(id)) {
+            return "Not a valid number";
+        }
+        return null;
     }
-    return false;
+    return "No value provided";
 }
 
 function validateActive(active) {
     if (typeof active !== "undefined" && active !== null) {
-        if (typeof active === "boolean") { return true; }
-        return active.toLowerCase() === 'true' || active.toLowerCase() === 'false';
+        if (typeof active === "boolean") { return null; }
+        if (active.toLowerCase() === 'true' || active.toLowerCase() === 'false') {
+            return null;
+        }
+        return "Invalid boolean value";
     }
-    return false;
+    return "No value provided";
 }
 
 function convertToBoolean(active) {
@@ -45,39 +74,46 @@ function convertToBoolean(active) {
 
 function validateShortName(name) {
     if (typeof name !== "undefined" && name) {
-        return name.length <= 5;
+        if (name.length <= 5) {
+            return null;
+        } else {
+            return "Too long, >5 characters";
+        }
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 async function validateIcon(icon) {
     if (typeof icon !== "undefined" && icon) {
-        if (icon.length > 2083) { return false; }
+        if (icon.length > 2083) { return "Too long, >2083 characters" ; }
         // Check that provided URL leads to a proper image resource
         // do this by doing a fetch and read metadata
         let response;
         try {
             response = await fetch(icon, { method: 'HEAD' });
         } catch (err) {
-            return false;
+            return "Failed to reach";
         }
-        if (!response.ok) { return false; }
+        if (!response.ok) { return "Invalid URL - failed to reach"; }
         const contentType = response.headers.get('content-type');
         // check that content type is an image type
-        return contentType && contentType.startsWith('image/');
+        if (contentType && contentType.startsWith('image/')) { return null }
+        return "Invalid URL - not an image";
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 function validateColor(color) {
-    if (typeof color !== "undefined" && color && color.length <= 7) {
-        // test if the provided value is a # followed by 3-6 letters/digits using regex
+    if (typeof color !== "undefined" && color) {
         const hexColorRegex = /^#([A-Fa-f0-9]{3,6})$/;
-        return hexColorRegex.test(color);
+        if (color.length > 7 || !hexColorRegex.test(color)) {
+            return "Not a valid hex color code";
+        }
+        return null;
     } else { 
-        return false;
+        return "No value provided";
     }
 
 }
@@ -85,17 +121,19 @@ function validateColor(color) {
 
 function validatePartyName(name) {
     if (typeof name !== "undefined" && name) {
-        return name.length <= 100;
+        if (name.length > 100) { return "Too long, >100 characters" }
+        return null;
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
 function validateReason(reason) {
     if (typeof reason !== "undefined" && reason) {
-        return reason.length <= 1000;
+        if (reason.length > 1000) { return "Too long, >1000 characters" }
+        return null;
     } else {
-        return false;
+        return "No value provided";
     }
 }
 
@@ -114,5 +152,6 @@ module.exports = {
     validatePartyName,
     validateIcon,
     validateShortName,
-    validateReason
+    validateReason,
+    validateData
 }

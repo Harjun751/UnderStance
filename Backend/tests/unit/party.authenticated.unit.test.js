@@ -96,7 +96,7 @@ describe("mock GET quiz party with filter", () => {
             .get("/parties?ID=abc")
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -148,7 +148,7 @@ describe("authenticated mock POST party", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
 
     });
@@ -165,7 +165,7 @@ describe("authenticated mock POST party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -228,7 +228,7 @@ describe("authenticated mock PUT party", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
 
     });
@@ -245,7 +245,7 @@ describe("authenticated mock PUT party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 

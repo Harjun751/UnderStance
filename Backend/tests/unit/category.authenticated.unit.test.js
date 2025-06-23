@@ -52,7 +52,7 @@ describe("authenticated mock POST category", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
 
     });
@@ -69,7 +69,7 @@ describe("authenticated mock POST category", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -120,7 +120,7 @@ describe("authenticated mock PUT Category", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
 
     });
@@ -137,7 +137,7 @@ describe("authenticated mock PUT Category", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 

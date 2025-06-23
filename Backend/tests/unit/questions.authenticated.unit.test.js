@@ -98,7 +98,7 @@ describe("authenticated mock POST quiz question", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -175,7 +175,7 @@ describe("authenticated mock PUT quiz question", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 

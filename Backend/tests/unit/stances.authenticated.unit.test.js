@@ -169,7 +169,7 @@ describe("authenticated mock POST stance", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -187,7 +187,7 @@ describe("authenticated mock POST stance", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
@@ -197,10 +197,10 @@ describe("authenticated mock POST stance", () => {
             .post("/stances")
             .send(fakeStance)
             .then((response) => {
-                expect(response.statusCode).toBe(500);
                 expect(response.body).toEqual({
                     error: "Failed to insert stance",
                 });
+                expect(response.statusCode).toBe(500);
                 expect(db.insertStance).toHaveBeenLastCalledWith(
                     fakeStance.Stand,
                     fakeStance.Reason,
@@ -247,7 +247,7 @@ describe("authenticated mock PUT party", () => {
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
 
     });
@@ -266,7 +266,7 @@ describe("authenticated mock PUT party", () => {
             .send(fakeCopy)
             .then((response) => {
                 expect(response.statusCode).toBe(400);
-                expect(response.body).toEqual({ error: "Invalid Arguments" });
+                expect(response.body).toMatchObject({ error: "Invalid Arguments" });
             });
     });
 
