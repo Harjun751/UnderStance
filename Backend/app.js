@@ -214,7 +214,7 @@ securedRoutes.post("/questions", async (req, res) => {
         res.status(200).send({ IssueID: data });
     } catch (error) {
         if (error.message === "Foreign Key Constraint Violation") {
-            res.status(400).send({ error: "Invalid Arguments" });
+            res.status(400).send({ error: "Invalid Arguments", details: "Invalid CategoryID supplied" });
         }
         logger.error(error.stack);
         res.status(500).send({ error: "Failed to insert question" });
@@ -289,7 +289,7 @@ securedRoutes.post("/parties", async (req, res) => {
             .status(400)
             .send({
                 error: "Invalid Arguments",
-                details: `Invalid icon filed ${iconError}`,
+                details: `Invalid icon ${iconError}`,
             });
     }
 
@@ -417,7 +417,8 @@ securedRoutes.post("/stances", async (req, res) => {
     } catch (error) {
         if (error.message === "Unique Constraint Violation") {
             res.status(400).send({
-                error: "Invalid Arguemnts - violates unique",
+                error: "Invalid Arguemnts",
+                details: "Party cannot have 2 stances on the same issue."
             });
         }
         logger.error(error.stack);
