@@ -1,7 +1,7 @@
 const request = require("supertest");
 const setupCompose = require("../setup/setupCompose");
 const teardownCompose = require("../setup/teardownCompose");
-const appPort = 3004;
+const appPort = 3005;
 
 beforeAll(async () => {
     await setupCompose(appPort);
@@ -114,7 +114,7 @@ describe("PUT category", () => {
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/categories`,
         ).set("authorization", `Bearer ${global.authToken}`);
-        expect(getResponse.body.some(obj => obj.CategoryID === insertedID && obj.Name === reqBody.Name)).toBe(true);
+        expect(getResponse.body.some(obj => obj.CategoryID === reqBody.CategoryID && obj.Name === reqBody.Name)).toBe(true);
     });
 
     test("400 for invalid argument - too long name", async () => {
@@ -169,11 +169,11 @@ describe("DELETE category", () => {
 
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(200);
-        // ASSERT: Check that resource does exists in GET call
+        // ASSERT: Check that resource does not exist in GET call
         const getResponse = await request(`http://localhost:${appPort}`).get(
             `/categories`,
         ).set("authorization", `Bearer ${global.authToken}`);
-        expect(getResponse.body.some(obj => obj.CategoryID === insertedID && obj.Name === reqBody.Name)).toBe(true);
+        expect(getResponse.body.some(obj => obj.CategoryID === insertedID && obj.Name === reqBody.Name)).toBe(false);
     });
 
     test("404 invalid DELETE for resource that does not exist", async () => {

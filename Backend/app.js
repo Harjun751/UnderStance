@@ -149,6 +149,16 @@ app.get("/parties", async (req, res) => {
     }
 });
 
+app.get("/categories", async (req, res) => {
+    try {
+        const data = await db.getCategories();
+        res.status(200).send(data);
+    } catch (error) {
+        logger.error(error.stack);
+        res.status(500).send({ error: "Failed to fetch categories" });
+    }
+});
+
 const securedRoutes = express.Router();
 
 /* middleware to parse req.body */
@@ -387,6 +397,74 @@ securedRoutes.delete("/stances/:id", async (req, res) => {
         res.status(400).send({ error: "Invalid Arguments" });
     }
 });
+
+
+
+
+securedRoutes.post("/categories", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validateCategory(body.Name)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    } else {
+        try {
+            const data = await db.insertCategory(body.Name);
+            res.status(200).send({ CategoryID: data });
+        } catch (error) {
+            logger.error(error.stack);
+            res.status(500).send({ error: "Failed to insert category" });
+        }
+    }
+});
+
+securedRoutes.put("/categories", async (req,res) => {
+    const body = req.body;
+    if (
+        !validator.validateCategory(body.Name) ||
+        !validator.validateID(body.CategoryID)
+    ) {
+        res.status(400).send({error: "Invalid Arguments"});
+    } else {
+        try {
+            const data = await db.updateCategory(body.CategoryID, body.Name);
+            res.status(200).send(data);
+        } catch (error) {
+            if (error.message === "Invalid Resource") {
+                res.status(404).send({error:"Could not update category with requested ID"}); 
+            } else {
+                logger.error(error.stack);
+                res.status(500).send({ error: "Failed to update category" });
+            }
+        }
+    }
+});
+
+securedRoutes.delete("/categories/:id", async (req, res) => {
+    if (!Number.isNaN(Number(req.params.id))) {
+        try {
+            await db.deleteCategory(Number.parseInt(req.params.id));
+            res.status(200).send({ message: "Successfully deleted" });
+        } catch (err) {
+            if (err.message === "Invalid Resource") {
+                res.status(404).send({error:"Could not delete stance with requested ID"}); 
+            } else if (err.message === "Foreign Key Constraint Violation") {
+                res.status(400).send({ error: "Invalid Arguments" });
+            } else {
+                logger.error(error.stack);
+                res.status(500).send({ error: "Failed to delete category" });
+            }
+        }
+    } else {
+        res.status(400).send({ error: "Invalid Arguments" });
+    }
+});
+
+
+
+
+
+
 app.use(securedRoutes);
 
 module.exports = app;

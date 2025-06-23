@@ -380,6 +380,76 @@ async function deleteStance(id) {
     }
 }
 
+async function insertCategory(name) {
+    try {
+        const rows = await pool.query(
+            `INSERT INTO "Category" ("Name")
+             VALUES ($1)
+             RETURNING "CategoryID"
+            `, [name]
+        );
+        return rows.rows[0].CategoryID;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function updateCategory(categoryID, name) {
+    try {
+        const rows = await pool.query(
+            `UPDATE "Category"
+             SET "Name" = $1
+             WHERE "CategoryID" = $2
+             RETURNING *
+            `, [name, categoryID]
+        );
+        if (rows.rows.length === 0) {
+            throw new Error("Invalid Resource");
+        }
+        return rows.rows[0];
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function deleteCategory(id) {
+    if (!Number.isNaN(Number(id))) {
+        const val = Number.parseInt(id);
+        try {
+            const rows = await pool.query(
+                `DELETE FROM "Category" WHERE "CategoryID" = $1`
+                , [val]
+            );
+            if (rows.rowCount === 0) {
+                throw new Error("Invalid Resource");
+            }
+            return;
+        } catch (err) {
+            // psql foreign key constraint violation error code
+            if (err.code == '23503') {
+                throw new Error("Foreign Key Constraint Violation");
+            }
+            logger.error(err.stack);
+            logger.error(err.code);
+            throw err;
+        }
+    } else {
+        throw new Error("Invalid Argument");
+    }
+}
+
+async function getCategories() {
+    try {
+        const rows = await pool.query('SELECT * FROM "Category";');
+        return rows.rows;
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
 
 module.exports = {
     getStancesFiltered,
@@ -396,5 +466,9 @@ module.exports = {
     insertParty,
     insertStance,
     updateStance,
-    deleteStance
+    deleteStance,
+    insertCategory,
+    updateCategory,
+    deleteCategory,
+    getCategories
 };

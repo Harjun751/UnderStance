@@ -9,7 +9,7 @@ const categories = [
         Name: "Governance"
     },
     {
-        CategoryID: 2
+        CategoryID: 2,
         Name: "Arts"
     },
 ];

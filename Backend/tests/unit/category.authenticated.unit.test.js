@@ -21,7 +21,7 @@ const categories = [
         Name: "Governance"
     },
     {
-        CategoryID: 2
+        CategoryID: 2,
         Name: "Arts"
     },
 ];
@@ -81,14 +81,10 @@ describe("authenticated mock POST category", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(500);
                 expect(response.body).toEqual({
-                    error: "Failed to insert Category",
+                    error: "Failed to insert category",
                 });
                 expect(db.insertCategory).toHaveBeenLastCalledWith(
                     fakeCategory.Name,
-                    fakeCategory.ShortName,
-                    fakeCategory.Icon,
-                    fakeCategory.CategoryColor,
-                    fakeCategory.Active
                 );
             });
     });
@@ -153,7 +149,7 @@ describe("authenticated mock PUT Category", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(500);
                 expect(response.body).toEqual({
-                    error: "Failed to update Category",
+                    error: "Failed to update category",
                 });
                 expect(db.updateCategory).toHaveBeenLastCalledWith(
                     fakeCategory.CategoryID,
