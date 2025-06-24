@@ -41,7 +41,7 @@ export default () => {
     if (loading) return <div>getting auth info...</div>;
 
     return (
-        <div id="dashboard">
+        <div class="dashboard-container page-container">
             <TopBar />
             <div>
                 Hi, you're logged in and authenticated with the token:{" "}

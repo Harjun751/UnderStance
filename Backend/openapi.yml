@@ -3,12 +3,13 @@ info:
   title: UnderStance Backend API
   description: >
     Backend API for the UnderStance web app. See our project page for more information: https://github.com/Harjun751/UnderStance
-  version: 0.1.0
+  version: 0.1.1
+
 paths:
   /questions:
     get:
       summary: Get all questions/issues
-      description: Retrieves all the issues from the database
+      description: Retrieves all the issues from the database. Response differs based on authentication status.
       parameters:
         - name: ID
           in: query
@@ -21,39 +22,39 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                minItems: 0
-                items:
-                  type: object
-                  properties:
-                    IssueID:
-                      type: integer
-                      description: ID of issue object
-                    Description:
-                      type: string
-                      description: Full description of issue
-                    Summary:
-                      type: string
-                      description: Short one line summary of issue
+                oneOf:
+                  - $ref: '#/components/schemas/UnauthenticatedQuestionGET'
+                  - $ref: '#/components/schemas/AuthenticatedQuestionGET'
               examples:
                     /questions:
                       value:
                         - IssueID: 23
                           Description: "Introduce doing backflips into school curriculum"
                           Summary: "Teaching backflips"
+                          Category: "Education"
                         - IssueID: 24
                           Description: "Allow bringing durians into public buses"
                           Summary: "Durians in Buses"
+                          Category: "Public Transport"
                     /questions?ID=23:
                       value:
                         - IssueID: 23
                           Description: "Introduce doing backflips into school curriculum"
                           Summary: "Teaching backflips"
+                          Category: "Education"
                     /questions?ID=24:
                       value:
                         - IssueID: 24
                           Description: "Allow bringing durians into public buses"
                           Summary: "Durians in Buses"
+                          Category: "Public Transport"
+                    /questions   (authenticated):
+                      value:
+                        - IssueID: 24
+                          Description: "Allow bringing durians into public buses"
+                          Summary: "Durians in Buses"
+                          CategoryID: 2
+                          Active: true
         "400":
           description: Bad request - incorrect parameters passed into query
           content:
@@ -76,7 +77,211 @@ paths:
                     type: string
                     enum: ['Failed to fetch questions']
                     description: Error message
-
+    post:
+      security:
+      - bearerAuth: []
+      summary: Adds a new question
+      description: Insert a new question into the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Description:
+                  type: string
+                  maxLength: 300
+                Summary:
+                  type: string
+                  maxLength: 50
+                CategoryID:
+                  type: integer
+                Active:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful POST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  IssueID:
+                    type: integer
+                    description: The ID of the new object
+        "400":
+          description: Failed POST, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Description (Too long), Summary (No value provided)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "500":
+          description: Failed POST, server error
+          content:
+            application/json:
+              example:
+                error: Failed to insert question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+    put:
+      security:
+      - bearerAuth: []
+      summary: Updates question
+      description: PATCHes a value in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                IssueID:
+                  type: integer
+                Description:
+                  type: string
+                  maxLength: 300
+                Summary:
+                  type: string
+                  maxLength: 50
+                CategoryID:
+                  type: integer
+                Active:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful PUT, shows fully updated value in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  IssueID:
+                    type: integer
+                  Description:
+                    type: string
+                    maxLength: 300
+                  Summary:
+                    type: string
+                    maxLength: 50
+                  CategoryID:
+                    type: integer
+                  Active:
+                    type: boolean
+        "400":
+          description: Failed PUT, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Description (Too long), Summary (No value provided)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "404":
+          description: Failed PUT, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not update question with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed PUT, server error
+          content:
+            application/json:
+              example:
+                error: Failed to update question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+  /questions/{id}:
+    delete:
+      security:
+      - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      summary: Deletes question
+      description: Drops a value in the database
+      responses:
+        "200":
+          description: Successful DELETE
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Successfully deleted"
+        "400":
+          description: Failed DELETE, ID not provided
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "404":
+          description: Failed DELETE, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not delete question with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed DELETE, server error
+          content:
+            application/json:
+              example:
+                error: Failed to delete question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
   /stances:
     get:
       summary: Get all stances
@@ -206,6 +411,208 @@ paths:
                     type: string
                     enum: ['Failed to fetch stances']
                     description: Error message
+    post:
+      security:
+      - bearerAuth: []
+      summary: Adds a new stance
+      description: Insert a new stance into the database. Both IssueID and PartyID must be unique - a party cannot have 2 stances on the same issue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Stand:
+                  type: boolean
+                Reason:
+                  type: string
+                  maxLength: 1000
+                IssueID:
+                  type: integer
+                PartyID:
+                  type: integer
+      responses:
+        "200":
+          description: Successful POST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  StanceID:
+                    type: integer
+                    description: The ID of the new object
+        "400":
+          description: Failed POST, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Reason (Too long)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "500":
+          description: Failed POST, server error
+          content:
+            application/json:
+              example:
+                error: Failed to insert stance
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+    put:
+      security:
+      - bearerAuth: []
+      summary: Updates stance
+      description: PATCHes a value in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                StanceID:
+                  type: integer
+                Stand:
+                  type: boolean
+                Reason:
+                  type: string
+                  maxLength: 1000
+                IssueID:
+                  type: integer
+                PartyID:
+                  type: integer
+      responses:
+        "200":
+          description: Successful PUT, shows fully updated value in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  StanceID:
+                    type: integer
+                  Stand:
+                    type: boolean
+                  Reason:
+                    type: string
+                    maxLength: 1000
+                  IssueID:
+                    type: integer
+                  PartyID:
+                    type: integer
+        "400":
+          description: Failed PUT, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Reason (Too long)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "404":
+          description: Failed PUT, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not update stance with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed PUT, server error
+          content:
+            application/json:
+              example:
+                error: Failed to update stance
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+  /stances/{id}:
+    delete:
+      security:
+      - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      summary: Deletes stance
+      description: Drops a value in the database
+      responses:
+        "200":
+          description: Successful DELETE
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Successfully deleted"
+        "400":
+          description: Failed DELETE, ID not provided
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "404":
+          description: Failed DELETE, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not delete stance with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed DELETE, server error
+          content:
+            application/json:
+              example:
+                error: Failed to delete question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
 
   /parties:
     get:
@@ -247,22 +654,46 @@ paths:
                           Name: "Coalition for Shakira"
                           ShortName: "CFS"
                           Icon: "https://url.com/image.jpg"
+                          PartyColor: "#FFFFFF"
                         - PartyID: 2
                           Name: "Coalition against Shakira"
                           ShortName: "CAS"
                           Icon: "https://url.com/image.jpg"
+                          PartyColor: "#0000000"
                     /parties?ID=1:
                       value:
                         - PartyID: 1
                           Name: "Coalition for Shakira"
                           ShortName: "CFS"
                           Icon: "https://url.com/image.jpg"
+                          PartyColor: "#0000000"
                     /parties?ID=2:
                       value:
                         - PartyID: 2
                           Name: "Coalition against Shakira"
                           ShortName: "CAS"
                           Icon: "https://url.com/image.jpg"
+                          PartyColor: "#0000000"
+                    /parties   (authenticated):
+                      value:
+                        - PartyID: 1
+                          Name: "Coalition for Shakira"
+                          ShortName: "CFS"
+                          Icon: "https://url.com/image.jpg"
+                          PartyColor: "#FFFFFF"
+                          Active: true
+                        - PartyID: 2
+                          Name: "Coalition against Shakira"
+                          ShortName: "CAS"
+                          Icon: "https://url.com/image.jpg"
+                          PartyColor: "#0000000"
+                          Active: true
+                        - PartyID: 3
+                          Name: "Defunct party"
+                          ShortName: "DFP"
+                          Icon: "https://url.com/image.jpg"
+                          PartyColor: "#0000000"
+                          Active: false
         "400":
           description: Bad request - incorrect parameters passed into query
           content:
@@ -285,5 +716,492 @@ paths:
                     type: string
                     enum: ['Failed to fetch parties']
                     description: Error message
+    post:
+      security:
+      - bearerAuth: []
+      summary: Adds a new party
+      description: Insert a new party into the database. Icon must be a valid URL pointing to an image resource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  maxLength: 100
+                ShortName:
+                  type: string
+                  maxLength: 5
+                Icon:
+                  type: string
+                  maxLength: 2083
+                PartyColor:
+                  type: string
+                  maxLength: 7
+                  description: A valid hex code.
+                Active:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful POST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PartyID:
+                    type: integer
+                    description: The ID of the new object
+        "400":
+          description: Failed POST, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "Invalid Icon (Invalid URL)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "500":
+          description: Failed POST, server error
+          content:
+            application/json:
+              example:
+                error: Failed to insert party
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+    put:
+      security:
+      - bearerAuth: []
+      summary: Updates Party
+      description: PATCHes a value in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PartyID:
+                  type: integer
+                Name:
+                  type: string
+                  maxLength: 100
+                ShortName:
+                  type: string
+                  maxLength: 5
+                Icon:
+                  type: string
+                  maxLength: 2083
+                PartyColor:
+                  type: string
+                  maxLength: 7
+                  description: A valid hex code.
+                Active:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful PUT, shows fully updated value in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PartyID:
+                    type: integer
+                  Name:
+                    type: string
+                    maxLength: 100
+                  ShortName:
+                    type: string
+                    maxLength: 5
+                  Icon:
+                    type: string
+                    maxLength: 2083
+                  PartyColor:
+                    type: string
+                    maxLength: 7
+                    description: A valid hex code.
+                  Active:
+                    type: boolean
+        "400":
+          description: Failed PUT, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Reason (Too long)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "404":
+          description: Failed PUT, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not update stance with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed PUT, server error
+          content:
+            application/json:
+              example:
+                error: Failed to update stance
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+  /parties/{id}:
+    delete:
+      security:
+      - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      summary: Deletes party
+      description: Drops a value in the database
+      responses:
+        "200":
+          description: Successful DELETE
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Successfully deleted"
+        "400":
+          description: Failed DELETE, ID not provided
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "404":
+          description: Failed DELETE, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not delete party with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed DELETE, server error
+          content:
+            application/json:
+              example:
+                error: Failed to delete question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+  /categories:
+    get:
+      summary: Get all categories for question
+      description: Retrieves all the categories from the database
+      responses:
+        "200":
+          description: Successful GET
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                items:
+                  type: object
+                  properties:
+                    PartyID:
+                      type: integer
+                      description: ID of category object
+                    Name:
+                      type: string
+                      description: The name of the category
+              examples:
+                    /categories:
+                      value:
+                        - CategoryID: 1
+                          Name: "Education"
+                        - CategoryID: 2
+                          Name: "Public Transport"
+        "400":
+          description: Bad request - incorrect parameters passed into query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Invalid Arguments']
+                    description: Error message
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum: ['Failed to fetch parties']
+                    description: Error message
+    post:
+      security:
+      - bearerAuth: []
+      summary: Adds a new category
+      description: Insert a new category into the databse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  maxLength: 50
+      responses:
+        "200":
+          description: Successful POST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  CategoryID:
+                    type: integer
+                    description: The ID of the new object
+        "400":
+          description: Failed POST, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "Invalid Name (Too long)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "500":
+          description: Failed POST, server error
+          content:
+            application/json:
+              example:
+                error: Failed to insert category
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+    put:
+      security:
+      - bearerAuth: []
+      summary: Updates category
+      description: PATCHes a value in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                CategoryID:
+                  type: integer
+                Name:
+                  type: string
+                  maxLength: 100
+      responses:
+        "200":
+          description: Successful PUT, shows fully updated value in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  CategoryID:
+                    type: integer
+                  Name:
+                    type: string
+                    maxLength: 100
+        "400":
+          description: Failed PUT, user error
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+                details: "There are invalid field(s): Name (Too long)"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+                  details:
+                    type: string
+                    description: Additional details on the error
+        "404":
+          description: Failed PUT, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not update category with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed PUT, server error
+          content:
+            application/json:
+              example:
+                error: Failed to update stance
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+  /categories/{id}:
+    delete:
+      security:
+      - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      summary: Deletes category
+      description: Drops a value in the database
+      responses:
+        "200":
+          description: Successful DELETE
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Successfully deleted"
+        "400":
+          description: Failed DELETE, ID not provided
+          content:
+            application/json:
+              example:
+                error: Invalid Arguments
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "404":
+          description: Failed DELETE, resource does not exist
+          content:
+            application/json:
+              example:
+                error: Could not delete party with requested ID
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
+        "500":
+          description: Failed DELETE, server error
+          content:
+            application/json:
+              example:
+                error: Failed to delete question
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error name
 servers:
-- url: "404.com" #Update once we have a actual server
+- url: "https://understance-backend.onrender.com/"
+
+components:
+  schemas:
+    UnauthenticatedQuestionGET:
+      type: object
+      properties:
+        IssueID:
+          type: integer
+        Description:
+          type: string
+        Summary:
+          type: string
+        Category:
+          type: string
+
+    AuthenticatedQuestionGET:
+      type: object
+      properties:
+        IssueID:
+          type: integer
+        Description:
+          type: string
+        Summary:
+          type: string
+        CategoryID:
+          type: integer
+        Active:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,15 +1,15 @@
-#title {
+h1.title {
     display: inline-block;
 }
-#title > span {
+h1.title > span {
     font-size: inherit;
 }
 
-#title > span:nth-child(2) {
+h1.title > span:nth-child(2) {
     color: var(--red);
 }
 
-#title:after {
+h1.title:after {
     content: "";
     display: block;
     width: 100%;
@@ -18,7 +18,7 @@
     top: -5px;
 }
 
-#title svg {
+h1.title svg {
     font-size: 0.75em;
     margin-right: 8px;
 }

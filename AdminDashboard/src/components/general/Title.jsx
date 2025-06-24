@@ -3,7 +3,7 @@ import { FaBuildingColumns } from "react-icons/fa6";
 
 export default () => {
     return (
-        <h1 id="title">
+        <h1 class="title">
             <span>
                 <FaBuildingColumns />
             </span>

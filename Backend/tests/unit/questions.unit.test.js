@@ -60,7 +60,7 @@ describe("mock GET quiz question with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeQuestions);
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(1);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 1);
             });
     });
 
@@ -72,7 +72,7 @@ describe("mock GET quiz question with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(fakeQuestions);
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(2);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 2);
             });
     });
 
@@ -94,7 +94,58 @@ describe("mock GET quiz question with filter", () => {
                 expect(response.body).toEqual({
                     error: "Failed to fetch questions",
                 });
-                expect(db.getQuestionWithID).toHaveBeenCalledWith(3);
+                expect(db.getQuestionWithID).toHaveBeenCalledWith(false, 3);
+            });
+    });
+});
+
+// represents ID of just-inserted object
+const fakeDescription = "Fake description";
+const fakeSummary = "Fake Summary";
+const fakeCategory = "Fake Category";
+const fakeBody = {
+    Description: fakeDescription,
+    Summary: fakeSummary,
+    Category: fakeCategory,
+};
+
+describe("unauthenticated POST quiz question", () => {
+    test("should return 401 unauthorized", () => {
+        return request(app)
+            .post("/questions")
+            .send(fakeBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
+            });
+    });
+});
+
+const fakeIssueID = 12;
+const fakePutBody = {
+    IssueID: fakeIssueID,
+    Description: fakeDescription,
+    Summary: fakeSummary,
+    Category: fakeCategory,
+};
+
+describe("unauthenticated PUT quiz question", () => {
+    test("should return 401 unauthorized", () => {
+        db.updateQuestion.mockResolvedValue(fakePutBody);
+        return request(app)
+            .put("/questions")
+            .send(fakePutBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
+            });
+    });
+});
+
+describe("unauthenticated DELETE quiz question", () => {
+    test("should return 401 unauthorized", () => {
+        return request(app)
+            .delete("/questions")
+            .then((response) => {
+                expect(response.statusCode).toBe(401);
             });
     });
 });

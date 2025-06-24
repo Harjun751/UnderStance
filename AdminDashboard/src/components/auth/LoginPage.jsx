@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navigate } from "react-router";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./LoginPage.css";
@@ -13,11 +12,11 @@ export default () => {
     }
 
     return (
-        <div id="login">
-            <div id="title-container">
+        <div class="login-container">
+            <div class="title-container">
                 <Title />
             </div>
-            <div id="login-btn">
+            <div class="login-btn">
                 <LoginButton />
             </div>
         </div>

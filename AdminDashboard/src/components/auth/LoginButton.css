@@ -1,4 +1,4 @@
-#login-button {
+.login-button {
     margin: auto;
     max-width: 300px;
     width: 100%;
@@ -10,7 +10,7 @@
     transition: all 0.5s;
     background: var(--red);
 }
-#login-button:hover {
+.login-button:hover {
     cursor: pointer;
     box-shadow: none;
 }

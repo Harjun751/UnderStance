@@ -1,11 +1,11 @@
-body:has(> #root > #login) {
+body:has(> #root > .login-container) {
     background: rgba(0, 0, 0, 0.9);
     /* background-image: linear-gradient(to right, #ce3f8f, #1b4dbe); */
     /* background-image: linear-gradient(to right, #3F3AA2, #00D4FF); */
     /* background-image: linear-gradient(to right, #3F3AA2, var(--red)); */
     /* background-image: linear-gradient(to right, red, var(--red)); */
 }
-body:has(> #root > #login)::before {
+body:has(> #root > .login-container)::before {
     background-image: url("../../assets/gradient-squares.png");
     content: "";
     position: fixed;
@@ -16,7 +16,7 @@ body:has(> #root > #login)::before {
     inset: 0;
     filter: contrast(10%);
 }
-#root:has(> #login) {
+#root:has(> .login-container) {
     margin: auto;
     display: flex;
     justify-content: center;
@@ -25,7 +25,7 @@ body:has(> #root > #login)::before {
     min-height: 100vh;
 }
 
-#login {
+.login-container {
     background: var(--primary);
     width: 500px;
     height: 500px;
@@ -39,7 +39,7 @@ body:has(> #root > #login)::before {
     position: relative;
 }
 
-#login > #title-container {
+.login-container > .title-container {
     position: absolute;
     width: 100%;
     top: 10px;
@@ -47,10 +47,10 @@ body:has(> #root > #login)::before {
 
 @media screen and (max-width: 1200px) {
     /* Hide hero on smaller devices */
-    #login {
+    .login-container {
         width: 100%;
     }
-    #root:has(> #login) {
+    #root:has(> .login-container) {
         max-width: 500px;
         width: 92%;
     }

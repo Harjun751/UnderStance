@@ -26,6 +26,7 @@ describe("mock GET party", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(parties);
+                expect(db.getParties).toHaveBeenLastCalledWith(false);
             });
     });
 
@@ -38,6 +39,7 @@ describe("mock GET party", () => {
                 expect(response.body).toEqual({
                     error: "Failed to fetch parties",
                 });
+                expect(db.getParties).toHaveBeenLastCalledWith(false);
             });
     });
 });
@@ -50,7 +52,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(parties[0]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(1);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(false, 1);
             });
     });
 
@@ -61,7 +63,7 @@ describe("mock GET quiz party with filter", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual([]);
-                expect(db.getPartyWithID).toHaveBeenCalledWith(3);
+                expect(db.getPartyWithID).toHaveBeenCalledWith(false, 3);
             });
     });
 
