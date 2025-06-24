@@ -1,12 +1,13 @@
 import "./SearchBar.css";
-//import { useState } from "react";
+import { useId } from "react";
 
 export default function SearchBar({ setSearch }) {
+    const id = useId();
     return (
         <div className="search-container">
             <label htmlFor="search">Search</label>
             <input
-                id="search"
+                id={`search-${id}`}
                 type="text"
                 name="search"
                 placeholder="Enter a search term..."

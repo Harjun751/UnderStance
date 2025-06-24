@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 export default function StanceItem({
     parties,
@@ -43,6 +43,9 @@ export default function StanceItem({
             onMouseUp={mouseUpHandler}
             onMouseLeave={mouseUpHandler}
             onMouseMove={mouseMoveHandler}
+            role="presentation"
+            tabIndex={-1}
+            aria-hidden="true"
         >
             {parties.map((party) => {
                 const stance = stancesForQuestion.find(

@@ -1,11 +1,10 @@
-import React from "react";
 import "./Header.css";
 import { FaBuildingColumns } from "react-icons/fa6";
 
 const Header = () => {
     return (
         <div className="UnderStance-header">
-            <h1 id="title">
+            <h1 className="UnderStance-title">
                 <span>
                     <FaBuildingColumns />
                 </span>

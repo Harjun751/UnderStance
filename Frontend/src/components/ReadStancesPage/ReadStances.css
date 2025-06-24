@@ -1,17 +1,27 @@
 /* General styles */
-#content-container.read-stances h1 {
-    text-align: left;
+.read-stances h1 {
+    text-align: left !important;
     margin-bottom: 20px;
+    margin-top: 10px;
 }
-#content-container.read-stances h2 {
+
+.question-header > h2 {
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 80%;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.read-stances h2 {
     text-align: left;
 }
 /* Hide break line in question for large displays */
-#content-container.read-stances h2 > .qn-break {
+.read-stances h2 > .qn-break {
     display: none;
 }
 
-#content-container.read-stances {
+.read-stances {
     /* force content-container to take up
      * max width on large displays */
     width: 1200px;
@@ -19,7 +29,7 @@
 
 /* The container holding all the questions
  * set a min height so scrollbar doesn't jump */
-#question-containers-container {
+.question-containers {
     min-height: 800px;
     padding-left: 0;
 }
@@ -57,7 +67,7 @@
     visibility: hidden;
 }
 
-#content-container.unanswered .question-container.expanded {
+.read-stances.unanswered.question-container.expanded {
     /* If quiz is unanswered, we change the height of the 
      * expanded container to reduce the white space */
     height: 280px;
@@ -68,12 +78,8 @@
     justify-content: space-between;
     align-items: flex-start;
 }
-.question-header > h2 {
-    white-space: nowrap;
-    overflow-x: auto;
-    width: 80%;
-}
-#content-container.unanswered .question-header > h2 {
+
+.read-stances.unanswered .question-header > h2 {
     width: 97%;
 }
 .question-header > .header-right {
@@ -82,12 +88,17 @@
     gap: 10px;
 }
 .question-container.expanded .question-header > h2 {
-    white-space: unset;
-    overflow-x: unset;
+    white-space: unset !important;
+    overflow-x: visible !important;
+    text-overflow: unset !important;
+    max-width: 100% !important;
 }
 
 /* User alignment text */
 .alignment-info {
+    all: unset;
+    display: block;
+    cursor: pointer;
     color: black;
     text-align: left;
     padding: 0;
@@ -189,7 +200,7 @@
 
 /* Bar char styling */
 .alignment-chart {
-    margin: 2rem 0;
+    margin: 0 0;
     background-color: #f7f7f7;
     padding: 1rem;
     border-radius: 8px;
@@ -322,6 +333,9 @@
 /* Small(er) screen breakpoint */
 /*@media only screen and (max-width: 1440px) {*/
 @media only screen and (max-width: 1400px) {
+    .read-stances {
+        width: 80%;
+    }
     .question-container {
         height: 45px;
         position: relative;
@@ -329,7 +343,7 @@
     .question-container.expanded {
         height: 360px;
     }
-    #content-container.unanswered .question-container.expanded {
+    .read-stances.unanswered .question-container.expanded {
         /* If quiz is unanswered, we change the height of the 
          * expanded container to reduce the white space */
         height: 250px;
@@ -341,20 +355,23 @@
         width: 90px;
         padding: 3px 0;
     }
-    .qn-break {
-        display: initial;
+    .read-stances h2 > .qn-break {
+        display: inline !important;
     }
-    #content-container.read-stances h2 {
+    .read-stances h2 {
         text-align: left;
     }
-    #question-containers-container {
+    .question-containers {
         min-height: 500px;
     }
     .question-header > h2 {
         width: 77%;
     }
-    #content-container.unanswered .question-header > h2 {
+    .read-stances.unanswered .question-header > h2 {
         width: 100%;
+    }
+    .alignment-toggle-buttons {
+        font-size: 0.75rem;
     }
     .comparison-table {
         font-size: 10px;
