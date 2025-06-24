@@ -193,7 +193,7 @@ describe("authenticated mock DELETE Category", () => {
             new Error("Foreign Key Constraint Violation"),
         );
         return request(app)
-            .delete("/categories/dingus")
+            .delete("/categories/1")
             .then((response) => {
                 expect(response.statusCode).toBe(400);
                 expect(response.body).toEqual({
