@@ -25,15 +25,34 @@
 
 .page-container {
     flex-grow: 1;
+    width: 100%;
+    flex-direction: column;
+    overflow-x: auto;
+    transition: margin-left 0.3s ease;
+}
+
+.page-container-body {
+    flex-grow: 1;
     padding: 1rem;
     transition: margin-left 0.3s ease;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    overflow-x: auto;
+    background: #c8c8c8;  /* Replace with Image later*/
 }
 
 .title,
 h1,
-h2,
-h3 {
+h2{
     font-family: "DM Serif Display", serif;
+    font-style: normal;
+    font-weight: unset;
+    margin: 0;
+}
+
+h3 {
+    font-family: "Sansation", sans-serif;
     font-style: normal;
     font-weight: unset;
     margin: 0;

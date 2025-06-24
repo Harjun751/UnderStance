@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../general/Layout";
+import { MdSpaceDashboard  } from "react-icons/md";
+import TopBar from "./TopBar";
 
 const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
@@ -51,7 +53,8 @@ const Dashboard = () => {
         //         </div>
         //     </div>
         // </div>
-        <Layout>
+        <Layout title={<><MdSpaceDashboard /> Dashboard</>}>
+            <TopBar />
             <div>
                 Hi, you're logged in and authenticated with the token:{" "}
                 {authInfo.token}

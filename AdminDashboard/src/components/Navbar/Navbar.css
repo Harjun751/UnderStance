@@ -156,9 +156,9 @@
 
 .navbar.collapsed .logo-text,
 .navbar.collapsed .nav-text {
-  display: none;
+    display: none;
 }
 
 .navbar.collapsed .navbar-title h3 {
-  display: none;
+    display: none;
 }

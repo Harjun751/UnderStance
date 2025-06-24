@@ -7,7 +7,10 @@ import LoginPage from "./components/auth/LoginPage";
 import AuthWrapper from "./components/auth/AuthenticatedRouteWrapper";
 import AuthLoadWrapper from "./components/auth/AuthLoadWrapper";
 import Dashboard from "./components/dashboard/Dashboard";
-import Navbar from "./components/Navbar/Navbar";
+import Category from "./components/Management/Category/Category";
+import Quiz from "./components/Management/Quiz/Quiz";
+import Stance from "./components/Management/Stance/Stance";
+import Party from "./components/Management/Party/Party";
 
 function App() {
     return (
@@ -28,6 +31,38 @@ function App() {
                             element={
                                 <AuthWrapper>
                                     <Dashboard />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/category"
+                            element={
+                                <AuthWrapper>
+                                    <Category />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/quiz"
+                            element={
+                                <AuthWrapper>
+                                    <Quiz />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/stance"
+                            element={
+                                <AuthWrapper>
+                                    <Stance />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/party"
+                            element={
+                                <AuthWrapper>
+                                    <Party />
                                 </AuthWrapper>
                             }
                         />
