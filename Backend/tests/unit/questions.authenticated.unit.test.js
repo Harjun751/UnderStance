@@ -217,7 +217,7 @@ describe("authenticated mock PUT quiz question", () => {
     });
 
     test("should return 400 for invalid category id", () => {
-        let reqCopy = { ...fakePutBody }
+        const reqCopy = { ...fakePutBody }
         reqCopy.CategoryID = 100000;
         db.updateQuestion.mockRejectedValue(
             new Error("Foreign Key Constraint Violation"),

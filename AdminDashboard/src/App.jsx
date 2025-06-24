@@ -1,8 +1,5 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Auth0Provider } from "@auth0/auth0-react";
 import "./App.css";
 
 /* Page imports */
@@ -12,8 +9,6 @@ import AuthLoadWrapper from "./components/auth/AuthLoadWrapper";
 import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
         <Auth0Provider
             domain="dev-i0ksanu2a66behjf.us.auth0.com"
