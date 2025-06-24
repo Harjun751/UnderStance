@@ -1,7 +1,7 @@
 import LogoutButton from "../auth/LogoutButton";
 import "./TopBar.css";
 
-export default () => {
+const TopBar = () => {
     return (
         <nav>
             <span>this is the navbar :)</span>
@@ -11,3 +11,5 @@ export default () => {
         </nav>
     );
 };
+
+export default TopBar;

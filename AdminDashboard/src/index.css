@@ -18,6 +18,17 @@
     /* dark theme? */
 }
 
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.page-container {
+    flex-grow: 1;
+    padding: 1rem;
+    transition: margin-left 0.3s ease;
+}
+
 .title,
 h1,
 h2,

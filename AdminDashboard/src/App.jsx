@@ -7,6 +7,7 @@ import LoginPage from "./components/auth/LoginPage";
 import AuthWrapper from "./components/auth/AuthenticatedRouteWrapper";
 import AuthLoadWrapper from "./components/auth/AuthLoadWrapper";
 import Dashboard from "./components/dashboard/Dashboard";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
     return (

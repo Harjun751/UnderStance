@@ -1,8 +1,8 @@
-import TopBar from "./TopBar";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Layout from "../general/Layout";
 
-export default () => {
+const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
@@ -41,12 +41,24 @@ export default () => {
     if (loading) return <div>getting auth info...</div>;
 
     return (
-        <div class="dashboard-container page-container">
-            <TopBar />
+        // <div className="container">
+        //     <Navbar />
+        //     <div class="dashboard-container page-container">
+        //         <TopBar />
+        //         <div>
+        //             Hi, you're logged in and authenticated with the token:{" "}
+        //             {authInfo.token}
+        //         </div>
+        //     </div>
+        // </div>
+        <Layout>
             <div>
                 Hi, you're logged in and authenticated with the token:{" "}
                 {authInfo.token}
             </div>
-        </div>
+        </Layout>
+        
     );
 };
+
+export default Dashboard;
