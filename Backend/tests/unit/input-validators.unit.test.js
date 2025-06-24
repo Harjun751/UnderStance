@@ -123,7 +123,9 @@ describe("active validator", () => {
     });
 
     test("should fail on invalid string", async () => {
-        expect(validator.validateActive("dingus")).toBe("Invalid boolean value");
+        expect(validator.validateActive("dingus")).toBe(
+            "Invalid boolean value",
+        );
     });
 
     test("should pass on valid boolean true", async () => {
@@ -251,11 +253,8 @@ describe("icon url validator", () => {
 
     test("should fail on invalid icon", async () => {
         fetch.mockRejectedValueOnce(new Error("Failed!"));
-        expect(await validator.validateIcon("12345")).toBe(
-            "Failed to reach",
-        );
+        expect(await validator.validateIcon("12345")).toBe("Failed to reach");
     });
-
 
     test("should fail on invalid Icon - > 2083 chars", async () => {
         expect(

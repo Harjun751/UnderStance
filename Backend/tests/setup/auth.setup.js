@@ -35,7 +35,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
             authToken = data.access_token;
             break;
         } catch (err) {
-            console.error(`Attempt ${attempt+1} failed with: `, err.message);
+            console.error(`Attempt ${attempt + 1} failed with: `, err.message);
             attempt++;
 
             if (attempt < maxRetries) {

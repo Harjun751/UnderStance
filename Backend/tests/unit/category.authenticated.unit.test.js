@@ -197,7 +197,7 @@ describe("authenticated mock DELETE Category", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(400);
                 expect(response.body).toEqual({
-                    error: "Invalid Arguments"
+                    error: "Invalid Arguments",
                 });
             });
     });
@@ -218,7 +218,9 @@ describe("authenticated mock DELETE Category", () => {
             .delete("/categories/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(response.body).toEqual({error:"Failed to delete category"});
+                expect(response.body).toEqual({
+                    error: "Failed to delete category",
+                });
                 expect(db.deleteCategory).toHaveBeenLastCalledWith(1);
             });
     });

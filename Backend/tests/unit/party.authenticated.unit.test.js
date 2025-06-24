@@ -231,7 +231,9 @@ describe("authenticated mock PUT party", () => {
             .send(fakeParty)
             .then((response) => {
                 expect(response.statusCode).toBe(404);
-                expect(response.body).toEqual({ error: "Could not update party with requested ID"});
+                expect(response.body).toEqual({
+                    error: "Could not update party with requested ID",
+                });
             });
     });
 

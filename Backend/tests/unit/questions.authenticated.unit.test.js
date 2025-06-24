@@ -113,13 +113,13 @@ describe("authenticated mock POST quiz question", () => {
                 Description: fakeDescription,
                 Summary: fakeSummary,
                 CategoryID: 100000,
-                Active: fakeActive
+                Active: fakeActive,
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
                 expect(response.body).toMatchObject({
                     error: "Invalid Arguments",
-                    details: "Invalid CategoryID supplied"
+                    details: "Invalid CategoryID supplied",
                 });
             });
     });
@@ -217,7 +217,7 @@ describe("authenticated mock PUT quiz question", () => {
     });
 
     test("should return 400 for invalid category id", () => {
-        const reqCopy = { ...fakePutBody }
+        const reqCopy = { ...fakePutBody };
         reqCopy.CategoryID = 100000;
         db.updateQuestion.mockRejectedValue(
             new Error("Foreign Key Constraint Violation"),
@@ -228,7 +228,7 @@ describe("authenticated mock PUT quiz question", () => {
             .then((response) => {
                 expect(response.body).toMatchObject({
                     error: "Invalid Arguments",
-                    details: "Invalid CategoryID supplied"
+                    details: "Invalid CategoryID supplied",
                 });
                 expect(response.statusCode).toBe(400);
             });
@@ -300,5 +300,4 @@ describe("authenticated mock DELETE quiz question", () => {
                 expect(db.deleteQuestion).toHaveBeenLastCalledWith(13000);
             });
     });
-
 });

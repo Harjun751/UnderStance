@@ -187,7 +187,7 @@ describe("mock PUT question", () => {
         const error = new Error("FK violation");
         error.code = "23503"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
-        await expect(dal.updateQuestion(1,"", "", "")).rejects.toThrow(
+        await expect(dal.updateQuestion(1, "", "", "")).rejects.toThrow(
             "Foreign Key Constraint Violation",
         );
     });
@@ -196,20 +196,16 @@ describe("mock PUT question", () => {
 describe("mock DELETE question", () => {
     test("should delete Issue", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 1
+            rowCount: 1,
         });
-        const result = await dal.deleteQuestion(
-            1
-        );
+        const result = await dal.deleteQuestion(1);
         expect(result).toEqual();
     });
     test("should throw error if no rows affected", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 0
+            rowCount: 0,
         });
-        await expect(dal.deleteQuestion(1)).rejects.toThrow(
-            "Invalid Resource",
-        );
+        await expect(dal.deleteQuestion(1)).rejects.toThrow("Invalid Resource");
     });
 
     test("should throw error on invalid argument", async () => {
@@ -220,12 +216,9 @@ describe("mock DELETE question", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.deleteQuestion(1)).rejects.toThrow(
-            "DB kaput",
-        );
+        await expect(dal.deleteQuestion(1)).rejects.toThrow("DB kaput");
     });
-})
-
+});
 
 const fakeStances = [
     {
@@ -398,14 +391,14 @@ describe("mock GET party filtered", () => {
 
 describe("mock insert party", () => {
     test("should succeed", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [ { PartyID: 1 }] });
-        const result = await dal.insertParty("","","","",true);
+        mockQuery.mockResolvedValueOnce({ rows: [{ PartyID: 1 }] });
+        const result = await dal.insertParty("", "", "", "", true);
         expect(result).toEqual(1);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.insertParty("","","","",true)).rejects.toThrow(
+        await expect(dal.insertParty("", "", "", "", true)).rejects.toThrow(
             "DB exploded",
         );
     });
@@ -414,26 +407,26 @@ describe("mock insert party", () => {
 describe("mock update party", () => {
     test("should succeed", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [parties[0]] });
-        const result = await dal.updateParty(1,"","","","",true);
+        const result = await dal.updateParty(1, "", "", "", "", true);
         expect(result).toEqual(parties[0]);
     });
 
     test("should throw error for invalid ID", async () => {
-        await expect(dal.updateParty("hi","","","","",true)).rejects.toThrow(
-            "Invalid Argument",
-        );
+        await expect(
+            dal.updateParty("hi", "", "", "", "", true),
+        ).rejects.toThrow("Invalid Argument");
     });
 
     test("should throw error if no rows affected", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        await expect(dal.updateParty(1,"","","","",true)).rejects.toThrow(
+        await expect(dal.updateParty(1, "", "", "", "", true)).rejects.toThrow(
             "Invalid Resource",
         );
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.insertParty("","","","",true)).rejects.toThrow(
+        await expect(dal.insertParty("", "", "", "", true)).rejects.toThrow(
             "DB exploded",
         );
     });
@@ -442,47 +435,39 @@ describe("mock update party", () => {
 describe("mock DELETE party", () => {
     test("should delete party", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 1
+            rowCount: 1,
         });
-        const result = await dal.deleteParty(
-            1
-        );
+        const result = await dal.deleteParty(1);
         expect(result).toEqual();
     });
     test("should throw error if no rows affected", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 0
+            rowCount: 0,
         });
-        await expect(dal.deleteParty(1)).rejects.toThrow(
-            "Invalid Resource",
-        );
+        await expect(dal.deleteParty(1)).rejects.toThrow("Invalid Resource");
     });
 
     test("should throw error on invalid argument", async () => {
-        await expect(dal.deleteParty("hi")).rejects.toThrow(
-            "Invalid Argument",
-        );
+        await expect(dal.deleteParty("hi")).rejects.toThrow("Invalid Argument");
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.deleteParty(1)).rejects.toThrow(
-            "DB kaput",
-        );
+        await expect(dal.deleteParty(1)).rejects.toThrow("DB kaput");
     });
-})
+});
 
 const stance = {
     StanceID: 1,
     Stand: true,
     Reason: "hi",
     IssueID: 1,
-    PartyID: 1
-}
+    PartyID: 1,
+};
 describe("mock insert stance", () => {
     test("should succeed", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [ { StanceID: 1 }] });
-        const result = await dal.insertStance(true,"",1,1);
+        mockQuery.mockResolvedValueOnce({ rows: [{ StanceID: 1 }] });
+        const result = await dal.insertStance(true, "", 1, 1);
         expect(result).toEqual(1);
     });
 
@@ -490,14 +475,14 @@ describe("mock insert stance", () => {
         const error = new Error("UQ violation");
         error.code = "23505"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
-        await expect(dal.insertStance(true,"",1,1)).rejects.toThrow(
+        await expect(dal.insertStance(true, "", 1, 1)).rejects.toThrow(
             "Unique Constraint Violation",
         );
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.insertStance(true,"",1,1)).rejects.toThrow(
+        await expect(dal.insertStance(true, "", 1, 1)).rejects.toThrow(
             "DB exploded",
         );
     });
@@ -506,13 +491,13 @@ describe("mock insert stance", () => {
 describe("mock update stance", () => {
     test("should succeed", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [stance] });
-        const result = await dal.updateStance(1,true,"",1,1);
+        const result = await dal.updateStance(1, true, "", 1, 1);
         expect(result).toEqual(stance);
     });
 
     test("should succeed", async () => {
         mockQuery.mockResolvedValueOnce({ rows: [] });
-        await expect(dal.updateStance(1,true,"",1,1)).rejects.toThrow(
+        await expect(dal.updateStance(1, true, "", 1, 1)).rejects.toThrow(
             "Invalid Resource",
         );
     });
@@ -521,14 +506,14 @@ describe("mock update stance", () => {
         const error = new Error("UQ violation");
         error.code = "23505"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
-        await expect(dal.updateStance(1,true,"",1,1)).rejects.toThrow(
+        await expect(dal.updateStance(1, true, "", 1, 1)).rejects.toThrow(
             "Unique Constraint Violation",
         );
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.updateStance(1,true,"",1,1)).rejects.toThrow(
+        await expect(dal.updateStance(1, true, "", 1, 1)).rejects.toThrow(
             "DB exploded",
         );
     });
@@ -537,20 +522,16 @@ describe("mock update stance", () => {
 describe("mock DELETE stance", () => {
     test("should delete stance", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 1
+            rowCount: 1,
         });
-        const result = await dal.deleteStance(
-            1
-        );
+        const result = await dal.deleteStance(1);
         expect(result).toEqual();
     });
     test("should throw error if no rows affected", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 0
+            rowCount: 0,
         });
-        await expect(dal.deleteStance(1)).rejects.toThrow(
-            "Invalid Resource",
-        );
+        await expect(dal.deleteStance(1)).rejects.toThrow("Invalid Resource");
     });
 
     test("should throw error on invalid argument", async () => {
@@ -561,51 +542,40 @@ describe("mock DELETE stance", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.deleteStance(1)).rejects.toThrow(
-            "DB kaput",
-        );
+        await expect(dal.deleteStance(1)).rejects.toThrow("DB kaput");
     });
-})
+});
 
 const category = {
     CategoryID: 1,
-    Name: "Dingus"
-}
+    Name: "Dingus",
+};
 
 describe("mock GET question", () => {
     test("should return rows from Category", async () => {
         mockQuery.mockResolvedValueOnce({
-            rows: [
-                category
-            ],
+            rows: [category],
         });
         const result = await dal.getCategories();
-        expect(result).toEqual([
-            category
-        ]);
+        expect(result).toEqual([category]);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.getCategories()).rejects.toThrow(
-            "DB exploded",
-        );
+        await expect(dal.getCategories()).rejects.toThrow("DB exploded");
     });
 });
 
-
 describe("mock insert category", () => {
     test("should succeed", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [ { CategoryID: 1 }] });
+        mockQuery.mockResolvedValueOnce({ rows: [{ CategoryID: 1 }] });
         const result = await dal.insertCategory("Hi");
         expect(result).toEqual(1);
     });
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB exploded"));
-        await expect(dal.insertCategory("hi")).rejects.toThrow(
-            "DB exploded",
-        );
+        await expect(dal.insertCategory("hi")).rejects.toThrow("DB exploded");
     });
 });
 
@@ -631,24 +601,19 @@ describe("mock update category", () => {
     });
 });
 
-
 describe("mock DELETE category", () => {
     test("should delete category", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 1
+            rowCount: 1,
         });
-        const result = await dal.deleteCategory(
-            1
-        );
+        const result = await dal.deleteCategory(1);
         expect(result).toEqual();
     });
     test("should throw error if no rows affected", async () => {
         mockQuery.mockResolvedValueOnce({
-            rowCount: 0
+            rowCount: 0,
         });
-        await expect(dal.deleteCategory(1)).rejects.toThrow(
-            "Invalid Resource",
-        );
+        await expect(dal.deleteCategory(1)).rejects.toThrow("Invalid Resource");
     });
 
     test("should throw error on invalid argument", async () => {
@@ -659,8 +624,6 @@ describe("mock DELETE category", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.deleteCategory(1)).rejects.toThrow(
-            "DB kaput",
-        );
+        await expect(dal.deleteCategory(1)).rejects.toThrow("DB kaput");
     });
-})
+});

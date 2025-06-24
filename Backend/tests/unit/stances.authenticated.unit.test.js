@@ -169,14 +169,16 @@ describe("authenticated mock POST stance", () => {
     });
 
     test("should return 400 if multiple stances for same party on same issue", () => {
-        db.insertStance.mockRejectedValue(new Error("Unique Constraint Violation"));
+        db.insertStance.mockRejectedValue(
+            new Error("Unique Constraint Violation"),
+        );
         return request(app)
             .post("/stances")
             .send(fakeStance)
             .then((response) => {
                 expect(response.body).toEqual({
                     error: "Invalid Arguments",
-                    details: "Party cannot have 2 stances on the same issue."
+                    details: "Party cannot have 2 stances on the same issue.",
                 });
                 expect(response.statusCode).toBe(400);
             });
@@ -271,13 +273,15 @@ describe("authenticated mock PUT party", () => {
             .then((response) => {
                 expect(response.statusCode).toBe(404);
                 expect(response.body).toEqual({
-                    error: "Could not update stance with requested ID"
+                    error: "Could not update stance with requested ID",
                 });
             });
     });
 
     test("should return 400 for unique contraint violation", () => {
-        db.updateStance.mockRejectedValue(new Error("Unique Constraint Violation"));
+        db.updateStance.mockRejectedValue(
+            new Error("Unique Constraint Violation"),
+        );
         return request(app)
             .put("/stances")
             .send(fakeStance)
@@ -377,7 +381,9 @@ describe("authenticated mock DELETE stance", () => {
             .delete("/stances/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
-                expect(response.body).toEqual({ error: "Failed to delete stance" });
+                expect(response.body).toEqual({
+                    error: "Failed to delete stance",
+                });
                 expect(db.deleteStance).toHaveBeenLastCalledWith(1);
             });
     });

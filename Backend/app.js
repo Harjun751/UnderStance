@@ -214,7 +214,10 @@ securedRoutes.post("/questions", async (req, res) => {
         res.status(200).send({ IssueID: data });
     } catch (error) {
         if (error.message === "Foreign Key Constraint Violation") {
-            res.status(400).send({ error: "Invalid Arguments", details: "Invalid CategoryID supplied" });
+            res.status(400).send({
+                error: "Invalid Arguments",
+                details: "Invalid CategoryID supplied",
+            });
         }
         logger.error(error.stack);
         res.status(500).send({ error: "Failed to insert question" });
@@ -252,7 +255,10 @@ securedRoutes.put("/questions", async (req, res) => {
                 error: "Could not update question with requested ID",
             });
         } else if (error.message === "Foreign Key Constraint Violation") {
-            res.status(400).send({ error: "Invalid Arguments", details: "Invalid CategoryID supplied" });
+            res.status(400).send({
+                error: "Invalid Arguments",
+                details: "Invalid CategoryID supplied",
+            });
         } else {
             logger.error(error.stack);
             res.status(500).send({ error: "Failed to update question" });
@@ -285,12 +291,10 @@ securedRoutes.post("/parties", async (req, res) => {
 
     const iconError = await validator.validateIcon(body.Icon);
     if (iconError != null) {
-        return res
-            .status(400)
-            .send({
-                error: "Invalid Arguments",
-                details: `Invalid icon ${iconError}`,
-            });
+        return res.status(400).send({
+            error: "Invalid Arguments",
+            details: `Invalid icon ${iconError}`,
+        });
     }
 
     const validators = {
@@ -325,12 +329,10 @@ securedRoutes.put("/parties", async (req, res) => {
 
     const iconError = await validator.validateIcon(body.Icon);
     if (iconError != null) {
-        return res
-            .status(400)
-            .send({
-                error: "Invalid Arguments",
-                details: `Invalid icon filed ${iconError}`,
-            });
+        return res.status(400).send({
+            error: "Invalid Arguments",
+            details: `Invalid icon filed ${iconError}`,
+        });
     }
 
     const validators = {
@@ -418,7 +420,7 @@ securedRoutes.post("/stances", async (req, res) => {
         if (error.message === "Unique Constraint Violation") {
             res.status(400).send({
                 error: "Invalid Arguments",
-                details: "Party cannot have 2 stances on the same issue."
+                details: "Party cannot have 2 stances on the same issue.",
             });
         }
         logger.error(error.stack);

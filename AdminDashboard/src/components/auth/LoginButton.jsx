@@ -6,7 +6,11 @@ export default () => {
 
     return (
         <>
-            <button onClick={loginWithRedirect} class="login-button" type="submit">
+            <button
+                onClick={loginWithRedirect}
+                class="login-button"
+                type="submit"
+            >
                 Login
             </button>
         </>
