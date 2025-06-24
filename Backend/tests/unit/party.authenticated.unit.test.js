@@ -224,6 +224,17 @@ describe("authenticated mock PUT party", () => {
             });
     });
 
+    test("should return 404 for invalid resource", () => {
+        db.updateParty.mockRejectedValue(new Error("Invalid Resource"));
+        return request(app)
+            .put("/parties")
+            .send(fakeParty)
+            .then((response) => {
+                expect(response.statusCode).toBe(404);
+                expect(response.body).toEqual({ error: "Could not update party with requested ID"});
+            });
+    });
+
     test("should return 400 if missing arguments", () => {
         return request(app)
             .put("/parties")
@@ -317,6 +328,9 @@ describe("authenticated mock DELETE party", () => {
             .delete("/parties/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
+                expect(response.body).toEqual({
+                    error: "Failed to delete party",
+                });
                 expect(db.deleteParty).toHaveBeenLastCalledWith(1);
             });
     });

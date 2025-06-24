@@ -112,10 +112,15 @@ describe("authenticated mock POST quiz question", () => {
             .send({
                 Description: fakeDescription,
                 Summary: fakeSummary,
-                Category: 100000,
+                CategoryID: 100000,
+                Active: fakeActive
             })
             .then((response) => {
                 expect(response.statusCode).toBe(400);
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                    details: "Invalid CategoryID supplied"
+                });
             });
     });
 
@@ -211,6 +216,24 @@ describe("authenticated mock PUT quiz question", () => {
             });
     });
 
+    test("should return 400 for invalid category id", () => {
+        let reqCopy = { ...fakePutBody }
+        reqCopy.CategoryID = 100000;
+        db.updateQuestion.mockRejectedValue(
+            new Error("Foreign Key Constraint Violation"),
+        );
+        return request(app)
+            .put("/questions")
+            .send(reqCopy)
+            .then((response) => {
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                    details: "Invalid CategoryID supplied"
+                });
+                expect(response.statusCode).toBe(400);
+            });
+    });
+
     test("should return 500 if DB error", () => {
         db.updateQuestion.mockRejectedValue(new Error("DB error"));
         return request(app)
@@ -255,6 +278,19 @@ describe("authenticated mock DELETE quiz question", () => {
             });
     });
 
+    test("should return 500 if DB error", () => {
+        db.deleteQuestion.mockRejectedValue(new Error("DB error"));
+        return request(app)
+            .delete("/questions/1")
+            .then((response) => {
+                expect(response.statusCode).toBe(500);
+                expect(response.body).toEqual({
+                    error: "Failed to delete question",
+                });
+                expect(db.deleteQuestion).toHaveBeenLastCalledWith(1);
+            });
+    });
+
     test("should return 404 if no valid resource", () => {
         db.deleteQuestion.mockRejectedValue(new Error("Invalid Resource"));
         return request(app)
@@ -265,13 +301,4 @@ describe("authenticated mock DELETE quiz question", () => {
             });
     });
 
-    test("should return 500 if DB error", () => {
-        db.deleteQuestion.mockRejectedValue(new Error("DB error"));
-        return request(app)
-            .delete("/questions/1")
-            .then((response) => {
-                expect(response.statusCode).toBe(500);
-                expect(db.deleteQuestion).toHaveBeenLastCalledWith(1);
-            });
-    });
 });

@@ -290,7 +290,6 @@ async function updateParty(id, name, shortName, icon, partyColor, active) {
 }
 
 async function deleteParty(id) {
-    console.log(`I got called with: ${id}`);
     if (!Number.isNaN(Number(id))) {
         const val = Number.parseInt(id);
         try {

@@ -1,3 +1,5 @@
+const logger = require("../logger");
+
 function validateData(validators, data) {
     const invalidFields = Object.entries(validators)
         .map(([fieldName, validator]) => [
@@ -50,7 +52,7 @@ function validateCategory(category) {
 
 function validateID(id) {
     if (typeof id !== "undefined" && id) {
-        if (Number.isNaN(id)) {
+        if (Number.isNaN(Number(id))) {
             return "Not a valid number";
         }
         return null;

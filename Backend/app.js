@@ -252,7 +252,7 @@ securedRoutes.put("/questions", async (req, res) => {
                 error: "Could not update question with requested ID",
             });
         } else if (error.message === "Foreign Key Constraint Violation") {
-            res.status(400).send({ error: "Invalid Arguments" });
+            res.status(400).send({ error: "Invalid Arguments", details: "Invalid CategoryID supplied" });
         } else {
             logger.error(error.stack);
             res.status(500).send({ error: "Failed to update question" });
@@ -271,7 +271,7 @@ securedRoutes.delete("/questions/:id", async (req, res) => {
                     error: "Could not delete question with requested ID",
                 });
             } else {
-                logger.error(error.stack);
+                logger.error(err.stack);
                 res.status(500).send({ error: "Failed to delete question" });
             }
         }
@@ -379,8 +379,8 @@ securedRoutes.delete("/parties/:id", async (req, res) => {
                     error: "Could not delete party with requested ID",
                 });
             } else {
-                logger.error(error.stack);
-                res.status(500).send({ error: "Failed to delete question" });
+                logger.error(err.stack);
+                res.status(500).send({ error: "Failed to delete party" });
             }
         }
     } else {
@@ -417,7 +417,7 @@ securedRoutes.post("/stances", async (req, res) => {
     } catch (error) {
         if (error.message === "Unique Constraint Violation") {
             res.status(400).send({
-                error: "Invalid Arguemnts",
+                error: "Invalid Arguments",
                 details: "Party cannot have 2 stances on the same issue."
             });
         }
@@ -480,7 +480,7 @@ securedRoutes.delete("/stances/:id", async (req, res) => {
                     error: "Could not delete stance with requested ID",
                 });
             } else {
-                logger.error(error.stack);
+                logger.error(err.stack);
                 res.status(500).send({ error: "Failed to delete stance" });
             }
         }
@@ -552,7 +552,7 @@ securedRoutes.delete("/categories/:id", async (req, res) => {
             } else if (err.message === "Foreign Key Constraint Violation") {
                 res.status(400).send({ error: "Invalid Arguments" });
             } else {
-                logger.error(error.stack);
+                logger.error(err.stack);
                 res.status(500).send({ error: "Failed to delete category" });
             }
         }

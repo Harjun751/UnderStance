@@ -168,6 +168,20 @@ describe("authenticated mock POST stance", () => {
             });
     });
 
+    test("should return 400 if multiple stances for same party on same issue", () => {
+        db.insertStance.mockRejectedValue(new Error("Unique Constraint Violation"));
+        return request(app)
+            .post("/stances")
+            .send(fakeStance)
+            .then((response) => {
+                expect(response.body).toEqual({
+                    error: "Invalid Arguments",
+                    details: "Party cannot have 2 stances on the same issue."
+                });
+                expect(response.statusCode).toBe(400);
+            });
+    });
+
     test("should return 400 if missing arguments", () => {
         return request(app)
             .post("/stances")
@@ -246,6 +260,33 @@ describe("authenticated mock PUT party", () => {
                     fakeStance.IssueID,
                     fakeStance.PartyID,
                 );
+            });
+    });
+
+    test("should return 404 for missing ID", () => {
+        db.updateStance.mockRejectedValue(new Error("Invalid Resource"));
+        return request(app)
+            .put("/stances")
+            .send(fakeStance)
+            .then((response) => {
+                expect(response.statusCode).toBe(404);
+                expect(response.body).toEqual({
+                    error: "Could not update stance with requested ID"
+                });
+            });
+    });
+
+    test("should return 400 for unique contraint violation", () => {
+        db.updateStance.mockRejectedValue(new Error("Unique Constraint Violation"));
+        return request(app)
+            .put("/stances")
+            .send(fakeStance)
+            .then((response) => {
+                expect(response.statusCode).toBe(400);
+                expect(response.body).toEqual({
+                    error: "Invalid Arguments",
+                    details: "Each party should only have 1 stance per issue.",
+                });
             });
     });
 
@@ -336,6 +377,7 @@ describe("authenticated mock DELETE stance", () => {
             .delete("/stances/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
+                expect(response.body).toEqual({ error: "Failed to delete stance" });
                 expect(db.deleteStance).toHaveBeenLastCalledWith(1);
             });
     });

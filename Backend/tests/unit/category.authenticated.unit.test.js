@@ -102,6 +102,19 @@ describe("authenticated mock PUT Category", () => {
             });
     });
 
+    test("should return 404 for missing value", () => {
+        db.updateCategory.mockRejectedValue(new Error("Invalid Resource"));
+        return request(app)
+            .put("/categories")
+            .send(fakeCategory)
+            .then((response) => {
+                expect(response.body).toEqual({
+                    error: "Could not update category with requested ID",
+                });
+                expect(response.statusCode).toBe(404);
+            });
+    });
+
     test("should return 400 if missing arguments", () => {
         return request(app)
             .put("/categories")
@@ -183,6 +196,9 @@ describe("authenticated mock DELETE Category", () => {
             .delete("/categories/dingus")
             .then((response) => {
                 expect(response.statusCode).toBe(400);
+                expect(response.body).toEqual({
+                    error: "Invalid Arguments"
+                });
             });
     });
 
@@ -202,6 +218,7 @@ describe("authenticated mock DELETE Category", () => {
             .delete("/categories/1")
             .then((response) => {
                 expect(response.statusCode).toBe(500);
+                expect(response.body).toEqual({error:"Failed to delete category"});
                 expect(db.deleteCategory).toHaveBeenLastCalledWith(1);
             });
     });

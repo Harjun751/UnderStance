@@ -95,6 +95,10 @@ describe("issueid validator", () => {
         expect(validator.validateID(2)).toBe(null);
     });
 
+    test("should fail on non number", async () => {
+        expect(validator.validateID("Hi!")).toBe("Not a valid number");
+    });
+
     test("should fail on invalid IssueID - NaN", async () => {
         expect(validator.validateID(Number("hi"))).toBe("No value provided");
     });
@@ -116,6 +120,10 @@ describe("active validator", () => {
 
     test("should pass on valid boolean false string", async () => {
         expect(validator.validateActive("false")).toBe(null);
+    });
+
+    test("should fail on invalid string", async () => {
+        expect(validator.validateActive("dingus")).toBe("Invalid boolean value");
     });
 
     test("should pass on valid boolean true", async () => {
@@ -215,7 +223,7 @@ describe("icon url validator", () => {
         expect(await validator.validateIcon("https://image.com")).toBe(null);
     });
 
-    test("should fail on invalid icon", async () => {
+    test("should fail on invalid resource", async () => {
         fetch.mockResolvedValueOnce({
             ok: null,
             headers: {
@@ -227,6 +235,27 @@ describe("icon url validator", () => {
             "Invalid URL - failed to reach",
         );
     });
+
+    test("should fail on invalid icon", async () => {
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            headers: {
+                get: (header) =>
+                    header === "content-type" ? "video/png" : null,
+            },
+        });
+        expect(await validator.validateIcon("12345")).toBe(
+            "Invalid URL - not an image",
+        );
+    });
+
+    test("should fail on invalid icon", async () => {
+        fetch.mockRejectedValueOnce(new Error("Failed!"));
+        expect(await validator.validateIcon("12345")).toBe(
+            "Failed to reach",
+        );
+    });
+
 
     test("should fail on invalid Icon - > 2083 chars", async () => {
         expect(
