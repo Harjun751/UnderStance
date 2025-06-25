@@ -93,7 +93,7 @@ const ReadStances = () => {
                 <SearchBar setSearch={setSearch} />
                 <h1>Stance Breakdown</h1>
                 <ul className={`question-containers`}>
-                    {questions.map((question) => {
+                    {questions.map((question, index) => {
                         // Filter stances for this question
                         const stancesForQuestion = stances.filter(
                             (s) => s.IssueID === question.IssueID,
@@ -133,7 +133,7 @@ const ReadStances = () => {
                                         }}
                                         onKeyPress={() => {}}
                                     >
-                                        Q{question.IssueID}:{" "}
+                                        Q{index+1}:{" "}
                                         {question.Description}
                                     </h2>
                                     <div className="header-right">
