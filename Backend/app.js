@@ -7,7 +7,7 @@ const morgan = require("morgan");
 app.use(morgan("combined"));
 
 app.get("/", (_req, res) => {
-	res.send("Hello World!");
+    res.send("Hello World!");
 });
 
 // prevent favico GET from leaking to secured routes

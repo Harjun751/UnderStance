@@ -9,14 +9,14 @@ const { requireValidAccessToken } = require("../utils/auth0.middleware");
 const securedRoutes = express.Router();
 
 securedRoutes.use(
-	express.json(),
-	/* CORS */
-	cors({
-		origin: config.adminOrigin,
-		methods: ["POST", "PUT", "DELETE"],
-	}),
-	/* Auth middleware that REQUIRES auth token */
-	requireValidAccessToken,
+    express.json(),
+    /* CORS */
+    cors({
+        origin: config.adminOrigin,
+        methods: ["POST", "PUT", "DELETE"],
+    }),
+    /* Auth middleware that REQUIRES auth token */
+    requireValidAccessToken,
 );
 
 securedRoutes.use(securedQuestionRoutes);
@@ -25,11 +25,11 @@ securedRoutes.use(securedPartyRoutes);
 securedRoutes.use(securedCategoryRoutes);
 
 securedRoutes.get("/authorized", async (req, res) => {
-	const auth = req.auth;
-	res.status(200).send({
-		message: "successfully authorized!",
-		token: auth.token,
-	});
+    const auth = req.auth;
+    res.status(200).send({
+        message: "successfully authorized!",
+        token: auth.token,
+    });
 });
 
 module.exports = securedRoutes;

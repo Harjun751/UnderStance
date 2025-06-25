@@ -15,18 +15,18 @@ routes.use(checkValidAccessToken);
  * Allows multiple origins, checks corsConfig origins
  * and allows if they match */
 const corsConfig = {
-	origins: [config.adminOrigin, config.frontendOrigin],
+    origins: [config.adminOrigin, config.frontendOrigin],
 };
 routes.use((req, res, next) => {
-	const origin = req.headers.origin;
-	if (corsConfig.origins.includes(origin)) {
-		res.setHeader("Access-Control-Allow-Origin", origin);
-		res.setHeader("Vary", "Origin");
-	}
-	res.header("Access-Control-Allow-Methods", "GET");
-	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-	res.header("Access-Control-Allow-Credentials", true);
-	return next();
+    const origin = req.headers.origin;
+    if (corsConfig.origins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+    }
+    res.header("Access-Control-Allow-Methods", "GET");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", true);
+    return next();
 });
 
 routes.use(questionRoutes);
