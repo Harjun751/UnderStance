@@ -1,0 +1,143 @@
+.management {
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-family: "Sansation", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.management-header {
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 25px;
+    border-bottom: solid rgba(0, 0, 0, 0.28);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.management-header-right {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    flex: 2;
+    padding-right: 1rem;
+}
+
+.button-management-add {
+    background: linear-gradient(90deg, rgba(34, 218, 255, 1) 0%, rgba(114, 111, 169, 1) 100%);
+    min-width: 200px;
+    min-height: 40px;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+}
+
+.management-sub {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+}
+
+.search-bar {
+    flex: 1 1 200px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.table-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    flex: 2;
+}
+
+.filter-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #DFDFDF;
+    font-size: 14px;
+}
+
+.table-filtered-count {
+    text-align: right;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    color: #777;
+}
+
+/* Rendered Table Styling */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: rgb(218, 218, 218);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table-header {
+    background-color: rgba(213, 213, 213, 0.32);
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    text-transform: capitalize;
+}
+
+.table-row {
+    /* Can consider removing if we wan a snappier feel */
+    transition: background-color 0.1s ease-in-out;
+}
+
+.table-row:nth-child(even) {
+    background-color: #E9E9E9;
+}
+
+.table-row:nth-child(odd) {
+    background-color: #F5F5F5;
+}
+
+
+.table-row:hover {
+    background-color: #BFE0FF;
+}
+
+.table-cell {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+}
+
+.table-empty {
+    color: #777;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
