@@ -7,10 +7,18 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
         next();
     }),
 }));
+const middleware = require("../../utils/auth0.middleware");
+jest.spyOn(middleware, "checkRequiredPermissions").mockImplementation(
+    (_requiredPermissions) => {
+        return (_req, _res, next) => {
+            next();
+        };
+    },
+);
 const app = require("../../app");
 const request = require("supertest");
-jest.mock("../../services/DAL");
-const db = require("../../services/DAL");
+jest.mock("../../utils/DAL");
+const db = require("../../utils/DAL");
 
 describe("authenticated mock GET quiz question", () => {
     test("should return 200 OK", () => {

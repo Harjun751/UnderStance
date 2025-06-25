@@ -4,7 +4,7 @@ const request = require("supertest");
 describe("CORS headers", () => {
     test("sets correct header on valid admin FE origin", async () => {
         const res = await request(app)
-            .get("/")
+            .get("/questions")
             .set("Origin", "http://localhost:5173");
 
         expect(res.headers["access-control-allow-origin"]).toBe(
@@ -14,7 +14,7 @@ describe("CORS headers", () => {
 
     test("sets correct header on valid FE origin", async () => {
         const res = await request(app)
-            .get("/")
+            .get("/questions")
             .set("Origin", "http://localhost:5174");
 
         expect(res.headers["access-control-allow-origin"]).toBe(
@@ -24,7 +24,7 @@ describe("CORS headers", () => {
 
     test("does not set header if invalid origin", async () => {
         const res = await request(app)
-            .get("/")
+            .get("/questions")
             .set("Origin", "http://malicious-site.com");
 
         expect(res.headers["access-control-allow-origin"]).toBeUndefined();

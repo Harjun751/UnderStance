@@ -8,11 +8,18 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
     }),
 }));
 
-global.fetch = jest.fn();
+const middleware = require("../../utils/auth0.middleware");
+jest.spyOn(middleware, "checkRequiredPermissions").mockImplementation(
+    (_requiredPermissions) => {
+        return (_req, _res, next) => {
+            next();
+        };
+    },
+);
 
 const request = require("supertest");
-jest.mock("../../services/DAL");
-const db = require("../../services/DAL");
+jest.mock("../../utils/DAL");
+const db = require("../../utils/DAL");
 const app = require("../../app");
 
 describe("authenticated mock POST category", () => {

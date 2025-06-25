@@ -98,6 +98,15 @@ describe("POST category", () => {
             false,
         );
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/categories")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("PUT category", () => {
@@ -153,6 +162,15 @@ describe("PUT category", () => {
             .send(invalidBody);
         // Check that 404 is returned
         expect(response.statusCode).toBe(404);
+    });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .put("/categories")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
     });
 });
 
@@ -214,5 +232,14 @@ describe("DELETE category", () => {
 
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(400);
+    });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete("/categories/2")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
     });
 });

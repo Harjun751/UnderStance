@@ -7,11 +7,25 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
         next();
     }),
 }));
+const middleware = require("../../utils/auth0.middleware");
+jest.spyOn(middleware, "checkRequiredPermissions").mockImplementation(
+    (_requiredPermissions) => {
+        return (_req, _res, next) => {
+            next();
+        };
+    },
+);
 
-global.fetch = jest.fn();
-
-// For image validation
-fetch.mockResolvedValue({
+const realFetch = global.fetch;
+const fakeFetch = jest.fn();
+global.fetch = jest.fn((url, options) => {
+    if (url.includes("auth0.com")) {
+        return realFetch(url, options);
+    } else {
+        return fakeFetch(url, options);
+    }
+});
+fakeFetch.mockResolvedValue({
     ok: true,
     headers: {
         get: (header) => (header === "content-type" ? "image/png" : null),
@@ -19,8 +33,8 @@ fetch.mockResolvedValue({
 });
 
 const request = require("supertest");
-jest.mock("../../services/DAL");
-const db = require("../../services/DAL");
+jest.mock("../../utils/DAL");
+const db = require("../../utils/DAL");
 const app = require("../../app");
 
 const parties = [

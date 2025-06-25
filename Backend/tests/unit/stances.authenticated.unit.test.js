@@ -8,12 +8,19 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
     }),
 }));
 
-// test when the issue/party does not exist?
+const middleware = require("../../utils/auth0.middleware");
+jest.spyOn(middleware, "checkRequiredPermissions").mockImplementation(
+    (_requiredPermissions) => {
+        return (_req, _res, next) => {
+            next();
+        };
+    },
+);
 
 const app = require("../../app");
 const request = require("supertest");
-jest.mock("../../services/DAL");
-const db = require("../../services/DAL");
+jest.mock("../../utils/DAL");
+const db = require("../../utils/DAL");
 
 const fakeStances = [
     {

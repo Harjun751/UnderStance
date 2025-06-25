@@ -220,6 +220,15 @@ describe("POST quiz question", () => {
             false,
         );
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/questions")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("PUT quiz question", () => {
@@ -310,6 +319,15 @@ describe("PUT quiz question", () => {
         // Check that 404 is returned
         expect(response.statusCode).toBe(404);
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .put("/questions")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("DELETE quiz question", () => {
@@ -358,5 +376,13 @@ describe("DELETE quiz question", () => {
 
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(400);
+    });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete("/questions/1")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
     });
 });
