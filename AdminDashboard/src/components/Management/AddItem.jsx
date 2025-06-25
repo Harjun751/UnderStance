@@ -5,7 +5,8 @@ const AddItem = ({
     headers = [],
     title = "Item",
     onClose,
-    onSubmit
+    onSubmit,
+    sampleItem = {}
 }) => {
     const initForm = {};
     headers.forEach((header) => {
@@ -17,6 +18,9 @@ const AddItem = ({
     const [formData, setFormData] = useState(initForm);
 
     const handleChange = (field, value) => {
+        if (typeof sampleItem[field] === "boolean") {
+            value = value === "True";
+        }
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
@@ -34,11 +38,20 @@ const AddItem = ({
                     {headers.filter(h => h !== "id").map((header) => (
                         <div key={header} className="form-group">
                             <label>{header}</label>
-                            <input
-                                type="text"
-                                value={formData[header]}
-                                onChange={(e) => handleChange(header, e.target.value)}
-                            />
+                            {typeof sampleItem[header] === "boolean" ? (
+                                <select
+                                    value={formData[header] === true ? "True" : "False"}
+                                    onChange={(e) => handleChange(header, e.target.value)}
+                                >
+                                    <option value="True">Agree</option>
+                                    <option value="False">Disagree</option>
+                                </select>
+                            ) : (
+                                <textarea
+                                    value={formData[header]}
+                                    onChange={(e) => handleChange(header, e.target.value)}
+                                />
+                            )}
                         </div>
                     ))}
                     <div className="modal-buttons">

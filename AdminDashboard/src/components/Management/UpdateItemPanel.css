@@ -1,0 +1,111 @@
+.side-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 300px;
+    width: 400px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(191, 191, 191, 0.95) 0%, rgba(86, 172, 255, 1) 100%);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    z-index: 1000;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: solid black;
+    transition: width 0.3s ease;
+}
+
+.side-panel.expanded {
+    width: 600px;
+}
+
+.side-panel h3 {
+    margin-top: 0rem;
+    text-align: center;
+    border-bottom: solid black;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.side-panel h4 {
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #424242;
+}
+
+.panel-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.panel-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    text-transform: capitalize;
+}
+
+.panel-form textarea{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical; /* Locks resizing to vertical only */
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.panel-form select {
+    width: 105%; /* Jank to make it look the same */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.side-panel.expanded > .panel-form select {
+    width: 103%;  /* Jank to make it look the same */
+}
+
+.panel-buttons {
+    display: grid;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.panel-submit {
+    padding: 8px 16px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.panel-cancel {
+    padding: 8px 16px;
+    background-color: #eee;
+    color: #333;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.expand-btn {
+    position: absolute;
+    background: transparent;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+}

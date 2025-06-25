@@ -52,7 +52,9 @@ h2{
     margin: 0;
 }
 
-h3 {
+h3,
+h4,
+textarea {
     font-family: "Sansation", sans-serif;
     font-style: normal;
     font-weight: unset;

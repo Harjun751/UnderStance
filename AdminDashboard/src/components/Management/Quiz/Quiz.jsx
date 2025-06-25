@@ -1,5 +1,5 @@
 import Management_Layout from "../Management_Layout";
-
+//import { MdQuiz  } from "react-icons/md";
 
 const Quiz = () => {
     const questions = [
@@ -9,9 +9,9 @@ const Quiz = () => {
         { id: 4, description: "japanese", summary: "worst", category: "people"},
     ];
     return (
-        <Management_Layout title={"Question"} data={questions}>
-            
-        </Management_Layout>
+        // <Management_Layout title={<><MdQuiz /> Question </>} data={questions}>
+        <Management_Layout title={<> Question </>} data={questions} /> 
+
     )
 }
 

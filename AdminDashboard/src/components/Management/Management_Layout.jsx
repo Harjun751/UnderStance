@@ -2,6 +2,8 @@ import Layout from "../general/Layout"
 import "./Management_Layout.css"
 import { useState, useMemo } from "react"
 import AddItem from "./AddItem";
+import UpdateItemPanel from "./UpdateItemPanel";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 const Management_Layout = ({title, data}) => {
     // For Table Filters
@@ -10,6 +12,9 @@ const Management_Layout = ({title, data}) => {
 
     // For AddItem Model
     const [showForm, setShowForm] = useState(false);
+
+    // For Side Panel
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const headers = useMemo(() => (data.length > 0 ? Object.keys(data[0]) : []), [data]);
 
@@ -68,11 +73,19 @@ const Management_Layout = ({title, data}) => {
                     </thead>
                     <tbody>
                         {filteredData.map((row, idx) => (
-                            <tr key={idx} className="table-row">
+                            <tr 
+                                key={idx} 
+                                className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
+                                onClick={() => setSelectedRow(row)}    
+                            >
                                 {headers.map((header) => (
                                     <td key={header} className="table-cell">
                                         {typeof row[header] === "boolean"
-                                            ? row[header] ? "True" : "False"
+                                            ? row[header] ? (
+                                                    <FaCheck className="boolean-true" />
+                                                ): (
+                                                    <FaTimes className="boolean-false" />
+                                                )
                                             : row[header]
                                         }
                                     </td>
@@ -124,7 +137,7 @@ const Management_Layout = ({title, data}) => {
                                 <option value="">All {header}</option>
                                 {uniqueValues[header].map((val) => (
                                     <option key={val} value={val}>
-                                        {val}
+                                        {val.toString()}
                                     </option>
                                 ))}
                             </select>
@@ -142,6 +155,18 @@ const Management_Layout = ({title, data}) => {
                         onClose={() => setShowForm(false)}
                         onSubmit={(item) => {
                             console.log("Added item:", item); //for debugging
+                            // Add logic here to submit updated
+                            setShowForm(false);
+                        }}
+                        sampleItem={data[0]} //sample data used to detect variable types
+                    />
+                )}
+                {selectedRow && (
+                    <UpdateItemPanel
+                        item={selectedRow}
+                        onClose={() => setSelectedRow(null)}
+                        onSubmit={(item) => {
+                            console.log("Updated item:", item); //for debugging
                             // Add logic here to submit updated
                             setShowForm(false);
                         }}
