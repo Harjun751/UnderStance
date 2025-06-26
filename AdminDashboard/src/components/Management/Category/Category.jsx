@@ -4,6 +4,7 @@ import Management_Layout from "../Management_Layout";
 const Category = () => {
     // Fetch Data
     // Pass data through to Management Layout.
+    //
 
     //Dummy data
     const categories = [
