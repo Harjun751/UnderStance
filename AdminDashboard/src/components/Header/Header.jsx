@@ -1,8 +1,11 @@
 
 import './Header.css';
 import { FaUser } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = ({ Title }) => {
+  const { user } = useAuth0();
+  console.log(JSON.stringify(user));
   return (
     <header className="header">
         <h1 className="header-title">
@@ -13,10 +16,10 @@ const Header = ({ Title }) => {
         <div className="header-right">
             <div className="user-info">
                 <div className="user-details">
-                    Admin Placeholder User  {/* Implement actual username later */}
+                  { user.name }
                 </div>
                 <div className="user-icon">
-                    <FaUser /> {/* Implement actual username later */}
+                    <img src={user.picture} />
                 </div>
             </div> 
         </div>
