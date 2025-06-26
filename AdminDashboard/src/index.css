@@ -39,8 +39,20 @@
     height: 100%;
     flex-direction: column;
     overflow-x: auto;
-    background: #c8c8c8; /* Replace with Image later*/
     box-sizing: border-box;
+}
+
+.page-container-body::before {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    background-size: 30%;
+    background-repeat: repeat;
+    background-blend-mode: lighten;
+    filter: contrast(40%);
+    mix-blend-mode: multiply;
+    inset: 0;
+    background-image: url("45-degree-fabric-light.png");
 }
 
 .title,

@@ -13,6 +13,7 @@ import {
 import { TbLogout2 } from "react-icons/tb";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 // LE WALL OF IMPORTS
 
 const Navbar = () => {
@@ -20,6 +21,7 @@ const Navbar = () => {
     const togglenavbar = () => {
         setCollapsed((prev) => !prev);
     };
+    const { logout } = useAuth0();
 
     return (
         <div className={`navbar ${collapsed ? "collapsed" : ""}`}>
@@ -113,7 +115,16 @@ const Navbar = () => {
                     <IoMdSettings />
                     {!collapsed && <span className="nav-text">Settings</span>}
                 </button>
-                <button type="button" className="footer-button">
+                <button type="button" className="footer-button"
+                        onClick={() => {
+                            logout({
+                                logoutParams: {
+                                    returnTo: window.location.origin,
+                                },
+                            });
+                        }}
+                        type="submit"
+                    >
                     <TbLogout2 />
                     {!collapsed && <span className="nav-text">Logout</span>}
                 </button>

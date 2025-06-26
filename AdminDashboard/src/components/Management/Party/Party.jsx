@@ -5,8 +5,8 @@ const Party = () => {
     //Dummy data
     const parties = [
         { id: 1, description: "lmao" },
-        { id: 2, description: "bussy" },
-        { id: 3, description: "femboys" },
+        { id: 2, description: "dingle" },
+        { id: 3, description: "finglebop" },
         { id: 4, description: "japanese" },
     ];
 

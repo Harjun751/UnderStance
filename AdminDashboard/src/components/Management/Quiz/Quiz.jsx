@@ -4,13 +4,13 @@ import Management_Layout from "../Management_Layout";
 const Quiz = () => {
     const questions = [
         { id: 1, description: "lmao", summary: "funny", category: "term" },
-        { id: 2, description: "bussy", summary: "best", category: "term" },
-        { id: 3, description: "femboys", summary: "best", category: "people" },
+        { id: 2, description: "dingle", summary: "wingle", category: "term" },
+        { id: 3, description: "finglebop", summary: "dinglesingle", category: "people" },
         {
             id: 4,
-            description: "japanese",
+            description: "test",
             summary: "worst",
-            category: "people",
+            category: "term",
         },
     ];
     return (

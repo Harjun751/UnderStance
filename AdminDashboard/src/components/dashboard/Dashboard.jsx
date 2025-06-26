@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../general/Layout";
 import { MdSpaceDashboard } from "react-icons/md";
-import TopBar from "./TopBar";
 import Loader from "../general/Loader";
 
 const Dashboard = () => {
@@ -50,7 +49,6 @@ const Dashboard = () => {
                     </>
                 }
             >
-                <TopBar />
                 <Loader message="Loading data..." />
             </Layout>
         );
@@ -63,7 +61,6 @@ const Dashboard = () => {
                 </>
             }
         >
-            <TopBar />
             <div>
                 Hi, you're logged in and authenticated with the token:{" "}
                 {authInfo.token}
