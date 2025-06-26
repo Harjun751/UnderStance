@@ -1,0 +1,35 @@
+const express = require("express");
+const cors = require("cors");
+const { securedQuestionRoutes } = require("./questions.route.js");
+const { securedStanceRoutes } = require("./stances.route.js");
+const { securedCategoryRoutes } = require("./categories.route.js");
+const { securedPartyRoutes } = require("./parties.route.js");
+const config = require("../utils/app-config");
+const { requireValidAccessToken } = require("../utils/auth0.middleware");
+const securedRoutes = express.Router();
+
+securedRoutes.use(
+    express.json(),
+    /* CORS */
+    cors({
+        origin: config.adminOrigin,
+        methods: ["POST", "PUT", "DELETE"],
+    }),
+    /* Auth middleware that REQUIRES auth token */
+    requireValidAccessToken,
+);
+
+securedRoutes.use(securedQuestionRoutes);
+securedRoutes.use(securedStanceRoutes);
+securedRoutes.use(securedPartyRoutes);
+securedRoutes.use(securedCategoryRoutes);
+
+securedRoutes.get("/authorized", async (req, res) => {
+    const auth = req.auth;
+    res.status(200).send({
+        message: "successfully authorized!",
+        token: auth.token,
+    });
+});
+
+module.exports = securedRoutes;

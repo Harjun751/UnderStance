@@ -276,6 +276,15 @@ describe("POST party", () => {
             false,
         );
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/parties")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("PUT party", () => {
@@ -360,6 +369,15 @@ describe("PUT party", () => {
         // Check that 404 is returned
         expect(response.statusCode).toBe(404);
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .put("/parties")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("DELETE party", () => {
@@ -410,5 +428,13 @@ describe("DELETE party", () => {
 
         // ASSERT: check that response was 200
         expect(response.statusCode).toBe(400);
+    });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete("/parties/1")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
     });
 });

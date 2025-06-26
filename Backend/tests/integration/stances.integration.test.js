@@ -206,6 +206,15 @@ describe("POST stance", () => {
             .send(invalidBody);
         expect(response.statusCode).toBe(400);
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .post("/stances")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("PUT stance", () => {
@@ -265,6 +274,15 @@ describe("PUT stance", () => {
             .send(invalidBody);
         expect(response.statusCode).toBe(404);
     });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .put("/stances")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`)
+            .send(reqBody);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
+    });
 });
 
 describe("DELETE stance", () => {
@@ -306,5 +324,13 @@ describe("DELETE stance", () => {
 
         // ASSERT: check that response was 400
         expect(response.statusCode).toBe(400);
+    });
+
+    test("403 for token with invalid scope", async () => {
+        const response = await request(`http://localhost:${appPort}`)
+            .delete("/stances/1")
+            .set("authorization", `Bearer ${global.unprivilegedAuthToken}`);
+        // Check that 403 is returned
+        expect(response.statusCode).toBe(403);
     });
 });

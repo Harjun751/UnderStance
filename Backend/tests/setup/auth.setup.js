@@ -6,10 +6,19 @@ if (!process.env.CI) {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 (async () => {
+    global.authToken = await fetchWith(
+        process.env.AUTH0_PRIVILEGED_CLIENT_ID?.trim(),
+        process.env.AUTH0_PRIVILEGED_CLIENT_SECRET?.trim(),
+    );
+    global.unprivilegedAuthToken = await fetchWith(
+        process.env.AUTH0_CLIENT_ID?.trim(),
+        process.env.AUTH0_CLIENT_SECRET?.trim(),
+    );
+})();
+
+async function fetchWith(client_id, client_secret) {
     const maxRetries = 3;
     let attempt = 0;
-    let authToken = null;
-
     while (attempt < maxRetries) {
         try {
             const res = await fetch(
@@ -18,8 +27,8 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        client_id: process.env.AUTH0_CLIENT_ID?.trim(),
-                        client_secret: process.env.AUTH0_CLIENT_SECRET?.trim(),
+                        client_id: client_id,
+                        client_secret: client_secret,
                         audience: process.env.AUTH0_AUDIENCE?.trim(),
                         grant_type: "client_credentials",
                     }),
@@ -32,8 +41,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
                 throw new Error(`Auth0 error: ${data.error || res.status}`);
             }
 
-            authToken = data.access_token;
-            break;
+            return data.access_token;
         } catch (err) {
             console.error(`Attempt ${attempt + 1} failed with: `, err.message);
             attempt++;
@@ -46,6 +54,4 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
             }
         }
     }
-
-    global.authToken = authToken;
-})();
+}

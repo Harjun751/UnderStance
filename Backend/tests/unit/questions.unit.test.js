@@ -1,7 +1,7 @@
 const app = require("../../app");
 const request = require("supertest");
-jest.mock("../../services/DAL");
-const db = require("../../services/DAL");
+jest.mock("../../utils/DAL");
+const db = require("../../utils/DAL");
 
 describe("mock GET quiz question", () => {
     test("should return 200 OK", () => {

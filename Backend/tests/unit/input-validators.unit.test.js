@@ -1,7 +1,21 @@
-const validator = require("../../services/InputValidation");
+const validator = require("../../utils/input-validation");
 
 // used for image validation
-global.fetch = jest.fn();
+const realFetch = global.fetch;
+const fakeFetch = jest.fn();
+global.fetch = jest.fn((url, options) => {
+    if (url.includes("auth0.com")) {
+        return realFetch(url, options);
+    } else {
+        return fakeFetch(url, options);
+    }
+});
+fakeFetch.mockResolvedValue({
+    ok: true,
+    headers: {
+        get: (header) => (header === "content-type" ? "image/png" : null),
+    },
+});
 
 describe("description validator", () => {
     test("should pass on valid description", async () => {

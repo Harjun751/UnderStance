@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 const secrets = require("./secrets");
-const logger = require("../logger");
+const logger = require("./logger");
 
 let pool;
 

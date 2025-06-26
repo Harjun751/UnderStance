@@ -11,7 +11,7 @@ Pool.mockReturnValue({
     query: mockQuery,
 });
 
-const dal = require("../../services/DAL");
+const dal = require("../../utils/DAL");
 
 describe("mock GET question", () => {
     test("should return rows from Issue", async () => {

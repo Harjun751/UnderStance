@@ -1,4 +1,4 @@
-const logger = require("../logger");
+const logger = require("./logger");
 
 function validateData(validators, data) {
     const invalidFields = Object.entries(validators)
