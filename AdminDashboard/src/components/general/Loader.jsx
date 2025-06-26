@@ -5,7 +5,7 @@ export default ({ message, style }) => {
         <div class="loader-container">
             <div style={style}>
                 <span class="loader"></span>
-                <h3>{ message }</h3>
+                <h3>{message}</h3>
             </div>
         </div>
     );

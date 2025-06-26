@@ -1,6 +1,9 @@
-
 .header {
-    background: linear-gradient(90deg, rgba(34, 218, 255, 1) 0%, rgba(114, 111, 169, 1) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(34, 218, 255, 1) 0%,
+        rgba(114, 111, 169, 1) 100%
+    );
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     padding: 1rem 1.5rem;
     display: flex;

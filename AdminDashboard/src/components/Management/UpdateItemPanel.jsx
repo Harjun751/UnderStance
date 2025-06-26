@@ -19,10 +19,10 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
         if (typeof formData[field] === "boolean") {
             value = value === "True";
         }
-        
-        setFormData(prev => ({
+
+        setFormData((prev) => ({
             ...prev,
-            [field]: value
+            [field]: value,
         }));
     };
 
@@ -41,20 +41,14 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
     if (!item) return null;
 
     return (
-        <div 
-            className={`side-panel ${isExpanded ? "expanded" : ""}`}
-        >
-            <button 
-                type="button"
-                className="close-btn" 
-                onClick={onClose}
-            >
+        <div className={`side-panel ${isExpanded ? "expanded" : ""}`}>
+            <button type="button" className="close-btn" onClick={onClose}>
                 <FaTimes />
             </button>
             <button
                 type="button"
                 className="expand-btn"
-                onClick={() => setIsExpanded(prev => !prev)}
+                onClick={() => setIsExpanded((prev) => !prev)}
                 title={isExpanded ? "Collapse Panel" : "Expand Panel"}
             >
                 {isExpanded ? <IoMdArrowDropright /> : <IoMdArrowDropleft />}
@@ -70,7 +64,9 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
                             <select
                                 id={key}
                                 value={value ? "True" : "False"}
-                                onChange={(e) => handleChange(key, e.target.value)}
+                                onChange={(e) =>
+                                    handleChange(key, e.target.value)
+                                }
                             >
                                 <option value="True">Agree</option>
                                 <option value="False">Disagree</option>
@@ -79,7 +75,9 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
                             <textarea
                                 id={key}
                                 value={value}
-                                onChange={(e) => handleChange(key, e.target.value)}
+                                onChange={(e) =>
+                                    handleChange(key, e.target.value)
+                                }
                                 disabled={key.toLowerCase() === "id"}
                                 rows={2}
                             />
@@ -90,16 +88,23 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
                     <button type="submit" className="panel-submit">
                         Update Entry
                     </button>
-                    <button type="button" onClick={handleDelete} className="panel-delete">
+                    <button
+                        type="button"
+                        onClick={handleDelete}
+                        className="panel-delete"
+                    >
                         Delete Entry
                     </button>
-                    <button type="button" onClick={onClose} className="panel-cancel">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="panel-cancel"
+                    >
                         Cancel
                     </button>
                 </div>
             </form>
         </div>
-        
     );
 };
 

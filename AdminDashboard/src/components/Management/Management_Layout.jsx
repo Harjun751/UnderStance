@@ -1,11 +1,11 @@
-import Layout from "../general/Layout"
-import "./Management_Layout.css"
-import { useState, useMemo } from "react"
+import Layout from "../general/Layout";
+import "./Management_Layout.css";
+import { useState, useMemo } from "react";
 import AddItem from "./AddItem";
 import UpdateItemPanel from "./UpdateItemPanel";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
-const Management_Layout = ({title, data}) => {
+const Management_Layout = ({ title, data }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
@@ -16,7 +16,10 @@ const Management_Layout = ({title, data}) => {
     // For Side Panel
     const [selectedRow, setSelectedRow] = useState(null);
 
-    const headers = useMemo(() => (data.length > 0 ? Object.keys(data[0]) : []), [data]);
+    const headers = useMemo(
+        () => (data.length > 0 ? Object.keys(data[0]) : []),
+        [data],
+    );
 
     // Unique values for each column for filter dropdowns
     const uniqueValues = useMemo(() => {
@@ -32,13 +35,15 @@ const Management_Layout = ({title, data}) => {
         return data.filter((row) => {
             // Apply search
             const matchesSearch = Object.values(row).some((val) =>
-                val?.toString().toLowerCase().includes(search.toLowerCase())
+                val?.toString().toLowerCase().includes(search.toLowerCase()),
             );
 
             // Apply dropdown filters
-            const matchesFilters = Object.entries(filters).every(([key, val]) => {
-                return val === "" || String(row[key]) === val;
-            });
+            const matchesFilters = Object.entries(filters).every(
+                ([key, val]) => {
+                    return val === "" || String(row[key]) === val;
+                },
+            );
 
             return matchesSearch && matchesFilters;
         });
@@ -50,11 +55,7 @@ const Management_Layout = ({title, data}) => {
 
     const renderTable = () => {
         if (!Array.isArray(data) || data.length === 0) {
-            return (
-                <div className="table-empty">
-                    No data found in table.
-                </div>
-            );
+            return <div className="table-empty">No data found in table.</div>;
         }
 
         const headers = Object.keys(data[0]);
@@ -73,21 +74,22 @@ const Management_Layout = ({title, data}) => {
                     </thead>
                     <tbody>
                         {filteredData.map((row) => (
-                            <tr 
-                                key={row} 
+                            <tr
+                                key={row}
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
-                                onClick={() => setSelectedRow(row)}    
+                                onClick={() => setSelectedRow(row)}
                             >
                                 {headers.map((header) => (
                                     <td key={header} className="table-cell">
-                                        {typeof row[header] === "boolean"
-                                            ? row[header] ? (
-                                                    <FaCheck className="boolean-true" />
-                                                ): (
-                                                    <FaTimes className="boolean-false" />
-                                                )
-                                            : row[header]
-                                        }
+                                        {typeof row[header] === "boolean" ? (
+                                            row[header] ? (
+                                                <FaCheck className="boolean-true" />
+                                            ) : (
+                                                <FaTimes className="boolean-false" />
+                                            )
+                                        ) : (
+                                            row[header]
+                                        )}
                                     </td>
                                 ))}
                             </tr>
@@ -96,13 +98,13 @@ const Management_Layout = ({title, data}) => {
                 </table>
             </div>
         );
-    }
+    };
     return (
         <Layout title={title}>
             {/* Implement Dynamic Table Design */}
             <div className="management">
                 <div className="management-header">
-                    {/* pass value */} 
+                    {/* pass value */}
                     {title} List
                     <div className="management-header-right">
                         <button
@@ -131,7 +133,9 @@ const Management_Layout = ({title, data}) => {
                             <select
                                 key={header}
                                 value={filters[header] || ""}
-                                onChange={(e) => handleFilterChange(header, e.target.value)}
+                                onChange={(e) =>
+                                    handleFilterChange(header, e.target.value)
+                                }
                                 className="filter-dropdown"
                             >
                                 <option value="">All {header}</option>
@@ -179,7 +183,7 @@ const Management_Layout = ({title, data}) => {
                 )}
             </div>
         </Layout>
-    )
-}
+    );
+};
 
 export default Management_Layout;

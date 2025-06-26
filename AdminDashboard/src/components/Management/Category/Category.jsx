@@ -8,13 +8,13 @@ const Category = () => {
 
     //Dummy data
     const categories = [
-        { id: 1, category: "term"},
-        { id: 2, category: "people"},
+        { id: 1, category: "term" },
+        { id: 2, category: "people" },
     ];
     return (
         // <Management_Layout title={<><BiSolidCategoryAlt /> Category </>} data={categories}>
         <Management_Layout title={<> Category </>} data={categories} />
-    )
-}
+    );
+};
 
 export default Category;

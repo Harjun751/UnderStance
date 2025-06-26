@@ -7,7 +7,7 @@ describe("Navbar Component", () => {
         render(
             <MemoryRouter>
                 <Navbar />
-            </MemoryRouter>
+            </MemoryRouter>,
         );
     });
 
@@ -34,7 +34,9 @@ describe("Navbar Component", () => {
     });
 
     test("toggles collapsed state on toggle button click", () => {
-        const toggleButton = screen.getByRole("button", { name: /collapse navbar|expand navbar/i });
+        const toggleButton = screen.getByRole("button", {
+            name: /collapse navbar|expand navbar/i,
+        });
 
         // Initially expanded, logo text visible
         expect(screen.getByText(/understance/i)).toBeInTheDocument();

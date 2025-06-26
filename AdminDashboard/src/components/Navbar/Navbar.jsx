@@ -2,10 +2,14 @@ import "./Navbar.css";
 import { FaBuildingColumns } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { GiInjustice } from "react-icons/gi";
-import { MdQuiz, MdSpaceDashboard  } from "react-icons/md";
+import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
 import { FaFlag } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
-import { IoMdArrowDropright, IoMdArrowDropleft, IoMdSettings } from "react-icons/io";
+import {
+    IoMdArrowDropright,
+    IoMdArrowDropleft,
+    IoMdSettings,
+} from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -14,11 +18,11 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
     const [collapsed, setCollapsed] = useState(false);
     const togglenavbar = () => {
-        setCollapsed(prev => !prev);
+        setCollapsed((prev) => !prev);
     };
 
     return (
-        <div className={`navbar ${collapsed ? 'collapsed' : ''}`}>
+        <div className={`navbar ${collapsed ? "collapsed" : ""}`}>
             <div className="navbar-header">
                 <div className="navbar-logo">
                     <FaBuildingColumns />
@@ -31,32 +35,41 @@ const Navbar = () => {
                 <div className="navbar-section">
                     <div className="navbar-title">
                         <h3>Home</h3>
-                        <button 
+                        <button
                             type="button"
-                            className="toggle-button" 
+                            className="toggle-button"
                             onClick={togglenavbar}
-                            aria-label={collapsed ? "Expand Navbar" : "Collapse Navbar"}
+                            aria-label={
+                                collapsed ? "Expand Navbar" : "Collapse Navbar"
+                            }
                         >
-                            {collapsed ? <IoMdArrowDropleft /> : <IoMdArrowDropright />}
+                            {collapsed ? (
+                                <IoMdArrowDropleft />
+                            ) : (
+                                <IoMdArrowDropright />
+                            )}
                         </button>
                     </div>
                 </div>
 
                 <nav className="navbar-list">
-                    <NavLink 
+                    <NavLink
                         to="/home"
-                        className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                        className={({ isActive }) =>
+                            `nav-item ${isActive ? "active" : ""}`
+                        }
                         onClick={togglenavbar}
                     >
                         <MdSpaceDashboard />
-                        {!collapsed && <span className="nav-text">Dashboard</span>}
+                        {!collapsed && (
+                            <span className="nav-text">Dashboard</span>
+                        )}
                     </NavLink>
-                    <NavLink 
-                        to="/analytics"
-                        className="nav-item"
-                    >
+                    <NavLink to="/analytics" className="nav-item">
                         <SiGoogleanalytics />
-                        {!collapsed && <span className="nav-text">Analytics</span>}
+                        {!collapsed && (
+                            <span className="nav-text">Analytics</span>
+                        )}
                     </NavLink>
                 </nav>
 
@@ -67,36 +80,25 @@ const Navbar = () => {
                     </div>
                 </div>
                 <nav className="navbar-list">
-                    <NavLink 
-                        to="/category"
-                        className="nav-item"
-                    >
+                    <NavLink to="/category" className="nav-item">
                         <BiSolidCategoryAlt />
-                        {!collapsed && <span className="nav-text">Category</span>}
+                        {!collapsed && (
+                            <span className="nav-text">Category</span>
+                        )}
                     </NavLink>
-                    <NavLink 
-                        to="/quiz"
-                        className="nav-item"
-                    >
+                    <NavLink to="/quiz" className="nav-item">
                         <MdQuiz />
                         {!collapsed && <span className="nav-text">Quiz</span>}
                     </NavLink>
-                    <NavLink 
-                        to="/stance"
-                        className="nav-item"
-                    >
+                    <NavLink to="/stance" className="nav-item">
                         <GiInjustice />
                         {!collapsed && <span className="nav-text">Stance</span>}
                     </NavLink>
-                    <NavLink 
-                        to="/party"
-                        className="nav-item"
-                    >
+                    <NavLink to="/party" className="nav-item">
                         <FaFlag />
                         {!collapsed && <span className="nav-text">Party</span>}
                     </NavLink>
                 </nav>
-
             </div>
 
             {/* Footer */}
@@ -108,7 +110,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <button type="button" className="footer-button">
-                    <IoMdSettings  />
+                    <IoMdSettings />
                     {!collapsed && <span className="nav-text">Settings</span>}
                 </button>
                 <button type="button" className="footer-button">
@@ -117,7 +119,7 @@ const Navbar = () => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;

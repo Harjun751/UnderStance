@@ -5,7 +5,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Wrapper({ children }) {
     const { isLoading, error } = useAuth0();
     if (isLoading) {
-        return <Loader message="Initializing app..." style={{ marginTop: '100px' }}/>
+        return (
+            <Loader
+                message="Initializing app..."
+                style={{ marginTop: "100px" }}
+            />
+        );
     }
     if (error) {
         console.error(error);

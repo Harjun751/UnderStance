@@ -17,13 +17,13 @@ describe("AddItem Component", () => {
 
     test("renders form with headers excluding id", () => {
         render(
-        <AddItem
-            headers={headers}
-            title={title}
-            onClose={onClose}
-            onSubmit={onSubmit}
-            sampleItem={sampleItem}
-        />
+            <AddItem
+                headers={headers}
+                title={title}
+                onClose={onClose}
+                onSubmit={onSubmit}
+                sampleItem={sampleItem}
+            />,
         );
 
         expect(screen.getByText(`Add New ${title}`)).toBeInTheDocument();
@@ -36,21 +36,25 @@ describe("AddItem Component", () => {
         expect(screen.getByText("active")).toBeInTheDocument();
 
         // textarea for "name"
-        expect(screen.getByRole("textbox", { name: /name/i })).toBeInTheDocument();
+        expect(
+            screen.getByRole("textbox", { name: /name/i }),
+        ).toBeInTheDocument();
 
         // select for "active"
-        expect(screen.getByRole("combobox", { name: /active/i })).toBeInTheDocument();
+        expect(
+            screen.getByRole("combobox", { name: /active/i }),
+        ).toBeInTheDocument();
     });
 
     test("handles text input and boolean select changes", () => {
         render(
-        <AddItem
-            headers={headers}
-            title={title}
-            onClose={onClose}
-            onSubmit={onSubmit}
-            sampleItem={sampleItem}
-        />
+            <AddItem
+                headers={headers}
+                title={title}
+                onClose={onClose}
+                onSubmit={onSubmit}
+                sampleItem={sampleItem}
+            />,
         );
 
         const nameInput = screen.getByRole("textbox", { name: /name/i });
@@ -70,13 +74,13 @@ describe("AddItem Component", () => {
 
     test("calls onClose when Cancel button clicked", () => {
         render(
-        <AddItem
-            headers={headers}
-            title={title}
-            onClose={onClose}
-            onSubmit={onSubmit}
-            sampleItem={sampleItem}
-        />
+            <AddItem
+                headers={headers}
+                title={title}
+                onClose={onClose}
+                onSubmit={onSubmit}
+                sampleItem={sampleItem}
+            />,
         );
 
         const cancelBtn = screen.getByRole("button", { name: /cancel/i });
@@ -88,13 +92,13 @@ describe("AddItem Component", () => {
 
     test("calls onSubmit with form data and onClose on form submit", () => {
         render(
-        <AddItem
-            headers={headers}
-            title={title}
-            onClose={onClose}
-            onSubmit={onSubmit}
-            sampleItem={sampleItem}
-        />
+            <AddItem
+                headers={headers}
+                title={title}
+                onClose={onClose}
+                onSubmit={onSubmit}
+                sampleItem={sampleItem}
+            />,
         );
 
         const textareas = screen.getAllByRole("textbox");
@@ -102,8 +106,10 @@ describe("AddItem Component", () => {
 
         const selects = screen.getAllByRole("combobox");
         const activeSelect = selects[0]; // first select
-        
-        const submitBtn = screen.getByRole("button", { name: /save question/i });
+
+        const submitBtn = screen.getByRole("button", {
+            name: /save question/i,
+        });
 
         // Fill form
         fireEvent.change(nameInput, { target: { value: "Submitted Name" } });
@@ -113,8 +119,8 @@ describe("AddItem Component", () => {
         fireEvent.click(submitBtn);
 
         expect(onSubmit).toHaveBeenCalledWith({
-        name: "Submitted Name",
-        active: false, // note conversion from "False" string to boolean false
+            name: "Submitted Name",
+            active: false, // note conversion from "False" string to boolean false
         });
 
         expect(onClose).toHaveBeenCalledTimes(1);

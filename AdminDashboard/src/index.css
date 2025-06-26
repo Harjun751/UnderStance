@@ -39,13 +39,13 @@
     height: 100%;
     flex-direction: column;
     overflow-x: auto;
-    background: #c8c8c8;  /* Replace with Image later*/
+    background: #c8c8c8; /* Replace with Image later*/
     box-sizing: border-box;
 }
 
 .title,
 h1,
-h2{
+h2 {
     font-family: "DM Serif Display", serif;
     font-style: normal;
     font-weight: unset;

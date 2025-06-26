@@ -133,8 +133,7 @@ const ReadStances = () => {
                                         }}
                                         onKeyPress={() => {}}
                                     >
-                                        Q{index+1}:{" "}
-                                        {question.Description}
+                                        Q{index + 1}: {question.Description}
                                     </h2>
                                     <div className="header-right">
                                         {userAnswers[question.IssueID]

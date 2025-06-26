@@ -1,6 +1,10 @@
 .navbar {
-    background: linear-gradient(90deg,rgba(29, 45, 69, 1) 0%, rgba(34, 50, 73, 1) 100%);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: linear-gradient(
+        90deg,
+        rgba(29, 45, 69, 1) 0%,
+        rgba(34, 50, 73, 1) 100%
+    );
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 16rem;
     display: flex;
     flex-direction: column;
@@ -10,7 +14,7 @@
     z-index: 10;
     margin: 0;
     background-color: #f3f4f6;
-    color: #FFFFFF;
+    color: #ffffff;
     transition: width 0.3s ease;
 }
 
@@ -25,7 +29,7 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 9999px;
-    background-color: #4F46E5;
+    background-color: #4f46e5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +40,7 @@
     margin-left: 0.75rem;
     font-size: 1.25rem;
     font-weight: bold;
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: "DM Serif Display", serif;
 }
 
@@ -44,7 +48,7 @@
     flex: 1;
     overflow-y: auto;
     padding-top: 1rem;
-    padding-bottom: 1rem; 
+    padding-bottom: 1rem;
     font-family: "Sansation", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -74,7 +78,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .toggle-button:hover {
@@ -90,7 +94,7 @@
     display: flex;
     align-items: center;
     padding: 1rem 1rem;
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 0.5rem;
     margin-top: 0.25rem;
     text-decoration: none;
@@ -102,14 +106,22 @@
 
 .nav-item:hover {
     /* background-color: #EEF2FF; */
-    background: linear-gradient(90deg,rgba(114, 111, 169, 1) 0%, rgba(34, 218, 255, 1) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(114, 111, 169, 1) 0%,
+        rgba(34, 218, 255, 1) 100%
+    );
     color: black;
 }
 
 .nav-item.active {
     color: black;
     /* background-color: #EEF2FF; */
-    background: linear-gradient(90deg,rgba(114, 111, 169, 1) 0%, rgba(34, 218, 255, 1) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(114, 111, 169, 1) 0%,
+        rgba(34, 218, 255, 1) 100%
+    );
 }
 
 .nav-item i {
@@ -125,7 +137,6 @@
     padding: 1rem;
     border-top: 1px solid #e5e7eb;
 }
-
 
 .footer-button {
     margin-top: 1rem;
@@ -151,7 +162,6 @@
 .navbar.collapsed {
     width: 5rem; /* shrink width */
 }
-
 
 .navbar.collapsed .logo-text,
 .navbar.collapsed .nav-text {
