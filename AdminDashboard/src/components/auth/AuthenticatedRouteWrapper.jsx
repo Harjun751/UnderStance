@@ -8,9 +8,10 @@ const base = ({ children }) => {
 };
 
 export default withAuthenticationRequired(base, {
-    onRedirecting: () => 
-            <Loader
-                message="Redirecting you to the login page..."
-                style={{ marginTop: "100px" }}
-            />
+    onRedirecting: () => (
+        <Loader
+            message="Redirecting you to the login page..."
+            style={{ marginTop: "100px" }}
+        />
+    ),
 });
