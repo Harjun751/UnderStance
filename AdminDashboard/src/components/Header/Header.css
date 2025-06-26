@@ -1,0 +1,63 @@
+.header {
+    background: linear-gradient(
+        90deg,
+        rgba(34, 218, 255, 1) 0%,
+        rgba(114, 111, 169, 1) 100%
+    );
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.header-title {
+    font-size: 1.85rem;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: "Sansation", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-icon-text svg {
+    vertical-align: top;
+    font-size: 2rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    display: flex;
+}
+
+.user-icon img {
+    max-width: inherit;
+    max-height: inherit;
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+}
+
+.user-details {
+    margin-right: 0.75rem;
+    color: #ffffff;
+    font-family: "Sansation", sans-serif;
+}

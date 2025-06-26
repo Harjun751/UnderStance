@@ -30,7 +30,9 @@ async function getQuestions(isAuthenticated) {
         FROM "Issue" i
         INNER JOIN "Category" c
         ON i."CategoryID" = c."CategoryID"
-        WHERE "Active" = true`;
+        WHERE "Active" = true
+        ORDER BY i."IssueID"
+        `;
     }
     try {
         const rows = await pool.query(query);

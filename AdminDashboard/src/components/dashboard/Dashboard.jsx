@@ -1,8 +1,10 @@
-import TopBar from "./TopBar";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Layout from "../general/Layout";
+import { MdSpaceDashboard } from "react-icons/md";
+import Loader from "../general/Loader";
 
-export default () => {
+const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
@@ -38,15 +40,33 @@ export default () => {
         fetchData();
     }, [getAccessTokenSilently]);
 
-    if (loading) return <div>getting auth info...</div>;
+    if (loading)
+        return (
+            <Layout
+                title={
+                    <>
+                        <MdSpaceDashboard /> Dashboard
+                    </>
+                }
+            >
+                <Loader message="Loading data..." />
+            </Layout>
+        );
 
     return (
-        <div class="dashboard-container page-container">
-            <TopBar />
+        <Layout
+            title={
+                <>
+                    <MdSpaceDashboard /> Dashboard
+                </>
+            }
+        >
             <div>
                 Hi, you're logged in and authenticated with the token:{" "}
                 {authInfo.token}
             </div>
-        </div>
+        </Layout>
     );
 };
+
+export default Dashboard;
