@@ -19,7 +19,7 @@ const Header = ({ Title }) => {
                   { user.name }
                 </div>
                 <div className="user-icon">
-                    <img src={user.picture} />
+                    <img src={user.picture} alt={<FaUser />}/>
                 </div>
             </div> 
         </div>

@@ -37,20 +37,22 @@ const AddItem = ({
                 <form onSubmit={handleSubmit} className="modal-form">
                     {headers.filter(h => h !== "id").map((header) => (
                         <div key={header} className="form-group">
-                            <label>{header}</label>
+                            <label htmlFor={`additem-${header}`}>{header}</label>
                             {typeof sampleItem[header] === "boolean" ? (
-                                <select
-                                    value={formData[header] === true ? "True" : "False"}
-                                    onChange={(e) => handleChange(header, e.target.value)}
-                                >
-                                    <option value="True">Agree</option>
-                                    <option value="False">Disagree</option>
-                                </select>
+                            <select
+                                id={`additem-${header}`}
+                                value={formData[header] === true ? "True" : "False"}
+                                onChange={(e) => handleChange(header, e.target.value)}
+                            >
+                                <option value="True">Agree</option>
+                                <option value="False">Disagree</option>
+                            </select>
                             ) : (
-                                <textarea
-                                    value={formData[header]}
-                                    onChange={(e) => handleChange(header, e.target.value)}
-                                />
+                            <textarea
+                                id={`additem-${header}`}
+                                value={formData[header]}
+                                onChange={(e) => handleChange(header, e.target.value)}
+                            />
                             )}
                         </div>
                     ))}

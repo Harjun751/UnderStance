@@ -1,6 +1,5 @@
 import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
-import TopBar from "../dashboard/TopBar";
 
 const Layout = ({ children, title }) => {
     return (

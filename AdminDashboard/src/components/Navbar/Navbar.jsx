@@ -31,7 +31,12 @@ const Navbar = () => {
                 <div className="navbar-section">
                     <div className="navbar-title">
                         <h3>Home</h3>
-                        <button className="toggle-button" onClick={togglenavbar}>
+                        <button 
+                            type="button"
+                            className="toggle-button" 
+                            onClick={togglenavbar}
+                            aria-label={collapsed ? "Expand Navbar" : "Collapse Navbar"}
+                        >
                             {collapsed ? <IoMdArrowDropleft /> : <IoMdArrowDropright />}
                         </button>
                     </div>
@@ -102,11 +107,11 @@ const Navbar = () => {
                         <h3>Account</h3>
                     </div>
                 </div>
-                <button className="footer-button">
+                <button type="button" className="footer-button">
                     <IoMdSettings  />
                     {!collapsed && <span className="nav-text">Settings</span>}
                 </button>
-                <button className="footer-button">
+                <button type="button" className="footer-button">
                     <TbLogout2 />
                     {!collapsed && <span className="nav-text">Logout</span>}
                 </button>

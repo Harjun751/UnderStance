@@ -72,9 +72,9 @@ const Management_Layout = ({title, data}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.map((row, idx) => (
+                        {filteredData.map((row) => (
                             <tr 
-                                key={idx} 
+                                key={row} 
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}    
                             >
@@ -167,6 +167,11 @@ const Management_Layout = ({title, data}) => {
                         onClose={() => setSelectedRow(null)}
                         onSubmit={(item) => {
                             console.log("Updated item:", item); //for debugging
+                            // Add logic here to submit updated
+                            setShowForm(false);
+                        }}
+                        onDelete={(item) => {
+                            console.log("Deleted item:", item); //for debugging
                             // Add logic here to submit updated
                             setShowForm(false);
                         }}

@@ -1,8 +1,9 @@
 import "./UpdateItemPanel.css";
 import { useEffect, useState } from "react";
 import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
+import { FaTimes } from "react-icons/fa";
 
-const UpdateItemPanel = ({ item, onClose, onSubmit }) => {
+const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
     const [formData, setFormData] = useState({});
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -31,20 +32,27 @@ const UpdateItemPanel = ({ item, onClose, onSubmit }) => {
         onClose();
     };
 
+    const handleDelete = (e) => {
+        e.preventDefault();
+        onDelete(formData);
+        onClose();
+    };
+
     if (!item) return null;
 
     return (
         <div 
-             className={`side-panel ${isExpanded ? "expanded" : ""}`}
-            onClick={(e) => e.stopPropagation()}
+            className={`side-panel ${isExpanded ? "expanded" : ""}`}
         >
             <button 
+                type="button"
                 className="close-btn" 
                 onClick={onClose}
             >
-                ×
+                <FaTimes />
             </button>
             <button
+                type="button"
                 className="expand-btn"
                 onClick={() => setIsExpanded(prev => !prev)}
                 title={isExpanded ? "Collapse Panel" : "Expand Panel"}
@@ -80,7 +88,10 @@ const UpdateItemPanel = ({ item, onClose, onSubmit }) => {
                 ))}
                 <div className="panel-buttons">
                     <button type="submit" className="panel-submit">
-                        Update
+                        Update Entry
+                    </button>
+                    <button type="button" onClick={handleDelete} className="panel-delete">
+                        Delete Entry
                     </button>
                     <button type="button" onClick={onClose} className="panel-cancel">
                         Cancel

@@ -68,7 +68,7 @@
 }
 
 .panel-buttons {
-    display: grid;
+    display: flex;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 1rem;
@@ -77,6 +77,15 @@
 .panel-submit {
     padding: 8px 16px;
     background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.panel-delete {
+    padding: 6px 16px;
+    background-color: #cc0000;
     color: white;
     border: none;
     border-radius: 6px;
