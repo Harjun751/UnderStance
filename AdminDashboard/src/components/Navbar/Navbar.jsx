@@ -123,7 +123,6 @@ const Navbar = () => {
                                 },
                             });
                         }}
-                        type="submit"
                     >
                     <TbLogout2 />
                     {!collapsed && <span className="nav-text">Logout</span>}
