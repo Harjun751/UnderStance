@@ -115,16 +115,18 @@ const Navbar = () => {
                     <IoMdSettings />
                     {!collapsed && <span className="nav-text">Settings</span>}
                 </button>
-                <button type="button" className="footer-button"
-                        onClick={() => {
-                            logout({
-                                logoutParams: {
-                                    returnTo: window.location.origin,
-                                },
-                            });
-                        }}
-                        type="submit"
-                    >
+                <button
+                    type="button"
+                    className="footer-button"
+                    onClick={() => {
+                        logout({
+                            logoutParams: {
+                                returnTo: window.location.origin,
+                            },
+                        });
+                    }}
+                    type="submit"
+                >
                     <TbLogout2 />
                     {!collapsed && <span className="nav-text">Logout</span>}
                 </button>
