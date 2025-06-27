@@ -67,6 +67,54 @@
     border-radius: 6px;
 }
 
+.image-preview-box {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.image-placeholder {
+    color: #aaa;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.standalone-image {
+    display: block;
+    max-width: 50%;
+    height: auto;
+    margin-top: 8px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.panel-form input[type="text"] {
+    width: 103%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.color-hex-code {
+    font-family: monospace;
+    font-size: 1rem;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    cursor: text;
+}
+
 .side-panel.expanded > .panel-form select {
     width: 103%; /* Jank to make it look the same */
 }
@@ -85,6 +133,12 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.panel-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .panel-delete {

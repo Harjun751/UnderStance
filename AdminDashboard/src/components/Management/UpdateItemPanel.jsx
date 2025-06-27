@@ -2,28 +2,43 @@ import "./UpdateItemPanel.css";
 import { useEffect, useState } from "react";
 import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 import { FaTimes } from "react-icons/fa";
+import { HexColorPicker } from "react-colorful";
 
-const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
+const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema }) => {
     const [formData, setFormData] = useState({});
     const [isExpanded, setIsExpanded] = useState(false);
 
     // Initialize formData when item is provided
     useEffect(() => {
-        if (item) {
-            setFormData(item);
+        if (item && schema) {
+            const normalized = {};
+            schema.forEach((field) => {
+                if (field.type === "boolean") {
+                    normalized[field.name] = Boolean(item[field.name]);
+                } else if (field.type === "dropdown") {
+                    // convert from object (e.g. name) to id
+                    const matching = field.dropdownData.data.find(
+                        (entry) =>
+                            entry[field.dropdownData.key] === item[field.name] || // already ID
+                            entry[field.dropdownData.value] === item[field.name]  // name → ID
+                    );
+                    normalized[field.name] = matching
+                        ? matching[field.dropdownData.key]
+                        : "";
+                } else {
+                    normalized[field.name] = item[field.name];
+                }
+            });
+            setFormData(normalized);
         }
-    }, [item]);
+    }, [item, schema]);
 
-    const handleChange = (field, value) => {
-        // For booleans, convert string "True"/"False" back to boolean
-        if (typeof formData[field] === "boolean") {
-            value = value === "True";
+    const handleChange = (name, value, type) => {
+        let parsedValue = value;
+        if (type === "boolean") {
+            parsedValue = value === "True";
         }
-
-        setFormData((prev) => ({
-            ...prev,
-            [field]: value,
-        }));
+        setFormData((prev) => ({ ...prev, [name]: parsedValue }));
     };
 
     const handleSubmit = (e) => {
@@ -37,6 +52,43 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
         onDelete(formData);
         onClose();
     };
+
+    // Disable Update button if no values updated
+    const hasChanges = schema
+        .filter((field) => field.type !== "id")
+        .some((field) => {
+            const current = formData[field.name];
+            const original = item[field.name];
+
+            if (field.type === "boolean") {
+                return Boolean(current) !== Boolean(original);
+            } else if (field.type === "dropdown") {
+                // Convert items stored as value name to id before comparing
+                const dropdownList = field.dropdownData?.data || [];
+                const getIdFromItem = (value) => {
+                    const entry = dropdownList.find(
+                        (d) =>
+                            d[field.dropdownData.key] === value ||
+                            d[field.dropdownData.value] === value
+                    );
+                    return entry?.[field.dropdownData.key] ?? "";
+                };
+
+                return String(current) !== String(getIdFromItem(original));
+            } else {
+                return current !== original;
+            }
+        });
+
+    //Disable Update button if an empty field is present
+    const allFieldsFilled = schema
+        .filter((field) => field.type !== "id")
+        .every((field) => {
+            const value = formData[field.name];
+            return value !== "" && value !== null && value !== undefined;
+        });
+
+    const formValid = hasChanges && allFieldsFilled;
 
     if (!item) return null;
 
@@ -56,36 +108,121 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete }) => {
             <h3>Quick View/Edit</h3>
             <h4>Select & Edit whichever parts you need</h4>
             <form onSubmit={handleSubmit} className="panel-form">
-                {Object.entries(formData).map(([key, value]) => (
-                    <div key={key} className="form-group">
-                        <label htmlFor={key}>{key}</label>
+                {schema.map((field) => {
+                    const value = formData[field.name];
+                    if (field.type === "id") {
+                        return (
+                            <div key={field.name} className="form-group">
+                                <label htmlFor={field.name}>{field.name}</label>
+                                <textarea
+                                    id={field.name}
+                                    value={value}
+                                    readOnly={true}
+                                    disabled={true}
+                                />
+                            </div>
+                        );
+                    }
 
-                        {typeof value === "boolean" ? (
-                            <select
-                                id={key}
-                                value={value ? "True" : "False"}
-                                onChange={(e) =>
-                                    handleChange(key, e.target.value)
-                                }
-                            >
-                                <option value="True">Agree</option>
-                                <option value="False">Disagree</option>
-                            </select>
-                        ) : (
-                            <textarea
-                                id={key}
-                                value={value}
-                                onChange={(e) =>
-                                    handleChange(key, e.target.value)
-                                }
-                                disabled={key.toLowerCase() === "id"}
-                                rows={2}
-                            />
-                        )}
-                    </div>
-                ))}
+                    return (
+                        <div key={field.name} className="form-group">
+                            <label htmlFor={field.name}>{field.name}</label>
+
+                            {field.type === "boolean" ? (
+                                <select
+                                    id={field.name}
+                                    value={value === true ? "True" : "False"}
+                                    onChange={(e) =>
+                                        handleChange(field.name, e.target.value, field.type)
+                                    }
+                                >
+                                    <option value="True">
+                                        {field.booleanData?.trueLabel || "True"}
+                                    </option>
+                                    <option value="False">
+                                        {field.booleanData?.falseLabel || "False"}
+                                    </option>
+                                </select>
+                            ) : field.type === "string" ? (
+                                <textarea
+                                    id={field.name}
+                                    value={value}
+                                    onChange={(e) =>
+                                        handleChange(field.name, e.target.value, field.type)
+                                    }
+                                    maxLength={field.maxLen || 255}
+                                    rows={2}
+                                />
+                            ) : field.type === "dropdown" ? (
+                                <select
+                                    id={field.name}
+                                    value={formData[field.name]}
+                                    onChange={(e) =>
+                                        handleChange(field.name, e.target.value, field.type)
+                                    }
+                                >
+                                    <option value="">Select {field.name}</option>
+                                    {field.dropdownData.data.map((item) => (
+                                        <option
+                                            key={item[field.dropdownData.key]}
+                                            value={item[field.dropdownData.key]}
+                                        >
+                                            {item[field.dropdownData.value]}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : field.type === "image" ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        id={field.name}
+                                        value={value || ""}
+                                        placeholder="Enter image URL"
+                                        onChange={(e) =>
+                                            handleChange(field.name, e.target.value, field.type)
+                                        }
+                                    />
+                                    {value ? (
+                                        <img
+                                            src={value}
+                                            alt="Preview"
+                                            className="standalone-image"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "https://via.placeholder.com/150?text=Invalid+Image";
+                                            }}
+                                        />
+                                    ) : (
+                                        <div className="image-preview-box">
+                                            <span className="image-placeholder">No image</span>
+                                        </div>
+                                    )}
+                                </>
+                            ) : field.type === "color" ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        value={value}
+                                        className="color-hex-code"
+                                        onChange={(e) =>
+                                            handleChange(field.name, e.target.value, field.type)
+                                        }
+                                        placeholder="#000000"
+                                    />
+                                    <HexColorPicker
+                                        color={value || "#000000"}
+                                        onChange={(color) =>
+                                            handleChange(field.name, color, field.type)
+                                        }
+                                    />
+                                </>
+                                
+                            ) : null}
+                        </div>
+                    );
+                })}
                 <div className="panel-buttons">
-                    <button type="submit" className="panel-submit">
+                    <button type="submit" className="panel-submit" disabled={!formValid}>
                         Update Entry
                     </button>
                     <button

@@ -9,7 +9,9 @@
     font-weight: 400;
     font-style: normal;
     overflow: hidden;
-    height: 90%;
+    overflow-y: auto;
+    min-height: 85vh;
+    max-height: 90vh;
 }
 
 .management-header {
@@ -95,6 +97,7 @@
 /* Rendered Table Styling */
 .table-container {
     overflow-x: auto;
+    overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);

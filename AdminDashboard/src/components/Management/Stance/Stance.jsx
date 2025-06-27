@@ -41,12 +41,12 @@ const Stance = () => {
         { name: "Issue Summary", type: "dropdown", filterable: true, dropdownData: {
             key: "IssueID",
             value: "Summary",
-            data: []
+            data: questions
         }},
         { name: "Party", type: "dropdown", filterable: true, dropdownData: {
             key: "PartyID",
             value: "Name",
-            data: []
+            data: parties
         }}
     ];
 

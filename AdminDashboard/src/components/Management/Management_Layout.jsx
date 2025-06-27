@@ -84,6 +84,16 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                                             ) : (
                                                 <FaTimes className="boolean-false" />
                                             )
+                                        ) : field.type === "image" ? (
+                                            row[field.name] ? (
+                                                <img
+                                                    src={row[field.name]}
+                                                    alt="thumbnail"
+                                                    style={{ width: "30px", height: "30px", objectFit: "cover" }}
+                                                />
+                                            ) : (
+                                                <div style={{ width: "20px", height: "20px", background: "#eee" }} />
+                                            )
                                         ) : (
                                             row[field.name]
                                         )}
@@ -98,7 +108,7 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
     };
     return (
         <Layout title={title}>
-            {/* Implement Dynamic Table Design */}
+            {/* Dynamic Table Design */}
             <div className="management">
                 <div className="management-header">
                     {/* pass value */}
@@ -152,14 +162,13 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                 {showForm && (
                     <AddItem
                         title={title}
-                        headers={headers}
                         onClose={() => setShowForm(false)}
                         onSubmit={(item) => {
                             console.log("Added item:", item); //for debugging
                             // Add logic here to submit updated
                             setShowForm(false);
                         }}
-                        sampleItem={data[0]} //sample data used to detect variable types
+                        schema={schema}
                     />
                 )}
                 {selectedRow && (
@@ -176,6 +185,7 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                             // Add logic here to submit updated
                             setShowForm(false);
                         }}
+                        schema={schema}
                     />
                 )}
             </div>

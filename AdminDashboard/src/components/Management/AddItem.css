@@ -25,10 +25,20 @@
     max-height: 700px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     font-size: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-content h3 {
     border-bottom: solid rgba(0, 0, 0, 0.28);
+}
+
+.modal-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 1rem;
+    padding-right: 2rem; /* gives space for scrollbar */
 }
 
 .modal-form {
@@ -64,11 +74,41 @@
     border-radius: 6px;
 }
 
-.boolean-true {
-    color: green;
+.modal-form input[type="text"]{
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
-.boolean-false {
-    color: red;
+
+.standalone-image {
+    display: block;
+    max-width: 20%;
+    height: auto;
+    margin-top: 8px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.image-preview-box {
+    margin-top: 8px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    overflow: hidden;
+}
+
+.image-placeholder {
+    color: #aaa;
+    font-size: 14px;
+    font-style: italic;
 }
 
 .modal-buttons {
@@ -76,6 +116,8 @@
     justify-content: flex-end;
     gap: 0.5rem;
     margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ccc;
 }
 
 .modal-submit {
@@ -85,6 +127,12 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.modal-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .modal-cancel {
