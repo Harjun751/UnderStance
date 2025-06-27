@@ -162,7 +162,14 @@ async function deleteQuestion(id) {
 async function getStances(isAuthenticated) {
     let query;
     if (isAuthenticated) {
-        query = `SELECT * FROM "Stance"`;
+        query = `
+        SELECT
+        s.*, p."Name" as "Party", i."Summary" AS "Issue Summary"
+        FROM "Stance" s
+        INNER JOIN "Party" p ON p."PartyID" = s."PartyID"
+        INNER JOIN "Issue" i ON i."IssueID" = s."IssueID"
+        ORDER BY s."StanceID"
+        `;
     } else {
         query = `
             SELECT s.* FROM "Stance" s
@@ -183,10 +190,14 @@ async function getStances(isAuthenticated) {
 async function getStancesFiltered(isAuthenticated, StanceID, IssueID, PartyID) {
     let query;
     if (isAuthenticated) {
-        query = `SELECT * FROM "Stance"
-            WHERE ($1::integer IS NULL OR "StanceID" = $1::integer)
-            AND ($2::integer IS NULL OR "IssueID" = $2::integer)
-            AND ($3::integer IS NULL OR "PartyID" = $3::integer)`;
+        query = `SELECT
+            s.*, p."Name" as "Party", i."Summary" AS "Issue Summary"
+            FROM "Stance" s
+            INNER JOIN "Party" p ON p."PartyID" = s."PartyID"
+            INNER JOIN "Issue" i ON i."IssueID" = s."IssueID"
+            WHERE ($1::integer IS NULL OR s."StanceID" = $1::integer)
+            AND ($2::integer IS NULL OR s."IssueID" = $2::integer)
+            AND ($3::integer IS NULL OR s."PartyID" = $3::integer)`;
     } else {
         query = `
             SELECT s.* FROM "Stance" s

@@ -1,23 +1,40 @@
 import Management_Layout from "../Management_Layout";
-//import { BiSolidCategoryAlt } from "react-icons/bi";
+import { useState, useEffect } from "react";
+import { useAPIClient } from "../../api/useAPIClient";
 
 const Category = () => {
-    // Fetch Data
-    // Pass data through to Management Layout.
-    //
+    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    //Dummy data
-    const categories = [
-        { id: 1, category: "term" },
-        { id: 2, category: "people" },
-    ];
-    const tempSchema = [
-        { name: "id", type: "id", filterable: false },
-        { name: "category", type: "string", filterable: false },
+    const apiClient = useAPIClient();
+
+    // Fetch Data
+    useEffect(() => {
+        let ignore = false;
+
+        apiClient.getCategories().then(result => {
+            if (!ignore) {
+                setCategories(result);
+                setIsLoading(false);
+            }
+        });
+
+        return () => {
+            ignore = true;
+        }
+    }, []);
+
+    const schema = [
+        { name: "CategoryID", type: "id", filterable: false },
+        { name: "Name", type: "string", maxLen:50, filterable: false },
     ];
     return (
-        // <Management_Layout title={<><BiSolidCategoryAlt /> Category </>} data={categories}>
-        <Management_Layout title={<> Category </>} data={categories} schema={tempSchema} />
+        <Management_Layout
+            title={<> Category </>}
+            data={categories}
+            schema={schema}
+            isLoading={isLoading}
+        />
     );
 };
 

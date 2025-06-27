@@ -6,43 +6,32 @@ import { useAPIClient } from "../../api/useAPIClient";
 const Quiz = () => {
     const [questions, setQuestions] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [questionsLoading, setQuestionsLoading] = useState(true);
-    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
 
     const apiClient = useAPIClient();
 
     useEffect(() => {
-        // ignore var to prevent race condition
-        let ignoreQn = false;
-        let ignoreCat = false;
+        let cancelled = false;
 
-        apiClient.getQuestions().then(result => {
-            if (!ignoreQn) {
-                setQuestions(result);
-                setQuestionsLoading(false);
-                setIsLoading((false || categoriesLoading));
+        Promise.all([
+            apiClient.getQuestions(),
+            apiClient.getCategories()
+        ]).then(([questions,categories]) => {
+            if (!cancelled) {
+                setQuestions(questions);
+                setCategories(categories);
+                setIsLoading(false);
             }
         });
-
-        apiClient.getCategories().then(result => {
-            if (!ignoreCat) {
-                setCategories(result);
-                setCategoriesLoading(false);
-                setIsLoading((false || questionsLoading));
-            }
-        });
-
         return () => {
-           ignoreCat = true; 
-           ignoreQn = true; 
+            cancelled = true;
         };
-    }, [questionsLoading, categoriesLoading]);
+    }, []);
 
     const schema = [
         { name: "IssueID", type: "id", filterable: false },
         { name: "Description", type: "string", maxLen: 300, filterable: false },
-        { name: "Summary", type: "string", maxLen: 80, filterable: false },
+        { name: "Summary", type: "string", maxLen: 50, filterable: false },
         { name: "Category", type: "dropdown", filterable: true, dropdownData: { key: "CategoryID", value: "Name", data: categories } },
         { name: "Active", type: "boolean", filterable: true },
     ]
