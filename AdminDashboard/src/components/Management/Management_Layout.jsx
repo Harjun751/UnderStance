@@ -6,7 +6,7 @@ import UpdateItemPanel from "./UpdateItemPanel";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import Loader from "../general/Loader";
 
-const Management_Layout = ({ title, data, isLoading }) => {
+const Management_Layout = ({ title, data, isLoading, schema }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
@@ -17,20 +17,15 @@ const Management_Layout = ({ title, data, isLoading }) => {
     // For Side Panel
     const [selectedRow, setSelectedRow] = useState(null);
 
-    const headers = useMemo(
-        () => (data.length > 0 ? Object.keys(data[0]) : []),
-        [data],
-    );
-
-    // Unique values for each column for filter dropdowns
+    // Unique values for each filterable column for filter dropdowns
     const uniqueValues = useMemo(() => {
         const values = {};
-        headers.forEach((header) => {
-            values[header] = [...new Set(data.map((row) => row[header]))];
+        schema.filter((obj) => obj.filterable === true).forEach((field) => {
+            values[field.name] = [...new Set(data.map((row) => row[field.name]))];
         });
         return values;
-    }, [data, headers]);
-
+    }, [data, schema]);
+    
     // Filter and search logic
     const filteredData = useMemo(() => {
         return data.filter((row) => {
@@ -62,16 +57,14 @@ const Management_Layout = ({ title, data, isLoading }) => {
             return <div className="table-empty">No data found in table.</div>;
         }
 
-        const headers = Object.keys(data[0]);
-
         return (
             <div className="table-container">
                 <table className="data-table">
                     <thead>
                         <tr>
-                            {headers.map((header) => (
-                                <th key={header} className="table-header">
-                                    {header}
+                            {schema.map((field) => (
+                                <th key={field.name} className="table-header">
+                                    {field.name}
                                 </th>
                             ))}
                         </tr>
@@ -83,16 +76,16 @@ const Management_Layout = ({ title, data, isLoading }) => {
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >
-                                {headers.map((header) => (
-                                    <td key={header} className="table-cell">
-                                        {typeof row[header] === "boolean" ? (
-                                            row[header] ? (
+                                {schema.map((field) => (
+                                    <td key={field.name} className="table-cell">
+                                        {field.type === "boolean" ? (
+                                            row[field.name] ? (
                                                 <FaCheck className="boolean-true" />
                                             ) : (
                                                 <FaTimes className="boolean-false" />
                                             )
                                         ) : (
-                                            row[header]
+                                            row[field.name]
                                         )}
                                     </td>
                                 ))}
@@ -133,17 +126,17 @@ const Management_Layout = ({ title, data, isLoading }) => {
                     </div>
                     <div className="table-filters">
                         {/* Create various drop down filters for the table */}
-                        {headers.map((header) => (
+                        {schema.filter((obj) => obj.filterable === true).map((field) => (
                             <select
-                                key={header}
-                                value={filters[header] || ""}
+                                key={field.name}
+                                value={filters[field.name] || ""}
                                 onChange={(e) =>
-                                    handleFilterChange(header, e.target.value)
+                                    handleFilterChange(field.name, e.target.value)
                                 }
                                 className="filter-dropdown"
                             >
-                                <option value="">All {header}</option>
-                                {uniqueValues[header].map((val) => (
+                                <option value="">Any {field.name}</option>
+                                {uniqueValues[field.name].map((val) => (
                                     <option key={val} value={val}>
                                         {val.toString()}
                                     </option>

@@ -12,9 +12,17 @@ const Stance = () => {
         { id: 3, stand: true, Reason: "best", IssueId: 4, partyId: 1 },
         { id: 4, stand: false, Reason: "worst", IssueId: 4, partyId: 2 },
     ];
+
+    const tempSchema = [
+        { name: "id", type: "id", filterable: false },
+        { name: "stand", type: "boolean", filterable: true },
+        { name: "Reason", type: "string", maxLen: 300, filterable: false },
+        { name: "IssueId", type: "integer", filterable: true },
+        { name: "partyId", type: "integer", filterable: true },
+    ];
     return (
         // <Management_Layout title={<><GiInjustice /> Stance</>} data={stances}>
-        <Management_Layout title={<>Stance</>} data={stances} />
+        <Management_Layout title={<>Stance</>} data={stances} schema={tempSchema} />
     );
 };
 

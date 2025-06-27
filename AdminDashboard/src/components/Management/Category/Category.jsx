@@ -11,9 +11,13 @@ const Category = () => {
         { id: 1, category: "term" },
         { id: 2, category: "people" },
     ];
+    const tempSchema = [
+        { name: "id", type: "id", filterable: false },
+        { name: "category", type: "string", filterable: false },
+    ];
     return (
         // <Management_Layout title={<><BiSolidCategoryAlt /> Category </>} data={categories}>
-        <Management_Layout title={<> Category </>} data={categories} />
+        <Management_Layout title={<> Category </>} data={categories} schema={tempSchema} />
     );
 };
 

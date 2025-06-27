@@ -10,9 +10,14 @@ const Party = () => {
         { id: 4, description: "japanese" },
     ];
 
+    const tempSchema = [
+        { name: "id", type: "id", filterable: false },
+        { name: "description", type: "string", filterable: false },
+    ];
+
     return (
         // <Management_Layout title={<><FaFlag /> Party </>} data={parties}>
-        <Management_Layout title={<> Party </>} data={parties} />
+        <Management_Layout title={<> Party </>} data={parties} schema={tempSchema} />
     );
 };
 
