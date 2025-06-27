@@ -13,7 +13,7 @@ export default () => {
                         },
                     });
                 }}
-                class="logout-button"
+                className="logout-button"
                 type="submit"
             >
                 Logout

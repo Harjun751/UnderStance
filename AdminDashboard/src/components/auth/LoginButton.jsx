@@ -8,7 +8,7 @@ export default () => {
         <>
             <button
                 onClick={loginWithRedirect}
-                class="login-button"
+                className="login-button"
                 type="submit"
             >
                 Login

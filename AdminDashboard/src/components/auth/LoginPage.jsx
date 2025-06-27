@@ -12,11 +12,11 @@ export default () => {
     }
 
     return (
-        <div class="login-container">
-            <div class="title-container">
+        <div className="login-container">
+            <div className="title-container">
                 <Title />
             </div>
-            <div class="login-btn">
+            <div className="login-btn">
                 <LoginButton />
             </div>
         </div>

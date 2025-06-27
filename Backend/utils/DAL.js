@@ -21,7 +21,13 @@ async function getQuestions(isAuthenticated) {
     let query;
     if (isAuthenticated) {
         // Return all info
-        query = 'SELECT * FROM "Issue"';
+        query = `
+        SELECT i.*, c."Name" as "Category"
+        FROM "Issue" i
+        INNER JOIN "Category" c
+        ON i."CategoryID" = c."CategoryID"
+        ORDER BY i."IssueID"
+        `
     } else {
         // return only active questions
         query = `
@@ -47,6 +53,14 @@ async function getQuestionWithID(isAuthenticated, id) {
     let query;
     if (isAuthenticated) {
         query = 'SELECT * FROM "Issue" WHERE "IssueID" = $1';
+        query = `
+            SELECT
+            i.*, c."Name" AS "Category"
+            FROM "Issue" i
+            INNER JOIN "Category" c
+            ON i."CategoryID" = c."CategoryID"
+            AND "IssueID" = $1
+        `;
     } else {
         query = `
             SELECT

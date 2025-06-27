@@ -4,8 +4,9 @@ import { useState, useMemo } from "react";
 import AddItem from "./AddItem";
 import UpdateItemPanel from "./UpdateItemPanel";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import Loader from "../general/Loader";
 
-const Management_Layout = ({ title, data }) => {
+const Management_Layout = ({ title, data, isLoading }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
@@ -54,6 +55,9 @@ const Management_Layout = ({ title, data }) => {
     };
 
     const renderTable = () => {
+        if (isLoading) {
+            return <Loader message="Loading data..." style={{ marginTop:"50px" }}/>
+        }
         if (!Array.isArray(data) || data.length === 0) {
             return <div className="table-empty">No data found in table.</div>;
         }
@@ -73,9 +77,9 @@ const Management_Layout = ({ title, data }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.map((row) => (
+                        {filteredData.map((row, index) => (
                             <tr
-                                key={row}
+                                key={index}
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >

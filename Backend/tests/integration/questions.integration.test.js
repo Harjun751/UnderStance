@@ -71,6 +71,7 @@ describe("GET quiz question with authentication", () => {
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
                 CategoryID: 1,
+                Category: "National Identity",
                 Active: true,
             },
         ]);
@@ -88,6 +89,7 @@ describe("GET quiz question with authentication", () => {
                 Description: "Change national anthem to hip's don't lie",
                 Summary: "On the anthem",
                 CategoryID: 1,
+                Category: "National Identity",
                 Active: true,
             },
         ]);
@@ -116,6 +118,7 @@ describe("POST quiz question", () => {
         Description: "Hi from integration test!",
         Summary: "This is a friendly greeting.",
         CategoryID: 1,
+        Category: "National Identity",
         Active: false,
     };
 
@@ -141,6 +144,7 @@ describe("POST quiz question", () => {
                 Description: reqBody.Description,
                 Summary: reqBody.Summary,
                 CategoryID: reqBody.CategoryID,
+                Category: reqBody.Category,
                 Active: false,
             },
         ]);
@@ -254,7 +258,9 @@ describe("PUT quiz question", () => {
         const getResponse = await request(`http://localhost:${appPort}`)
             .get(`/questions?ID=${reqBody.IssueID}`)
             .set("authorization", `Bearer ${global.authToken}`);
-        expect(getResponse.body).toEqual([reqBody]);
+        const expectedResponse = { ...reqBody };
+        expectedResponse.Category = "National Identity";
+        expect(getResponse.body).toEqual([expectedResponse]);
     });
 
     test("400 for invalid argument - too long description", async () => {
