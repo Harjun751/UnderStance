@@ -28,22 +28,22 @@ class APIClientWrapper {
     }
 
     addQuestion(description, summary, categoryID, active) {
-        return this.client.post("/questions, {
+        return this.client.post("/questions", {
             Description: description,
             Summary: summary,
             CategoryID: categoryID,
-            active: active
-        }
+            Active: active
+        });
     }
 
     updateQuestion(id, description, summary, categoryID, active) {
-        return this.client.put("/questions, {
+        return this.client.put("/questions", {
             IssueID: id,
             Description: description,
             Summary: summary,
             CategoryID: categoryID,
-            active: active
-        }
+            Active: active
+        });
     }
 
     deleteQuestion(id) {
@@ -58,14 +58,14 @@ class APIClientWrapper {
     addCategory(name) {
         return this.client.post("/categories", {
             Name: name
-        }
+        });
     }
 
     updateCategory(id, name) {
         return this.client.put("/categories", {
             Name: name,
             CategoryID: id
-        }
+        });
     }
 
     deleteCategory(id) {
@@ -83,7 +83,7 @@ class APIClientWrapper {
             Icon: icon,
             PartyColor: partyColor,
             Active: active
-        }
+        });
     }
 
     updateParty(id, name, shortName, icon, partyColor, active) {
@@ -94,7 +94,7 @@ class APIClientWrapper {
             Icon: icon,
             PartyColor: partyColor,
             Active: active
-        }
+        });
     }
 
     deleteParty(id) {
@@ -111,7 +111,7 @@ class APIClientWrapper {
             Reason: reason,
             IssueID: issueID,
             PartyID: partyID
-        }
+        });
     }
 
     updateStance(id, stand, reason, issueID, partyID) {
@@ -121,7 +121,7 @@ class APIClientWrapper {
             Reason: reason,
             IssueID: issueID,
             PartyID: partyID
-        }
+        });
     }
 
     deleteStance(id) {
