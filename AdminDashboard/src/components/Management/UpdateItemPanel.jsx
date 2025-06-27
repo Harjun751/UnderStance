@@ -1,12 +1,11 @@
 import "./UpdateItemPanel.css";
 import { useEffect, useState } from "react";
-import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
+import { FaAnglesRight , FaAnglesLeft  } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import { HexColorPicker } from "react-colorful";
 
-const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema }) => {
+const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded }) => {
     const [formData, setFormData] = useState({});
-    const [isExpanded, setIsExpanded] = useState(false);
 
     // Initialize formData when item is provided
     useEffect(() => {
@@ -93,8 +92,8 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema }) => {
     if (!item) return null;
 
     return (
-        <div className={`side-panel ${isExpanded ? "expanded" : ""}`}>
-            <button type="button" className="close-btn" onClick={onClose}>
+        <div className={`side-panel-content ${isExpanded ? "expanded" : ""}`}>
+            {/* <button type="button" className="close-btn" onClick={onClose}>
                 <FaTimes />
             </button>
             <button
@@ -103,144 +102,147 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema }) => {
                 onClick={() => setIsExpanded((prev) => !prev)}
                 title={isExpanded ? "Collapse Panel" : "Expand Panel"}
             >
-                {isExpanded ? <IoMdArrowDropright /> : <IoMdArrowDropleft />}
-            </button>
-            <h3>Quick View/Edit</h3>
-            <h4>Select & Edit whichever parts you need</h4>
-            <form onSubmit={handleSubmit} className="panel-form">
-                {schema.map((field) => {
-                    const value = formData[field.name];
-                    if (field.type === "id") {
-                        return (
-                            <div key={field.name} className="form-group">
-                                <label htmlFor={field.name}>{field.name}</label>
-                                <textarea
-                                    id={field.name}
-                                    value={value}
-                                    readOnly={true}
-                                    disabled={true}
-                                />
-                            </div>
-                        );
-                    }
-
-                    return (
-                        <div key={field.name} className="form-group">
-                            <label htmlFor={field.name}>{field.name}</label>
-
-                            {field.type === "boolean" ? (
-                                <select
-                                    id={field.name}
-                                    value={value === true ? "True" : "False"}
-                                    onChange={(e) =>
-                                        handleChange(field.name, e.target.value, field.type)
-                                    }
-                                >
-                                    <option value="True">
-                                        {field.booleanData?.trueLabel || "True"}
-                                    </option>
-                                    <option value="False">
-                                        {field.booleanData?.falseLabel || "False"}
-                                    </option>
-                                </select>
-                            ) : field.type === "string" ? (
-                                <textarea
-                                    id={field.name}
-                                    value={value}
-                                    onChange={(e) =>
-                                        handleChange(field.name, e.target.value, field.type)
-                                    }
-                                    maxLength={field.maxLen || 255}
-                                    rows={2}
-                                />
-                            ) : field.type === "dropdown" ? (
-                                <select
-                                    id={field.name}
-                                    value={formData[field.name]}
-                                    onChange={(e) =>
-                                        handleChange(field.name, e.target.value, field.type)
-                                    }
-                                >
-                                    <option value="">Select {field.name}</option>
-                                    {field.dropdownData.data.map((item) => (
-                                        <option
-                                            key={item[field.dropdownData.key]}
-                                            value={item[field.dropdownData.key]}
-                                        >
-                                            {item[field.dropdownData.value]}
-                                        </option>
-                                    ))}
-                                </select>
-                            ) : field.type === "image" ? (
-                                <>
+                {isExpanded ? <FaAnglesRight /> : <FaAnglesLeft />}
+            </button> */}
+            <div className="panel-scrollable">
+                <h3>Quick View/Edit</h3>
+                <h4>Select & Edit whichever parts you need</h4>
+                <form onSubmit={handleSubmit} className="panel-form">
+                    {schema.map((field) => {
+                        const value = formData[field.name];
+                        if (field.type === "id") {
+                            return (
+                                <div key={field.name} className="form-group">
+                                    <label htmlFor={field.name}>{field.name}</label>
                                     <input
                                         type="text"
                                         id={field.name}
-                                        value={value || ""}
-                                        placeholder="Enter image URL"
-                                        onChange={(e) =>
-                                            handleChange(field.name, e.target.value, field.type)
-                                        }
-                                    />
-                                    {value ? (
-                                        <img
-                                            src={value}
-                                            alt="Preview"
-                                            className="standalone-image"
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = "https://via.placeholder.com/150?text=Invalid+Image";
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className="image-preview-box">
-                                            <span className="image-placeholder">No image</span>
-                                        </div>
-                                    )}
-                                </>
-                            ) : field.type === "color" ? (
-                                <>
-                                    <input
-                                        type="text"
                                         value={value}
-                                        className="color-hex-code"
+                                        readOnly={true}
+                                        disabled={true}
+                                    />
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <div key={field.name} className="form-group">
+                                <label htmlFor={field.name}>{field.name}</label>
+
+                                {field.type === "boolean" ? (
+                                    <select
+                                        id={field.name}
+                                        value={value === true ? "True" : "False"}
                                         onChange={(e) =>
                                             handleChange(field.name, e.target.value, field.type)
                                         }
-                                        placeholder="#000000"
-                                    />
-                                    <HexColorPicker
-                                        color={value || "#000000"}
-                                        onChange={(color) =>
-                                            handleChange(field.name, color, field.type)
+                                    >
+                                        <option value="True">
+                                            {field.booleanData?.trueLabel || "True"}
+                                        </option>
+                                        <option value="False">
+                                            {field.booleanData?.falseLabel || "False"}
+                                        </option>
+                                    </select>
+                                ) : field.type === "string" ? (
+                                    <textarea
+                                        id={field.name}
+                                        value={value}
+                                        onChange={(e) =>
+                                            handleChange(field.name, e.target.value, field.type)
                                         }
+                                        maxLength={field.maxLen || 255}
+                                        rows={2}
                                     />
-                                </>
-                                
-                            ) : null}
-                        </div>
-                    );
-                })}
-                <div className="panel-buttons">
-                    <button type="submit" className="panel-submit" disabled={!formValid}>
-                        Update Entry
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleDelete}
-                        className="panel-delete"
-                    >
-                        Delete Entry
-                    </button>
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="panel-cancel"
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                                ) : field.type === "dropdown" ? (
+                                    <select
+                                        id={field.name}
+                                        value={formData[field.name]}
+                                        onChange={(e) =>
+                                            handleChange(field.name, e.target.value, field.type)
+                                        }
+                                    >
+                                        <option value="">Select {field.name}</option>
+                                        {field.dropdownData.data.map((item) => (
+                                            <option
+                                                key={item[field.dropdownData.key]}
+                                                value={item[field.dropdownData.key]}
+                                            >
+                                                {item[field.dropdownData.value]}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : field.type === "image" ? (
+                                    <>
+                                        <input
+                                            type="text"
+                                            id={field.name}
+                                            value={value || ""}
+                                            placeholder="Enter image URL"
+                                            onChange={(e) =>
+                                                handleChange(field.name, e.target.value, field.type)
+                                            }
+                                        />
+                                        {value ? (
+                                            <img
+                                                src={value}
+                                                alt="Preview"
+                                                className="standalone-image"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = "https://via.placeholder.com/150?text=Invalid+Image";
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="image-preview-box">
+                                                <span className="image-placeholder">No image</span>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : field.type === "color" ? (
+                                    <>
+                                        <input
+                                            type="text"
+                                            value={value}
+                                            className="color-hex-code"
+                                            onChange={(e) =>
+                                                handleChange(field.name, e.target.value, field.type)
+                                            }
+                                            placeholder="#000000"
+                                        />
+                                        <HexColorPicker
+                                            color={value || "#000000"}
+                                            onChange={(color) =>
+                                                handleChange(field.name, color, field.type)
+                                            }
+                                        />
+                                    </>
+                                    
+                                ) : null}
+                            </div>
+                        );
+                    })}
+                    <div className="panel-buttons">
+                        <button type="submit" className="panel-submit" disabled={!formValid}>
+                            Update Entry
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="panel-delete"
+                        >
+                            Delete Entry
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="panel-cancel"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

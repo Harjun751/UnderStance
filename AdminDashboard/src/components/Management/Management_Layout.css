@@ -164,6 +164,64 @@
     color: red;
 }
 
+.panel-wrapper {
+    position: fixed; /* fixed so it overlays on top */
+    top: 66px;
+    right: 0;
+    height: 100%;
+    width: 450px;
+    height: calc(100% - 66px);
+    background: linear-gradient(
+        90deg,
+        rgba(191, 191, 191, 0.95) 0%,
+        rgba(86, 172, 255, 1) 100%
+    );
+    transform: translateX(100%); /* start off-screen on the right */
+    transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 10px;
+    z-index: 1000;
+}
+
+/* When panel is active (shown) */
+.panel-wrapper.open {
+  transform: translateX(0); /* slide in */
+}
+
+.panel-wrapper.expanded {
+    width: 600px;
+}
+
+/* Buttons on the panel-wrapper */
+.panel-wrapper .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+    color: #333;
+}
+
+.panel-wrapper .expand-btn {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.4);
+    z-index: 1100;
+}
+
+.panel-wrapper.expanded .expand-btn {
+    color: rgba(0, 0, 0, 0.8);
+}
 
 @media (max-width: 1080px) {
     .management-sub {

@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import AddItem from "./AddItem";
 import UpdateItemPanel from "./UpdateItemPanel";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaAnglesRight , FaAnglesLeft  } from "react-icons/fa6";
 import Loader from "../general/Loader";
 
 const Management_Layout = ({ title, data, isLoading, schema }) => {
@@ -16,6 +17,16 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
 
     // For Side Panel
     const [selectedRow, setSelectedRow] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const handleClosePanel = () => {
+        setSelectedRow(null);
+        setIsExpanded(false);
+    };
+
+    const toggleExpand = () => {
+        setIsExpanded((prev) => !prev);
+    };
 
     // Unique values for each filterable column for filter dropdowns
     const uniqueValues = useMemo(() => {
@@ -171,22 +182,43 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                         schema={schema}
                     />
                 )}
+            </div>
+            <div className={`panel-wrapper ${selectedRow ? "open" : ""} ${isExpanded ? "expanded" : ""}`}>
                 {selectedRow && (
-                    <UpdateItemPanel
-                        item={selectedRow}
-                        onClose={() => setSelectedRow(null)}
-                        onSubmit={(item) => {
-                            console.log("Updated item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
-                        onDelete={(item) => {
-                            console.log("Deleted item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
-                        schema={schema}
-                    />
+                    <>
+                        <button
+                            type="button"
+                            className="close-btn"
+                            onClick={handleClosePanel}
+                            title="Close Panel"
+                        >
+                            <FaTimes />
+                        </button>
+                        <button
+                            type="button"
+                            className="expand-btn"
+                            onClick={toggleExpand}
+                            title={isExpanded ? "Collapse Panel" : "Expand Panel"}
+                        >
+                            {isExpanded ? <FaAnglesRight /> : <FaAnglesLeft />}
+                        </button>
+                        <UpdateItemPanel
+                            item={selectedRow}
+                            onClose={handleClosePanel}
+                            onSubmit={(item) => {
+                                console.log("Updated item:", item); //for debugging
+                                // Add logic here to submit updated
+                                setShowForm(false);
+                            }}
+                            onDelete={(item) => {
+                                console.log("Deleted item:", item); //for debugging
+                                // Add logic here to submit updated
+                                setShowForm(false);
+                            }}
+                            schema={schema}
+                            isExpanded={isExpanded}
+                        />
+                    </>
                 )}
             </div>
         </Layout>
