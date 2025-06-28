@@ -469,7 +469,7 @@ async function deleteCategory(id) {
 
 async function getCategories() {
     try {
-        const rows = await pool.query('SELECT * FROM "Category";');
+        const rows = await pool.query('SELECT * FROM "Category" ORDER BY "CategoryID";');
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);

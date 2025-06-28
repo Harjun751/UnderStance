@@ -7,7 +7,7 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import { FaAnglesRight , FaAnglesLeft  } from "react-icons/fa6";
 import Loader from "../general/Loader";
 
-const Management_Layout = ({ title, data, isLoading, schema }) => {
+const Management_Layout = ({ title, data, isLoading, schema, addSubmitHandler, updateSubmitHandler, deleteSubmitHandler }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
@@ -174,11 +174,7 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                     <AddItem
                         title={title}
                         onClose={() => setShowForm(false)}
-                        onSubmit={(item) => {
-                            console.log("Added item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
+                        onSubmit={addSubmitHandler}
                         schema={schema}
                     />
                 )}
@@ -205,16 +201,8 @@ const Management_Layout = ({ title, data, isLoading, schema }) => {
                         <UpdateItemPanel
                             item={selectedRow}
                             onClose={handleClosePanel}
-                            onSubmit={(item) => {
-                                console.log("Updated item:", item); //for debugging
-                                // Add logic here to submit updated
-                                setShowForm(false);
-                            }}
-                            onDelete={(item) => {
-                                console.log("Deleted item:", item); //for debugging
-                                // Add logic here to submit updated
-                                setShowForm(false);
-                            }}
+                            onSubmit={updateSubmitHandler}
+                            onDelete={deleteSubmitHandler}
                             schema={schema}
                             isExpanded={isExpanded}
                         />
