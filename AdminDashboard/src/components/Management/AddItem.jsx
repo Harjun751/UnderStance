@@ -10,7 +10,11 @@ const AddItem = ({
 }) => {
     const initialState = {};
     schema.forEach((field) => {
-        if (field.type !== "id") {
+        if (field.type === "dropdown") {
+            // track value as well for display later
+            initialState[`${field.name}ID`] = "";
+            initialState[`${field.name}`] = "";
+        } else if (field.type !== "id") {
             initialState[field.name] = "";
         }
     });
@@ -18,11 +22,7 @@ const AddItem = ({
     const [formData, setFormData] = useState(initialState);
 
     const handleChange = (name, value, type) => {
-        let parsedValue = value;
-        if (type === "boolean") {
-            parsedValue = value === "True";
-        }
-        setFormData((prev) => ({ ...prev, [name]: parsedValue }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
@@ -50,15 +50,22 @@ const AddItem = ({
                                     {field.type === "boolean" ? (
                                         <select
                                             id={`additem-${field.name}`}
-                                            value={formData[field.name] === true ? "True" : "False"}
+                                            value={formData[field.name]}
                                             onChange={(e) =>
-                                                handleChange(field.name, e.target.value, field.type)
+                                                handleChange(
+                                                    field.name,
+                                                    e.target.value === "true",
+                                                    field.type
+                                                )
                                             }
                                         >
-                                            <option value="True">
+                                            <option value="" disabled>
+                                                Select a value
+                                            </option>
+                                            <option value="true">
                                                 {field.booleanData?.trueLabel || "True"}
                                             </option>
-                                            <option value="False">
+                                            <option value="false">
                                                 {field.booleanData?.falseLabel || "False"}
                                             </option>
                                         </select>
@@ -77,17 +84,22 @@ const AddItem = ({
                                         />
                                     ) : field.type === "dropdown" ? (
                                         <select
-                                            id={`additem-${field.name}`}
-                                            value={formData[field.name]}
-                                            onChange={(e) =>
+                                            id={`additem-${field.name}ID`}
+                                            value={formData[`${field.name}ID`]}
+                                            onChange={(e) => {
                                                 handleChange(
-                                                    field.name,
+                                                    `${field.name}ID`,
                                                     e.target.value,
                                                     field.type
-                                                )
-                                            }
+                                                );
+                                                handleChange(
+                                                    field.name,
+                                                    e.target.options[e.target.selectedIndex].text,
+                                                    "text"
+                                                );
+                                            }}
                                         >
-                                            <option value="">
+                                            <option value="" disabled>
                                                 Select {field.name}
                                             </option>
                                             {field.dropdownData.data.map((item) => (

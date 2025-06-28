@@ -13,7 +13,8 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
             const normalized = {};
             schema.forEach((field) => {
                 if (field.type === "boolean") {
-                    normalized[field.name] = Boolean(item[field.name]);
+                    console.log(item[field.name]);
+                    normalized[field.name] = item[field.name];
                 } else if (field.type === "dropdown") {
                     // convert from object (e.g. name) to id
                     const matching = field.dropdownData.data.find(
@@ -21,8 +22,12 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                             entry[field.dropdownData.key] === item[field.name] || // already ID
                             entry[field.dropdownData.value] === item[field.name]  // name → ID
                     );
-                    normalized[field.name] = matching
+                    // Store both dropdown ID and value
+                    normalized[`${field.name}ID`] = matching
                         ? matching[field.dropdownData.key]
+                        : "";
+                    normalized[field.name] = matching
+                        ? matching[field.dropdownData.value]
                         : "";
                 } else {
                     normalized[field.name] = item[field.name];
@@ -33,11 +38,7 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
     }, [item, schema]);
 
     const handleChange = (name, value, type) => {
-        let parsedValue = value;
-        if (type === "boolean") {
-            parsedValue = value === "True";
-        }
-        setFormData((prev) => ({ ...prev, [name]: parsedValue }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
@@ -132,15 +133,22 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                 {field.type === "boolean" ? (
                                     <select
                                         id={field.name}
-                                        value={value === true ? "True" : "False"}
+                                        value={value}
                                         onChange={(e) =>
-                                            handleChange(field.name, e.target.value, field.type)
+                                            handleChange(
+                                                field.name,
+                                                e.target.value === "true",
+                                                field.type
+                                            )
                                         }
                                     >
-                                        <option value="True">
+                                        <option value="" disabled>
+                                            Select a value
+                                        </option>
+                                        <option value="true">
                                             {field.booleanData?.trueLabel || "True"}
                                         </option>
-                                        <option value="False">
+                                        <option value="false">
                                             {field.booleanData?.falseLabel || "False"}
                                         </option>
                                     </select>
@@ -157,12 +165,21 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                 ) : field.type === "dropdown" ? (
                                     <select
                                         id={field.name}
-                                        value={formData[field.name]}
-                                        onChange={(e) =>
-                                            handleChange(field.name, e.target.value, field.type)
-                                        }
+                                        value={formData[`${field.name}ID`]}
+                                        onChange={(e) => {
+                                            handleChange(
+                                                `${field.name}ID`,
+                                                e.target.value,
+                                                field.type
+                                            );
+                                            handleChange(
+                                                field.name,
+                                                e.target.options[e.target.selectedIndex].text,
+                                                "text"
+                                            );
+                                        }}
                                     >
-                                        <option value="">Select {field.name}</option>
+                                        <option value="" disabled>Select {field.name}</option>
                                         {field.dropdownData.data.map((item) => (
                                             <option
                                                 key={item[field.dropdownData.key]}

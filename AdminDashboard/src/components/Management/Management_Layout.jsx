@@ -159,7 +159,7 @@ const Management_Layout = ({ title, data, isLoading, schema, addSubmitHandler, u
                                 <option value="">Any {field.name}</option>
                                 {uniqueValues[field.name].map((val) => (
                                     <option key={val} value={val}>
-                                        {val.toString()}
+                                        {val?.toString()}
                                     </option>
                                 ))}
                             </select>

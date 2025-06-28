@@ -15,6 +15,7 @@ export function useAddSubmitHandler({ addFunction, setResource, key }) {
                 newObject[field] = value;
             });
             newObject[key] = resp.data[key];
+            console.log(newObject);
             // set new object
             setResource(prevItems => [...prevItems, newObject]);
         } catch (err) {

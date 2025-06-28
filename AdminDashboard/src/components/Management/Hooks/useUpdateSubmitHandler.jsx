@@ -8,11 +8,12 @@ export function useUpdateSubmitHandler({ updateFunction, setResource, key}) {
         setUpdateSubmitLoading(true);
 
         try {
+            console.log(form);
             const resp = await updateFunction(form);
-            setResource(prevItems =>
+            setResource(prevItems => 
                 prevItems.map(obj => 
                     obj[key] === resp.data[key]
-                    ? resp.data
+                    ? form
                     : obj
                 )
             );

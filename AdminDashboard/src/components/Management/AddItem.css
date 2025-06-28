@@ -86,10 +86,11 @@
 .standalone-image {
     display: block;
     max-width: 20%;
-    height: auto;
     margin-top: 8px;
     border-radius: 6px;
-    object-fit: contain;
+    object-fit: fill;
+    width: 150px;
+    height: 150px;
 }
 
 .image-preview-box {
