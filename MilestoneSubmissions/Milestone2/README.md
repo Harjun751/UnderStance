@@ -68,14 +68,17 @@ The bar chart showing how the stances compare is complete, along with the issue-
 ![Party Breakdown Live](images/breakdownlive.jpg "Live Party Breakdown")
 
 ## Milestone 2 Progress
-The design was updated to be more responsive. Additionally, the 2 sub-pages were added to give users the ability to granularly see their stance alignment with the various parties.
+The design was updated to be more responsive. Additionally 2 sub-pages were added to the chart, the breakdown by category and table breakdown. This allows the users to view the alignments more granuarly.
 
 ![Party Breakdown Live](images/ms2-breakdownlive.png "Live Party Breakdown")
 ![Party Breakdown by Category Live](images/ms2-breakdownlive-2.png "Live Party Breakdown by Category")
+The category breakdown allows users to see how they align with parties in overarching categories.
 ![Party Breakdown by Table Live](images/ms2-breakdownlive-3.png "Live Party Breakdown by Table")
+The table breakdown shows a concise summary of the users' responses and how it affected the results that they receive.
+
 ## Core Feat 3: Read Stances
 ### Proposed Feature
-This feature would allow any user, regardless if they have finished the quiz or not, to read on the stances that the parties have on the issues in the quiz. It would simply show the issue in question, and then the response of the party and their overall stance. The page would additionally have a search bar.
+This feature would allow any user, regardless if they have finished the quiz or not, to read on the stances that the parties have on the issues in the quiz. It would simply show the issue in question, and then the response of the party and their overall stance. The page would additionally have a search bar to quickly allow users to find pertinent questions.
 
 ![Read Stances](images/readstances.png "Read Stances")
 
@@ -89,25 +92,25 @@ Styling for mobile and functional search bar added to the page.
 
 ![Read Stances Live](images/ms2-readstanceslive.png "Live Read Stances")
 
-## Core Feat 4: Admin Dashboard Authenticated
+## Core Feat 4: Admin Dashboard Authentication
 ### Proposed Feature
 A page for admin users to login to the application. Operations done in the admin dashboard will require authentication to perform, thus the login page should validate users and provide the necessary tokens to make requests that require elevated permission on the backend with.
 
 ### Milestone 2 Progress
 Fully implmented. Login was done via Auth0. Respective routes on the backend requiring elevated privileges were secured, relying on auth0's role-based authentication to ensure that operations can only be done by users of the correct role.
 
-#[Login Page](images/loginpage.png "Login Page")
+![Login Page](images/loginpage.png "Login Page")
 
 ## Core Feat 5: Admin Dashboard
 ### Proposed Feature
-The admin dashboard would be its own page requiring authentication to access. The dashboard will support standard CRUD operations on the various items in the database such as issues and stances. This will allow proper management of the quiz
+The admin dashboard would be its own page requiring authentication to access. The dashboard will support standard CRUD operations on the various resources in the database such as issues and stances. This will allow proper management of the quiz, ensuring that it is kept accurate and up-to-date.
 
 ![Dashboard](images/dashboard.png "Dashboard")
 
 ### Milestone 2 Progress
-The dashboard is functional. Each resource is editable. Resources can be updated, deleted, or new ones could be added. Fields can be filtered and searched.
+The dashboard is fully functional. Each resource is editable. Resources can be updated, deleted, or new ones could be added. Each page has relevant filters and search bars to allow admins to quickly find what they are looking for.
 
-#[Admin Page](images/adminpage.png "Admin Page")
+![Admin Page](images/adminpage.png "Admin Page")
 
 ## Extension Feat 1: Automatic stance extraction
 ### Proposed Feature
@@ -289,14 +292,14 @@ Code quality was maintined throughout the repository using formatters and linter
 Git was used for version control, with Github as the remote repository. Branch protections were set in place such that code cannot be directly commited to main - all changes must be done through pull requests. Additionally, code reviews must be done in Github before any pull request can be merged. To keep branches clean and well-organized, we followed the Github flow, naming our branches <#name>/JIRA-<#issueNumber>-<#briefDescription>.
 
 ![Github flow](images/githubflow.jpg "Github flow")
-(Branches that I did not delete locally)
+(Branches not deleted locally)
 
 This reduced the cognitive load when switching between branches or reviewing pull requests, as the naming scheme and workflow made the development process easy to follow.
 
 ## Collaboration
-As previously mentioned, we used Scrum with 2 week sprints as our collaborative framework. We conducted pre-sprint meetings, planning pokers, and daily scrums in our process for Milestone 1. We used JIRA to host our product backlog and conduct sprint planning.
+As previously mentioned, we used Scrum with 2 week sprints as our collaborative framework. We continued conducting pre-sprint meetings, planning pokers, and daily scrums in our process for Milestone 2. We used JIRA to host our product backlog and conduct sprint planning.
 
-Scrum has allowed us to set clear goals for Milestone 1, while leaving some flexibility on which developer does which task. Daily scrums kept us on-track and up-to-date regarding any pertinent information. It had also allowed us an avenue to clarify any doubts we had in specific implementation details with each other.
+Scrum has allowed us to set clear goals for the milestones, while leaving some flexibility on which developer does which task. Daily scrums kept us on-track and up-to-date regarding any pertinent information. It had also allowed us an avenue to clarify any doubts we had in specific implementation details with each other.
 
 ![JIRA board](images/scrum.jpg "JIRA Board")
 
