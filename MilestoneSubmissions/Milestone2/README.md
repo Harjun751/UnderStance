@@ -1,4 +1,4 @@
-<h1 align=center>Milestone 1 Submission</h1>
+<h1 align=center>Milestone 2 Submission</h1>
 
 [Repository Link](https://github.com/Harjun751/UnderStance)
 [Technical Proof of Concept (drive)](https://drive.google.com/file/d/1oU5gNQOGLaAdHc5UH6IQ1UcIsvinkht7/view?usp=sharing)
@@ -44,10 +44,17 @@ The proposed feature is the main questionnaire that the user would complete befo
 
 ![Questionnaire](images/quiz.png "Questionnaire")
 
-### Current Progress
+### Milestone 1 Progress
 For Milestone 1, the quiz page is functional. Users can agree/disagree/skip, and the previous/next controls are functioning as well. Yet to be finished are the 2x weightage options and the progress bar. Additionally, work is to be done on making the frontend look 1:1 with our Figma designs and making the page mobile-friendly.
 
 ![Questionnaire Live](images/quizlive.jpg "Live Questionnaire")
+
+### Milestone 2 Progress
+The design of the page was updated, including responsive styling for smaller screens. The weightage feature is also now complete, with a slider present to adjust importance for users.
+
+![Questionnaire Live](images/ms2-quizlive.jpg "Live Questionnaire")
+![Questionnaire Live](images/ms2-quizlive-mobile.jpg "Live Questionnaire Mobile")
+
 
 ## Core Feat 2: Party Breakdown
 ### Proposed Feature
@@ -55,10 +62,15 @@ This feature would be displayed upon completing the quiz. It would involve a bar
 
 ![Party Breakdown](images/breakdown.png "Party Breakdown")
 
-## Current Progress
+## Milestone 1 Progress
 The bar chart showing how the stances compare is complete, along with the issue-by-issue breakdown. Similarly to above, work is to be done on making the page mobile-friendly and implementing the Figma design as above.
 
 ![Party Breakdown Live](images/breakdownlive.jpg "Live Party Breakdown")
+
+## Milestone 2 Progress
+The design was updated to be more responsive. Additionally, the 2 sub-pages were added to give users the ability to granularly see their stance alignment with the various parties.
+
+![Party Breakdown Live](images/ms2-breakdownlive.jpg "Live Party Breakdown")
 
 ## Core Feat 3: Read Stances
 ### Proposed Feature
@@ -66,72 +78,175 @@ This feature would allow any user, regardless if they have finished the quiz or 
 
 ![Read Stances](images/readstances.png "Read Stances")
 
-### Current Progress
+### Milestone 1 Progress
 The basic page is complete. Yet to be implemented are the search bars and styling for mobile.
 
 ![Read Stances Live](images/readstanceslive.jpg "Live Read Stances")
 
-## Core Feat 4: Admin Dashboard
+### Milestone 2 Progress
+Styling for mobile and functional search bar added to the page.
+
+![Read Stances Live](images/readstanceslive.jpg "Live Read Stances")
+
+## Core Feat 4: Admin Dashboard Authenticated
+### Proposed Feature
+A page for admin users to login to the application. Operations done in the admin dashboard will require authentication to perform, thus the login page should validate users and provide the necessary tokens to make requests that require elevated permission on the backend with.
+
+### Milestone 2 Progress
+Fully implmented. Login was done via Auth0. Respective routes on the backend requiring elevated privileges were secured, relying on auth0's role-based authentication to ensure that operations can only be done by users of the correct role.
+
+#[Login Page](images/loginpage.jpg "Login Page")
+
+## Core Feat 5: Admin Dashboard
 ### Proposed Feature
 The admin dashboard would be its own page requiring authentication to access. The dashboard will support standard CRUD operations on the various items in the database such as issues and stances. This will allow proper management of the quiz
 
 ![Dashboard](images/dashboard.png "Dashboard")
 
-### Current Progress
-As of milestone 1, this feature was not worked on yet.
+### Milestone 2 Progress
+The dashboard is functional. Each resource is editable. Resources can be updated, deleted, or new ones could be added. Fields can be filtered and searched.
+
+#[Admin Page](images/adminpage.jpg "Admin Page")
 
 ## Extension Feat 1: Automatic stance extraction
 ### Proposed Feature
 This proposed feature is to automate extraction of party stances from online sources. This will be done by utilizing web scraping to obtain data on parties from sources such as news sites or manifestos, thereafter passing the data to an AI agent for it to glean stances from. After doing so, the agent would be able to suggest/insert stances and issues into the database for approval.
 
 ### Current Progress
-As of milestone 1, this feature was not worked on yet.
+As of milestone 2, this feature was not worked on yet.
 
 ## Extension Feat 2: Approve/Deny automatic stances
 ### Proposed Feature
 This addition to the dashboard would allow admins to view the AI-inserted stances/issues. It would allow them to verify its accuracy and relevance, and then either approve them or reject them. Approved issues would go into the "Bonus questions" pool, a separate pool of questions that users may choose to include along with the core set of questions.
 
 ### Current Progress
-As of milestone 1, this feature was not worked on yet.
+As of milestone 2, this feature was not worked on yet.
 
 ## Extension Feat 3: Add Bonus Questions
 ### Proposed Feature
 This feature would allow users, before doing the questionaire, to view the bonus questions and choose to include them. They would be allowed to select any amount of questions they want.
 
 ### Current Progress
-As of milestone 1, this feature was not worked on yet.
+As of milestone 2, this feature was not worked on yet.
 
 # Timeline
 As we are using Scrum, deadlines are not assigned on a task-basis. Instead, they were assigned for sprints, each sprint being 2 weeks. The milestone submission deadlines are still in-place. For upcoming milestones and sprints, sprint planning meetings will be held to decide which items in backlog will be included in the sprint. Backlog refinement will also be done to further distill features into tasks for optimal splitting of work (e.g. Dashboard login to be split into Backend implement auth and frontend create page)
 
-<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0" class="tg"><thead>
-<tr><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:right;vertical-align:top;word-break:normal">Sprint #</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Task</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Description</th>
-<th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Assigned</th><th style="background-color:#f38630;border-color:inherit;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Deadline</th></tr>
+<table class="tg" style="border-collapse: collapse; border-color: #aaa; border-spacing: 0;">
+<thead>
+<tr>
+<th style="background-color: #f38630; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; overflow: hidden; padding: 10px 5px; text-align: right; vertical-align: top; word-break: normal; border: 1px solid inherit;">Sprint #</th>
+<th style="background-color: #f38630; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Task</th>
+<th style="background-color: #f38630; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Description</th>
+<th style="background-color: #f38630; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Assigned</th>
+<th style="background-color: #f38630; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Deadline</th>
+</tr>
 </thead>
 <tbody>
-<tr><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:middle;word-break:normal" rowspan="10">#1</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Setup Database</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create database schema, setup config for DB</td>
-<td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Arjun</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:middle;word-break:normal" rowspan="10">2nd June<br></td></tr>
-<tr><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Backend: GET questions</td><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create an endpoint in the Backend server to return the quiz questions</td><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Arjun</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Backend: GET stances</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create an endpoint in the Backend server to return party stances for issues</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Arjun</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Backend: GET party</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create an endpoint in the Backend server to return party information</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Arjun</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Docker Compose config</td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create a docker compose config to spin up Backend, Database, Frontend<br></td><td style="background-color:#FCFBE3;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Arjun</td></tr>
-<tr><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Frontend: Quiz page</td><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create a functional quiz page as per spec</td><td style="background-color:#fff;border-color:inherit;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Thaddaeus</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Frontend: Compare Stance page</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create the functional compare stance page as per spec</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Thaddaeus</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Frontend: Compare Stance page</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create the functional compare stance page as per spec</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Thaddaeus</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Frontend: Front page</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create basic front page</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Thaddaeus</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Github Actions</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Create CI/CD workflow using github actions.</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Thaddaeus</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal" colspan="4"><b>MILESTONE 1</b> - Technical proof of concept to be done. Basic Functionality of quiz done, along with rudimentary breakdown of leanings. Backend set-up with database</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">2nd June</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:middle;word-break:normal" rowspan="8">TBA</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Question Weightages</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement functional UI for increasing weightage to question</td>
-<td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:middle;word-break:normal" rowspan="8">TBA</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:middle;word-break:normal" rowspan="8">TBA</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Search Stances</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement search UI in read stances page to filter</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Dashboard login</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement login functionality for admin dashboard</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Dashboard view questions</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement a page to show all questions in the database</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Dashboard update questions</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement a page for admins to perform updates to questions</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Stance Scraping</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement stance scraping as per spec</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Dashboard manage scraped qns</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement a page for admins to manage scraped questions(approve/reject)</td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Include scraped qns</td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Implement a page in main app to include scraped questions for use</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal" colspan="4"><b>MILESTONE 2</b> - Fully-fledged core system. Quiz fully featured with weightage. Breakdown of leanings is detailed. Backend API complete. Dashboard completely implemented.</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"><span style="font-weight:400;font-style:normal;text-decoration:none">30th June</span></td></tr>
-<tr><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal" colspan="4"><b>MILESTONE 3</b><span style="font-weight:400;font-style:normal;text-decoration:none"> - Extended system. Web scraping + AI component complete. Dashboard with bonus questions complete. </span></td><td style="background-color:#FCFBE3;border-color:#aaa;border-style:solid;border-width:1px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">28th July</td></tr></tbody></table>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: middle; word-break: normal; border: 1px solid inherit;" rowspan="10">#1</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Setup Database</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Create database schema, setup config for DB</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Arjun</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: middle; word-break: normal; border: 1px solid inherit;" rowspan="10">2nd June</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Backend: GET questions</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Create an endpoint in the Backend server to return the quiz questions</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Arjun</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Backend: GET stances</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Create an endpoint in the Backend server to return party stances for issues</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Arjun</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Backend: GET party</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Create an endpoint in the Backend server to return party information</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Arjun</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Docker Compose config</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Create a docker compose config to spin up Backend, Database, Frontend</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Arjun</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Frontend: Quiz page</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Create a functional quiz page as per spec</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid inherit;">Thaddaeus</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Frontend: Compare Stance page</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Create the functional compare stance page as per spec</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Thaddaeus</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Frontend: Compare Stance page</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Create the functional compare stance page as per spec</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Thaddaeus</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Frontend: Front page</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Create basic front page</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Thaddaeus</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Github Actions</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Create CI/CD workflow using github actions.</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Thaddaeus</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;" colspan="4"><strong>MILESTONE 1</strong> - Technical proof of concept to be done. Basic Functionality of quiz done, along with rudimentary breakdown of leanings. Backend set-up with database</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">2nd June</td>
+</tr>
+<tr>
+        <td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: middle; word-break: normal; border: 1px solid #aaa;" rowspan="3">#2</td>
+        <td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Question Weightages</td>
+        <td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement functional UI for increasing weightage to question</td>
+        <td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: middle; word-break: normal; border: 1px solid #aaa;">Thaddaeus</td><td rowspan="3">17th June</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Search Stances</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement search UI in read stances page to filter</td><td>Arjun</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Dashboard login</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement login functionality for admin dashboard</td><td>Arjun</td>
+</tr>
+<tr>
+  <td rowspan="2">#3</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Dashboard view questions</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement a page to show all questions in the database</td><td>Thaddaeus</td><td rowspan="2">30th June
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Dashboard update questions</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement a page for admins to perform updates to questions</td><td>Arjun</td>
+</tr>
+  <tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;" colspan="4"><strong>MILESTONE 2</strong> - Fully-fledged core system. Quiz fully featured with weightage. Breakdown of leanings is detailed. Backend API complete. Dashboard completely implemented.</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;"><span style="font-weight: 400; font-style: normal; text-decoration: none;">30th June</span></td>
+</tr>
+<tr>
+  <td rowspan="3">TBA</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Stance Scraping</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement stance scraping as per spec</td>
+  <td rowspan="3">TBA</td>
+  <td rowspan="3">TBA</td>
+</tr>
+<tr>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Dashboard manage scraped qns</td>
+<td style="background-color: #fff; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement a page for admins to manage scraped questions(approve/reject)</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Include scraped qns</td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">Implement a page in main app to include scraped questions for use</td>
+</tr>
+<tr>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;" colspan="4"><strong>MILESTONE 3</strong><span style="font-weight: 400; font-style: normal; text-decoration: none;"> - Extended system. Web scraping + AI component complete. Dashboard with bonus questions complete. </span></td>
+<td style="background-color: #fcfbe3; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; text-align: left; vertical-align: top; word-break: normal; border: 1px solid #aaa;">28th July</td>
+</tr>
+</tbody>
+</table>
 
 # Systems Design
 To ensure our system was logical and flowed well, we created several diagrams.
@@ -185,7 +300,7 @@ Scrum has allowed us to set clear goals for Milestone 1, while leaving some flex
 ![JIRA board](images/scrum.jpg "JIRA Board")
 
 # External Documentation
-The Backend component also has API documentation hosted on SwaggerHub, using the OpenAPI spec file located in the Backend folder. The documentation is [available publicly](https://app.swaggerhub.com/apis-docs/harjun7517/under-stance_backend_api/0.1.0)
+The Backend component also has API documentation hosted on SwaggerHub, using the OpenAPI spec file located in the Backend folder. The documentation is [available publicly](https://app.swaggerhub.com/apis-docs/harjun7517/under-stance_backend_api/0.1.1)
 
 # Project log
-View the project log for Milestone 1 [on github here](https://github.com/Harjun751/UnderStance/blob/main/MilestoneSubmissions/Milestone1/ProjectLog.md)
+View the project log for Milestone 2 [on github here](https://github.com/Harjun751/UnderStance/blob/main/MilestoneSubmissions/Milestone2/ProjectLog.md)
