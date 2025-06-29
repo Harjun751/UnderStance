@@ -2,12 +2,7 @@ import "./AddItem.css";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-const AddItem = ({
-    title = "Item",
-    onClose,
-    onSubmit,
-    schema = [],
-}) => {
+const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
     const initialState = {};
     schema.forEach((field) => {
         if (field.type === "dropdown") {
@@ -32,7 +27,9 @@ const AddItem = ({
     };
 
     //Check if form is valid before proceeding for submission
-    const formValid = Object.values(formData).every((val) => val !== "" && val !== null && val !== undefined);
+    const formValid = Object.values(formData).every(
+        (val) => val !== "" && val !== null && val !== undefined,
+    );
 
     return (
         <div className="modal-overlay">
@@ -55,7 +52,7 @@ const AddItem = ({
                                                 handleChange(
                                                     field.name,
                                                     e.target.value === "true",
-                                                    field.type
+                                                    field.type,
                                                 )
                                             }
                                         >
@@ -63,10 +60,12 @@ const AddItem = ({
                                                 Select a value
                                             </option>
                                             <option value="true">
-                                                {field.booleanData?.trueLabel || "True"}
+                                                {field.booleanData?.trueLabel ||
+                                                    "True"}
                                             </option>
                                             <option value="false">
-                                                {field.booleanData?.falseLabel || "False"}
+                                                {field.booleanData
+                                                    ?.falseLabel || "False"}
                                             </option>
                                         </select>
                                     ) : field.type === "string" ? (
@@ -77,7 +76,7 @@ const AddItem = ({
                                                 handleChange(
                                                     field.name,
                                                     e.target.value,
-                                                    field.type
+                                                    field.type,
                                                 )
                                             }
                                             maxLength={field.maxLen || 255}
@@ -90,28 +89,50 @@ const AddItem = ({
                                                 handleChange(
                                                     `${field.name}ID`,
                                                     e.target.value,
-                                                    field.type
+                                                    field.type,
                                                 );
                                                 handleChange(
                                                     field.name,
-                                                    e.target.options[e.target.selectedIndex].text,
-                                                    "text"
+                                                    e.target.options[
+                                                        e.target.selectedIndex
+                                                    ].text,
+                                                    "text",
                                                 );
                                             }}
                                         >
                                             <option value="" disabled>
                                                 Select {field.name}
                                             </option>
-                                            {field.dropdownData.data.map((item) => (
-                                                <option
-                                                    key={item[field.dropdownData.key]}
-                                                    value={item[field.dropdownData.key]}
-                                                >
-                                                    {item[field.dropdownData.value]}
-                                                </option>
-                                            ))}
+                                            {field.dropdownData.data.map(
+                                                (item) => (
+                                                    <option
+                                                        key={
+                                                            item[
+                                                                field
+                                                                    .dropdownData
+                                                                    .key
+                                                            ]
+                                                        }
+                                                        value={
+                                                            item[
+                                                                field
+                                                                    .dropdownData
+                                                                    .key
+                                                            ]
+                                                        }
+                                                    >
+                                                        {
+                                                            item[
+                                                                field
+                                                                    .dropdownData
+                                                                    .value
+                                                            ]
+                                                        }
+                                                    </option>
+                                                ),
+                                            )}
                                         </select>
-                                    ): field.type === "image" ? (
+                                    ) : field.type === "image" ? (
                                         <>
                                             <input
                                                 type="text"
@@ -119,7 +140,11 @@ const AddItem = ({
                                                 value={formData[field.name]}
                                                 placeholder="Enter image URL"
                                                 onChange={(e) =>
-                                                    handleChange(field.name, e.target.value, field.type)
+                                                    handleChange(
+                                                        field.name,
+                                                        e.target.value,
+                                                        field.type,
+                                                    )
                                                 }
                                             />
                                             {formData[field.name] ? (
@@ -133,29 +158,41 @@ const AddItem = ({
                                                 />
                                             ) : (
                                                 <div className="image-preview-box">
-                                                    <div className="image-placeholder">No image</div>
+                                                    <div className="image-placeholder">
+                                                        No image
+                                                    </div>
                                                 </div>
                                             )}
                                         </>
-                                        
                                     ) : field.type === "color" ? (
                                         <>
                                             <input
                                                 type="text"
                                                 value={formData[field.name]}
-                                                onChange={(e) => handleChange(field.name, e.target.value, field.type)}
+                                                onChange={(e) =>
+                                                    handleChange(
+                                                        field.name,
+                                                        e.target.value,
+                                                        field.type,
+                                                    )
+                                                }
                                                 placeholder="#000000"
                                             />
                                             <HexColorPicker
                                                 color={formData[field.name]}
-                                                onChange={(newColor) => handleChange(field.name, newColor, field.type)}
+                                                onChange={(newColor) =>
+                                                    handleChange(
+                                                        field.name,
+                                                        newColor,
+                                                        field.type,
+                                                    )
+                                                }
                                             />
                                         </>
-                                        
                                     ) : null}
                                 </div>
                             ))}
-                                    
+
                         <div className="modal-buttons">
                             <button
                                 type="button"
@@ -164,7 +201,11 @@ const AddItem = ({
                             >
                                 Cancel
                             </button>
-                            <button type="submit" className="modal-submit" disabled={!formValid}>
+                            <button
+                                type="submit"
+                                className="modal-submit"
+                                disabled={!formValid}
+                            >
                                 Save Question
                             </button>
                         </div>

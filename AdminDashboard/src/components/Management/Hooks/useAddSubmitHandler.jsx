@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useAddSubmitHandler({ addFunction, setResource, key }) {
     const [addSubmitLoading, setAddSubmitLoading] = useState(false);
@@ -10,22 +10,22 @@ export function useAddSubmitHandler({ addFunction, setResource, key }) {
         try {
             const resp = await addFunction(form);
             // create new object based on form and returned value
-            const newObject = {}
+            const newObject = {};
             Object.entries(form).forEach(([field, value]) => {
                 newObject[field] = value;
             });
             newObject[key] = resp.data[key];
             console.log(newObject);
             // set new object
-            setResource(prevItems => [...prevItems, newObject]);
+            setResource((prevItems) => [...prevItems, newObject]);
         } catch (err) {
             // Alert with details given from backend
             if (err.response?.data?.error) {
                 const info = err.response.data;
                 if (info.details) {
-                    alert(`${info.error} \n${info.details}`)
+                    alert(`${info.error} \n${info.details}`);
                 } else {
-                    alert(`${info.error}`)
+                    alert(`${info.error}`);
                 }
             } else {
                 // Other error: just alert with code
@@ -38,4 +38,4 @@ export function useAddSubmitHandler({ addFunction, setResource, key }) {
     };
 
     return { handleAddSubmit, addSubmitLoading, addSubmitError };
-};
+}

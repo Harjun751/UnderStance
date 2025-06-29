@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export function useDeleteSubmitHandler({ /*deleteFunction,*/ setResource, key}) {
+export function useDeleteSubmitHandler({
+    /*deleteFunction,*/ setResource,
+    key,
+}) {
     const [deleteSubmitLoading, setDeleteSubmitLoading] = useState(false);
     const [deleteSubmitError, setDeleteSubmitError] = useState(null);
 
@@ -10,15 +13,17 @@ export function useDeleteSubmitHandler({ /*deleteFunction,*/ setResource, key}) 
         try {
             // const resp = await deleteFunction(form);
             // remove resource
-            setResource(prevItems => prevItems.filter(item => item[key] !== form[key]));
+            setResource((prevItems) =>
+                prevItems.filter((item) => item[key] !== form[key]),
+            );
         } catch (err) {
             // Alert with details given from backend
             if (err.response?.data?.error) {
                 const info = err.response.data;
                 if (info.details) {
-                    alert(`${info.error} \n${info.details}`)
+                    alert(`${info.error} \n${info.details}`);
                 } else {
-                    alert(`${info.error}`)
+                    alert(`${info.error}`);
                 }
             } else {
                 // Other error: just alert with code
