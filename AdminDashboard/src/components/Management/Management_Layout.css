@@ -8,7 +8,6 @@
     font-family: "Sansation", sans-serif;
     font-weight: 400;
     font-style: normal;
-    overflow: hidden;
     overflow: auto;
     min-height: 85vh;
     max-height: 90vh;
@@ -168,7 +167,6 @@
     position: fixed; /* fixed so it overlays on top */
     top: 66px;
     right: 0;
-    height: 100%;
     width: 450px;
     height: calc(100% - 66px);
     background: linear-gradient(

@@ -54,7 +54,7 @@ const Category = () => {
         return () => {
             ignore = true;
         }
-    }, []);
+    }, [apiClient]);
 
     const schema = [
         { name: "CategoryID", type: "id", filterable: false },

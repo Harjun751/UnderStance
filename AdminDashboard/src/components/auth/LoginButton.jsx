@@ -5,14 +5,12 @@ export default () => {
     const { _isAuthenticated, loginWithRedirect } = useAuth0();
 
     return (
-        <>
-            <button
-                onClick={loginWithRedirect}
-                className="login-button"
-                type="submit"
-            >
-                Login
-            </button>
-        </>
+        <button
+            onClick={loginWithRedirect}
+            className="login-button"
+            type="submit"
+        >
+            Login
+        </button>
     );
 };

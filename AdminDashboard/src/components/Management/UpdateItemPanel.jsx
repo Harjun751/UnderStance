@@ -1,7 +1,5 @@
 import "./UpdateItemPanel.css";
 import { useEffect, useState } from "react";
-import { FaAnglesRight , FaAnglesLeft  } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
 import { HexColorPicker } from "react-colorful";
 
 const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded }) => {
@@ -37,7 +35,7 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
         }
     }, [item, schema]);
 
-    const handleChange = (name, value, type) => {
+    const handleChange = (name, value) => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 

@@ -81,9 +81,9 @@ const Management_Layout = ({ title, data, isLoading, schema, addSubmitHandler, u
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.map((row, index) => (
+                        {filteredData.map((row) => (
                             <tr
-                                key={index}
+                                key={row}
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >

@@ -65,7 +65,7 @@ const Party = () => {
         return () => {
            ignore = true; 
         };
-    }, []);
+    }, [apiClient]);
 
 
 

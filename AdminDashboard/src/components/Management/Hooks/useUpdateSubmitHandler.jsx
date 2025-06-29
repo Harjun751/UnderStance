@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export function useUpdateSubmitHandler({ updateFunction, setResource, key}) {
     const [updateSubmitLoading, setUpdateSubmitLoading] = useState(false);

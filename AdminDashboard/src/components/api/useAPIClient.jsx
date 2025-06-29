@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from "react";
 import { createAPIClient } from "./APIClient";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export function useAPIClient() {
     const { getAccessTokenSilently } = useAuth0();
-    return createAPIClient(getAccessTokenSilently);
+    const apiClient = useMemo(() => {
+        return createAPIClient(getAccessTokenSilently);
+    }, [getAccessTokenSilently]); // re-run only if the Auth0 getter changes
+
+    return apiClient;
 }

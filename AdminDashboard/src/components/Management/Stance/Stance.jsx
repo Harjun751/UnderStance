@@ -71,7 +71,7 @@ const Stance = () => {
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [apiClient]);
 
 
 

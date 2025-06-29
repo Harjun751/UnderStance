@@ -66,7 +66,7 @@ const Quiz = () => {
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [apiClient]);
 
     const schema = [
         { name: "IssueID", type: "id", filterable: false },

@@ -21,7 +21,7 @@ const AddItem = ({
 
     const [formData, setFormData] = useState(initialState);
 
-    const handleChange = (name, value, type) => {
+    const handleChange = (name, value) => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
