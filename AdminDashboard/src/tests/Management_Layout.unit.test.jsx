@@ -24,9 +24,25 @@ const sampleData = [
     { id: 2, name: "Second Item", active: false },
 ];
 
+const mockSchema = [
+    { name: "id", type: "id" },
+    { name: "name", type: "string", filterable: true },
+    { name: "active", type: "boolean", filterable: true },
+]
+
 describe("Management_Layout Component", () => {
     test("Renders table headers and rows", () => {
-        render(<Management_Layout title="Test" data={sampleData} />);
+        render(
+            <Management_Layout
+                title="Test"
+                data={sampleData}
+                schema={mockSchema}
+                isLoading={false}
+                addSubmitHandler={vi.fn()}
+                updateSubmitHandler={vi.fn()}
+                deleteSubmitHandler={vi.fn()}
+            />
+        );
 
         expect(screen.getByText("Test List")).toBeInTheDocument();
 
@@ -37,7 +53,17 @@ describe("Management_Layout Component", () => {
     });
 
     test("Renders FaCheck and FaTimes icons for boolean values", () => {
-        render(<Management_Layout title="Test" data={sampleData} />);
+        render(
+            <Management_Layout
+                title="Test"
+                data={sampleData}
+                schema={mockSchema}
+                isLoading={false}
+                addSubmitHandler={vi.fn()}
+                updateSubmitHandler={vi.fn()}
+                deleteSubmitHandler={vi.fn()}
+            />
+        );
 
         const trueIcon = document.querySelector(".boolean-true");
         const falseIcon = document.querySelector(".boolean-false");
@@ -49,7 +75,16 @@ describe("Management_Layout Component", () => {
     });
 
     test("Successfully filters items based on search input", () => {
-        render(<Management_Layout title="Test" data={sampleData} />);
+        render(
+        <Management_Layout
+            title="Test"
+            data={sampleData}
+            schema={mockSchema}
+            isLoading={false}
+            addSubmitHandler={vi.fn()}
+            updateSubmitHandler={vi.fn()}
+            deleteSubmitHandler={vi.fn()}
+        />);
 
         const searchInput = screen.getByPlaceholderText(/search/i);
         fireEvent.change(searchInput, { target: { value: "Second" } });
@@ -64,7 +99,17 @@ describe("Management_Layout Component", () => {
     });
 
     test("Opens AddItem modal when Add button clicked", async () => {
-        render(<Management_Layout title="Test" data={sampleData} />);
+        render(
+            <Management_Layout
+                title="Test"
+                data={sampleData}
+                schema={mockSchema}
+                isLoading={false}
+                addSubmitHandler={vi.fn()}
+                updateSubmitHandler={vi.fn()}
+                deleteSubmitHandler={vi.fn()}
+            />
+        );
         const addButton = screen.getByRole("button", { name: /Add Test/i });
 
         fireEvent.click(addButton);
@@ -75,7 +120,17 @@ describe("Management_Layout Component", () => {
     });
 
     test("Opens UpdateItemPanel on row click", async () => {
-        render(<Management_Layout title="Test" data={sampleData} />);
+        render(
+            <Management_Layout
+                title="Test"
+                data={sampleData}
+                schema={mockSchema}
+                isLoading={false}
+                addSubmitHandler={vi.fn()}
+                updateSubmitHandler={vi.fn()}
+                deleteSubmitHandler={vi.fn()}
+            />
+        );
 
         // Use role="table" to scope correctly to the table
         const table = screen.getByRole("table");
