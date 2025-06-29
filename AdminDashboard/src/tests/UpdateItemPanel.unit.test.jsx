@@ -9,17 +9,34 @@ const mockItem = {
     active: true,
 };
 
+const mockSchema = [
+    { name: "id", type: "id" },
+    { name: "name", type: "string" },
+    {
+        name: "active",
+        type: "boolean",
+        booleanData: {
+            trueLabel: "Yes",
+            falseLabel: "No",
+        },
+    },
+];
+
 describe("UpdateItemPanel Component", () => {
-    let handleClose, handleSubmit;
+    let handleClose, handleSubmit, handleDelete;
 
     beforeEach(() => {
         handleClose = vi.fn();
         handleSubmit = vi.fn();
+        handleDelete = vi.fn();
         render(
             <UpdateItemPanel
                 item={mockItem}
+                schema={mockSchema}
                 onClose={handleClose}
                 onSubmit={handleSubmit}
+                onDelete={handleDelete}
+                isExpanded={false}
             />,
         );
     });
@@ -37,12 +54,16 @@ describe("UpdateItemPanel Component", () => {
         const nameInput = screen.getByLabelText(/name/i);
         fireEvent.change(nameInput, { target: { value: "Updated Name" } });
 
-        fireEvent.click(screen.getByRole("button", { name: /Update Entry/i }));
+        const submitButton = screen.getByRole("button", {
+            name: /Update Entry/i,
+        });
+        fireEvent.click(submitButton);
 
         await waitFor(() => {
             expect(handleSubmit).toHaveBeenCalledWith({
-                ...mockItem,
+                id: 1,
                 name: "Updated Name",
+                active: true,
             });
             expect(handleClose).toHaveBeenCalled();
         });
@@ -53,13 +74,20 @@ describe("UpdateItemPanel Component", () => {
         expect(handleClose).toHaveBeenCalled();
     });
 
-    test("Toggles panel width on expand button click", () => {
-        const expandBtn = screen.getByRole("button", {
-            name: /Expand Panel/i,
+    test("Calls onDelete when Delete is clicked", () => {
+        fireEvent.click(screen.getByRole("button", { name: /Delete Entry/i }));
+        expect(handleDelete).toHaveBeenCalledWith({
+            id: 1,
+            name: "Sample Name",
+            active: true,
         });
-        fireEvent.click(expandBtn);
+        expect(handleClose).toHaveBeenCalled();
+    });
 
-        const panel = screen.getByText(/Quick View\/Edit/i).closest("div");
-        expect(panel.className).toContain("expanded");
+    test("disables Update button if no changes", () => {
+        const updateButton = screen.getByRole("button", {
+            name: /Update Entry/i,
+        });
+        expect(updateButton).toBeDisabled();
     });
 });

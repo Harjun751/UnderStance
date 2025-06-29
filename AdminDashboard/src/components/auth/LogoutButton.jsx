@@ -4,20 +4,18 @@ export default () => {
     const { _isAuthenticated, logout } = useAuth0();
 
     return (
-        <>
-            <button
-                onClick={() => {
-                    logout({
-                        logoutParams: {
-                            returnTo: window.location.origin,
-                        },
-                    });
-                }}
-                class="logout-button"
-                type="submit"
-            >
-                Logout
-            </button>
-        </>
+        <button
+            onClick={() => {
+                logout({
+                    logoutParams: {
+                        returnTo: window.location.origin,
+                    },
+                });
+            }}
+            className="logout-button"
+            type="submit"
+        >
+            Logout
+        </button>
     );
 };

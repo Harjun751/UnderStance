@@ -130,12 +130,18 @@ describe("authenticated GET stances", () => {
     // deep copy the above-defined response
     const extendedFakeStances = JSON.parse(JSON.stringify(fakeStances));
     // verify that inactive parties show up in the response too
+    extendedFakeStances[0]["Issue Summary"] = "On the anthem";
+    extendedFakeStances[1]["Issue Summary"] = "On the anthem";
+    extendedFakeStances[0]["Party"] = "Coalition for Shakira";
+    extendedFakeStances[1]["Party"] = "Traditionalists' Party";
     extendedFakeStances.push({
         StanceID: 3,
         Stand: false,
         Reason: "Our opinions are irrelevant",
         IssueID: 1,
         PartyID: 3,
+        "Issue Summary": "On the anthem",
+        Party: "Inactive Party",
     });
 
     test("200 OK GET all", async () => {
@@ -178,6 +184,8 @@ describe("POST stance", () => {
                 Reason: reqBody.Reason,
                 IssueID: reqBody.IssueID,
                 PartyID: reqBody.PartyID,
+                "Issue Summary": "On the anthem",
+                Party: "Defunct Party",
             },
         ]);
     });
@@ -235,9 +243,9 @@ describe("PUT stance", () => {
         expect(response.statusCode).toBe(200);
 
         // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`)
-            .get(`/stances?StanceID=${reqBody.StanceID}`)
-            .set("authorization", `Bearer ${global.authToken}`);
+        const getResponse = await request(`http://localhost:${appPort}`).get(
+            `/stances?StanceID=${reqBody.StanceID}`,
+        );
         expect(getResponse.body).toEqual([reqBody]);
     });
 

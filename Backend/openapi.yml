@@ -54,6 +54,7 @@ paths:
                           Description: "Allow bringing durians into public buses"
                           Summary: "Durians in Buses"
                           CategoryID: 2
+                          Category: "Public Transport"
                           Active: true
         "400":
           description: Bad request - incorrect parameters passed into query
@@ -389,6 +390,16 @@ paths:
                       Description: "School should teach cool things. Backflips are cool."
                       IssueID: 23
                       PartyID: 2
+                /stances (authenticated):
+                  value:
+                    - StanceID: 2
+                      Stand: true
+                      Description: "School should teach cool things. Backflips are cool."
+                      IssueID: 23
+                      Issue Summary: Teaching Backflips
+                      PartyID: 2
+                      Party: Backflip Party
+
         "400":
           description: Bad request - incorrect parameters passed into query
           content:
@@ -1205,3 +1216,4 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+

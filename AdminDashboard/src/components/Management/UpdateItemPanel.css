@@ -1,41 +1,27 @@
-.side-panel {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 300px;
-    width: 400px;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(191, 191, 191, 0.95) 0%,
-        rgba(86, 172, 255, 1) 100%
-    );
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+.side-panel-content {
     padding: 1.5rem;
-    z-index: 1000;
-    overflow-y: auto;
-    border-radius: 10px;
-    border: solid black;
-    transition: width 0.3s ease;
 }
 
-.side-panel.expanded {
-    width: 600px;
-}
-
-.side-panel h3 {
-    margin-top: 0rem;
-    text-align: center;
-    border-bottom: solid black;
+.side-panel-content h3 {
+    margin-top: -1rem;
+    margin-bottom: 0.2rem;
+    border-bottom: solid 2px rgb(114, 114, 114);
     font-weight: bold;
     font-size: 25px;
 }
 
-.side-panel h4 {
-    margin-top: 0rem;
+.side-panel-content h4 {
     margin-bottom: 1rem;
-    text-align: center;
-    color: #424242;
+    color: #3b3b3b;
+}
+
+.panel-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    padding-left: 1.5rem;
+    padding-bottom: 3rem;
+    padding-top: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .panel-form .form-group {
@@ -61,14 +47,61 @@
 }
 
 .panel-form select {
-    width: 105%; /* Jank to make it look the same */
+    width: 104%; /* Jank to make it look the same */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 6px;
 }
 
-.side-panel.expanded > .panel-form select {
-    width: 103%; /* Jank to make it look the same */
+.image-preview-box {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.image-placeholder {
+    color: #aaa;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.standalone-image {
+    display: block;
+    max-width: 50%;
+    margin-top: 8px;
+    border-radius: 6px;
+    object-fit: fill;
+    width: 150px;
+    height: 150px;
+}
+
+.panel-form input[type="text"] {
+    width: 103%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition:
+        border-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out;
+}
+
+.color-hex-code {
+    font-family: monospace;
+    font-size: 1rem;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    cursor: text;
 }
 
 .panel-buttons {
@@ -87,6 +120,12 @@
     cursor: pointer;
 }
 
+.panel-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .panel-delete {
     padding: 6px 16px;
     background-color: #cc0000;
@@ -102,23 +141,5 @@
     color: #333;
     border: none;
     border-radius: 6px;
-    cursor: pointer;
-}
-
-.close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    font-size: 1.5rem;
-    border: none;
-    cursor: pointer;
-}
-
-.expand-btn {
-    position: absolute;
-    background: transparent;
-    font-size: 1.5rem;
-    border: none;
     cursor: pointer;
 }

@@ -4,8 +4,18 @@ import { useState, useMemo } from "react";
 import AddItem from "./AddItem";
 import UpdateItemPanel from "./UpdateItemPanel";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaAnglesRight, FaAnglesLeft } from "react-icons/fa6";
+import Loader from "../general/Loader";
 
-const Management_Layout = ({ title, data }) => {
+const Management_Layout = ({
+    title,
+    data,
+    isLoading,
+    schema,
+    addSubmitHandler,
+    updateSubmitHandler,
+    deleteSubmitHandler,
+}) => {
     // For Table Filters
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState({});
@@ -15,20 +25,29 @@ const Management_Layout = ({ title, data }) => {
 
     // For Side Panel
     const [selectedRow, setSelectedRow] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
 
-    const headers = useMemo(
-        () => (data.length > 0 ? Object.keys(data[0]) : []),
-        [data],
-    );
+    const handleClosePanel = () => {
+        setSelectedRow(null);
+        setIsExpanded(false);
+    };
 
-    // Unique values for each column for filter dropdowns
+    const toggleExpand = () => {
+        setIsExpanded((prev) => !prev);
+    };
+
+    // Unique values for each filterable column for filter dropdowns
     const uniqueValues = useMemo(() => {
         const values = {};
-        headers.forEach((header) => {
-            values[header] = [...new Set(data.map((row) => row[header]))];
-        });
+        schema
+            .filter((obj) => obj.filterable === true)
+            .forEach((field) => {
+                values[field.name] = [
+                    ...new Set(data.map((row) => row[field.name])),
+                ];
+            });
         return values;
-    }, [data, headers]);
+    }, [data, schema]);
 
     // Filter and search logic
     const filteredData = useMemo(() => {
@@ -54,20 +73,26 @@ const Management_Layout = ({ title, data }) => {
     };
 
     const renderTable = () => {
+        if (isLoading) {
+            return (
+                <Loader
+                    message="Loading data..."
+                    style={{ marginTop: "50px" }}
+                />
+            );
+        }
         if (!Array.isArray(data) || data.length === 0) {
             return <div className="table-empty">No data found in table.</div>;
         }
-
-        const headers = Object.keys(data[0]);
 
         return (
             <div className="table-container">
                 <table className="data-table">
                     <thead>
                         <tr>
-                            {headers.map((header) => (
-                                <th key={header} className="table-header">
-                                    {header}
+                            {schema.map((field) => (
+                                <th key={field.name} className="table-header">
+                                    {field.name}
                                 </th>
                             ))}
                         </tr>
@@ -79,16 +104,36 @@ const Management_Layout = ({ title, data }) => {
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >
-                                {headers.map((header) => (
-                                    <td key={header} className="table-cell">
-                                        {typeof row[header] === "boolean" ? (
-                                            row[header] ? (
+                                {schema.map((field) => (
+                                    <td key={field.name} className="table-cell">
+                                        {field.type === "boolean" ? (
+                                            row[field.name] ? (
                                                 <FaCheck className="boolean-true" />
                                             ) : (
                                                 <FaTimes className="boolean-false" />
                                             )
+                                        ) : field.type === "image" ? (
+                                            row[field.name] ? (
+                                                <img
+                                                    src={row[field.name]}
+                                                    alt="thumbnail"
+                                                    style={{
+                                                        width: "30px",
+                                                        height: "30px",
+                                                        objectFit: "cover",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div
+                                                    style={{
+                                                        width: "20px",
+                                                        height: "20px",
+                                                        background: "#eee",
+                                                    }}
+                                                />
+                                            )
                                         ) : (
-                                            row[header]
+                                            row[field.name]
                                         )}
                                     </td>
                                 ))}
@@ -101,7 +146,7 @@ const Management_Layout = ({ title, data }) => {
     };
     return (
         <Layout title={title}>
-            {/* Implement Dynamic Table Design */}
+            {/* Dynamic Table Design */}
             <div className="management">
                 <div className="management-header">
                     {/* pass value */}
@@ -129,23 +174,28 @@ const Management_Layout = ({ title, data }) => {
                     </div>
                     <div className="table-filters">
                         {/* Create various drop down filters for the table */}
-                        {headers.map((header) => (
-                            <select
-                                key={header}
-                                value={filters[header] || ""}
-                                onChange={(e) =>
-                                    handleFilterChange(header, e.target.value)
-                                }
-                                className="filter-dropdown"
-                            >
-                                <option value="">All {header}</option>
-                                {uniqueValues[header].map((val) => (
-                                    <option key={val} value={val}>
-                                        {val.toString()}
-                                    </option>
-                                ))}
-                            </select>
-                        ))}
+                        {schema
+                            .filter((obj) => obj.filterable === true)
+                            .map((field) => (
+                                <select
+                                    key={field.name}
+                                    value={filters[field.name] || ""}
+                                    onChange={(e) =>
+                                        handleFilterChange(
+                                            field.name,
+                                            e.target.value,
+                                        )
+                                    }
+                                    className="filter-dropdown"
+                                >
+                                    <option value="">Any {field.name}</option>
+                                    {uniqueValues[field.name].map((val) => (
+                                        <option key={val} value={val}>
+                                            {val?.toString()}
+                                        </option>
+                                    ))}
+                                </select>
+                            ))}
                     </div>
                 </div>
                 {renderTable()}
@@ -155,31 +205,44 @@ const Management_Layout = ({ title, data }) => {
                 {showForm && (
                     <AddItem
                         title={title}
-                        headers={headers}
                         onClose={() => setShowForm(false)}
-                        onSubmit={(item) => {
-                            console.log("Added item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
-                        sampleItem={data[0]} //sample data used to detect variable types
+                        onSubmit={addSubmitHandler}
+                        schema={schema}
                     />
                 )}
+            </div>
+            <div
+                className={`panel-wrapper ${selectedRow ? "open" : ""} ${isExpanded ? "expanded" : ""}`}
+            >
                 {selectedRow && (
-                    <UpdateItemPanel
-                        item={selectedRow}
-                        onClose={() => setSelectedRow(null)}
-                        onSubmit={(item) => {
-                            console.log("Updated item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
-                        onDelete={(item) => {
-                            console.log("Deleted item:", item); //for debugging
-                            // Add logic here to submit updated
-                            setShowForm(false);
-                        }}
-                    />
+                    <>
+                        <button
+                            type="button"
+                            className="close-btn"
+                            onClick={handleClosePanel}
+                            title="Close Panel"
+                        >
+                            <FaTimes />
+                        </button>
+                        <button
+                            type="button"
+                            className="expand-btn"
+                            onClick={toggleExpand}
+                            title={
+                                isExpanded ? "Collapse Panel" : "Expand Panel"
+                            }
+                        >
+                            {isExpanded ? <FaAnglesRight /> : <FaAnglesLeft />}
+                        </button>
+                        <UpdateItemPanel
+                            item={selectedRow}
+                            onClose={handleClosePanel}
+                            onSubmit={updateSubmitHandler}
+                            onDelete={deleteSubmitHandler}
+                            schema={schema}
+                            isExpanded={isExpanded}
+                        />
+                    </>
                 )}
             </div>
         </Layout>

@@ -21,7 +21,13 @@ async function getQuestions(isAuthenticated) {
     let query;
     if (isAuthenticated) {
         // Return all info
-        query = 'SELECT * FROM "Issue"';
+        query = `
+        SELECT i.*, c."Name" as "Category"
+        FROM "Issue" i
+        INNER JOIN "Category" c
+        ON i."CategoryID" = c."CategoryID"
+        ORDER BY i."IssueID"
+        `;
     } else {
         // return only active questions
         query = `
@@ -47,6 +53,14 @@ async function getQuestionWithID(isAuthenticated, id) {
     let query;
     if (isAuthenticated) {
         query = 'SELECT * FROM "Issue" WHERE "IssueID" = $1';
+        query = `
+            SELECT
+            i.*, c."Name" AS "Category"
+            FROM "Issue" i
+            INNER JOIN "Category" c
+            ON i."CategoryID" = c."CategoryID"
+            AND "IssueID" = $1
+        `;
     } else {
         query = `
             SELECT
@@ -148,7 +162,14 @@ async function deleteQuestion(id) {
 async function getStances(isAuthenticated) {
     let query;
     if (isAuthenticated) {
-        query = `SELECT * FROM "Stance"`;
+        query = `
+        SELECT
+        s.*, p."Name" as "Party", i."Summary" AS "Issue Summary"
+        FROM "Stance" s
+        INNER JOIN "Party" p ON p."PartyID" = s."PartyID"
+        INNER JOIN "Issue" i ON i."IssueID" = s."IssueID"
+        ORDER BY s."StanceID"
+        `;
     } else {
         query = `
             SELECT s.* FROM "Stance" s
@@ -169,10 +190,14 @@ async function getStances(isAuthenticated) {
 async function getStancesFiltered(isAuthenticated, StanceID, IssueID, PartyID) {
     let query;
     if (isAuthenticated) {
-        query = `SELECT * FROM "Stance"
-            WHERE ($1::integer IS NULL OR "StanceID" = $1::integer)
-            AND ($2::integer IS NULL OR "IssueID" = $2::integer)
-            AND ($3::integer IS NULL OR "PartyID" = $3::integer)`;
+        query = `SELECT
+            s.*, p."Name" as "Party", i."Summary" AS "Issue Summary"
+            FROM "Stance" s
+            INNER JOIN "Party" p ON p."PartyID" = s."PartyID"
+            INNER JOIN "Issue" i ON i."IssueID" = s."IssueID"
+            WHERE ($1::integer IS NULL OR s."StanceID" = $1::integer)
+            AND ($2::integer IS NULL OR s."IssueID" = $2::integer)
+            AND ($3::integer IS NULL OR s."PartyID" = $3::integer)`;
     } else {
         query = `
             SELECT s.* FROM "Stance" s
@@ -444,7 +469,9 @@ async function deleteCategory(id) {
 
 async function getCategories() {
     try {
-        const rows = await pool.query('SELECT * FROM "Category";');
+        const rows = await pool.query(
+            'SELECT * FROM "Category" ORDER BY "CategoryID";',
+        );
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);

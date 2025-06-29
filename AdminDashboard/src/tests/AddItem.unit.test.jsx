@@ -3,83 +3,90 @@ import AddItem from "../components/Management/AddItem"; // adjust path if needed
 import { vi } from "vitest";
 
 describe("AddItem Component", () => {
-    const headers = ["id", "name", "active"];
     const title = "Test Item";
-    const sampleItem = { name: "", active: true };
 
     const onClose = vi.fn();
     const onSubmit = vi.fn();
+
+    const mockSchema = [
+        { name: "name", type: "string" },
+        {
+            name: "active",
+            type: "boolean",
+            booleanData: { trueLabel: "Yes", falseLabel: "No" },
+        },
+    ];
 
     beforeEach(() => {
         onClose.mockReset();
         onSubmit.mockReset();
     });
 
-    test("renders form with headers excluding id", () => {
+    test("renders form based on mock Schema excluding id", () => {
         render(
             <AddItem
-                headers={headers}
                 title={title}
                 onClose={onClose}
                 onSubmit={onSubmit}
-                sampleItem={sampleItem}
+                schema={mockSchema}
             />,
         );
 
         expect(screen.getByText(`Add New ${title}`)).toBeInTheDocument();
 
-        // "id" label should NOT be present
-        expect(screen.queryByText("id")).not.toBeInTheDocument();
+        // Name should render string input as textarea
+        expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+        expect(screen.getByRole("textbox", { name: /name/i })).toBeVisible();
 
-        // "name" and "active" labels should be present
-        expect(screen.getByText("name")).toBeInTheDocument();
-        expect(screen.getByText("active")).toBeInTheDocument();
+        // Active should render boolean select dropdown
+        expect(screen.getByLabelText(/active/i)).toBeInTheDocument();
+        expect(screen.getByRole("combobox", { name: /active/i })).toBeVisible();
 
-        // textarea for "name"
+        // Save button should initially be disabled
         expect(
-            screen.getByRole("textbox", { name: /name/i }),
-        ).toBeInTheDocument();
-
-        // select for "active"
-        expect(
-            screen.getByRole("combobox", { name: /active/i }),
-        ).toBeInTheDocument();
+            screen.getByRole("button", { name: /save question/i }),
+        ).toBeDisabled();
     });
 
-    test("handles text input and boolean select changes", () => {
+    test("enables submit when all fields are filled and submits data", () => {
         render(
             <AddItem
-                headers={headers}
                 title={title}
                 onClose={onClose}
                 onSubmit={onSubmit}
-                sampleItem={sampleItem}
+                schema={mockSchema}
             />,
         );
 
         const nameInput = screen.getByRole("textbox", { name: /name/i });
         const activeSelect = screen.getByRole("combobox", { name: /active/i });
+        const submitBtn = screen.getByRole("button", {
+            name: /save question/i,
+        });
 
-        // Change textarea value
-        fireEvent.change(nameInput, { target: { value: "New Name" } });
-        expect(nameInput.value).toBe("New Name");
+        // Fill form
+        fireEvent.change(nameInput, { target: { value: "Test Name" } });
+        fireEvent.change(activeSelect, { target: { value: "true" } });
 
-        // Change select value (boolean)
-        fireEvent.change(activeSelect, { target: { value: "False" } });
-        expect(activeSelect.value).toBe("False");
+        expect(submitBtn).not.toBeDisabled();
 
-        fireEvent.change(activeSelect, { target: { value: "True" } });
-        expect(activeSelect.value).toBe("True");
+        // Submit
+        fireEvent.click(submitBtn);
+
+        expect(onSubmit).toHaveBeenCalledWith({
+            name: "Test Name",
+            active: true,
+        });
+        expect(onClose).toHaveBeenCalled();
     });
 
-    test("calls onClose when Cancel button clicked", () => {
+    test("calls onClose without submitting when Cancel clicked", () => {
         render(
             <AddItem
-                headers={headers}
                 title={title}
                 onClose={onClose}
                 onSubmit={onSubmit}
-                sampleItem={sampleItem}
+                schema={mockSchema}
             />,
         );
 
@@ -88,41 +95,5 @@ describe("AddItem Component", () => {
 
         expect(onClose).toHaveBeenCalledTimes(1);
         expect(onSubmit).not.toHaveBeenCalled();
-    });
-
-    test("calls onSubmit with form data and onClose on form submit", () => {
-        render(
-            <AddItem
-                headers={headers}
-                title={title}
-                onClose={onClose}
-                onSubmit={onSubmit}
-                sampleItem={sampleItem}
-            />,
-        );
-
-        const textareas = screen.getAllByRole("textbox");
-        const nameInput = textareas[0]; // first textarea
-
-        const selects = screen.getAllByRole("combobox");
-        const activeSelect = selects[0]; // first select
-
-        const submitBtn = screen.getByRole("button", {
-            name: /save question/i,
-        });
-
-        // Fill form
-        fireEvent.change(nameInput, { target: { value: "Submitted Name" } });
-        fireEvent.change(activeSelect, { target: { value: "False" } });
-
-        // Submit form
-        fireEvent.click(submitBtn);
-
-        expect(onSubmit).toHaveBeenCalledWith({
-            name: "Submitted Name",
-            active: false, // note conversion from "False" string to boolean false
-        });
-
-        expect(onClose).toHaveBeenCalledTimes(1);
     });
 });

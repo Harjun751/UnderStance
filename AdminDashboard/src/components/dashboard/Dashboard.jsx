@@ -11,14 +11,6 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            /* test if normal routes work */
-            const testRes = await fetch(
-                `${import.meta.env.VITE_API_URL}/questions`,
-            );
-            const testData = await testRes.json();
-            console.log(testData);
-            /* end */
-
             const token = await getAccessTokenSilently({
                 authorizationParams: {
                     audience: "https://understance-backend.onrender.com/",
