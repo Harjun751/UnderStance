@@ -52,8 +52,8 @@ For Milestone 1, the quiz page is functional. Users can agree/disagree/skip, and
 ### Milestone 2 Progress
 The design of the page was updated, including responsive styling for smaller screens. The weightage feature is also now complete, with a slider present to adjust importance for users.
 
-![Questionnaire Live](images/ms2-quizlive.jpg "Live Questionnaire")
-![Questionnaire Live](images/ms2-quizlive-mobile.jpg "Live Questionnaire Mobile")
+![Questionnaire Live](images/ms2-quizlive.png "Live Questionnaire")
+![Questionnaire Live](images/ms2-quizlive-mobile.png "Live Questionnaire Mobile")
 
 
 ## Core Feat 2: Party Breakdown
@@ -71,7 +71,8 @@ The bar chart showing how the stances compare is complete, along with the issue-
 The design was updated to be more responsive. Additionally, the 2 sub-pages were added to give users the ability to granularly see their stance alignment with the various parties.
 
 ![Party Breakdown Live](images/ms2-breakdownlive.png "Live Party Breakdown")
-
+![Party Breakdown by Category Live](images/ms2-breakdownlive-2.png "Live Party Breakdown by Category")
+![Party Breakdown by Table Live](images/ms2-breakdownlive-3.png "Live Party Breakdown by Table")
 ## Core Feat 3: Read Stances
 ### Proposed Feature
 This feature would allow any user, regardless if they have finished the quiz or not, to read on the stances that the parties have on the issues in the quiz. It would simply show the issue in question, and then the response of the party and their overall stance. The page would additionally have a search bar.

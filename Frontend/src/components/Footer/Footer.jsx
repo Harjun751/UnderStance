@@ -60,7 +60,7 @@ const Footer = () => {
                             <Link>
                                 <li>
                                     <a
-                                        href="https://www.youtube.com/watch?v=KZoipAb2fo4&list=RDKZoipAb2fo4&start_radio=1&pp=ygUOYnJhaW5yb3QgYW5pbWWgBwE%3D"
+                                        href="https://docs.google.com/spreadsheets/d/1amv7Aa4VcDngvbswcU4n80nv4tjPsn8oJAOVqbWXiyI/edit?usp=sharing"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
