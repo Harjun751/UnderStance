@@ -16,8 +16,8 @@ const mockSchema = [
         name: "active",
         type: "boolean",
         booleanData: {
-        trueLabel: "Yes",
-        falseLabel: "No",
+            trueLabel: "Yes",
+            falseLabel: "No",
         },
     },
 ];
@@ -37,7 +37,7 @@ describe("UpdateItemPanel Component", () => {
                 onSubmit={handleSubmit}
                 onDelete={handleDelete}
                 isExpanded={false}
-            />
+            />,
         );
     });
 
@@ -54,7 +54,9 @@ describe("UpdateItemPanel Component", () => {
         const nameInput = screen.getByLabelText(/name/i);
         fireEvent.change(nameInput, { target: { value: "Updated Name" } });
 
-        const submitButton = screen.getByRole("button", { name: /Update Entry/i });
+        const submitButton = screen.getByRole("button", {
+            name: /Update Entry/i,
+        });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
@@ -73,7 +75,7 @@ describe("UpdateItemPanel Component", () => {
     });
 
     test("Calls onDelete when Delete is clicked", () => {
-    fireEvent.click(screen.getByRole("button", { name: /Delete Entry/i }));
+        fireEvent.click(screen.getByRole("button", { name: /Delete Entry/i }));
         expect(handleDelete).toHaveBeenCalledWith({
             id: 1,
             name: "Sample Name",
@@ -83,7 +85,9 @@ describe("UpdateItemPanel Component", () => {
     });
 
     test("disables Update button if no changes", () => {
-        const updateButton = screen.getByRole("button", { name: /Update Entry/i });
+        const updateButton = screen.getByRole("button", {
+            name: /Update Entry/i,
+        });
         expect(updateButton).toBeDisabled();
     });
 });

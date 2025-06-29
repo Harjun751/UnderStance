@@ -28,7 +28,7 @@ const mockSchema = [
     { name: "id", type: "id" },
     { name: "name", type: "string", filterable: true },
     { name: "active", type: "boolean", filterable: true },
-]
+];
 
 describe("Management_Layout Component", () => {
     test("Renders table headers and rows", () => {
@@ -41,7 +41,7 @@ describe("Management_Layout Component", () => {
                 addSubmitHandler={vi.fn()}
                 updateSubmitHandler={vi.fn()}
                 deleteSubmitHandler={vi.fn()}
-            />
+            />,
         );
 
         expect(screen.getByText("Test List")).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe("Management_Layout Component", () => {
                 addSubmitHandler={vi.fn()}
                 updateSubmitHandler={vi.fn()}
                 deleteSubmitHandler={vi.fn()}
-            />
+            />,
         );
 
         const trueIcon = document.querySelector(".boolean-true");
@@ -76,15 +76,16 @@ describe("Management_Layout Component", () => {
 
     test("Successfully filters items based on search input", () => {
         render(
-        <Management_Layout
-            title="Test"
-            data={sampleData}
-            schema={mockSchema}
-            isLoading={false}
-            addSubmitHandler={vi.fn()}
-            updateSubmitHandler={vi.fn()}
-            deleteSubmitHandler={vi.fn()}
-        />);
+            <Management_Layout
+                title="Test"
+                data={sampleData}
+                schema={mockSchema}
+                isLoading={false}
+                addSubmitHandler={vi.fn()}
+                updateSubmitHandler={vi.fn()}
+                deleteSubmitHandler={vi.fn()}
+            />,
+        );
 
         const searchInput = screen.getByPlaceholderText(/search/i);
         fireEvent.change(searchInput, { target: { value: "Second" } });
@@ -108,7 +109,7 @@ describe("Management_Layout Component", () => {
                 addSubmitHandler={vi.fn()}
                 updateSubmitHandler={vi.fn()}
                 deleteSubmitHandler={vi.fn()}
-            />
+            />,
         );
         const addButton = screen.getByRole("button", { name: /Add Test/i });
 
@@ -129,7 +130,7 @@ describe("Management_Layout Component", () => {
                 addSubmitHandler={vi.fn()}
                 updateSubmitHandler={vi.fn()}
                 deleteSubmitHandler={vi.fn()}
-            />
+            />,
         );
 
         // Use role="table" to scope correctly to the table

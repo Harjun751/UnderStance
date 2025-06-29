@@ -42,9 +42,10 @@ describe("AddItem Component", () => {
         expect(screen.getByLabelText(/active/i)).toBeInTheDocument();
         expect(screen.getByRole("combobox", { name: /active/i })).toBeVisible();
 
-
         // Save button should initially be disabled
-        expect(screen.getByRole("button", { name: /save question/i })).toBeDisabled();
+        expect(
+            screen.getByRole("button", { name: /save question/i }),
+        ).toBeDisabled();
     });
 
     test("enables submit when all fields are filled and submits data", () => {
@@ -54,12 +55,14 @@ describe("AddItem Component", () => {
                 onClose={onClose}
                 onSubmit={onSubmit}
                 schema={mockSchema}
-            />
+            />,
         );
 
         const nameInput = screen.getByRole("textbox", { name: /name/i });
         const activeSelect = screen.getByRole("combobox", { name: /active/i });
-        const submitBtn = screen.getByRole("button", { name: /save question/i });
+        const submitBtn = screen.getByRole("button", {
+            name: /save question/i,
+        });
 
         // Fill form
         fireEvent.change(nameInput, { target: { value: "Test Name" } });
