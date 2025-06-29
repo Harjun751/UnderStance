@@ -2,7 +2,14 @@ import "./UpdateItemPanel.css";
 import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded }) => {
+const UpdateItemPanel = ({
+    item,
+    onClose,
+    onSubmit,
+    onDelete,
+    schema,
+    isExpanded,
+}) => {
     const [formData, setFormData] = useState({});
 
     // Initialize formData when item is provided
@@ -17,8 +24,10 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                     // convert from object (e.g. name) to id
                     const matching = field.dropdownData.data.find(
                         (entry) =>
-                            entry[field.dropdownData.key] === item[field.name] || // already ID
-                            entry[field.dropdownData.value] === item[field.name]  // name → ID
+                            entry[field.dropdownData.key] ===
+                                item[field.name] || // already ID
+                            entry[field.dropdownData.value] ===
+                                item[field.name], // name → ID
                     );
                     // Store both dropdown ID and value
                     normalized[`${field.name}ID`] = matching
@@ -67,7 +76,7 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                     const entry = dropdownList.find(
                         (d) =>
                             d[field.dropdownData.key] === value ||
-                            d[field.dropdownData.value] === value
+                            d[field.dropdownData.value] === value,
                     );
                     return entry?.[field.dropdownData.key] ?? "";
                 };
@@ -112,7 +121,9 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                         if (field.type === "id") {
                             return (
                                 <div key={field.name} className="form-group">
-                                    <label htmlFor={field.name}>{field.name}</label>
+                                    <label htmlFor={field.name}>
+                                        {field.name}
+                                    </label>
                                     <input
                                         type="text"
                                         id={field.name}
@@ -136,7 +147,7 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                             handleChange(
                                                 field.name,
                                                 e.target.value === "true",
-                                                field.type
+                                                field.type,
                                             )
                                         }
                                     >
@@ -144,10 +155,12 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                             Select a value
                                         </option>
                                         <option value="true">
-                                            {field.booleanData?.trueLabel || "True"}
+                                            {field.booleanData?.trueLabel ||
+                                                "True"}
                                         </option>
                                         <option value="false">
-                                            {field.booleanData?.falseLabel || "False"}
+                                            {field.booleanData?.falseLabel ||
+                                                "False"}
                                         </option>
                                     </select>
                                 ) : field.type === "string" ? (
@@ -155,7 +168,11 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                         id={field.name}
                                         value={value}
                                         onChange={(e) =>
-                                            handleChange(field.name, e.target.value, field.type)
+                                            handleChange(
+                                                field.name,
+                                                e.target.value,
+                                                field.type,
+                                            )
                                         }
                                         maxLength={field.maxLen || 255}
                                         rows={2}
@@ -168,20 +185,28 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                             handleChange(
                                                 `${field.name}ID`,
                                                 e.target.value,
-                                                field.type
+                                                field.type,
                                             );
                                             handleChange(
                                                 field.name,
-                                                e.target.options[e.target.selectedIndex].text,
-                                                "text"
+                                                e.target.options[
+                                                    e.target.selectedIndex
+                                                ].text,
+                                                "text",
                                             );
                                         }}
                                     >
-                                        <option value="" disabled>Select {field.name}</option>
+                                        <option value="" disabled>
+                                            Select {field.name}
+                                        </option>
                                         {field.dropdownData.data.map((item) => (
                                             <option
-                                                key={item[field.dropdownData.key]}
-                                                value={item[field.dropdownData.key]}
+                                                key={
+                                                    item[field.dropdownData.key]
+                                                }
+                                                value={
+                                                    item[field.dropdownData.key]
+                                                }
                                             >
                                                 {item[field.dropdownData.value]}
                                             </option>
@@ -195,7 +220,11 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                             value={value || ""}
                                             placeholder="Enter image URL"
                                             onChange={(e) =>
-                                                handleChange(field.name, e.target.value, field.type)
+                                                handleChange(
+                                                    field.name,
+                                                    e.target.value,
+                                                    field.type,
+                                                )
                                             }
                                         />
                                         {value ? (
@@ -205,12 +234,15 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                                 className="standalone-image"
                                                 onError={(e) => {
                                                     e.target.onerror = null;
-                                                    e.target.src = "https://via.placeholder.com/150?text=Invalid+Image";
+                                                    e.target.src =
+                                                        "https://via.placeholder.com/150?text=Invalid+Image";
                                                 }}
                                             />
                                         ) : (
                                             <div className="image-preview-box">
-                                                <span className="image-placeholder">No image</span>
+                                                <span className="image-placeholder">
+                                                    No image
+                                                </span>
                                             </div>
                                         )}
                                     </>
@@ -221,24 +253,35 @@ const UpdateItemPanel = ({ item, onClose, onSubmit, onDelete, schema, isExpanded
                                             value={value}
                                             className="color-hex-code"
                                             onChange={(e) =>
-                                                handleChange(field.name, e.target.value, field.type)
+                                                handleChange(
+                                                    field.name,
+                                                    e.target.value,
+                                                    field.type,
+                                                )
                                             }
                                             placeholder="#000000"
                                         />
                                         <HexColorPicker
                                             color={value || "#000000"}
                                             onChange={(color) =>
-                                                handleChange(field.name, color, field.type)
+                                                handleChange(
+                                                    field.name,
+                                                    color,
+                                                    field.type,
+                                                )
                                             }
                                         />
                                     </>
-                                    
                                 ) : null}
                             </div>
                         );
                     })}
                     <div className="panel-buttons">
-                        <button type="submit" className="panel-submit" disabled={!formValid}>
+                        <button
+                            type="submit"
+                            className="panel-submit"
+                            disabled={!formValid}
+                        >
                             Update Entry
                         </button>
                         <button

@@ -27,7 +27,7 @@ async function getQuestions(isAuthenticated) {
         INNER JOIN "Category" c
         ON i."CategoryID" = c."CategoryID"
         ORDER BY i."IssueID"
-        `
+        `;
     } else {
         // return only active questions
         query = `
@@ -469,7 +469,9 @@ async function deleteCategory(id) {
 
 async function getCategories() {
     try {
-        const rows = await pool.query('SELECT * FROM "Category" ORDER BY "CategoryID";');
+        const rows = await pool.query(
+            'SELECT * FROM "Category" ORDER BY "CategoryID";',
+        );
         return rows.rows;
     } catch (err) {
         logger.error(err.stack);

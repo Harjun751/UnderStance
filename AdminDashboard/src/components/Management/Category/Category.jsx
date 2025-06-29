@@ -17,7 +17,8 @@ const Category = () => {
     // Update data
     const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
         useUpdateSubmitHandler({
-            updateFunction: (form) => apiClient.updateCategory(form.CategoryID, form.Name),
+            updateFunction: (form) =>
+                apiClient.updateCategory(form.CategoryID, form.Name),
             setResource: setCategories,
             key: "CategoryID",
         });
@@ -33,9 +34,8 @@ const Category = () => {
         useDeleteSubmitHandler({
             deleteFunction: (form) => apiClient.deleteCategory(form.CategoryID),
             setResource: setCategories,
-            key: "CategoryID"
+            key: "CategoryID",
         });
-
 
     // API Client for requests
     const apiClient = useAPIClient();
@@ -44,7 +44,7 @@ const Category = () => {
     useEffect(() => {
         let ignore = false;
 
-        apiClient.getCategories().then(result => {
+        apiClient.getCategories().then((result) => {
             if (!ignore) {
                 setCategories(result);
                 setIsLoading(false);
@@ -53,12 +53,12 @@ const Category = () => {
 
         return () => {
             ignore = true;
-        }
+        };
     }, [apiClient]);
 
     const schema = [
         { name: "CategoryID", type: "id", filterable: false },
-        { name: "Name", type: "string", maxLen:50, filterable: false },
+        { name: "Name", type: "string", maxLen: 50, filterable: false },
     ];
     return (
         <Management_Layout
@@ -66,11 +66,9 @@ const Category = () => {
             data={categories}
             schema={schema}
             isLoading={isLoading}
-            updateSubmitHandler={(form) => 
-                handleUpdateSubmit(form)
-            }
-            addSubmitHandler= { (form) => handleAddSubmit(form) }
-            deleteSubmitHandler={ (form) => handleDeleteSubmit(form) }
+            updateSubmitHandler={(form) => handleUpdateSubmit(form)}
+            addSubmitHandler={(form) => handleAddSubmit(form)}
+            deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
         />
     );
 };

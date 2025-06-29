@@ -20,35 +20,36 @@ const Stance = () => {
     // Update data
     const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
         useUpdateSubmitHandler({
-            updateFunction: (form) => apiClient.updateStance(
-                form.StanceID,
-                form.Stand,
-                form.Reason,
-                form[`Issue SummaryID`],
-                form.PartyID
-            ),
+            updateFunction: (form) =>
+                apiClient.updateStance(
+                    form.StanceID,
+                    form.Stand,
+                    form.Reason,
+                    form[`Issue SummaryID`],
+                    form.PartyID,
+                ),
             setResource: setStances,
             key: "StanceID",
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
         useAddSubmitHandler({
-            addFunction: (form) => apiClient.addStance(
-                form.Stand,
-                form.Reason,
-                form[`Issue SummaryID`],
-                form.PartyID
-            ),
+            addFunction: (form) =>
+                apiClient.addStance(
+                    form.Stand,
+                    form.Reason,
+                    form[`Issue SummaryID`],
+                    form.PartyID,
+                ),
             setResource: setStances,
             key: "StanceID",
-
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
         useDeleteSubmitHandler({
             deleteFunction: (form) => apiClient.deleteStance(form.StanceID),
             setResource: setStances,
-            key: "StanceID"
+            key: "StanceID",
         });
 
     useEffect(() => {
@@ -65,7 +66,6 @@ const Stance = () => {
                 setQuestions(questions);
                 setIsLoading(false);
             }
-
         });
 
         return () => {
@@ -73,22 +73,30 @@ const Stance = () => {
         };
     }, [apiClient]);
 
-
-
     const schema = [
         { name: "StanceID", type: "id", filterable: false },
         { name: "Stand", type: "boolean", filterable: true },
-        { name: "Reason", type: "string", maxLen:1000, filterable: false },
-        { name: "Issue Summary", type: "dropdown", filterable: true, dropdownData: {
-            key: "IssueID",
-            value: "Summary",
-            data: questions
-        }},
-        { name: "Party", type: "dropdown", filterable: true, dropdownData: {
-            key: "PartyID",
-            value: "Name",
-            data: parties
-        }}
+        { name: "Reason", type: "string", maxLen: 1000, filterable: false },
+        {
+            name: "Issue Summary",
+            type: "dropdown",
+            filterable: true,
+            dropdownData: {
+                key: "IssueID",
+                value: "Summary",
+                data: questions,
+            },
+        },
+        {
+            name: "Party",
+            type: "dropdown",
+            filterable: true,
+            dropdownData: {
+                key: "PartyID",
+                value: "Name",
+                data: parties,
+            },
+        },
     ];
 
     return (
@@ -97,11 +105,9 @@ const Stance = () => {
             data={stances}
             schema={schema}
             isLoading={isLoading}
-            updateSubmitHandler={(form) => 
-                handleUpdateSubmit(form)
-            }
-            addSubmitHandler= { (form) => handleAddSubmit(form) }
-            deleteSubmitHandler={ (form) => handleDeleteSubmit(form) }
+            updateSubmitHandler={(form) => handleUpdateSubmit(form)}
+            addSubmitHandler={(form) => handleAddSubmit(form)}
+            deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
         />
     );
 };

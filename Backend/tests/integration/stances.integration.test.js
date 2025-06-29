@@ -141,7 +141,7 @@ describe("authenticated GET stances", () => {
         IssueID: 1,
         PartyID: 3,
         "Issue Summary": "On the anthem",
-        Party: "Inactive Party"
+        Party: "Inactive Party",
     });
 
     test("200 OK GET all", async () => {
@@ -185,7 +185,7 @@ describe("POST stance", () => {
                 IssueID: reqBody.IssueID,
                 PartyID: reqBody.PartyID,
                 "Issue Summary": "On the anthem",
-                Party: "Defunct Party"
+                Party: "Defunct Party",
             },
         ]);
     });
@@ -243,8 +243,9 @@ describe("PUT stance", () => {
         expect(response.statusCode).toBe(200);
 
         // Check that resource exists in GET call
-        const getResponse = await request(`http://localhost:${appPort}`)
-            .get(`/stances?StanceID=${reqBody.StanceID}`)
+        const getResponse = await request(`http://localhost:${appPort}`).get(
+            `/stances?StanceID=${reqBody.StanceID}`,
+        );
         expect(getResponse.body).toEqual([reqBody]);
     });
 

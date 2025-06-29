@@ -20,25 +20,27 @@ const Quiz = () => {
     // Update data
     const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
         useUpdateSubmitHandler({
-            updateFunction: (form) => apiClient.updateQuestion(
-                form.IssueID,
-                form.Description,
-                form.Summary,
-                form.CategoryID,
-                form.Active
-            ),
+            updateFunction: (form) =>
+                apiClient.updateQuestion(
+                    form.IssueID,
+                    form.Description,
+                    form.Summary,
+                    form.CategoryID,
+                    form.Active,
+                ),
             setResource: setQuestions,
             key: "IssueID",
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
         useAddSubmitHandler({
-            addFunction: (form) => apiClient.addQuestion(
-                form.Description,
-                form.Summary,
-                form.CategoryID,
-                form.Active
-            ),
+            addFunction: (form) =>
+                apiClient.addQuestion(
+                    form.Description,
+                    form.Summary,
+                    form.CategoryID,
+                    form.Active,
+                ),
             setResource: setQuestions,
             key: "IssueID",
         });
@@ -47,22 +49,21 @@ const Quiz = () => {
         useDeleteSubmitHandler({
             deleteFunction: (form) => apiClient.deleteQuestion(form.IssueID),
             setResource: setQuestions,
-            key: "IssueID"
+            key: "IssueID",
         });
 
     useEffect(() => {
         let cancelled = false;
 
-        Promise.all([
-            apiClient.getQuestions(),
-            apiClient.getCategories()
-        ]).then(([questions,categories]) => {
-            if (!cancelled) {
-                setQuestions(questions);
-                setCategories(categories);
-                setIsLoading(false);
-            }
-        });
+        Promise.all([apiClient.getQuestions(), apiClient.getCategories()]).then(
+            ([questions, categories]) => {
+                if (!cancelled) {
+                    setQuestions(questions);
+                    setCategories(categories);
+                    setIsLoading(false);
+                }
+            },
+        );
         return () => {
             cancelled = true;
         };
@@ -72,9 +73,18 @@ const Quiz = () => {
         { name: "IssueID", type: "id", filterable: false },
         { name: "Description", type: "string", maxLen: 300, filterable: false },
         { name: "Summary", type: "string", maxLen: 50, filterable: false },
-        { name: "Category", type: "dropdown", filterable: true, dropdownData: { key: "CategoryID", value: "Name", data: categories } },
+        {
+            name: "Category",
+            type: "dropdown",
+            filterable: true,
+            dropdownData: {
+                key: "CategoryID",
+                value: "Name",
+                data: categories,
+            },
+        },
         { name: "Active", type: "boolean", filterable: true },
-    ]
+    ];
 
     return (
         <Management_Layout
@@ -82,11 +92,9 @@ const Quiz = () => {
             data={questions}
             isLoading={isLoading}
             schema={schema}
-            updateSubmitHandler={(form) => 
-                handleUpdateSubmit(form)
-            }
-            addSubmitHandler= { (form) => handleAddSubmit(form) }
-            deleteSubmitHandler={ (form) => handleDeleteSubmit(form) }
+            updateSubmitHandler={(form) => handleUpdateSubmit(form)}
+            addSubmitHandler={(form) => handleAddSubmit(form)}
+            deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
         />
     );
 };

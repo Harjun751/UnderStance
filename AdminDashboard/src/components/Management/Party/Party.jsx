@@ -18,27 +18,29 @@ const Party = () => {
     // Update data
     const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
         useUpdateSubmitHandler({
-            updateFunction: (form) => apiClient.updateParty(
-                form.PartyID,
-                form.Name,
-                form.ShortName,
-                form.Icon,
-                form.PartyColor,
-                form.Active
-            ),
+            updateFunction: (form) =>
+                apiClient.updateParty(
+                    form.PartyID,
+                    form.Name,
+                    form.ShortName,
+                    form.Icon,
+                    form.PartyColor,
+                    form.Active,
+                ),
             setResource: setParties,
             key: "PartyID",
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
         useAddSubmitHandler({
-            addFunction: (form) => apiClient.addParty(
-                form.Name,
-                form.ShortName,
-                form.Icon,
-                form.PartyColor,
-                form.Active
-            ),
+            addFunction: (form) =>
+                apiClient.addParty(
+                    form.Name,
+                    form.ShortName,
+                    form.Icon,
+                    form.PartyColor,
+                    form.Active,
+                ),
             setResource: setParties,
             key: "PartyID",
         });
@@ -47,15 +49,14 @@ const Party = () => {
         useDeleteSubmitHandler({
             deleteFunction: (form) => apiClient.deleteParty(form.PartyID),
             setResource: setParties,
-            key: "PartyID"
+            key: "PartyID",
         });
-
 
     useEffect(() => {
         // ignore var to prevent race condition
         let ignore = false;
 
-        apiClient.getParties().then(result => {
+        apiClient.getParties().then((result) => {
             if (!ignore) {
                 setParties(result);
                 setIsLoading(false);
@@ -63,17 +64,15 @@ const Party = () => {
         });
 
         return () => {
-           ignore = true; 
+            ignore = true;
         };
     }, [apiClient]);
 
-
-
     const schema = [
         { name: "PartyID", type: "id", filterable: false },
-        { name: "Name", type: "string", maxLen:100, filterable: false },
-        { name: "ShortName", type: "string", maxLen:5, filterable: false },
-        { name: "Icon", type: "image", maxLen:2083, filterable: false },
+        { name: "Name", type: "string", maxLen: 100, filterable: false },
+        { name: "ShortName", type: "string", maxLen: 5, filterable: false },
+        { name: "Icon", type: "image", maxLen: 2083, filterable: false },
         { name: "PartyColor", type: "color", filterable: false },
         { name: "Active", type: "boolean", filterable: true },
     ];
@@ -84,11 +83,9 @@ const Party = () => {
             data={parties}
             schema={schema}
             isLoading={isLoading}
-            updateSubmitHandler={(form) => 
-                handleUpdateSubmit(form)
-            }
-            addSubmitHandler= { (form) => handleAddSubmit(form) }
-            deleteSubmitHandler={ (form) => handleDeleteSubmit(form) }
+            updateSubmitHandler={(form) => handleUpdateSubmit(form)}
+            addSubmitHandler={(form) => handleAddSubmit(form)}
+            deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
         />
     );
 };

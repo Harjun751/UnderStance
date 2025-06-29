@@ -14,7 +14,7 @@ securedRoutes.use(
     cors({
         origin: config.adminOrigin,
         methods: ["POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"]
+        allowedHeaders: ["Content-Type", "Authorization"],
     }),
     /* Auth middleware that REQUIRES auth token */
     requireValidAccessToken,

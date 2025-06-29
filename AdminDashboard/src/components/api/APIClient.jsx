@@ -13,10 +13,9 @@ export const createAPIClient = (getAccessTokenSilently) => {
         config.headers.Authorization = `Bearer ${token}`;
         return config;
     });
-    
-    return new APIClientWrapper(client);
-}
 
+    return new APIClientWrapper(client);
+};
 
 class APIClientWrapper {
     constructor(axiosClient) {
@@ -32,7 +31,7 @@ class APIClientWrapper {
             Description: description,
             Summary: summary,
             CategoryID: categoryID,
-            Active: active
+            Active: active,
         });
     }
 
@@ -42,7 +41,7 @@ class APIClientWrapper {
             Description: description,
             Summary: summary,
             CategoryID: categoryID,
-            Active: active
+            Active: active,
         });
     }
 
@@ -50,21 +49,20 @@ class APIClientWrapper {
         return this.client.delete(`/questions/${id}`);
     }
 
-
     getCategories() {
         return this.client.get("/categories").then((resp) => resp.data);
     }
 
     addCategory(name) {
         return this.client.post("/categories", {
-            Name: name
+            Name: name,
         });
     }
 
     updateCategory(id, name) {
         return this.client.put("/categories", {
             Name: name,
-            CategoryID: id
+            CategoryID: id,
         });
     }
 
@@ -82,7 +80,7 @@ class APIClientWrapper {
             ShortName: shortName,
             Icon: icon,
             PartyColor: partyColor,
-            Active: active
+            Active: active,
         });
     }
 
@@ -93,7 +91,7 @@ class APIClientWrapper {
             ShortName: shortName,
             Icon: icon,
             PartyColor: partyColor,
-            Active: active
+            Active: active,
         });
     }
 
@@ -110,7 +108,7 @@ class APIClientWrapper {
             Stand: stand,
             Reason: reason,
             IssueID: issueID,
-            PartyID: partyID
+            PartyID: partyID,
         });
     }
 
@@ -120,7 +118,7 @@ class APIClientWrapper {
             Stand: stand,
             Reason: reason,
             IssueID: issueID,
-            PartyID: partyID
+            PartyID: partyID,
         });
     }
 

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export function useUpdateSubmitHandler({ updateFunction, setResource, key}) {
+export function useUpdateSubmitHandler({ updateFunction, setResource, key }) {
     const [updateSubmitLoading, setUpdateSubmitLoading] = useState(false);
     const [updateSubmitError, setUpdateSubmitError] = useState(null);
 
@@ -10,21 +10,19 @@ export function useUpdateSubmitHandler({ updateFunction, setResource, key}) {
         try {
             console.log(form);
             const resp = await updateFunction(form);
-            setResource(prevItems => 
-                prevItems.map(obj => 
-                    obj[key] === resp.data[key]
-                    ? form
-                    : obj
-                )
+            setResource((prevItems) =>
+                prevItems.map((obj) =>
+                    obj[key] === resp.data[key] ? form : obj,
+                ),
             );
         } catch (err) {
             // Alert with details given from backend
             if (err.response?.data?.error) {
                 const info = err.response.data;
                 if (info.details) {
-                    alert(`${info.error} \n${info.details}`)
+                    alert(`${info.error} \n${info.details}`);
                 } else {
-                    alert(`${info.error}`)
+                    alert(`${info.error}`);
                 }
             } else {
                 // Other error: just alert with code

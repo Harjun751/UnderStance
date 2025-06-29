@@ -175,7 +175,9 @@
         rgba(86, 172, 255, 1) 100%
     );
     transform: translateX(100%); /* start off-screen on the right */
-    transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
+    transition:
+        transform 0.2s ease-in-out,
+        width 0.2s ease-in-out;
     overflow-y: auto;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     border-top-left-radius: 10px;
@@ -184,7 +186,7 @@
 
 /* When panel is active (shown) */
 .panel-wrapper.open {
-  transform: translateX(0); /* slide in */
+    transform: translateX(0); /* slide in */
 }
 
 .panel-wrapper.expanded {
