@@ -70,7 +70,7 @@ The bar chart showing how the stances compare is complete, along with the issue-
 ## Milestone 2 Progress
 The design was updated to be more responsive. Additionally, the 2 sub-pages were added to give users the ability to granularly see their stance alignment with the various parties.
 
-![Party Breakdown Live](images/ms2-breakdownlive.jpg "Live Party Breakdown")
+![Party Breakdown Live](images/ms2-breakdownlive.png "Live Party Breakdown")
 
 ## Core Feat 3: Read Stances
 ### Proposed Feature
@@ -86,7 +86,7 @@ The basic page is complete. Yet to be implemented are the search bars and stylin
 ### Milestone 2 Progress
 Styling for mobile and functional search bar added to the page.
 
-![Read Stances Live](images/readstanceslive.jpg "Live Read Stances")
+![Read Stances Live](images/ms2-readstanceslive.png "Live Read Stances")
 
 ## Core Feat 4: Admin Dashboard Authenticated
 ### Proposed Feature
@@ -95,7 +95,7 @@ A page for admin users to login to the application. Operations done in the admin
 ### Milestone 2 Progress
 Fully implmented. Login was done via Auth0. Respective routes on the backend requiring elevated privileges were secured, relying on auth0's role-based authentication to ensure that operations can only be done by users of the correct role.
 
-#[Login Page](images/loginpage.jpg "Login Page")
+#[Login Page](images/loginpage.png "Login Page")
 
 ## Core Feat 5: Admin Dashboard
 ### Proposed Feature
@@ -106,7 +106,7 @@ The admin dashboard would be its own page requiring authentication to access. Th
 ### Milestone 2 Progress
 The dashboard is functional. Each resource is editable. Resources can be updated, deleted, or new ones could be added. Fields can be filtered and searched.
 
-#[Admin Page](images/adminpage.jpg "Admin Page")
+#[Admin Page](images/adminpage.png "Admin Page")
 
 ## Extension Feat 1: Automatic stance extraction
 ### Proposed Feature
