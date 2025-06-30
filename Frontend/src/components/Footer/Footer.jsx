@@ -29,7 +29,7 @@ const Footer = () => {
                             <Link>
                                 <li>
                                     <a
-                                        href="https://www.youtube.com/shorts/m_182DGEO5Y"
+                                        href=""
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
