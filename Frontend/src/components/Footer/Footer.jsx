@@ -101,8 +101,7 @@ const Footer = () => {
                             </a>
                         </div>
                         <div class="footer-comment">
-                            <p class="footer-note">
-                            </p>
+                            <p class="footer-note"></p>
                         </div>
                     </div>
                 </div>

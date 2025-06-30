@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-export function useDeleteSubmitHandler({
-    deleteFunction, setResource,
-    key,
-}) {
+export function useDeleteSubmitHandler({ deleteFunction, setResource, key }) {
     const [deleteSubmitLoading, setDeleteSubmitLoading] = useState(false);
     const [deleteSubmitError, setDeleteSubmitError] = useState(null);
 
