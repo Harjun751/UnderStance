@@ -10,7 +10,7 @@
     background-color: rgba(255, 255, 255, 1);
 }
 body::before {
-    background-image: url("45-degree-fabric-light.png");
+    background-image: url("./assets/45-degree-fabric-light.png");
     content: "";
     position: fixed;
     z-index: -1;
