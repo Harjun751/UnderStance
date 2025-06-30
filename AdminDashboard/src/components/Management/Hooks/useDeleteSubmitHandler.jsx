@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export function useDeleteSubmitHandler({
-    /*deleteFunction,*/ setResource,
+    deleteFunction, setResource,
     key,
 }) {
     const [deleteSubmitLoading, setDeleteSubmitLoading] = useState(false);
@@ -11,7 +11,7 @@ export function useDeleteSubmitHandler({
         setDeleteSubmitLoading(true);
 
         try {
-            // const resp = await deleteFunction(form);
+            const resp = await deleteFunction(form);
             // remove resource
             setResource((prevItems) =>
                 prevItems.filter((item) => item[key] !== form[key]),
