@@ -70,9 +70,16 @@ const ReadStances = () => {
 
     // Retrieve user answers passed via navigation state
     const location = useLocation();
-    const userAnswers =
+    const [userAnswers, setUserAnswers] = useState(
         location.state?.answers ||
-        JSON.parse(window.localStorage.getItem("quizAnswers") || "{}");
+        JSON.parse(window.localStorage.getItem("quizAnswers") || "{}")
+    );
+
+    //Updates to localstorage
+    const updateUserAnswers = (updated) => {
+        setUserAnswers(updated);
+        window.localStorage.setItem("quizAnswers", JSON.stringify(updated));
+    };
 
     // Show loading or error messages before rendering data
     if (loading) return <div>Loading...</div>;
@@ -88,6 +95,7 @@ const ReadStances = () => {
                     questions={questions}
                     userAnswers={userAnswers}
                     stances={stances}
+                    updateUserAnswers={updateUserAnswers}
                 />
 
                 <SearchBar setSearch={setSearch} />

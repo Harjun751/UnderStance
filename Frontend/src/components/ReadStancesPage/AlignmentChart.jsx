@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { GoSkip } from "react-icons/go";
+import WeightageTuning from "./WeightageTuning";
 
 // (Category Alignment)
 const Category_CustomXAxisTick = ({ x, y, payload }) => {
@@ -71,6 +72,7 @@ export default function AlignmentChart({
     questions,
     userAnswers,
     stances,
+    updateUserAnswers,
 }) {
     const [view, setView] = useState("chart"); // chart or table
     // Calculate alignment percentages between user's answers and each party
@@ -400,12 +402,28 @@ export default function AlignmentChart({
                         >
                             Table Breakdown
                         </button>
+                        <button
+                            type="button"
+                            className={view === "tune" ? "active" : ""}
+                            onClick={() => setView("tune")}
+                        >
+                            Weightage Tuning
+                        </button>
                     </div>
                     {view === "chart"
                         ? renderChart()
                         : view === "category"
-                          ? renderCategory()
-                          : renderTable()}
+                        ? renderCategory()
+                        : view === "table"
+                        ? renderTable()
+                        : view === "tune"
+                        ? <WeightageTuning 
+                            questions={questions}
+                            userAnswers={userAnswers}
+                            onSubmit={updateUserAnswers}
+                            onClose={() => setView("chart")}
+                        />
+                        : null}
                 </div>
             </>
         );
