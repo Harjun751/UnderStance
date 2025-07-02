@@ -18,6 +18,10 @@
     /* dark theme? */
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     height: 100vh;
@@ -40,7 +44,7 @@
     height: 100%;
     flex-direction: column;
     overflow-x: auto;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .page-container-body::before {

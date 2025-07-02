@@ -10,6 +10,7 @@ const Stance = () => {
     const [questions, setQuestions] = useState([]);
     const [parties, setParties] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     const apiClient = useAPIClient();
 
@@ -30,6 +31,8 @@ const Stance = () => {
                 ),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
@@ -43,6 +46,8 @@ const Stance = () => {
                 ),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
@@ -50,6 +55,8 @@ const Stance = () => {
             deleteFunction: (form) => apiClient.deleteStance(form.StanceID),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     useEffect(() => {
@@ -108,6 +115,7 @@ const Stance = () => {
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };

@@ -10,6 +10,7 @@ const Quiz = () => {
     const [questions, setQuestions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     const apiClient = useAPIClient();
 
@@ -30,6 +31,8 @@ const Quiz = () => {
                 ),
             setResource: setQuestions,
             key: "IssueID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
@@ -43,6 +46,8 @@ const Quiz = () => {
                 ),
             setResource: setQuestions,
             key: "IssueID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
@@ -50,6 +55,8 @@ const Quiz = () => {
             deleteFunction: (form) => apiClient.deleteQuestion(form.IssueID),
             setResource: setQuestions,
             key: "IssueID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     useEffect(() => {
@@ -95,6 +102,7 @@ const Quiz = () => {
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };

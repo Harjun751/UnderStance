@@ -8,6 +8,7 @@ import { useDeleteSubmitHandler } from "../Hooks/useDeleteSubmitHandler";
 const Party = () => {
     const [parties, setParties] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     const apiClient = useAPIClient();
 
@@ -16,7 +17,7 @@ const Party = () => {
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
+    const { handleUpdateSubmit } =
         useUpdateSubmitHandler({
             updateFunction: (form) =>
                 apiClient.updateParty(
@@ -29,6 +30,8 @@ const Party = () => {
                 ),
             setResource: setParties,
             key: "PartyID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
@@ -43,6 +46,8 @@ const Party = () => {
                 ),
             setResource: setParties,
             key: "PartyID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
@@ -50,6 +55,8 @@ const Party = () => {
             deleteFunction: (form) => apiClient.deleteParty(form.PartyID),
             setResource: setParties,
             key: "PartyID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     useEffect(() => {
@@ -86,6 +93,7 @@ const Party = () => {
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };

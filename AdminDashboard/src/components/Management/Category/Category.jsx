@@ -9,32 +9,39 @@ const Category = () => {
     // States for loading and data
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     /*           HANDLER HOOKS
      * For updating/adding/submitting data
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
+    const { handleUpdateSubmit } =
         useUpdateSubmitHandler({
             updateFunction: (form) =>
                 apiClient.updateCategory(form.CategoryID, form.Name),
             setResource: setCategories,
             key: "CategoryID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Add data
-    const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
+    const { handleAddSubmit } =
         useAddSubmitHandler({
             addFunction: (form) => apiClient.addCategory(form.Name),
             setResource: setCategories,
             key: "CategoryID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
-    const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
+    const { handleDeleteSubmit } =
         useDeleteSubmitHandler({
             deleteFunction: (form) => apiClient.deleteCategory(form.CategoryID),
             setResource: setCategories,
             key: "CategoryID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     // API Client for requests
@@ -69,6 +76,7 @@ const Category = () => {
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };
