@@ -17,12 +17,12 @@ const AnswerButtons = ({ currentAnswer, onChange }) => {
             {options.map((option) => (
                 <button
                     key={option}
-                    className={`answer-btn ${
-                        currentAnswer === option ? "selected" : "disabled"
+                    className={`answer-btn ${option} ${
+                        currentAnswer === option ? "selected" : ""
                     }`}
                     onClick={() => onChange(option)}
                 >
-                    {icons[option]} {option}
+                    {icons[option]} 
                 </button>
             ))}
         </div>
@@ -48,48 +48,49 @@ const WeightageTuning = ({ questions, userAnswers, onSubmit, onClose }) => {
     return (
         <div className="weightage-tuning">
             <h2>Fine-tune Your Answers</h2>
-            {questions.map((question) => {
-                const current = editableAnswers[question.IssueID];
-                if (!current) return null;
+            <div className="tuning-container">
+                {questions.map((question) => {
+                    const current = editableAnswers[question.IssueID];
+                    if (!current) return null;
 
-                return (
-                    <div
-                        key={question.IssueID}
-                        className="question-tuning-card"
-                    >
-                        <h4>{question.Description}</h4>
-                        <p>
-                            <strong>Category:</strong> {question.Category}
-                        </p>
+                    return (
+                        <div
+                            key={question.IssueID}
+                            className="tuning-card"
+                        >
+                            <h3>{question.Description}</h3>
+                            <div className="card-details">
+                                <AnswerButtons
+                                    currentAnswer={current.answer}
+                                    onChange={(newAnswer) =>
+                                        setEditableAnswers((prev) => ({
+                                            ...prev,
+                                            [question.IssueID]: {
+                                                ...prev[question.IssueID],
+                                                answer: newAnswer,
+                                            },
+                                        }))
+                                    }
+                                />
 
-                        <AnswerButtons
-                            currentAnswer={current.answer}
-                            onChange={(newAnswer) =>
-                                setEditableAnswers((prev) => ({
-                                    ...prev,
-                                    [question.IssueID]: {
-                                        ...prev[question.IssueID],
-                                        answer: newAnswer,
-                                    },
-                                }))
-                            }
-                        />
-
-                        <WeightageSlider
-                            value={current.weightage}
-                            onChange={(newWeight) =>
-                                setEditableAnswers((prev) => ({
-                                    ...prev,
-                                    [question.IssueID]: {
-                                        ...prev[question.IssueID],
-                                        weightage: newWeight,
-                                    },
-                                }))
-                            }
-                        />
-                    </div>
-                );
-            })}
+                                <WeightageSlider
+                                    value={current.weightage}
+                                    onChange={(newWeight) =>
+                                        setEditableAnswers((prev) => ({
+                                            ...prev,
+                                            [question.IssueID]: {
+                                                ...prev[question.IssueID],
+                                                weightage: newWeight,
+                                            },
+                                        }))
+                                    }
+                                />
+                            </div>
+                            
+                        </div>
+                    );
+                })}
+            </div>
 
             <div className="submit-updates">
                 <button type="submit" className="submit-button" onClick={handleSubmit}>
