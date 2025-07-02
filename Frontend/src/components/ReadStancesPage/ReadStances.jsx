@@ -72,7 +72,7 @@ const ReadStances = () => {
     const location = useLocation();
     const [userAnswers, setUserAnswers] = useState(
         location.state?.answers ||
-        JSON.parse(window.localStorage.getItem("quizAnswers") || "{}")
+            JSON.parse(window.localStorage.getItem("quizAnswers") || "{}"),
     );
 
     //Updates to localstorage

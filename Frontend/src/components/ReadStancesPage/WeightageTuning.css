@@ -21,12 +21,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 .tuning-card h3 {
     text-align: left;
     border-bottom: 1px solid black;
     margin-bottom: 1rem;
-
 }
 
 .card-details {
@@ -58,7 +56,7 @@
 }
 
 .answer-btn.agree.selected {
-    background-color: #4CAF50; /* green */
+    background-color: #4caf50; /* green */
 }
 
 .answer-btn.disagree.selected {
@@ -74,7 +72,7 @@
 }
 
 .answer-btn.agree:hover {
-    background-color: #4CAF50;
+    background-color: #4caf50;
 }
 
 .answer-btn.disagree:hover {

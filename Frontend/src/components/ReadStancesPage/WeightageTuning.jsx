@@ -24,7 +24,7 @@ const AnswerButtons = ({ currentAnswer, onChange }) => {
                     }`}
                     onClick={() => onChange(option)}
                 >
-                    {icons[option]} 
+                    {icons[option]}
                 </button>
             ))}
         </div>
@@ -56,10 +56,7 @@ const WeightageTuning = ({ questions, userAnswers, onSubmit, onClose }) => {
                     if (!current) return null;
 
                     return (
-                        <div
-                            key={question.IssueID}
-                            className="tuning-card"
-                        >
+                        <div key={question.IssueID} className="tuning-card">
                             <h3>{question.Description}</h3>
                             <div className="card-details">
                                 <AnswerButtons
@@ -88,14 +85,17 @@ const WeightageTuning = ({ questions, userAnswers, onSubmit, onClose }) => {
                                     }
                                 />
                             </div>
-                            
                         </div>
                     );
                 })}
             </div>
 
             <div className="submit-updates">
-                <button type="submit" className="submit-button" onClick={handleSubmit}>
+                <button
+                    type="submit"
+                    className="submit-button"
+                    onClick={handleSubmit}
+                >
                     Submit Updates
                 </button>
             </div>
