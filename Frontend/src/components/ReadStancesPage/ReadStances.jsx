@@ -79,6 +79,9 @@ const ReadStances = () => {
     const updateUserAnswers = (updated) => {
         setUserAnswers(updated);
         window.localStorage.setItem("quizAnswers", JSON.stringify(updated));
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }, 0);
     };
 
     // Show loading or error messages before rendering data

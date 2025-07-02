@@ -6,6 +6,7 @@ import "./WeightageTuning.css";
 
 const AnswerButtons = ({ currentAnswer, onChange }) => {
     const options = ["agree", "skip", "disagree"];
+    //option to icon mapping
     const icons = {
         agree: <FaCheck />,
         disagree: <FaTimes />,
@@ -16,6 +17,7 @@ const AnswerButtons = ({ currentAnswer, onChange }) => {
         <div className="answer-buttons">
             {options.map((option) => (
                 <button
+                    type="button"
                     key={option}
                     className={`answer-btn ${option} ${
                         currentAnswer === option ? "selected" : ""
@@ -47,7 +49,7 @@ const WeightageTuning = ({ questions, userAnswers, onSubmit, onClose }) => {
 
     return (
         <div className="weightage-tuning">
-            <h2>Fine-tune Your Answers</h2>
+            <h2>Update Your Answers</h2>
             <div className="tuning-container">
                 {questions.map((question) => {
                     const current = editableAnswers[question.IssueID];
