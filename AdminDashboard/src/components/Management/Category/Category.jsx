@@ -56,6 +56,9 @@ const Category = () => {
                 setCategories(result);
                 setIsLoading(false);
             }
+        }).catch((err) => {
+            setIsLoading(false);
+            setLatestError(err);
         });
 
         return () => {

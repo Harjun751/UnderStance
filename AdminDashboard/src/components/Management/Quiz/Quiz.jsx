@@ -70,7 +70,11 @@ const Quiz = () => {
                     setIsLoading(false);
                 }
             },
-        );
+        ).catch((err) => {
+            setIsLoading(false);
+            setLatestError(err);
+        });
+
         return () => {
             cancelled = true;
         };

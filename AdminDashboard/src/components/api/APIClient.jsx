@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createAPIClient = (getAccessTokenSilently) => {
+export const createAPIClient = (getAccessTokenSilently, getAccessTokenWithPopup, userID) => {
     const client = axios.create({
         baseURL: `${import.meta.env.VITE_API_URL}`,
         headers: {
@@ -14,12 +14,47 @@ export const createAPIClient = (getAccessTokenSilently) => {
         return config;
     });
 
-    return new APIClientWrapper(client);
+    const userClient = axios.create({
+        baseURL: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    userClient.interceptors.request.use(async (config) => {
+        let userToken;
+        try {
+            userToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
+                    scope: "read:current_user",
+                },
+            });
+        } catch (e) {
+            if (e.error === 'consent_required') {
+                userToken = await getAccessTokenWithPopup({
+                    authorizationParams: {
+                        audience: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
+                        scope: "read:current_user",
+                    },
+                });
+            } else {
+                throw e
+            }
+        }
+        config.headers.Authorization = `Bearer ${userToken}`;
+        return config;
+    });
+
+
+    return new APIClientWrapper(client, userClient , userID);
 };
 
 class APIClientWrapper {
-    constructor(axiosClient) {
+    constructor(axiosClient, userClient, userID) {
         this.client = axiosClient;
+        this.userClient = userClient;
+        this.userID = userID;
     }
 
     getQuestions() {
@@ -125,4 +160,9 @@ class APIClientWrapper {
     deleteStance(id) {
         return this.client.delete(`/stances/${id}`);
     }
+
+    getUserInfo() {
+        return this.userClient.get(`/users/${this.userID}`);
+    }
+
 }

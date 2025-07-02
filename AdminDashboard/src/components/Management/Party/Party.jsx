@@ -68,6 +68,9 @@ const Party = () => {
                 setParties(result);
                 setIsLoading(false);
             }
+        }).catch((err) => {
+            setIsLoading(false);
+            setLatestError(err);
         });
 
         return () => {

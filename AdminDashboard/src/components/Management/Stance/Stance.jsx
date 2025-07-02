@@ -73,6 +73,9 @@ const Stance = () => {
                 setQuestions(questions);
                 setIsLoading(false);
             }
+        }).catch((err) => {
+            setIsLoading(false);
+            setLatestError(err);
         });
 
         return () => {

@@ -111,10 +111,12 @@ const Navbar = () => {
                         <h3>Account</h3>
                     </div>
                 </div>
-                <button type="button" className="footer-button">
-                    <IoMdSettings />
-                    {!collapsed && <span className="nav-text">Settings</span>}
-                </button>
+                <NavLink to="/settings" class="nav-btn">
+                    <button type="button" className="footer-button">
+                        <IoMdSettings />
+                        {!collapsed && <span className="nav-text">Settings</span>}
+                    </button>
+                </NavLink>
                 <button
                     type="button"
                     className="footer-button"

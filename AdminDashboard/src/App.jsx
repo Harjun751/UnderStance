@@ -7,6 +7,7 @@ import LoginPage from "./components/auth/LoginPage";
 import AuthWrapper from "./components/auth/AuthenticatedRouteWrapper";
 import AuthLoadWrapper from "./components/auth/AuthLoadWrapper";
 import Dashboard from "./components/dashboard/Dashboard";
+import Settings from "./components/settings/Settings";
 import Category from "./components/Management/Category/Category";
 import Quiz from "./components/Management/Quiz/Quiz";
 import Stance from "./components/Management/Stance/Stance";
@@ -63,6 +64,14 @@ function App() {
                             element={
                                 <AuthWrapper>
                                     <Party />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/settings"
+                            element={
+                                <AuthWrapper>
+                                    <Settings />
                                 </AuthWrapper>
                             }
                         />
