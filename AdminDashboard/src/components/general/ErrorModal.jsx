@@ -24,7 +24,7 @@ export default ({ error }) => {
                 setHeader(error.message);
             }
 
-            if (error.code >= 500) {
+            if (error.status >= 500) {
                 setTitle("There's an issue on our side...");
             } else {
                 setTitle("There was an issue with your request");

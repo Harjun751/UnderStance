@@ -25,8 +25,21 @@ function getConnString() {
     return getSecret(process.env.SECRET_DB_CONN_PATH);
 }
 
+function getAuthDomain() {
+    return getSecret(process.env.SECRET_AUTH0_DOMAIN_PATH);
+}
+function getAuthClientID() {
+    return getSecret(process.env.SECRET_AUTH0_CLIENT_ID_PATH);
+}
+function getAuthClientSecret() {
+    return getSecret(process.env.SECRET_AUTH0_CLIENT_SECRET_PATH);
+}
+
 module.exports = {
     getUser,
     getPassword,
     getConnString,
+    getAuthDomain,
+    getAuthClientID,
+    getAuthClientSecret
 };

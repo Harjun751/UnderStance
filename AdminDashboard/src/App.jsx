@@ -12,6 +12,7 @@ import Category from "./components/Management/Category/Category";
 import Quiz from "./components/Management/Quiz/Quiz";
 import Stance from "./components/Management/Stance/Stance";
 import Party from "./components/Management/Party/Party";
+import User from "./components/Management/User/User";
 
 function App() {
     return (
@@ -64,6 +65,14 @@ function App() {
                             element={
                                 <AuthWrapper>
                                     <Party />
+                                </AuthWrapper>
+                            }
+                        />
+                        <Route
+                            path="/user"
+                            element={
+                                <AuthWrapper>
+                                    <User />
                                 </AuthWrapper>
                             }
                         />

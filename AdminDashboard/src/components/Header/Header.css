@@ -1,9 +1,5 @@
 .header {
-    background: linear-gradient(
-        90deg,
-        rgba(34, 218, 255, 1) 0%,
-        rgba(114, 111, 169, 1) 100%
-    );
+    background: var(--gradient);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     padding: 1rem 1.5rem;
     display: flex;
@@ -18,7 +14,7 @@
 .header-title {
     font-size: 1.85rem;
     font-weight: bold;
-    color: #ffffff;
+    color: var(--on-gradient);
     font-family: "Sansation", sans-serif;
     display: flex;
     align-items: center;
@@ -59,6 +55,6 @@
 
 .user-details {
     margin-right: 0.75rem;
-    color: #ffffff;
+    color: var(--on-gradient);
     font-family: "Sansation", sans-serif;
 }

@@ -11,12 +11,14 @@
 
 .error-modal-content{
     position: relative;
-    background-color: white;
+    background-color: var(--surface-container);
+    color: var(--on-surface-container);
     margin: 15% auto;
     padding: 20px;
     width: 80%;
     max-width: 800px;
     border-radius: 10px;
+
 }
 
 .error-modal-content > svg {
@@ -30,7 +32,7 @@
     font-size: 3em;
     background: none;
     cursor: pointer;
-    color: #333;
+    color: var(--on-surface-container);
     line-height: 1;
     border: none;
     position: absolute;

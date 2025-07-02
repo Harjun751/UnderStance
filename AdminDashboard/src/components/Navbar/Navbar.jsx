@@ -3,7 +3,7 @@ import { FaBuildingColumns } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { GiInjustice } from "react-icons/gi";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
-import { FaFlag } from "react-icons/fa";
+import { FaFlag, FaUser } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 import {
     IoMdArrowDropright,
@@ -14,10 +14,12 @@ import { TbLogout2 } from "react-icons/tb";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { usePermissions } from "../general/usePermissions";
 // LE WALL OF IMPORTS
 
 const Navbar = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const permissions = usePermissions();
     const togglenavbar = () => {
         setCollapsed((prev) => !prev);
     };
@@ -100,6 +102,11 @@ const Navbar = () => {
                         <FaFlag />
                         {!collapsed && <span className="nav-text">Party</span>}
                     </NavLink>
+                    { permissions.includes("read:users") ?
+                    <NavLink to="/user" className="nav-item">
+                        <FaUser />
+                        {!collapsed && <span className="nav-text">User</span>}
+                    </NavLink> : <></>}
                 </nav>
             </div>
 
@@ -111,7 +118,7 @@ const Navbar = () => {
                         <h3>Account</h3>
                     </div>
                 </div>
-                <NavLink to="/settings" class="nav-btn">
+                <NavLink to="/settings" className="nav-btn">
                     <button type="button" className="footer-button">
                         <IoMdSettings />
                         {!collapsed && <span className="nav-text">Settings</span>}

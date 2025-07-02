@@ -3,7 +3,6 @@ import { useState } from "react";
 export function useAddSubmitHandler({ addFunction, setResource, key, setError, setIsLoading }) {
     const handleAddSubmit = async (form) => {
         setIsLoading(true);
-
         try {
             const resp = await addFunction(form);
             // create new object based on form and returned value

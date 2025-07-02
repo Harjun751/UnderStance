@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createAPIClient = (getAccessTokenSilently, getAccessTokenWithPopup, userID) => {
+export const createAPIClient = (getAccessTokenSilently) => {
     const client = axios.create({
         baseURL: `${import.meta.env.VITE_API_URL}`,
         headers: {
@@ -14,40 +14,7 @@ export const createAPIClient = (getAccessTokenSilently, getAccessTokenWithPopup,
         return config;
     });
 
-    const userClient = axios.create({
-        baseURL: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-
-    userClient.interceptors.request.use(async (config) => {
-        let userToken;
-        try {
-            userToken = await getAccessTokenSilently({
-                authorizationParams: {
-                    audience: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
-                    scope: "read:current_user",
-                },
-            });
-        } catch (e) {
-            if (e.error === 'consent_required') {
-                userToken = await getAccessTokenWithPopup({
-                    authorizationParams: {
-                        audience: `https://dev-i0ksanu2a66behjf.us.auth0.com/api/v2/`,
-                        scope: "read:current_user",
-                    },
-                });
-            } else {
-                throw e
-            }
-        }
-        config.headers.Authorization = `Bearer ${userToken}`;
-        return config;
-    });
-
-
-    return new APIClientWrapper(client, userClient , userID);
+    return new APIClientWrapper(client);
 };
 
 class APIClientWrapper {
@@ -161,8 +128,42 @@ class APIClientWrapper {
         return this.client.delete(`/stances/${id}`);
     }
 
-    getUserInfo() {
-        return this.userClient.get(`/users/${this.userID}`);
+    getUsers() {
+        return this.client.get("/users").then((resp) => resp.data);
+    }
+
+    getRoles() {
+        return this.client.get("/roles").then((resp) => resp.data);
+    }
+
+    updateUser(id, name, picture, role) {
+        return this.client.patch("/users", {
+            ID: id,
+            Role: role,
+            Name: name,
+            Picture: picture
+        });
+    }
+
+    updateUserNoRole(id, name, picture) {
+        return this.client.patch("/users", {
+            ID: id,
+            Name: name,
+            Picture: picture
+        });
+    }
+
+    addUser(name, picture, email, role) {
+        return this.client.post("/users", {
+            Role: role,
+            Name: name,
+            Picture: picture,
+            Email: email
+        });
+    }
+
+    deleteUser(id) {    
+        return this.client.delete(`/users/${id}`);
     }
 
 }

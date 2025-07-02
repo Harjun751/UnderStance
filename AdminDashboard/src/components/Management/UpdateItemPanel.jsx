@@ -17,8 +17,8 @@ const UpdateItemPanel = ({
         if (item && schema) {
             const normalized = {};
             schema.forEach((field) => {
+                if (field.noupdate === true) { return; }
                 if (field.type === "boolean") {
-                    console.log(item[field.name]);
                     normalized[field.name] = item[field.name];
                 } else if (field.type === "dropdown") {
                     // convert from object (e.g. name) to id
@@ -62,7 +62,7 @@ const UpdateItemPanel = ({
 
     // Disable Update button if no values updated
     const hasChanges = schema
-        .filter((field) => field.type !== "id")
+        .filter((field) => (field.type !== "id" && field.noupdate !== true))
         .some((field) => {
             const current = formData[field.name];
             const original = item[field.name];
@@ -89,7 +89,7 @@ const UpdateItemPanel = ({
 
     //Disable Update button if an empty field is present
     const allFieldsFilled = schema
-        .filter((field) => field.type !== "id")
+        .filter((field) => (field.type !== "id" && field.noupdate !== true))
         .every((field) => {
             const value = formData[field.name];
             return value !== "" && value !== null && value !== undefined;
@@ -117,6 +117,7 @@ const UpdateItemPanel = ({
                 <h4>Select & Edit whichever parts you need</h4>
                 <form onSubmit={handleSubmit} className="panel-form">
                     {schema.map((field) => {
+                        if (field.noupdate === true) { return <></> }
                         const value = formData[field.name];
                         if (field.type === "id") {
                             return (

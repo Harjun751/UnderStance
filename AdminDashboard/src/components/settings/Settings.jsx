@@ -1,48 +1,53 @@
+import "./Settings.css";
 import Layout from "../general/Layout";
 import Loader from "../general/Loader";
 import ErrorModal from "../general/ErrorModal";
 import { useAPIClient } from "../api/useAPIClient";
 import { useState, useEffect } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
+import { useId } from 'react';
+
 
 const Settings = () => {
-    const loading = false;
     const apiClient = useAPIClient();
-    const [userData, setUserData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { user } = useAuth0();
     const [error, setError] = useState(null);
-    // Fetch the user data and populate
-    useEffect(() => {
-        let ignore = false;
+    const [isLoading, setIsLoading] = useState(false);
+    const [name, setName] = useState(user.name);
+    const [picture, setPicture] = useState(user.picture);
+    let defaultTheme = localStorage.getItem('data-theme');
+    defaultTheme = (defaultTheme === "light" || defaultTheme === "dark") ? defaultTheme : "light";
+    const [theme, setTheme] = useState(defaultTheme);
+    const [submitting, setSubmitting] = useState(false);
 
-        apiClient.getUserInfo().then((result) => {
-            if (!ignore) {
-                setUserData(result.data);
-                setIsLoading(false);
-            }
-        }).catch((err) => {
-            setIsLoading(false);
+    // Form element IDs
+    const themeDarkId = useId();
+    const themeLightId = useId();
+
+    const themeHandler = (theme) => {
+        setTheme(theme);
+        if (theme === "light") {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('data-theme', 'light');
+        } else if (theme === "dark") {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('data-theme', 'dark');
+        }
+    };
+
+    const updateUserHandler = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        try {
+            const formData = new FormData(e.target);
+            await apiClient.updateUserNoRole(user.sub, formData.get("name"), formData.get("picture"));
+        } catch (err) {
             setError(err);
-        });
-
-        return () => {
-            ignore = true;
-        };
-    }, [apiClient]);
-
-
-
-    if (loading)
-        return (
-            <Layout
-                title={
-                    <>
-                        Settings
-                    </>
-                }
-            >
-                <Loader message="Loading data..." />
-            </Layout>
-        );
+        } finally {
+            setSubmitting(false);
+            window.location.reload();
+        }
+    }
 
     return (
         <Layout
@@ -56,9 +61,74 @@ const Settings = () => {
                 <Loader message="Loading data..."/>
             ) : (<></>)}
             <ErrorModal error={error}/>
-            <div>
-                This is the epic settings page.
-                { userData.name }
+            <div className="settings-section profile">
+                <h1>Profile</h1>
+                <form onSubmit={e => updateUserHandler(e)}>
+                    <div className="row">
+                        <div className="col">
+                            <label>
+                                Display Name
+                                <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+                            </label>
+                            <label>
+                                Picture
+                                <input type="text" name="picture" value={picture} onChange={e => setPicture(e.target.value)} />
+                            </label>
+                            <button type="submit" disabled={submitting} className={submitting ? "disabled" : ""}>
+                                {submitting ? "Submitting..." : "Save User Info"}
+                            </button>
+                        </div>
+                        <div className="img-container">
+                            <label>Profile picture preview</label>
+                            <img src={picture} />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div className="settings-section appearance">
+                <h1>Appearance</h1>
+                <div className="theme-selector">
+                    <label>Theme</label>
+                    <div className="radio-container">
+                        <label>Light Theme</label>
+                        <input
+                            className="radio" type="radio"
+                            name="theme" value="light" id={themeLightId}
+                            onChange={e => themeHandler(e.target.value)}
+                            checked={theme === 'light'}
+                        />
+                        <label className="preview light-option" htmlFor={themeLightId} />
+                    </div>
+                    <div className="radio-container">
+                        <label>Dark Theme</label>
+                        <input 
+                            className="radio"
+                            type="radio" name="theme"
+                            value="dark" id={themeDarkId}
+                            onChange={e => themeHandler(e.target.value)}
+                            checked={theme === 'dark'}
+                        />
+                        <label className="preview dark-option" htmlFor={themeDarkId} />
+                    </div>
+                </div>
+            </div>
+            <div className="settings-section">
+                <h1>Other Links</h1>
+                <div className="row">
+                    <div>
+                        <label>Auth0 Dashboard</label>
+                        <a href="https://manage.auth0.com/dashboard/us/dev-i0ksanu2a66behjf/">
+                            <button type="submit">Auth0 Dashboard</button>
+                        </a>
+                    </div>
+                    {/*<div>
+                        <label>Change Password</label>
+                        <a href={changePasswordURL}>
+                            <button type="button">Change Password</button>
+                        </a>
+                    </div>*/}
+                </div>
             </div>
         </Layout>
     );
