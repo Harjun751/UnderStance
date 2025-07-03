@@ -236,7 +236,9 @@
     cursor: pointer;
     background-color: #e5e7eb;
     color: #4b5563;
-    transition: background-color 0.2s ease, max-height 0.3s ease;
+    transition:
+        background-color 0.2s ease,
+        max-height 0.3s ease;
     width: 100%;
     max-height: 50px;
     overflow: hidden;
@@ -272,7 +274,7 @@
     opacity: 1;
 }
 
-.alignment-toggle-buttons button:hover .button-text{
+.alignment-toggle-buttons button:hover .button-text {
     opacity: 1;
 }
 
@@ -418,7 +420,7 @@
 }
 
 @media only screen and (max-width: 720px) {
-    .alignment-toggle-buttons button{
+    .alignment-toggle-buttons button {
         padding: 0.4rem 0.5rem; /*Ensures that text is still viewable*/
         max-height: 40px;
     }

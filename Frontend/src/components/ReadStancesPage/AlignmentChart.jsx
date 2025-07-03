@@ -420,25 +420,25 @@ export default function AlignmentChart({
                             onClick={() => setView("tune")}
                         >
                             <div className="button-icon">
-                                <HiAdjustmentsHorizontal /> 
+                                <HiAdjustmentsHorizontal />
                             </div>
                             <div className="button-text">Tuning</div>
                         </button>
                     </div>
-                    {view === "chart"
-                        ? renderChart()
-                        : view === "category"
-                        ? renderCategory()
-                        : view === "table"
-                        ? renderTable()
-                        : view === "tune"
-                        ? <WeightageTuning 
+                    {view === "chart" ? (
+                        renderChart()
+                    ) : view === "category" ? (
+                        renderCategory()
+                    ) : view === "table" ? (
+                        renderTable()
+                    ) : view === "tune" ? (
+                        <WeightageTuning
                             questions={questions}
                             userAnswers={userAnswers}
                             onSubmit={updateUserAnswers}
                             onClose={() => setView("chart")}
                         />
-                        : null}
+                    ) : null}
                 </div>
             </>
         );
