@@ -9,8 +9,12 @@ import {
 } from "recharts";
 
 import { useState } from "react";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaCheck, FaTimes, FaTable } from "react-icons/fa";
 import { GoSkip } from "react-icons/go";
+import { HiAdjustmentsHorizontal } from "react-icons/hi2";
+import { BiSolidCategory } from "react-icons/bi";
+import { IoStatsChart } from "react-icons/io5";
+import WeightageTuning from "./WeightageTuning";
 
 // (Category Alignment)
 const Category_CustomXAxisTick = ({ x, y, payload }) => {
@@ -71,6 +75,7 @@ export default function AlignmentChart({
     questions,
     userAnswers,
     stances,
+    updateUserAnswers,
 }) {
     const [view, setView] = useState("chart"); // chart or table
     // Calculate alignment percentages between user's answers and each party
@@ -384,28 +389,56 @@ export default function AlignmentChart({
                             className={view === "chart" ? "active" : ""}
                             onClick={() => setView("chart")}
                         >
-                            Overall
+                            <div className="button-icon">
+                                <IoStatsChart />
+                            </div>
+                            <div className="button-text">Result</div>
                         </button>
                         <button
                             type="button"
                             className={view === "category" ? "active" : ""}
                             onClick={() => setView("category")}
                         >
-                            By Category
+                            <div className="button-icon">
+                                <BiSolidCategory />
+                            </div>
+                            <div className="button-text">Category</div>
                         </button>
                         <button
                             type="button"
                             className={view === "table" ? "active" : ""}
                             onClick={() => setView("table")}
                         >
-                            Table Breakdown
+                            <div className="button-icon">
+                                <FaTable />
+                            </div>
+                            <div className="button-text">Breakdown</div>
+                        </button>
+                        <button
+                            type="button"
+                            className={view === "tune" ? "active" : ""}
+                            onClick={() => setView("tune")}
+                        >
+                            <div className="button-icon">
+                                <HiAdjustmentsHorizontal />
+                            </div>
+                            <div className="button-text">Tuning</div>
                         </button>
                     </div>
-                    {view === "chart"
-                        ? renderChart()
-                        : view === "category"
-                          ? renderCategory()
-                          : renderTable()}
+                    {view === "chart" ? (
+                        renderChart()
+                    ) : view === "category" ? (
+                        renderCategory()
+                    ) : view === "table" ? (
+                        renderTable()
+                    ) : view === "tune" ? (
+                        <WeightageTuning
+                            questions={questions}
+                            userAnswers={userAnswers}
+                            onSubmit={updateUserAnswers}
+                            onClose={() => setView("chart")}
+                        />
+                    ) : null}
                 </div>
             </>
         );

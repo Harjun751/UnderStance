@@ -158,10 +158,12 @@ const Quiz = () => {
                             </button>
                         ))}
                     </div>
-                    <WeightageSlider
-                        value={weightage}
-                        onChange={setWeightage}
-                    />
+                    <div className="weightage-container">
+                        <WeightageSlider
+                            value={weightage}
+                            onChange={setWeightage}
+                        />
+                    </div>
                     <div className="control-btns">
                         <button
                             type="button"
