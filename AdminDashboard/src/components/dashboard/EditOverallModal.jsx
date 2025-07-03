@@ -3,17 +3,20 @@ import "./EditOverallModal.css";
 import { FaTimes } from "react-icons/fa";
 
 const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) => {
+    //Form field states for creating/updating a card
     const [dataType, setDataType] = useState("questions");
     const [field, setField] = useState("");
     const [action, setAction] = useState("count");
     const [color, setColor] = useState("blue");
     const [title, setTitle] = useState("");
 
+    //Adding or editing a card state
     const [mode, setMode] = useState("add");
 
     const [fields, setFields] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
 
+    //Updates the selectable fields when dataType changes
     useEffect(() => {
         if (data[dataType] && data[dataType].length > 0) {
             setFields(Object.keys(data[dataType][0]));
@@ -26,6 +29,63 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
         }
     }, [dataType, data]);
 
+    //For handling modal draggability state
+    const [isDragging, setIsDragging] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+    //Begins dragging the modal
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setOffset({
+            x: e.clientX - position.x,
+            y: e.clientY - position.y,
+        });
+    };
+
+    //Move modal to follow mouse moves
+    const handleMouseMove = (e) => {
+        if (isDragging) {
+            setPosition({
+                x: e.clientX - offset.x,
+                y: e.clientY - offset.y,
+            });
+        }
+    };
+
+    //Stop dragging when mouse is released
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    //Sets the modal's inital position to be center of the screen
+    useEffect(() => {
+        const modalWidth = 600;
+        const modalHeight = 600;
+        const centerX = window.innerWidth / 2 - modalWidth / 2;
+        const centerY = window.innerHeight / 2 - modalHeight / 2;
+
+        setPosition({ x: centerX, y: centerY });
+    }, []);
+
+    //Tack drag position by using mouse's events.
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener("mousemove", handleMouseMove);
+            window.addEventListener("mouseup", handleMouseUp);
+        } else {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        }
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+    }, [isDragging]);
+
+
+    //Resets form fields to initial values
     const resetForm = () => {
         setDataType("questions");
         setField("");
@@ -35,9 +95,10 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
         setEditIndex(null);
     };
 
+    //Submits form to save or update a card
     const handleSubmit = (e) => {
         e.preventDefault();
-        //ensures that all fields are selected.
+        //ensures that title fields is not empty.
         if (!title) return;
 
         const card = {
@@ -56,6 +117,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
         resetForm();
     };
 
+    //Populates form with existing card info for editing
     const handleEditClick = (card, index) => {
         setDataType(card.dataType);
         setField(card.field);
@@ -68,7 +130,16 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
 
     return (
         <div className="display-modal-background">
-            <div className="display-modal-content">
+            <div 
+                className="display-modal-content"
+                onMouseDown={handleMouseDown}
+                style={{
+                    position : "absolute",
+                    top: `${position.y}px`,
+                    left: `${position.x}px`,
+                    cursor: isDragging ? "grabbing" : "grab",
+                }}
+            >
                 <div className="header-row">
                     <h2>Customize Overall Section</h2>
                     <div className="header-row-right">

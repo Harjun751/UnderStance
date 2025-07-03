@@ -42,7 +42,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
         },
         {
             dataType: "stances",
-            field: "id", // assuming each stance has an `id` field
+            field: "id",
             action: "count",
             color: "red",
             title: "Total Stances",

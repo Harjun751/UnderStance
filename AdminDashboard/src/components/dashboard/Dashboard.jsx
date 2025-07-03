@@ -6,6 +6,7 @@ import Loader from "../general/Loader";
 import { useAPIClient } from "../api/useAPIClient";
 import "./Dashboard.css";
 import OverallSection from "./OverallSection";
+import TabSection from "./TabSection";
 
 const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
@@ -94,6 +95,7 @@ const Dashboard = () => {
                     parties={parties}
                     stances={stances}
                 />
+                <TabSection />
             </div>
         </Layout>
 
