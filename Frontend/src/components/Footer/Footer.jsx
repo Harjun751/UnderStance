@@ -65,10 +65,9 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div class="footer-column">
+                    {/* <div class="footer-column">
                         <h3 class="footer-heading">Legal</h3>
                         <ul class="footer-list">
-                            {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
                                 <li>
                                     <a
@@ -94,7 +93,7 @@ const Footer = () => {
                                 </li>
                             </Link>
                         </ul>
-                    </div>
+                    </div> */}
 
                     <div class="footer-column">
                         <h3 class="footer-heading">Connect</h3>
@@ -117,7 +116,7 @@ const Footer = () => {
                                 <FaGoogleDrive />
                             </a>
                             <a
-                                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                href="https://drive.google.com/file/d/15bZYKrSL7GOCpdxfzyzgFJd1GSbpPT2r/view?usp=drive_link"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="footer-icon"
