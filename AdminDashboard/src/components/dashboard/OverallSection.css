@@ -1,0 +1,15 @@
+.edit-button {
+    padding: 6px 12px;
+    background-color: transparent; /* blue-500 */
+    border: none;
+    border-radius: 6px;
+    color: rgb(188, 188, 188);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+    color: rgb(0, 25, 139);
+}

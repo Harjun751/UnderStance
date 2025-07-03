@@ -3,11 +3,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../general/Layout";
 import { MdSpaceDashboard } from "react-icons/md";
 import Loader from "../general/Loader";
+import { useAPIClient } from "../api/useAPIClient";
+import "./Dashboard.css";
+import OverallSection from "./OverallSection";
 
 const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
+    const [questions, setQuestions] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [parties, setParties] = useState([]);
+
+    const apiClient = useAPIClient();
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +41,24 @@ const Dashboard = () => {
         fetchData();
     }, [getAccessTokenSilently]);
 
+    useEffect(() => {
+        let cancelled = false;
+
+        Promise.all([apiClient.getQuestions(), apiClient.getCategories(), apiClient.getParties()]).then(
+            ([questions, categories, parties]) => {
+                if (!cancelled) {
+                    setQuestions(questions);
+                    setCategories(categories);
+                    setParties(parties)
+                    setIsLoading(false);
+                }
+            },
+        );
+        return () => {
+            cancelled = true;
+        };
+    }, [apiClient]);
+
     if (loading)
         return (
             <Layout
@@ -47,17 +74,33 @@ const Dashboard = () => {
 
     return (
         <Layout
-            title={
+             title={
                 <>
                     <MdSpaceDashboard /> Dashboard
                 </>
             }
         >
-            <div>
-                Hi, you're logged in and authenticated with the token:{" "}
-                {authInfo.token}
+            <div className="dashboard">
+                <OverallSection 
+                    questions={questions}
+                    categories={categories}
+                    parties={parties}
+                />
             </div>
         </Layout>
+
+        // <Layout
+        //     title={
+        //         <>
+        //             <MdSpaceDashboard /> Dashboard
+        //         </>
+        //     }
+        // >
+        //     <div>
+        //         Hi, you're logged in and authenticated with the token:{" "}
+        //         {authInfo.token}
+        //     </div>
+        // </Layout>
     );
 };
 
