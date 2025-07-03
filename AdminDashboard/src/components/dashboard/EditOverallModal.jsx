@@ -51,7 +51,7 @@ const EditOverallModal = ({ onClose, onSave, data }) => {
                 {/* For Adding */}
                 <form onSubmit={handleSubmit} className="display-modal-form">
                     {/* Data Type */}
-                    <label>Data Type:</label>
+                    <label>Table selection:</label>
                     <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
                         <option value="questions">Questions</option>
                         <option value="categories">Categories</option>

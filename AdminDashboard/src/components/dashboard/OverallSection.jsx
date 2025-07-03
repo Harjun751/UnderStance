@@ -15,6 +15,8 @@ const iconMap = {
 
 const OverallSection = ({ questions, categories, parties }) => {
     const [showModal, setShowModal] = useState(false);
+
+    // Load user's display cards set.
     const [cards, setCards] = useState([
         {
             dataType: "questions",
@@ -41,6 +43,7 @@ const OverallSection = ({ questions, categories, parties }) => {
 
     const dataMap = { questions, categories, parties };
 
+    // Handles adding new card into the display cards set.
     const handleSave = (newCard) => {
         setCards((prev) => [...prev, newCard]);
         setShowModal(false);
@@ -60,6 +63,7 @@ const OverallSection = ({ questions, categories, parties }) => {
                 </div>
             </div>
             <div className="stats-grid">
+                {/* Loop through each card and display relevant details */}
                 {cards.map((card, idx) => {
                     const data = dataMap[card.dataType] || [];
                     let cardValue = 0;
