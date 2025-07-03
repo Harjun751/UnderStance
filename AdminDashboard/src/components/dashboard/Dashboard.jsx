@@ -14,6 +14,7 @@ const Dashboard = () => {
     const [questions, setQuestions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [parties, setParties] = useState([]);
+    const [stances, setStances] = useState([]);
 
     const apiClient = useAPIClient();
 
@@ -44,12 +45,18 @@ const Dashboard = () => {
     useEffect(() => {
         let cancelled = false;
 
-        Promise.all([apiClient.getQuestions(), apiClient.getCategories(), apiClient.getParties()]).then(
-            ([questions, categories, parties]) => {
+        Promise.all([
+            apiClient.getQuestions(), 
+            apiClient.getCategories(), 
+            apiClient.getParties(), 
+            apiClient.getStances()
+        ]).then(
+            ([questions, categories, parties, stances]) => {
                 if (!cancelled) {
                     setQuestions(questions);
                     setCategories(categories);
                     setParties(parties)
+                    setStances(stances)
                     setIsLoading(false);
                 }
             },
@@ -85,6 +92,7 @@ const Dashboard = () => {
                     questions={questions}
                     categories={categories}
                     parties={parties}
+                    stances={stances}
                 />
             </div>
         </Layout>

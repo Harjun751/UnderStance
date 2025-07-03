@@ -20,10 +20,9 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.display-modal-content h2 {
+.header-row {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 30px;
     border-bottom: solid 1px black;
     padding-left: 2rem;
     padding-right: 2rem;
@@ -36,6 +35,27 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-row h2 {
+    font-size: 30px;
+}
+
+.header-row-right {
+    justify-content: flex-end;
+}
+
+.close-button {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.close-button svg {
+    font-size: 30px;
 }
 
 .toggle-button-group {
@@ -43,6 +63,86 @@
     padding-left: 2rem;
     padding-right: 2rem;
     gap: 1rem;
+    border-bottom: 2px dotted #e5e7eb;
+    padding-bottom: 0.3rem;
+    justify-content: center;
+    align-content: center;
+}
+
+.toggle-button-group button {
+    padding: 8px 16px;
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.toggle-button-group button:hover {
+    background-color: #e5e7eb;
+}
+
+.toggle-button-group button.active {
+    background: linear-gradient(
+        90deg,
+        rgba(34, 218, 255, 1) 0%,
+        rgba(114, 111, 169, 1) 100%
+    );
+    color: white;
+    border-color: #25b6eb;
+}
+
+.edit-list {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.edit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: #f9fafb;
+}
+
+.edit-item strong {
+    font-weight: 600;
+    color: #111827;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.edit-actions button:hover {
+    background-color: #e5e7eb;
+}
+
+.edit-actions .delete-button {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.edit-actions .delete-btn:hover {
+    background-color: #fecaca;
 }
 
 .display-modal-form {
@@ -52,6 +152,11 @@
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 1rem;
+}
+
+.display-modal-form h3 {
+    font-weight: bold;
+    text-align: center;
 }
 
 .display-modal-form label {

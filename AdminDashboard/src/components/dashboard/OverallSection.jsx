@@ -11,9 +11,10 @@ const iconMap = {
   questions: <MdQuiz />,
   categories: <BiSolidCategoryAlt />,
   parties: <FaFlag />,
+  stances: <GiInjustice />,
 };
 
-const OverallSection = ({ questions, categories, parties }) => {
+const OverallSection = ({ questions, categories, parties, stances }) => {
     const [showModal, setShowModal] = useState(false);
 
     // Load user's display cards set.
@@ -39,14 +40,29 @@ const OverallSection = ({ questions, categories, parties }) => {
             color: "yellow",
             title: "Total Parties",
         },
+        {
+            dataType: "stances",
+            field: "id", // assuming each stance has an `id` field
+            action: "count",
+            color: "red",
+            title: "Total Stances",
+        },
     ]);
 
-    const dataMap = { questions, categories, parties };
-
+    const dataMap = { questions, categories, parties, stances };
+    console.log("DataMap:", dataMap);
     // Handles adding new card into the display cards set.
     const handleSave = (newCard) => {
         setCards((prev) => [...prev, newCard]);
         setShowModal(false);
+    };
+
+    const handleUpdate = (index, updatedCard) => {
+        setCards(prev => prev.map((c, i) => (i === index ? updatedCard : c)));
+    };
+
+    const handleDelete = (index) => {
+        setCards(prev => prev.filter((_, i) => i !== index));
     };
 
     return (
@@ -95,7 +111,10 @@ const OverallSection = ({ questions, categories, parties }) => {
                 <EditOverallModal
                     onClose={() => setShowModal(false)}
                     onSave={handleSave}
-                    data={{ questions, categories, parties }}
+                    data={{ questions, categories, parties, stances }}
+                    cards={cards}
+                    onUpdate={handleUpdate}
+                    onDelete={handleDelete}
                 />
             )}
         </div>
