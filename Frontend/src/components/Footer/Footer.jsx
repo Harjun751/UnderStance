@@ -122,14 +122,14 @@ const Footer = () => {
                                 <FaYoutube />
                             </a>
                         </div>
-                        <div class="footer-comment">
+                        {/* <div class="footer-comment">
                             <p class="footer-note">
                                 HEY I JUST MET YOU <br />
                                 AND THIS IS CRAZY <br />
                                 BUT HERE'S MY NUMBER <br />
                                 SO CALL ME MAYBE
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
