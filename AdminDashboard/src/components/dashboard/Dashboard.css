@@ -97,6 +97,7 @@
     color: #ef4444;
 }
 
+/* For bigger Screens */
 @media (min-width: 720px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
