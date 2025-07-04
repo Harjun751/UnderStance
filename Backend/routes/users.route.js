@@ -1,6 +1,5 @@
 const express = require("express");
 const securedUserRoutes = express.Router();
-const db = require("../utils/DAL");
 const validator = require("../utils/input-validation");
 const logger = require("../utils/logger");
 const { management } = require("../utils/management-client");
@@ -13,25 +12,17 @@ securedUserRoutes.get(
     "/users",
     checkRequiredPermissions([permissions.readUsers]),
     async (req, res) => {
-        const allUsers = [];
-        let page = 0;
-        while (true) {
-          const {
-            data: { users, total },
-          } = await management.users.getAll({
-            include_totals: true,
-            page: page++,
-          });
-          allUsers.push(...users);
-          if (allUsers.length === total) {
-            break;
-          }
+        try {
+            const allUsers = await management.users.getAll().then((resp) => resp.data);
+            for (const user of allUsers) {
+                const roles = await management.users.getRoles({ id: user.user_id });
+                user.roles = roles.data.map(r => r.name).join(', ');
+            }
+            res.status(200).send(allUsers);
+        } catch (err) {
+            logger.error(err.stack);
+            res.status(500).send({ message: "Failed to get users." });
         }
-        for (const user of allUsers) {
-            const roles = await management.users.getRoles({ id: user.user_id });
-            user.roles = roles.data.map(r => r.name).join(', ');
-        }
-        res.status(200).send(allUsers);
     }
 );
 
@@ -39,8 +30,14 @@ securedUserRoutes.get(
     "/roles",
     checkRequiredPermissions([permissions.readUsers]),
     async (req, res) => {
-        const roles = await management.roles.getAll();
-        res.status(200).send(roles.data);
+        try {
+            const roles = await management.roles.getAll();
+            res.status(200).send(roles.data);
+        } catch (err) {
+            logger.error(err.stack);
+            //res.status(500).send({ message: "Failed to get roles" });
+            res.status(500).send({ message: err.stack });
+        }
     }
 );
 
@@ -49,7 +46,7 @@ securedUserRoutes.post(
     checkRequiredPermissions([permissions.writeUsers]),
     async (req, res) => {
         const body = req.body;
-
+        
         const iconError = await validator.validateIcon(body.Picture);
         if (iconError != null) {
             return res.status(400).send({
@@ -66,20 +63,25 @@ securedUserRoutes.post(
             Role: validator.validatePartyName
         };
 
-        const resp = await management.users.create(
-            {
-                connection: "Username-Password-Authentication",
-                name: body.Name,
-                email: body.Email,
-                picture: body.Picture,
-                password: "Password123",    // Look into email flow
-            }
-        ).then((resp) => resp.data);
-        // assign role to user
-        const user_id = resp.user_id;
-        await management.users.assignRoles({ id: user_id }, { roles: [body.Role] });
-        // send OK
-        return res.status(200).send({ user_id: user_id });
+        try {
+            const resp = await management.users.create(
+                {
+                    connection: "Username-Password-Authentication",
+                    name: body.Name,
+                    email: body.Email,
+                    picture: body.Picture,
+                    password: "Password123",    // Look into email flow
+                }
+            ).then((resp) => resp.data);
+            // assign role to user
+            const user_id = resp.user_id;
+            await management.users.assignRoles({ id: user_id }, { roles: [body.Role] });
+            // send OK
+            return res.status(200).send({ user_id: user_id });
+        } catch (err) {
+            logger.error(err.stack);
+            return res.status(500).send({stack: err.stack});
+        }
     }
 );
 
@@ -154,9 +156,9 @@ securedUserRoutes.delete(
         try {
             await management.users.delete({id: req.params.id });
             return res.status(200).send({ message: "Successfully deleted" });
-        } catch {
+        } catch(err) {
             logger.error(err.stack);
-            res.status(500).send({error:"Failed to delete..."});
+            res.status(500).send({error:"Failed to delete user"});
         }
     }
 );
