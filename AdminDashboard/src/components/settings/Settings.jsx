@@ -4,9 +4,8 @@ import Loader from "../general/Loader";
 import ErrorModal from "../general/ErrorModal";
 import { useAPIClient } from "../api/useAPIClient";
 import { useState } from "react";
-import { useAuth0 } from '@auth0/auth0-react';
-import { useId } from 'react';
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { useId } from "react";
 
 const Settings = () => {
     const apiClient = useAPIClient();
@@ -15,8 +14,11 @@ const Settings = () => {
     const [isLoading, _setIsLoading] = useState(false);
     const [name, setName] = useState(user.name);
     const [picture, setPicture] = useState(user.picture);
-    let defaultTheme = localStorage.getItem('data-theme');
-    defaultTheme = (defaultTheme === "light" || defaultTheme === "dark") ? defaultTheme : "light";
+    let defaultTheme = localStorage.getItem("data-theme");
+    defaultTheme =
+        defaultTheme === "light" || defaultTheme === "dark"
+            ? defaultTheme
+            : "light";
     const [theme, setTheme] = useState(defaultTheme);
     const [submitting, setSubmitting] = useState(false);
 
@@ -27,11 +29,11 @@ const Settings = () => {
     const themeHandler = (theme) => {
         setTheme(theme);
         if (theme === "light") {
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('data-theme', 'light');
+            document.documentElement.setAttribute("data-theme", "light");
+            localStorage.setItem("data-theme", "light");
         } else if (theme === "dark") {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('data-theme', 'dark');
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("data-theme", "dark");
         }
     };
 
@@ -40,42 +42,54 @@ const Settings = () => {
         setSubmitting(true);
         try {
             const formData = new FormData(e.target);
-            await apiClient.updateUserNoRole(user.sub, formData.get("name"), formData.get("picture"));
+            await apiClient.updateUserNoRole(
+                user.sub,
+                formData.get("name"),
+                formData.get("picture"),
+            );
         } catch (err) {
             setError(err);
         } finally {
             setSubmitting(false);
             window.location.reload();
         }
-    }
+    };
 
     return (
-        <Layout
-            title={
-                <>
-                    Settings
-                </>
-            }
-        >
-            {isLoading && (
-                <Loader message="Loading data..."/>
-            )}
-            <ErrorModal error={error}/>
+        <Layout title={<>Settings</>}>
+            {isLoading && <Loader message="Loading data..." />}
+            <ErrorModal error={error} />
             <div className="settings-section profile">
                 <h1>Profile</h1>
-                <form onSubmit={e => updateUserHandler(e)}>
+                <form onSubmit={(e) => updateUserHandler(e)}>
                     <div className="row">
                         <div className="col">
                             <label>
                                 Display Name
-                                <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
                             </label>
                             <label>
                                 Picture
-                                <input type="text" name="picture" value={picture} onChange={e => setPicture(e.target.value)} />
+                                <input
+                                    type="text"
+                                    name="picture"
+                                    value={picture}
+                                    onChange={(e) => setPicture(e.target.value)}
+                                />
                             </label>
-                            <button type="submit" disabled={submitting} className={submitting ? "disabled" : ""}>
-                                {submitting ? "Submitting..." : "Save User Info"}
+                            <button
+                                type="submit"
+                                disabled={submitting}
+                                className={submitting ? "disabled" : ""}
+                            >
+                                {submitting
+                                    ? "Submitting..."
+                                    : "Save User Info"}
                             </button>
                         </div>
                         <div className="img-container">
@@ -93,23 +107,38 @@ const Settings = () => {
                     <div className="radio-container">
                         <h3>Light Theme</h3>
                         <input
-                            className="radio" type="radio"
-                            name="theme" value="light" id={themeLightId}
-                            onChange={e => themeHandler(e.target.value)}
-                            checked={theme === 'light'}
+                            className="radio"
+                            type="radio"
+                            name="theme"
+                            value="light"
+                            id={themeLightId}
+                            onChange={(e) => themeHandler(e.target.value)}
+                            checked={theme === "light"}
                         />
-                        <label className="preview light-option" htmlFor={themeLightId}>Light Theme</label>
+                        <label
+                            className="preview light-option"
+                            htmlFor={themeLightId}
+                        >
+                            Light Theme
+                        </label>
                     </div>
                     <div className="radio-container">
                         <h3>Dark Theme</h3>
-                        <input 
+                        <input
                             className="radio"
-                            type="radio" name="theme"
-                            value="dark" id={themeDarkId}
-                            onChange={e => themeHandler(e.target.value)}
-                            checked={theme === 'dark'}
+                            type="radio"
+                            name="theme"
+                            value="dark"
+                            id={themeDarkId}
+                            onChange={(e) => themeHandler(e.target.value)}
+                            checked={theme === "dark"}
                         />
-                        <label className="preview dark-option" htmlFor={themeDarkId}>Dark Theme</label>
+                        <label
+                            className="preview dark-option"
+                            htmlFor={themeDarkId}
+                        >
+                            Dark Theme
+                        </label>
                     </div>
                 </div>
             </div>

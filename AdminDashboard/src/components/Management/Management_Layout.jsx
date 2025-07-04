@@ -17,7 +17,7 @@ const Management_Layout = ({
     addSubmitHandler,
     updateSubmitHandler,
     deleteSubmitHandler,
-    error
+    error,
 }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
@@ -149,7 +149,7 @@ const Management_Layout = ({
     };
     return (
         <Layout title={title}>
-            <ErrorModal error={error}/>
+            <ErrorModal error={error} />
             {/* Dynamic Table Design */}
             <div className="management">
                 <div className="management-header">

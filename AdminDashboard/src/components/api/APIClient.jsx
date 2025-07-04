@@ -141,7 +141,7 @@ class APIClientWrapper {
             ID: id,
             Role: role,
             Name: name,
-            Picture: picture
+            Picture: picture,
         });
     }
 
@@ -149,7 +149,7 @@ class APIClientWrapper {
         return this.client.patch("/users", {
             ID: id,
             Name: name,
-            Picture: picture
+            Picture: picture,
         });
     }
 
@@ -158,12 +158,11 @@ class APIClientWrapper {
             Role: role,
             Name: name,
             Picture: picture,
-            Email: email
+            Email: email,
         });
     }
 
-    deleteUser(id) {    
+    deleteUser(id) {
         return this.client.delete(`/users/${id}`);
     }
-
 }

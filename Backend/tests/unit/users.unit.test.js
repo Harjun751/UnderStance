@@ -31,67 +31,71 @@ fakeFetch.mockResolvedValue({
     },
 });
 
-
 const fakeUsers = [
-    { email: "hi@fake.com", nickname: "test", picture: "https://www.com", user_id: "123" },
-    { email: "hi@2fake.com", nickname: "test2", picture: "https://www.com", user_id: "1234" }
-]
-const fakeRoles = [
-    { name: "admin"},
-    { name: "editor"},
-    { name: "viewer"},
-]
+    {
+        email: "hi@fake.com",
+        nickname: "test",
+        picture: "https://www.com",
+        user_id: "123",
+    },
+    {
+        email: "hi@2fake.com",
+        nickname: "test2",
+        picture: "https://www.com",
+        user_id: "1234",
+    },
+];
+const fakeRoles = [{ name: "admin" }, { name: "editor" }, { name: "viewer" }];
 
-const mockGetAll = jest.fn().mockImplementation(() =>
-  Promise.resolve({ data: fakeUsers })
-);
-const mockGetRoles = jest.fn().mockImplementation(({id}) => {
+const mockGetAll = jest
+    .fn()
+    .mockImplementation(() => Promise.resolve({ data: fakeUsers }));
+const mockGetRoles = jest.fn().mockImplementation(({ id }) => {
     if (id === "123") {
         return Promise.resolve({
-            data: [ { name: "admin" } ]
+            data: [{ name: "admin" }],
         });
     } else if (id === "1234") {
         return Promise.resolve({
-            data: [ { name: "editor" }, { name: "viewer" } ]
+            data: [{ name: "editor" }, { name: "viewer" }],
         });
     } else {
         return Promise.resolve({
-            data: []
+            data: [],
         });
     }
 });
-const mockCreate = jest.fn().mockResolvedValue({ data: {user_id:12} })
+const mockCreate = jest.fn().mockResolvedValue({ data: { user_id: 12 } });
 
-const mockGetAllRoles = jest.fn().mockImplementation(() =>
-  Promise.resolve({ data: fakeRoles })
-);
+const mockGetAllRoles = jest
+    .fn()
+    .mockImplementation(() => Promise.resolve({ data: fakeRoles }));
 const mockUpdateUser = jest.fn().mockImplementation(() => {
-  Promise.resolve({ data: {user_id:12} })
+    Promise.resolve({ data: { user_id: 12 } });
 });
 const mockDeleteUser = jest.fn();
-jest.mock('auth0', () => ({
-  ManagementClient: jest.fn().mockImplementation(() => ({
-    users: {
-      getAll: mockGetAll,
-      getRoles: mockGetRoles,
-      create: mockCreate,
-      assignRoles: jest.fn(),
-      update: mockUpdateUser,
-      delete: mockDeleteUser,
-    },
-    roles: {
-      getAll: mockGetAllRoles,
-    },
-  })),
+jest.mock("auth0", () => ({
+    ManagementClient: jest.fn().mockImplementation(() => ({
+        users: {
+            getAll: mockGetAll,
+            getRoles: mockGetRoles,
+            create: mockCreate,
+            assignRoles: jest.fn(),
+            update: mockUpdateUser,
+            delete: mockDeleteUser,
+        },
+        roles: {
+            getAll: mockGetAllRoles,
+        },
+    })),
 }));
 
 const app = require("../../app");
 const request = require("supertest");
 
-
 describe("mock GET users", () => {
     test("should return 200 OK", () => {
-        const expected = fakeUsers.map(user => ({ ...user }));
+        const expected = fakeUsers.map((user) => ({ ...user }));
         expected[0].roles = "admin";
         expected[1].roles = "editor, viewer";
         return request(app)
@@ -116,15 +120,15 @@ describe("mock POST user", () => {
         Name: "Test",
         Email: "test@gmail.com",
         Role: "admin",
-        Picture: "url.com"
-    }
+        Picture: "url.com",
+    };
 
     test("should return 200 OK", () => {
         return request(app)
             .post("/users")
             .send(fakeUser)
             .then((response) => {
-                expect(response.body).toEqual({ user_id: 12});
+                expect(response.body).toEqual({ user_id: 12 });
                 expect(response.statusCode).toBe(200);
             });
     });
@@ -140,8 +144,6 @@ describe("mock POST user", () => {
                     error: "Invalid Arguments",
                 });
             });
-
-
     });
 
     test("should return 500 if management API error", () => {
@@ -152,7 +154,6 @@ describe("mock POST user", () => {
                 expect(response.statusCode).toBe(500);
             });
     });
-
 });
 
 describe("mock PATCH user", () => {
@@ -161,15 +162,15 @@ describe("mock PATCH user", () => {
         Name: "Test",
         Email: "test@gmail.com",
         Picture: "url.com",
-        Role: "admin"
-    }
+        Role: "admin",
+    };
 
     test("should return 200 OK", () => {
         return request(app)
             .patch("/users")
             .send(fakeUser)
             .then((response) => {
-                expect(response.body).toEqual({ user_id: "sub|123"});
+                expect(response.body).toEqual({ user_id: "sub|123" });
                 expect(response.statusCode).toBe(200);
             });
     });
@@ -212,7 +213,6 @@ describe("mock PATCH user", () => {
                 expect(response.statusCode).toBe(500);
             });
     });
-
 });
 
 describe("mock DELETE users", () => {
@@ -238,9 +238,7 @@ describe("mock DELETE users", () => {
                 });
             });
     });
-
 });
-
 
 describe("mock GET roles", () => {
     test("should return 200 OK", () => {
@@ -253,7 +251,6 @@ describe("mock GET roles", () => {
             });
     });
 
-
     test("should return 500 if management API error", () => {
         mockGetAllRoles.mockRejectedValue(new Error("API Error"));
         return request(app)
@@ -262,5 +259,4 @@ describe("mock GET roles", () => {
                 expect(response.statusCode).toBe(500);
             });
     });
-
 });

@@ -1,7 +1,7 @@
 :root {
     --texture-background: transparent;
-    --surface: rgba(0,0,0,0);
-    --surface-container: #FFFFFF;
+    --surface: rgba(0, 0, 0, 0);
+    --surface-container: #ffffff;
     /* TODO: Change this for lesser contrast */
     --on-surface-container: black;
     --surface-container-outline: #ccc;
@@ -39,25 +39,25 @@
 
 [data-theme="dark"] {
     --texture-background: black;
-    --surface: rgba(0,0,0,1);
-    --surface-container: #1F1F22;
-    --surface-container-outline: #46484F;
-    --on-surface-container: #EDEDED;
-    --gradient: linear-gradient(90deg, #0D324D 0%, #7F5A83 100%);
+    --surface: rgba(0, 0, 0, 1);
+    --surface-container: #1f1f22;
+    --surface-container-outline: #46484f;
+    --on-surface-container: #ededed;
+    --gradient: linear-gradient(90deg, #0d324d 0%, #7f5a83 100%);
     /*--gradient: linear-gradient(90deg, #003848 0%, #2C294A 100%);*/
     /*--gradient: #7277A9;*/
     --on-gradient: #d9d9d9;
-    --green: #26A269;
+    --green: #26a269;
     --red: #ac0000;
     --navbar-surface: #121212;
-    --on-navbar-surface: #DFDFDF;
-    --navbar-surface-container: #1F1F22;
-    --navbar-surface-container-hover: #797B86;
-    --navbar-separator: #46474E;
-    --on-navbar-surface-container: #EDEDED;
-    --table-even: #27282C;
-    --table-odd: #393A3F;
-    --table-hover: #1F1F22;
+    --on-navbar-surface: #dfdfdf;
+    --navbar-surface-container: #1f1f22;
+    --navbar-surface-container-hover: #797b86;
+    --navbar-separator: #46474e;
+    --on-navbar-surface-container: #ededed;
+    --table-even: #27282c;
+    --table-odd: #393a3f;
+    --table-hover: #1f1f22;
     --table-selected: #121212;
 }
 

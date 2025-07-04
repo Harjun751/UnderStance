@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { IoIosWarning } from "react-icons/io";
-import './ErrorModal.css';
+import "./ErrorModal.css";
 
 export default ({ error }) => {
     const [show, setShow] = useState(true);
@@ -38,15 +38,18 @@ export default ({ error }) => {
         return (
             <div className="modal error-modal">
                 <div className="error-modal-content">
-                    <button
-                        type="button"
-                        onClick={() => setShow(false)}
-                    >&times;</button>
+                    <button type="button" onClick={() => setShow(false)}>
+                        &times;
+                    </button>
                     <IoIosWarning />
-                    <h1>{ title }</h1>
-                    <h2 class="error-header">{ header }</h2>
+                    <h1>{title}</h1>
+                    <h2 class="error-header">{header}</h2>
                     {details !== "" && (
-                        <p class="error-details">Additional details:<br/>{ details }</p>
+                        <p class="error-details">
+                            Additional details:
+                            <br />
+                            {details}
+                        </p>
                     )}
                 </div>
             </div>
