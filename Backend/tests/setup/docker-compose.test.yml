@@ -29,6 +29,8 @@ services:
     secrets:
       - db_user
       - db_password
+      - ga4_service_account
+      - ga4_property_id
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
     # wait for DB service to be complete
@@ -40,3 +42,7 @@ secrets:
     file: ../../.config/.dev/mysql-user
   db_password:
     file: ../../.config/.dev/mysql-password
+  ga4_service_account:
+    file: ../../.config/.dev/ga4-service-account.json
+  ga4_property_id:
+    file: ../../.config/.dev/ga4-property-id

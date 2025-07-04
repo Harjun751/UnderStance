@@ -1,6 +1,9 @@
 # config secrets for docker
 .config/.prod
 .env.test
+# GA4 credentials (development only)
+.config/.dev/ga4-*
+
 # Logs
 logs
 *.log

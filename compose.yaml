@@ -31,6 +31,8 @@ services:
     secrets:
       - db_user
       - db_password
+      - ga4_service_account
+      - ga4_property_id
     develop:
       watch:
         - action: rebuild
@@ -72,3 +74,7 @@ secrets:
     file: ./Backend/.config/.dev/mysql-user
   db_password:
     file: ./Backend/.config/.dev/mysql-password
+  ga4_service_account:
+    file: ./Backend/.config/.dev/ga4-service-account.json
+  ga4_property_id:
+    file: ./Backend/.config/.dev/ga4-property-id
