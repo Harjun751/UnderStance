@@ -1,18 +1,9 @@
 import "./OverallSection.css";
 import "./Dashboard.css";
-import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
-import { FaFlag } from "react-icons/fa";
-import { GiInjustice } from "react-icons/gi";
-import { BiSolidCategoryAlt } from "react-icons/bi";
 import { useState } from "react";
 import EditOverallModal from "./EditOverallModal";
+import CardDisplay from "./CardDisplay";
 
-const iconMap = {
-  questions: <MdQuiz />,
-  categories: <BiSolidCategoryAlt />,
-  parties: <FaFlag />,
-  stances: <GiInjustice />,
-};
 
 const OverallSection = ({ questions, categories, parties, stances }) => {
     const [showModal, setShowModal] = useState(false);
@@ -23,6 +14,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
             dataType: "questions",
             field: "IssueId",
             action: "count",
+            filter: null,
             color: "blue",
             title: "Total Questions",
         },
@@ -30,6 +22,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
             dataType: "categories",
             field: "id",
             action: "count",
+            filter: null,
             color: "green",
             title: "Total Categories",
         },
@@ -37,6 +30,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
             dataType: "parties",
             field: "id",
             action: "count",
+            filter: null,
             color: "yellow",
             title: "Total Parties",
         },
@@ -44,6 +38,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
             dataType: "stances",
             field: "id",
             action: "count",
+            filter: null,
             color: "red",
             title: "Total Stances",
         },
@@ -78,35 +73,10 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
                     </button>
                 </div>
             </div>
-            <div className="stats-grid">
-                {/* Loop through each card and display relevant details */}
-                {cards.map((card, idx) => {
-                    const data = dataMap[card.dataType] || [];
-                    let cardValue = 0;
-
-                    if (card.action === "count") {
-                        cardValue = data.length;
-                    } else if (card.action === "countUnique") {
-                        const uniqueValues = new Set(data.map((item) => item[card.field]));
-                        cardValue = uniqueValues.size;
-                    }
-
-                    return (
-                        <div className="card" key={idx}>
-                            <div className="card-content">
-                                <div className="text-block">
-                                    <p className="card-title">{card.title}</p>
-                                    <h3 className="card-number">{cardValue}</h3>
-                                </div>
-                                <div className={`icon-container ${card.color}`}>
-                                    {iconMap[card.dataType]}
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-            
+            <CardDisplay 
+                cards={cards}
+                dataMap={dataMap}
+            />
             {showModal && (
                 <EditOverallModal
                     onClose={() => setShowModal(false)}

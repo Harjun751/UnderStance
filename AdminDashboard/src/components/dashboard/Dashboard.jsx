@@ -95,7 +95,12 @@ const Dashboard = () => {
                     parties={parties}
                     stances={stances}
                 />
-                <TabSection />
+                <TabSection 
+                    questions={questions}
+                    categories={categories}
+                    parties={parties}
+                    stances={stances}
+                />
             </div>
         </Layout>
 

@@ -9,6 +9,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
     const [action, setAction] = useState("count");
     const [color, setColor] = useState("blue");
     const [title, setTitle] = useState("");
+    const [filters, setFilters] = useState([]);
 
     //Adding or editing a card state
     const [mode, setMode] = useState("add");
@@ -28,6 +29,12 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
             setField("");
         }
     }, [dataType, data]);
+
+    const getUniqueValues = (field) => {
+        if (!data[dataType] || !field) return [];
+        const values = data[dataType].map(item => item[field]);
+        return [...new Set(values)].filter(v => v !== undefined && v !== null);
+    };
 
     //For handling modal draggability state
     const [isDragging, setIsDragging] = useState(false);
@@ -105,10 +112,11 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
             dataType,
             field,
             action,
+            filter: filters.filter(f => f.filterField && f.filterValue),
             color,
             title,
         };
-
+        console.log(card);
         if (mode === "add") {
             onSave(card);
         } else if (mode === "edit" && editIndex !== null) {
@@ -132,7 +140,6 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
         <div className="display-modal-background">
             <div 
                 className="display-modal-content"
-                onMouseDown={handleMouseDown}
                 style={{
                     position : "absolute",
                     top: `${position.y}px`,
@@ -140,7 +147,10 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
                     cursor: isDragging ? "grabbing" : "grab",
                 }}
             >
-                <div className="header-row">
+                <div 
+                    className="header-row"
+                    onMouseDown={handleMouseDown} //this will make sure it only drags when moving the header.
+                >
                     <h2>Customize Overall Section</h2>
                     <div className="header-row-right">
                         <button
@@ -209,7 +219,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
                         </select>
 
                         {/* Field */}
-                        <label>Field:</label>
+                        <label>Target Field:</label>
                         <select value={field} onChange={(e) => setField(e.target.value)} disabled={fields.length === 0}>
                             {fields.map((f) => (
                                 <option value={f} key={f}>
@@ -224,7 +234,83 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
                             <option value="count">Count All</option>
                             <option value="countUnique">Count Unique</option>
                         </select>
+                        
+                        {/* Filter for Valuue */}
+                        <label>Filter for:</label>
+                        <div className="filter-titles">
+                            <h4>Filter Field</h4>
+                            <h4>Filter Value</h4>
+                        </div>
+                        {/* <select
+                            value={filterValue}
+                            onChange={(e) => setFilterValue(e.target.value)}
+                            disabled={filterOptions.length === 0}
+                        >
+                            <option value="">-- No Filter --</option>
+                            {filterOptions.map((value) => (
+                                <option key={value} value={value}>
+                                    {String(value)}
+                                </option>
+                            ))}
+                        </select> */}
+                        {filters.map((f, index) => (
+                            <div key={index} className="filter-row">
+                                 
+                                <select
+                                    value={f.filterField}
+                                    onChange={(e) => {
+                                        const updated = [...filters];
+                                        updated[index].filterField = e.target.value;
+                                        updated[index].filterValue = "";
+                                        setFilters(updated);
+                                    }}
+                                >
+                                    <option value="">-- Select Field --</option>
+                                    {fields.map((fieldOpt) => (
+                                        <option key={fieldOpt} value={fieldOpt}>
+                                            {fieldOpt}
+                                        </option>
+                                    ))}
+                                </select>
 
+                                <select
+                                    value={f.filterValue}
+                                    onChange={(e) => {
+                                        const updated = [...filters];
+                                        updated[index].filterValue = e.target.value;
+                                        setFilters(updated);
+                                    }}
+                                    disabled={!f.filterField}
+                                >
+                                    <option value="">-- Select Value --</option>
+                                    {getUniqueValues(f.filterField).map((val) => (
+                                        <option key={val} value={val}>
+                                            {String(val)}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <button
+                                    type="button"
+                                    className="remove-button"
+                                    onClick={() => {
+                                        const updated = filters.filter((_, i) => i !== index);
+                                        setFilters(updated);
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                                
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className="add-filter-button"
+                            onClick={() => setFilters([...filters, { filterField: "", filterValue: "" }])}
+                        >
+                            + Add Filter
+                        </button>
+                        
                         {/* Color */}
                         <label>Card Color:</label>
                         <select value={color} onChange={(e) => setColor(e.target.value)}>
