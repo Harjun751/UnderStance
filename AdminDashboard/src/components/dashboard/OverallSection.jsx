@@ -60,6 +60,10 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
         setCards(prev => prev.filter((_, i) => i !== index));
     };
 
+    const handleReorder = (newCardList) => {
+        setCards(newCardList);
+    };
+
     return (
         <div className="section-container">
             <div className="section-header">
@@ -85,6 +89,7 @@ const OverallSection = ({ questions, categories, parties, stances }) => {
                     cards={cards}
                     onUpdate={handleUpdate}
                     onDelete={handleDelete}
+                    onReorder={handleReorder}
                 />
             )}
         </div>

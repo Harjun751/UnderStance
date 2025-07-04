@@ -132,7 +132,18 @@
     font-size: 0.875rem;
 }
 
-.edit-actions button:hover {
+.edit-actions button:disabled {
+    background-color: #bbbbbb;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+.edit-actions .edit-button {
+    background-color: #e0dfdf;
+    color: rgb(0, 0, 0);
+}
+
+.edit-actions .edit-button:hover {
     background-color: #e5e7eb;
 }
 
@@ -141,8 +152,28 @@
     color: #b91c1c;
 }
 
-.edit-actions .delete-btn:hover {
-    background-color: #fecaca;
+.edit-actions .delete-button:hover {
+    background-color: #b91c1c;
+    color: #fee2e2;
+}
+
+.edit-actions .up-button {
+    background-color: #a9f9a2;
+    color: #31b825;
+}
+
+.edit-actions .up-button:hover {
+    background-color: #31b825;
+    color: #a9f9a2;
+}
+
+.edit-actions .down-button {
+    background-color: #e0dfdf;
+    color: rgb(0, 0, 0);
+}
+
+.edit-actions .down-button:hover {
+    background-color: #e5e7eb;
 }
 
 .display-modal-form {

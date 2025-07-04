@@ -60,3 +60,10 @@
 .redirect-button:hover {
     color: rgb(0, 25, 139);
 }
+
+.tab-content > .section-header-end {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./EditOverallModal.css";
 import { FaTimes } from "react-icons/fa";
 
-const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) => {
+const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, onReorder }) => {
     //Form field states for creating/updating a card
     const [dataType, setDataType] = useState("questions");
     const [field, setField] = useState("");
@@ -192,8 +192,32 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete }) 
                             <div key={card} className="edit-item">
                                 <strong>{card.title}</strong>
                                 <div className="edit-actions">
-                                    <button type="button" onClick={() => handleEditClick(card, idx)}>Edit</button>
-                                    <button type="button" onClick={() => onDelete(idx)} className="delete-button">Delete</button>
+                                    <button type="button" className="edit-button" onClick={() => handleEditClick(card, idx)}>Edit</button>
+                                    <button type="button" className="delete-button" onClick={() => onDelete(idx)}>Delete</button>
+                                    <button 
+                                        type="button" 
+                                        className="up-button"
+                                        disabled={idx === 0} 
+                                        onClick={() => {
+                                            const updated = [...cards];
+                                            [updated[idx - 1], updated[idx]] = [updated[idx], updated[idx - 1]];
+                                            onReorder(updated);
+                                        }}
+                                    >
+                                        ↑
+                                    </button>
+                                    <button 
+                                        type="button"
+                                        className="down-button"
+                                        disabled={idx === cards.length - 1} 
+                                        onClick={() => {
+                                            const updated = [...cards];
+                                            [updated[idx], updated[idx + 1]] = [updated[idx + 1], updated[idx]];
+                                            onReorder(updated);
+                                        }}
+                                    >
+                                        ↓
+                                    </button>
                                 </div>
                             </div>
                         ))}
