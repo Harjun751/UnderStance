@@ -7,6 +7,7 @@ import { useAPIClient } from "../api/useAPIClient";
 import "./Dashboard.css";
 import OverallSection from "./OverallSection";
 import TabSection from "./TabSection";
+import AnalyticsSection from "./AnalyticsSection";
 
 const Dashboard = () => {
     const [authInfo, setAuthInfo] = useState([]);
@@ -100,6 +101,38 @@ const Dashboard = () => {
                     categories={categories}
                     parties={parties}
                     stances={stances}
+                />
+                <AnalyticsSection 
+                    data={[
+                        {
+                            date: "20250704",
+                            activeUsers: "3",
+                            newUsers: "3",
+                            sessions: "4",
+                            screenPageViews: "24"
+                        },
+                        {
+                            date: "20250705",
+                            activeUsers: "5",
+                            newUsers: "1",
+                            sessions: "5",
+                            screenPageViews: "30"
+                        },
+                        {
+                            date: "20250706",
+                            activeUsers: "2",
+                            newUsers: "2",
+                            sessions: "3",
+                            screenPageViews: "5"
+                        },
+                        {
+                            date: "20250707",
+                            activeUsers: "3",
+                            newUsers: "2",
+                            sessions: "6",
+                            screenPageViews: "15"
+                        },
+                    ]}
                 />
             </div>
         </Layout>
