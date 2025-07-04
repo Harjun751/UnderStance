@@ -30,7 +30,7 @@ describe("mocked auth authorized endpoint", () => {
                 req.auth = {
                     sub: "user-123",
                     scope: "read:messages",
-                    permissions: ["read:messages"]
+                    permissions: ["read:messages"],
                 };
                 next();
             }),
@@ -61,7 +61,7 @@ describe("mocked", () => {
                 req.auth = {
                     sub: "user-123",
                     scope: "read:messages",
-                    permissions: ["read:messages"]
+                    permissions: ["read:messages"],
                 };
                 next();
             }),
@@ -79,7 +79,7 @@ describe("mocked", () => {
     test("should return 403 if insufficient perms", () => {
         return request(app)
             .post("/parties")
-            .send({ data: "none"})
+            .send({ data: "none" })
             .then((response) => {
                 expect(response.statusCode).toBe(403);
             });

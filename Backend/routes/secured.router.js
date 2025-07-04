@@ -9,7 +9,6 @@ const config = require("../utils/app-config");
 const { requireValidAccessToken } = require("../utils/auth0.middleware");
 const securedRoutes = express.Router();
 
-
 securedRoutes.use(
     express.json(),
     /* CORS */
@@ -21,7 +20,6 @@ securedRoutes.use(
     /* Auth middleware that REQUIRES auth token */
     requireValidAccessToken,
 );
-
 
 securedRoutes.use(securedQuestionRoutes);
 securedRoutes.use(securedStanceRoutes);

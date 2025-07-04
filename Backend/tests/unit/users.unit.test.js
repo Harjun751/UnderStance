@@ -190,7 +190,9 @@ describe("mock PATCH user", () => {
     });
 
     test("should return 200 with multiple roles returned", () => {
-        mockGetRoles.mockResolvedValueOnce({ data: [{id:"123"},{id:"1234"}]});
+        mockGetRoles.mockResolvedValueOnce({
+            data: [{ id: "123" }, { id: "1234" }],
+        });
         return request(app)
             .patch("/users")
             .send(fakeUser)
