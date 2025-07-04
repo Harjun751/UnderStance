@@ -1,0 +1,106 @@
+.weightage-tuning {
+    padding: 1rem;
+}
+
+.weightage-tuning h2 {
+    margin-bottom: 0.5rem;
+}
+
+.tuning-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.tuning-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 0.3rem 1rem;
+    margin-bottom: 0.5rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.tuning-card h3 {
+    text-align: left;
+    border-bottom: 1px solid black;
+    margin-bottom: 1rem;
+}
+
+.card-details {
+    padding: 0rem;
+}
+
+/* Styling for Answer Buttons */
+.answer-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.answer-btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    background: #bfbfbf;
+    color: white;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+    width: 80px;
+}
+
+.answer-btn.selected {
+    opacity: 1;
+}
+
+.answer-btn.agree.selected {
+    background-color: #4caf50; /* green */
+}
+
+.answer-btn.disagree.selected {
+    background-color: #f44336; /* red */
+}
+
+.answer-btn.skip.selected {
+    background-color: #5a5a5a; /* gray */
+}
+
+.answer-btn.disabled {
+    opacity: 0.5;
+}
+
+.answer-btn.agree:hover {
+    background-color: #4caf50;
+}
+
+.answer-btn.disagree:hover {
+    background-color: #f44336;
+}
+
+.answer-btn.skip:hover {
+    background-color: #5a5a5a;
+}
+
+/* Styling for Submit Button */
+.submit-updates {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.submit-button {
+    background-color: #0077cc;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Resizing to smaller resolutions */
+@media (max-width: 1000px) {
+    .tuning-container {
+        grid-template-columns: 1fr;
+    }
+}
