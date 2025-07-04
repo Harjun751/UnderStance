@@ -29,7 +29,7 @@ const Footer = () => {
                             <Link>
                                 <li>
                                     <a
-                                        href=""
+                                        href="https://www.linkedin.com/in/thaddaeus-chua-540bb6185/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="footer-link"
