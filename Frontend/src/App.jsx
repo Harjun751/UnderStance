@@ -9,7 +9,9 @@ import "./App.css";
 import ReactGA from "react-ga4";
 import { useEffect } from "react";
 
-function App() {
+ReactGA.initialize("G-4ZEGR53H48");
+
+function AnalyticsWrapper() {
     const location = useLocation();
 
     //Send a pageview on route change
@@ -18,16 +20,22 @@ function App() {
     }, [location]);
     
     return (
+        <div className="app-container">
+            <Navbar />
+            <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/read-stances" element={<ReadStances />} />
+                <Route path="/quiz" element={<Quiz />} />
+            </Routes>
+        </div>
+    );
+}
+
+function App() {
+    return (
         <Router>
-            <div className="app-container">
-                <Navbar />
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/read-stances" element={<ReadStances />} />
-                    <Route path="/quiz" element={<Quiz />} />
-                </Routes>
-            </div>
+            <AnalyticsWrapper />
         </Router>
     );
 }
