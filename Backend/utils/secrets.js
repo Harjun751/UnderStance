@@ -1,15 +1,12 @@
 const fs = require("node:fs");
 
 function getSecret(path) {
-    if (process.env.NODE_ENV === "test") {
-        return "dummy";
-    }
     try {
         const data = fs.readFileSync(path, { encoding: "utf8", flag: "r" });
         return data.trim();
     } catch (err) {
         console.error(`Error occured while reading secret! ${err}`);
-        return {};
+        return null;
     }
 }
 
@@ -26,13 +23,28 @@ function getConnString() {
 }
 
 function getAuthDomain() {
-    return getSecret(process.env.SECRET_AUTH0_DOMAIN_PATH);
+    let domain = getSecret(process.env.SECRET_AUTH0_DOMAIN_PATH);
+    if (domain === null) {
+        // for github actions
+        client_id = process.env.AUTH0_DOMAIN;
+    }
+    return domain;
 }
 function getAuthClientID() {
-    return getSecret(process.env.SECRET_AUTH0_CLIENT_ID_PATH);
+    let client_id = getSecret(process.env.SECRET_AUTH0_CLIENT_ID_PATH);
+    if (client_id === null) {
+        // for github actions
+        client_id = process.env.AUTH0_PRIVILEGED_CLIENT_ID;
+    }
+    return client_id;
 }
 function getAuthClientSecret() {
-    return getSecret(process.env.SECRET_AUTH0_CLIENT_SECRET_PATH);
+    let client_secret = getSecret(process.env.SECRET_AUTH0_CLIENT_SECRET_PATH);
+    if (client_secret === null) {
+        // for github actions
+        client_secret = process.env.AUTH0_PRIVILEGED_CLIENT_SECRET;
+    }
+    return client_secret;
 }
 
 module.exports = {
