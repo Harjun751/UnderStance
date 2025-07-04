@@ -62,18 +62,18 @@ const Quiz = () => {
     useEffect(() => {
         let cancelled = false;
 
-        Promise.all([apiClient.getQuestions(), apiClient.getCategories()]).then(
-            ([questions, categories]) => {
+        Promise.all([apiClient.getQuestions(), apiClient.getCategories()])
+            .then(([questions, categories]) => {
                 if (!cancelled) {
                     setQuestions(questions);
                     setCategories(categories);
                     setIsLoading(false);
                 }
-            },
-        ).catch((err) => {
-            setIsLoading(false);
-            setLatestError(err);
-        });
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                setLatestError(err);
+            });
 
         return () => {
             cancelled = true;

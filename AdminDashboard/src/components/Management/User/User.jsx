@@ -17,32 +17,41 @@ const User = () => {
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit } =
-        useUpdateSubmitHandler({
-            updateFunction: (form) => apiClient.updateUser(form.user_id, form.name, form.picture, form.rolesID),
-            setResource: setUsers,
-            key: "user_id",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleUpdateSubmit } = useUpdateSubmitHandler({
+        updateFunction: (form) =>
+            apiClient.updateUser(
+                form.user_id,
+                form.name,
+                form.picture,
+                form.rolesID,
+            ),
+        setResource: setUsers,
+        key: "user_id",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Add data
-    const { handleAddSubmit } =
-        useAddSubmitHandler({
-            addFunction: (form) => apiClient.addUser(form.name, form.picture, form.email, form.rolesID),
-            setResource: setUsers,
-            key: "user_id",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleAddSubmit } = useAddSubmitHandler({
+        addFunction: (form) =>
+            apiClient.addUser(
+                form.name,
+                form.picture,
+                form.email,
+                form.rolesID,
+            ),
+        setResource: setUsers,
+        key: "user_id",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Delete data
-    const { handleDeleteSubmit } =
-        useDeleteSubmitHandler({
-            deleteFunction: (form) => apiClient.deleteUser(form.user_id),
-            setResource: setUsers,
-            key: "user_id",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleDeleteSubmit } = useDeleteSubmitHandler({
+        deleteFunction: (form) => apiClient.deleteUser(form.user_id),
+        setResource: setUsers,
+        key: "user_id",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
 
     // API Client for requests
     const apiClient = useAPIClient();
@@ -51,18 +60,17 @@ const User = () => {
     useEffect(() => {
         let ignore = false;
 
-        Promise.all([
-            apiClient.getUsers(),
-            apiClient.getRoles()
-        ]).then(([users, roles]) => {
-            if (!ignore);
-            setUsers(users);
-            setRoles(roles);
-            setIsLoading(false);
-        }).catch((err) => {
-            setIsLoading(false);
-            setLatestError(err);
-        });
+        Promise.all([apiClient.getUsers(), apiClient.getRoles()])
+            .then(([users, roles]) => {
+                if (!ignore);
+                setUsers(users);
+                setRoles(roles);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                setLatestError(err);
+            });
 
         return () => {
             ignore = true;
@@ -81,7 +89,7 @@ const User = () => {
             dropdownData: {
                 key: "id",
                 value: "name",
-                data: roles
+                data: roles,
             },
         },
     ];

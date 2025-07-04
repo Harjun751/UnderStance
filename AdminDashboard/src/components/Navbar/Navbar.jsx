@@ -102,11 +102,14 @@ const Navbar = () => {
                         <FaFlag />
                         {!collapsed && <span className="nav-text">Party</span>}
                     </NavLink>
-                    { permissions.includes("read:users") && (
-                    <NavLink to="/user" className="nav-item">
-                        <FaUser />
-                        {!collapsed && <span className="nav-text">User</span>}
-                    </NavLink>)}
+                    {permissions.includes("read:users") && (
+                        <NavLink to="/user" className="nav-item">
+                            <FaUser />
+                            {!collapsed && (
+                                <span className="nav-text">User</span>
+                            )}
+                        </NavLink>
+                    )}
                 </nav>
             </div>
 
@@ -121,7 +124,9 @@ const Navbar = () => {
                 <NavLink to="/settings" className="nav-btn">
                     <button type="button" className="footer-button">
                         <IoMdSettings />
-                        {!collapsed && <span className="nav-text">Settings</span>}
+                        {!collapsed && (
+                            <span className="nav-text">Settings</span>
+                        )}
                     </button>
                 </NavLink>
                 <button

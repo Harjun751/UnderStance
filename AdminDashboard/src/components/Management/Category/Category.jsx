@@ -16,33 +16,30 @@ const Category = () => {
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit } =
-        useUpdateSubmitHandler({
-            updateFunction: (form) =>
-                apiClient.updateCategory(form.CategoryID, form.Name),
-            setResource: setCategories,
-            key: "CategoryID",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleUpdateSubmit } = useUpdateSubmitHandler({
+        updateFunction: (form) =>
+            apiClient.updateCategory(form.CategoryID, form.Name),
+        setResource: setCategories,
+        key: "CategoryID",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Add data
-    const { handleAddSubmit } =
-        useAddSubmitHandler({
-            addFunction: (form) => apiClient.addCategory(form.Name),
-            setResource: setCategories,
-            key: "CategoryID",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleAddSubmit } = useAddSubmitHandler({
+        addFunction: (form) => apiClient.addCategory(form.Name),
+        setResource: setCategories,
+        key: "CategoryID",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Delete data
-    const { handleDeleteSubmit } =
-        useDeleteSubmitHandler({
-            deleteFunction: (form) => apiClient.deleteCategory(form.CategoryID),
-            setResource: setCategories,
-            key: "CategoryID",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleDeleteSubmit } = useDeleteSubmitHandler({
+        deleteFunction: (form) => apiClient.deleteCategory(form.CategoryID),
+        setResource: setCategories,
+        key: "CategoryID",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
 
     // API Client for requests
     const apiClient = useAPIClient();
@@ -51,15 +48,18 @@ const Category = () => {
     useEffect(() => {
         let ignore = false;
 
-        apiClient.getCategories().then((result) => {
-            if (!ignore) {
-                setCategories(result);
+        apiClient
+            .getCategories()
+            .then((result) => {
+                if (!ignore) {
+                    setCategories(result);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
                 setIsLoading(false);
-            }
-        }).catch((err) => {
-            setIsLoading(false);
-            setLatestError(err);
-        });
+                setLatestError(err);
+            });
 
         return () => {
             ignore = true;

@@ -12,7 +12,7 @@ const permissions = {
     delete: "delete:resources",
     readUsers: "read:users",
     writeUsers: "write:users",
-    deleteUsers: "delete:users"
+    deleteUsers: "delete:users",
 };
 
 const checkValidAccessToken = auth({
@@ -42,7 +42,7 @@ const checkRequiredPermissions = (requiredPermissions) => {
                 const perms = requiredPermissions.join(", ");
                 return res.status(403).send({
                     error: "You don't have permissions to access this resource.",
-                    details: `You need the scope(s): ${perms}`
+                    details: `You need the scope(s): ${perms}`,
                 });
             }
 

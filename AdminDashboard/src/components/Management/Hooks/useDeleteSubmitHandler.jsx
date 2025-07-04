@@ -1,4 +1,10 @@
-export function useDeleteSubmitHandler({ deleteFunction, setResource, key, setError, setIsLoading }) {
+export function useDeleteSubmitHandler({
+    deleteFunction,
+    setResource,
+    key,
+    setError,
+    setIsLoading,
+}) {
     const handleDeleteSubmit = async (form) => {
         setIsLoading(true);
 

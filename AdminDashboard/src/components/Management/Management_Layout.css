@@ -65,7 +65,7 @@
     border-radius: 6px;
     font-size: 14px;
     border: 1px solid var(--surface-container-outline);
-    background: var(--surface-container); 
+    background: var(--surface-container);
     color: var(--on-surface-container);
 }
 
@@ -82,7 +82,7 @@
     border-radius: 6px;
     font-size: 14px;
     border: 1px solid var(--surface-container-outline);
-    background: var(--surface-container); 
+    background: var(--surface-container);
     color: var(--on-surface-container);
 }
 
@@ -145,7 +145,7 @@
 
 .table-cell {
     padding: 12px 16px;
-    border-bottom: 1px solid var(--surface-container-outline)/*#eee*/;
+    border-bottom: 1px solid var(--surface-container-outline) /*#eee*/;
     white-space: nowrap;
 }
 

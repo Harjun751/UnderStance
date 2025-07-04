@@ -27,9 +27,7 @@ const Footer = () => {
                             </Link>
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
                             <Link>
-                                <li>
-                                    About
-                                </li>
+                                <li>About</li>
                             </Link>
                         </ul>
                     </div>

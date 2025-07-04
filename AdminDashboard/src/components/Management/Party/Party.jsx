@@ -17,22 +17,21 @@ const Party = () => {
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit } =
-        useUpdateSubmitHandler({
-            updateFunction: (form) =>
-                apiClient.updateParty(
-                    form.PartyID,
-                    form.Name,
-                    form.ShortName,
-                    form.Icon,
-                    form.PartyColor,
-                    form.Active,
-                ),
-            setResource: setParties,
-            key: "PartyID",
-            setError: setLatestError,
-            setIsLoading: setIsLoading,
-        });
+    const { handleUpdateSubmit } = useUpdateSubmitHandler({
+        updateFunction: (form) =>
+            apiClient.updateParty(
+                form.PartyID,
+                form.Name,
+                form.ShortName,
+                form.Icon,
+                form.PartyColor,
+                form.Active,
+            ),
+        setResource: setParties,
+        key: "PartyID",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
         useAddSubmitHandler({
@@ -63,15 +62,18 @@ const Party = () => {
         // ignore var to prevent race condition
         let ignore = false;
 
-        apiClient.getParties().then((result) => {
-            if (!ignore) {
-                setParties(result);
+        apiClient
+            .getParties()
+            .then((result) => {
+                if (!ignore) {
+                    setParties(result);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
                 setIsLoading(false);
-            }
-        }).catch((err) => {
-            setIsLoading(false);
-            setLatestError(err);
-        });
+                setLatestError(err);
+            });
 
         return () => {
             ignore = true;

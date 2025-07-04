@@ -23,7 +23,7 @@ function getConnString() {
 }
 
 function getAuthDomain() {
-    let domain = getSecret(process.env.SECRET_AUTH0_DOMAIN_PATH);
+    const domain = getSecret(process.env.SECRET_AUTH0_DOMAIN_PATH);
     if (domain === null) {
         // for github actions
         client_id = process.env.AUTH0_DOMAIN;
@@ -53,5 +53,5 @@ module.exports = {
     getConnString,
     getAuthDomain,
     getAuthClientID,
-    getAuthClientSecret
+    getAuthClientSecret,
 };

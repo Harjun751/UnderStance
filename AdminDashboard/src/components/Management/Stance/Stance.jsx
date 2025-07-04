@@ -66,17 +66,19 @@ const Stance = () => {
             apiClient.getStances(),
             apiClient.getParties(),
             apiClient.getQuestions(),
-        ]).then(([stances, parties, questions]) => {
-            if (!cancelled) {
-                setStances(stances);
-                setParties(parties);
-                setQuestions(questions);
+        ])
+            .then(([stances, parties, questions]) => {
+                if (!cancelled) {
+                    setStances(stances);
+                    setParties(parties);
+                    setQuestions(questions);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
                 setIsLoading(false);
-            }
-        }).catch((err) => {
-            setIsLoading(false);
-            setLatestError(err);
-        });
+                setLatestError(err);
+            });
 
         return () => {
             cancelled = true;
