@@ -3,7 +3,7 @@ import Layout from "../general/Layout";
 import Loader from "../general/Loader";
 import ErrorModal from "../general/ErrorModal";
 import { useAPIClient } from "../api/useAPIClient";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useId } from 'react';
 
@@ -12,7 +12,7 @@ const Settings = () => {
     const apiClient = useAPIClient();
     const { user } = useAuth0();
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, _setIsLoading] = useState(false);
     const [name, setName] = useState(user.name);
     const [picture, setPicture] = useState(user.picture);
     let defaultTheme = localStorage.getItem('data-theme');
@@ -57,9 +57,9 @@ const Settings = () => {
                 </>
             }
         >
-            {isLoading ? (
+            {isLoading && (
                 <Loader message="Loading data..."/>
-            ) : (<></>)}
+            )}
             <ErrorModal error={error}/>
             <div className="settings-section profile">
                 <h1>Profile</h1>
@@ -79,8 +79,8 @@ const Settings = () => {
                             </button>
                         </div>
                         <div className="img-container">
-                            <label>Profile picture preview</label>
-                            <img src={picture} />
+                            <h3>Profile picture preview</h3>
+                            <img src={picture} alt="Profile Preview" />
                         </div>
                     </div>
                 </form>
@@ -89,19 +89,19 @@ const Settings = () => {
             <div className="settings-section appearance">
                 <h1>Appearance</h1>
                 <div className="theme-selector">
-                    <label>Theme</label>
+                    <h3>Theme</h3>
                     <div className="radio-container">
-                        <label>Light Theme</label>
+                        <h3>Light Theme</h3>
                         <input
                             className="radio" type="radio"
                             name="theme" value="light" id={themeLightId}
                             onChange={e => themeHandler(e.target.value)}
                             checked={theme === 'light'}
                         />
-                        <label className="preview light-option" htmlFor={themeLightId} />
+                        <label className="preview light-option" htmlFor={themeLightId}>Light Theme</label>
                     </div>
                     <div className="radio-container">
-                        <label>Dark Theme</label>
+                        <h3>Dark Theme</h3>
                         <input 
                             className="radio"
                             type="radio" name="theme"
@@ -109,7 +109,7 @@ const Settings = () => {
                             onChange={e => themeHandler(e.target.value)}
                             checked={theme === 'dark'}
                         />
-                        <label className="preview dark-option" htmlFor={themeDarkId} />
+                        <label className="preview dark-option" htmlFor={themeDarkId}>Dark Theme</label>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ const Settings = () => {
                 <h1>Other Links</h1>
                 <div className="row">
                     <div>
-                        <label>Auth0 Dashboard</label>
+                        <h3>Auth0 Dashboard</h3>
                         <a href="https://manage.auth0.com/dashboard/us/dev-i0ksanu2a66behjf/">
                             <button type="submit">Auth0 Dashboard</button>
                         </a>

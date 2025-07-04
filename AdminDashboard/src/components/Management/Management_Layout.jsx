@@ -11,6 +11,7 @@ import Loader from "../general/Loader";
 const Management_Layout = ({
     title,
     data,
+    dataKey,
     isLoading,
     schema,
     addSubmitHandler,
@@ -100,9 +101,9 @@ const Management_Layout = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredData.map((row, index) => (
+                        {filteredData.map((row) => (
                             <tr
-                                key={index}
+                                key={row[dataKey]}
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export function useUpdateSubmitHandler({ updateFunction, setResource, key, setError, setIsLoading }) {
     const handleUpdateSubmit = async (form) => {
         setIsLoading(true);

@@ -113,6 +113,7 @@ const Stance = () => {
         <Management_Layout
             title={<>Stance</>}
             data={stances}
+            dataKey="StanceID"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}

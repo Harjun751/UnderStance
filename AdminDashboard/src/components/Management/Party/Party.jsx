@@ -91,6 +91,7 @@ const Party = () => {
         <Management_Layout
             title={<> Party </>}
             data={parties}
+            dataKey="PartyID"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}

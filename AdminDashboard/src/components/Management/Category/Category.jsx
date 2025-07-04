@@ -74,6 +74,7 @@ const Category = () => {
         <Management_Layout
             title={<> Category </>}
             data={categories}
+            dataKey="CategoryID"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}

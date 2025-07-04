@@ -116,8 +116,7 @@ const UpdateItemPanel = ({
                 <h3>Quick View/Edit</h3>
                 <h4>Select & Edit whichever parts you need</h4>
                 <form onSubmit={handleSubmit} className="panel-form">
-                    {schema.map((field) => {
-                        if (field.noupdate === true) { return <></> }
+                    {schema.filter(x => x.noupdate !== true).map((field) => {
                         const value = formData[field.name];
                         if (field.type === "id") {
                             return (

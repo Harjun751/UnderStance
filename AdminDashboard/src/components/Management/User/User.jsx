@@ -90,6 +90,7 @@ const User = () => {
         <Management_Layout
             title={<> User </>}
             data={users}
+            dataKey="user_id"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}

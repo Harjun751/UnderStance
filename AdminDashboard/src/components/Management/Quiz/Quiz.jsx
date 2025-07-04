@@ -101,6 +101,7 @@ const Quiz = () => {
         <Management_Layout
             title={<> Question </>}
             data={questions}
+            dataKey="IssueID"
             isLoading={isLoading}
             schema={schema}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}

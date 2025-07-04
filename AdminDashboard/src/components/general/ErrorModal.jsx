@@ -45,9 +45,9 @@ export default ({ error }) => {
                     <IoIosWarning />
                     <h1>{ title }</h1>
                     <h2 class="error-header">{ header }</h2>
-                    {details != "" ? (
+                    {details !== "" && (
                         <p class="error-details">Additional details:<br/>{ details }</p>
-                    ) : (<></>)}
+                    )}
                 </div>
             </div>
         );

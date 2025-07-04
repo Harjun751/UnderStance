@@ -102,11 +102,11 @@ const Navbar = () => {
                         <FaFlag />
                         {!collapsed && <span className="nav-text">Party</span>}
                     </NavLink>
-                    { permissions.includes("read:users") ?
+                    { permissions.includes("read:users") && (
                     <NavLink to="/user" className="nav-item">
                         <FaUser />
                         {!collapsed && <span className="nav-text">User</span>}
-                    </NavLink> : <></>}
+                    </NavLink>)}
                 </nav>
             </div>
 
