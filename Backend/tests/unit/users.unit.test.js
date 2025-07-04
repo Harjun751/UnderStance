@@ -83,6 +83,7 @@ jest.mock("auth0", () => ({
             assignRoles: jest.fn(),
             update: mockUpdateUser,
             delete: mockDeleteUser,
+            deleteRoles: jest.fn(),
         },
         roles: {
             getAll: mockGetAllRoles,
@@ -146,6 +147,19 @@ describe("mock POST user", () => {
             });
     });
 
+    test("should return 400 for invalid image", () => {
+        fakeFetch.mockRejectedValueOnce(new Error("bad image"));
+        return request(app)
+            .post("/users")
+            .send(fakeUser)
+            .then((response) => {
+                expect(response.statusCode).toBe(400);
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
+            });
+    });
+
     test("should return 500 if management API error", () => {
         mockCreate.mockRejectedValue(new Error("API Error"));
         return request(app)
@@ -175,6 +189,16 @@ describe("mock PATCH user", () => {
             });
     });
 
+    test("should return 200 with multiple roles returned", () => {
+        mockGetRoles.mockResolvedValueOnce({ data: [{id:"123"},{id:"1234"}]});
+        return request(app)
+            .patch("/users")
+            .send(fakeUser)
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+            });
+    });
+
     test("should return 200 with some arguments", () => {
         const respBody = { ID: fakeUser.ID, Name: fakeUser.Name };
         return request(app)
@@ -195,6 +219,16 @@ describe("mock PATCH user", () => {
             });
     });
 
+    test("should return 200 with some arguments", () => {
+        const respBody = { ID: fakeUser.ID, Roles: "Admin" };
+        return request(app)
+            .patch("/users")
+            .send(respBody)
+            .then((response) => {
+                expect(response.statusCode).toBe(200);
+            });
+    });
+
     test("should return 400 with no ID supplied", () => {
         const respBody = { Picture: fakeUser.Picture };
         return request(app)
@@ -207,6 +241,15 @@ describe("mock PATCH user", () => {
 
     test("should return 500 if management API error", () => {
         mockUpdateUser.mockRejectedValue(new Error("API Error"));
+        return request(app)
+            .patch("/users")
+            .then((response) => {
+                expect(response.statusCode).toBe(500);
+            });
+    });
+
+    test("should return 500 if management API error", () => {
+        mockGetRoles.mockRejectedValue(new Error("API Error"));
         return request(app)
             .patch("/users")
             .then((response) => {

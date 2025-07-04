@@ -39,8 +39,7 @@ securedUserRoutes.get(
             res.status(200).send(roles.data);
         } catch (err) {
             logger.error(err.stack);
-            //res.status(500).send({ message: "Failed to get roles" });
-            res.status(500).send({ message: err.stack });
+            res.status(500).send({ message: "Failed to get roles" });
         }
     },
 );

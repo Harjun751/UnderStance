@@ -1,6 +1,9 @@
 const fs = require("node:fs");
 
 function getSecret(path) {
+    if (process.env.NODE_ENV === "test") {
+        return "dummy";
+    }
     try {
         const data = fs.readFileSync(path, { encoding: "utf8", flag: "r" });
         return data.trim();
