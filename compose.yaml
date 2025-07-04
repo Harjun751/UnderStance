@@ -26,11 +26,17 @@ services:
       ADMIN_ORIGIN: "http://localhost:5173"
       SECRET_USER_PATH: "/run/secrets/db_user"
       SECRET_PASSWORD_PATH: "/run/secrets/db_password"
+      SECRET_AUTH0_DOMAIN_PATH: "/run/secrets/auth0_domain"
+      SECRET_AUTH0_CLIENT_ID_PATH: "/run/secrets/auth0_client_id"
+      SECRET_AUTH0_CLIENT_SECRET_PATH: "/run/secrets/auth0_client_secret"
     ports:
       - 3000:3000
     secrets:
       - db_user
       - db_password
+      - auth0_domain
+      - auth0_client_id
+      - auth0_client_secret
     develop:
       watch:
         - action: rebuild
@@ -72,3 +78,9 @@ secrets:
     file: ./Backend/.config/.dev/mysql-user
   db_password:
     file: ./Backend/.config/.dev/mysql-password
+  auth0_domain:
+    file: ./Backend/.config/.dev/auth0-domain
+  auth0_client_id:
+    file: ./Backend/.config/.dev/auth0-client-id
+  auth0_client_secret:
+    file: ./Backend/.config/.dev/auth0-client-secret

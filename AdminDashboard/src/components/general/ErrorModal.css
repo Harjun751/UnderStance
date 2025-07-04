@@ -1,0 +1,48 @@
+.error-modal {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.error-modal-content {
+    position: relative;
+    background-color: var(--surface-container);
+    color: var(--on-surface-container);
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+}
+
+.error-modal-content > svg {
+    color: var(--red);
+    font-size: 4em;
+    margin: auto;
+    display: block;
+}
+
+.error-modal-content > button {
+    font-size: 3em;
+    background: none;
+    cursor: pointer;
+    color: var(--on-surface-container);
+    line-height: 1;
+    border: none;
+    position: absolute;
+    right: 15px;
+    top: 0px;
+}
+
+.error-modal-content > h1 {
+    text-align: center;
+}
+
+.error-modal-content > .error-header {
+    text-align: center;
+}

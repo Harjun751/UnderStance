@@ -5,9 +5,10 @@ import { useUpdateSubmitHandler } from "../Hooks/useUpdateSubmitHandler";
 import { useAddSubmitHandler } from "../Hooks/useAddSubmitHandler";
 import { useDeleteSubmitHandler } from "../Hooks/useDeleteSubmitHandler";
 
-const Category = () => {
+const User = () => {
     // States for loading and data
-    const [categories, setCategories] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [latestError, setLatestError] = useState(null);
 
@@ -18,25 +19,36 @@ const Category = () => {
     // Update data
     const { handleUpdateSubmit } = useUpdateSubmitHandler({
         updateFunction: (form) =>
-            apiClient.updateCategory(form.CategoryID, form.Name),
-        setResource: setCategories,
-        key: "CategoryID",
+            apiClient.updateUser(
+                form.user_id,
+                form.name,
+                form.picture,
+                form.rolesID,
+            ),
+        setResource: setUsers,
+        key: "user_id",
         setError: setLatestError,
         setIsLoading: setIsLoading,
     });
     // Add data
     const { handleAddSubmit } = useAddSubmitHandler({
-        addFunction: (form) => apiClient.addCategory(form.Name),
-        setResource: setCategories,
-        key: "CategoryID",
+        addFunction: (form) =>
+            apiClient.addUser(
+                form.name,
+                form.picture,
+                form.email,
+                form.rolesID,
+            ),
+        setResource: setUsers,
+        key: "user_id",
         setError: setLatestError,
         setIsLoading: setIsLoading,
     });
     // Delete data
     const { handleDeleteSubmit } = useDeleteSubmitHandler({
-        deleteFunction: (form) => apiClient.deleteCategory(form.CategoryID),
-        setResource: setCategories,
-        key: "CategoryID",
+        deleteFunction: (form) => apiClient.deleteUser(form.user_id),
+        setResource: setUsers,
+        key: "user_id",
         setError: setLatestError,
         setIsLoading: setIsLoading,
     });
@@ -44,17 +56,16 @@ const Category = () => {
     // API Client for requests
     const apiClient = useAPIClient();
 
-    // Fetch the category data and populate
+    // Fetch the User data and populate
     useEffect(() => {
         let ignore = false;
 
-        apiClient
-            .getCategories()
-            .then((result) => {
-                if (!ignore) {
-                    setCategories(result);
-                    setIsLoading(false);
-                }
+        Promise.all([apiClient.getUsers(), apiClient.getRoles()])
+            .then(([users, roles]) => {
+                if (!ignore);
+                setUsers(users);
+                setRoles(roles);
+                setIsLoading(false);
             })
             .catch((err) => {
                 setIsLoading(false);
@@ -67,14 +78,27 @@ const Category = () => {
     }, [apiClient]);
 
     const schema = [
-        { name: "CategoryID", type: "id", filterable: false },
-        { name: "Name", type: "string", maxLen: 50, filterable: false },
+        { name: "picture", type: "image", filterable: false },
+        { name: "name", type: "string", filterable: false },
+        { name: "email", type: "string", filterable: false, noupdate: true },
+        { name: "user_id", type: "id", filterable: false },
+        {
+            name: "roles",
+            type: "dropdown",
+            filterable: true,
+            dropdownData: {
+                key: "id",
+                value: "name",
+                data: roles,
+            },
+        },
     ];
+
     return (
         <Management_Layout
-            title={<> Category </>}
-            data={categories}
-            dataKey="CategoryID"
+            title={<> User </>}
+            data={users}
+            dataKey="user_id"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
@@ -85,4 +109,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default User;

@@ -10,6 +10,7 @@ const Stance = () => {
     const [questions, setQuestions] = useState([]);
     const [parties, setParties] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     const apiClient = useAPIClient();
 
@@ -30,6 +31,8 @@ const Stance = () => {
                 ),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
@@ -43,6 +46,8 @@ const Stance = () => {
                 ),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
@@ -50,6 +55,8 @@ const Stance = () => {
             deleteFunction: (form) => apiClient.deleteStance(form.StanceID),
             setResource: setStances,
             key: "StanceID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     useEffect(() => {
@@ -59,14 +66,19 @@ const Stance = () => {
             apiClient.getStances(),
             apiClient.getParties(),
             apiClient.getQuestions(),
-        ]).then(([stances, parties, questions]) => {
-            if (!cancelled) {
-                setStances(stances);
-                setParties(parties);
-                setQuestions(questions);
+        ])
+            .then(([stances, parties, questions]) => {
+                if (!cancelled) {
+                    setStances(stances);
+                    setParties(parties);
+                    setQuestions(questions);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
                 setIsLoading(false);
-            }
-        });
+                setLatestError(err);
+            });
 
         return () => {
             cancelled = true;
@@ -103,11 +115,13 @@ const Stance = () => {
         <Management_Layout
             title={<>Stance</>}
             data={stances}
+            dataKey="StanceID"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };

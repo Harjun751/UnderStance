@@ -1,38 +1,31 @@
-import { useState } from "react";
-
-export function useUpdateSubmitHandler({ updateFunction, setResource, key }) {
-    const [updateSubmitLoading, setUpdateSubmitLoading] = useState(false);
-    const [updateSubmitError, setUpdateSubmitError] = useState(null);
-
+export function useUpdateSubmitHandler({
+    updateFunction,
+    setResource,
+    key,
+    setError,
+    setIsLoading,
+}) {
     const handleUpdateSubmit = async (form) => {
-        setUpdateSubmitLoading(true);
-
+        setIsLoading(true);
         try {
-            console.log(form);
             const resp = await updateFunction(form);
-            setResource((prevItems) =>
-                prevItems.map((obj) =>
-                    obj[key] === resp.data[key] ? form : obj,
-                ),
-            );
+            setResource((prevItems) => {
+                return prevItems.map((obj) => {
+                    if (obj[key] === resp.data[key]) {
+                        // copy fields from obj and overwrite
+                        Object.assign(obj, form);
+                        return obj;
+                    } else {
+                        return obj;
+                    }
+                });
+            });
         } catch (err) {
-            // Alert with details given from backend
-            if (err.response?.data?.error) {
-                const info = err.response.data;
-                if (info.details) {
-                    alert(`${info.error} \n${info.details}`);
-                } else {
-                    alert(`${info.error}`);
-                }
-            } else {
-                // Other error: just alert with code
-                alert(`${err}`);
-            }
-            setUpdateSubmitError(err);
+            setError(err);
         } finally {
-            setUpdateSubmitLoading(false);
+            setIsLoading(false);
         }
     };
 
-    return { handleUpdateSubmit, updateSubmitLoading, updateSubmitError };
+    return { handleUpdateSubmit };
 }

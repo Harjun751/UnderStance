@@ -1,4 +1,5 @@
 import Layout from "../general/Layout";
+import ErrorModal from "../general/ErrorModal";
 import "./Management_Layout.css";
 import { useState, useMemo } from "react";
 import AddItem from "./AddItem";
@@ -10,11 +11,13 @@ import Loader from "../general/Loader";
 const Management_Layout = ({
     title,
     data,
+    dataKey,
     isLoading,
     schema,
     addSubmitHandler,
     updateSubmitHandler,
     deleteSubmitHandler,
+    error,
 }) => {
     // For Table Filters
     const [search, setSearch] = useState("");
@@ -100,7 +103,7 @@ const Management_Layout = ({
                     <tbody>
                         {filteredData.map((row) => (
                             <tr
-                                key={row}
+                                key={row[dataKey]}
                                 className={`table-row ${selectedRow === row ? "table-row-selected" : ""}`}
                                 onClick={() => setSelectedRow(row)}
                             >
@@ -146,6 +149,7 @@ const Management_Layout = ({
     };
     return (
         <Layout title={title}>
+            <ErrorModal error={error} />
             {/* Dynamic Table Design */}
             <div className="management">
                 <div className="management-header">

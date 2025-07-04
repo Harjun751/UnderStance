@@ -1,21 +1,68 @@
 :root {
-    --primary: #e0dfdf;
-    --on-primary: #0000;
-    --on-primary-alt: #333333;
-    --primary-container: #ffff;
+    --texture-background: transparent;
+    --surface: rgba(0, 0, 0, 0);
+    --surface-container: #ffffff;
+    /* TODO: Change this for lesser contrast */
+    --on-surface-container: black;
+    --surface-container-outline: #ccc;
+    --gradient: linear-gradient(
+        90deg,
+        rgba(34, 218, 255, 1) 0%,
+        rgba(114, 111, 169, 1) 100%
+    );
+    --on-gradient: #ffffff;
+    --navbar-surface: linear-gradient(
+        90deg,
+        rgba(29, 45, 69, 1) 0%,
+        rgba(34, 50, 73, 1) 100%
+    );
+    --on-navbar-surface: #ffffff;
+    --navbar-surface-container: #f3f4f6;
+    --navbar-surface-container-hover: #e5e7eb;
+    --navbar-separator: #e5e7eb;
+    --on-navbar-surface-container: #374151;
 
-    /*--secondary: */
-    --on-secondary: #ffff;
+    --table-even: #e9e9e9;
+    --table-odd: #f5f5f5;
+    --table-hover: #bfe0ff;
+    --table-selected: #7fc1ff;
 
+    --green: green;
     --red: #ac0000;
 
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
     box-sizing: border-box;
+    background: var(--texture-background);
+    color: var(--on-surface-container);
 }
 
-@media (prefers-color-scheme: dark) {
-    /* dark theme? */
+[data-theme="dark"] {
+    --texture-background: black;
+    --surface: rgba(0, 0, 0, 1);
+    --surface-container: #1f1f22;
+    --surface-container-outline: #46484f;
+    --on-surface-container: #ededed;
+    --gradient: linear-gradient(90deg, #0d324d 0%, #7f5a83 100%);
+    /*--gradient: linear-gradient(90deg, #003848 0%, #2C294A 100%);*/
+    /*--gradient: #7277A9;*/
+    --on-gradient: #d9d9d9;
+    --green: #26a269;
+    --red: #ac0000;
+    --navbar-surface: #121212;
+    --on-navbar-surface: #dfdfdf;
+    --navbar-surface-container: #1f1f22;
+    --navbar-surface-container-hover: #797b86;
+    --navbar-separator: #46474e;
+    --on-navbar-surface-container: #ededed;
+    --table-even: #27282c;
+    --table-odd: #393a3f;
+    --table-hover: #1f1f22;
+    --table-selected: #121212;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .container {
@@ -33,6 +80,7 @@
 }
 
 .page-container-body {
+    background: var(--texture-background);
     flex-grow: 1;
     padding: 1rem;
     transition: margin-left 0.3s ease;
@@ -40,7 +88,7 @@
     height: 100%;
     flex-direction: column;
     overflow-x: auto;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .page-container-body::before {
@@ -51,6 +99,7 @@
     background-repeat: repeat;
     background-blend-mode: lighten;
     filter: contrast(40%);
+    background: var(--surface);
     mix-blend-mode: multiply;
     inset: 0;
     background-image: url("./assets/45-degree-fabric-light.png");

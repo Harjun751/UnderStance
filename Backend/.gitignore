@@ -1,5 +1,6 @@
 # config secrets for docker
 .config/.prod
+.config/.dev/auth*
 .env.test
 # Logs
 logs
