@@ -10,7 +10,7 @@ export default ({ error }) => {
 
     useEffect(() => {
         if (error !== null) {
-            if (error.response?.data?.error) {
+            if (error?.response?.data?.error) {
                 // Alert with details given from backend
                 const info = error.response.data;
                 if (info.details) {
@@ -19,12 +19,12 @@ export default ({ error }) => {
                 } else {
                     setHeader(info.error);
                 }
-            } else {
+            } else if (error?.message) {
                 // Other error just fill message
                 setHeader(error.message);
             }
 
-            if (error.status >= 500) {
+            if (error?.status >= 500) {
                 setTitle("There's an issue on our side...");
             } else {
                 setTitle("There was an issue with your request");

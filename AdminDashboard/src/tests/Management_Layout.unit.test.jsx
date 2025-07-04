@@ -36,6 +36,7 @@ describe("Management_Layout Component", () => {
             <Management_Layout
                 title="Test"
                 data={sampleData}
+                dataKey="id"
                 schema={mockSchema}
                 isLoading={false}
                 addSubmitHandler={vi.fn()}
@@ -57,6 +58,7 @@ describe("Management_Layout Component", () => {
             <Management_Layout
                 title="Test"
                 data={sampleData}
+                dataKey="id"
                 schema={mockSchema}
                 isLoading={false}
                 addSubmitHandler={vi.fn()}
@@ -79,6 +81,7 @@ describe("Management_Layout Component", () => {
             <Management_Layout
                 title="Test"
                 data={sampleData}
+                dataKey="id"
                 schema={mockSchema}
                 isLoading={false}
                 addSubmitHandler={vi.fn()}
@@ -104,6 +107,7 @@ describe("Management_Layout Component", () => {
             <Management_Layout
                 title="Test"
                 data={sampleData}
+                dataKey="id"
                 schema={mockSchema}
                 isLoading={false}
                 addSubmitHandler={vi.fn()}
@@ -125,6 +129,7 @@ describe("Management_Layout Component", () => {
             <Management_Layout
                 title="Test"
                 data={sampleData}
+                dataKey="id"
                 schema={mockSchema}
                 isLoading={false}
                 addSubmitHandler={vi.fn()}
