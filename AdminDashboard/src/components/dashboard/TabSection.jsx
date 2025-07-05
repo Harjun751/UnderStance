@@ -140,6 +140,8 @@ const TabSection = ({ questions, categories, parties, stances }) => {
         }));
     };
 
+    //Maybe consider implementing tab management.
+
     return (
         <div className="tab-container">
             <div className="tab-headers">

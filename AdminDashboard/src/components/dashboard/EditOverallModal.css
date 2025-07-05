@@ -12,7 +12,7 @@
 }
 
 .display-modal-content {
-    background: white;
+    background: var(--surface-container);
     border-radius: 8px;
     width: 800px;
     max-width: 90%;
@@ -86,13 +86,10 @@
 }
 
 .toggle-button-group button.active {
-    background: linear-gradient(
-        90deg,
-        rgba(34, 218, 255, 1) 0%,
-        rgba(114, 111, 169, 1) 100%
-    );
+    background: var(--gradient);
+    color: var(--on-gradient);
     color: white;
-    border-color: #25b6eb;
+    border-color: var(--gradient);
 }
 
 .edit-list {
@@ -110,7 +107,7 @@
     padding: 0.75rem 1rem;
     border: 1px solid #e5e7eb;
     border-radius: 6px;
-    background-color: #f9fafb;
+    background-color: var(--edit-card-item);
 }
 
 .edit-item strong {
@@ -250,6 +247,7 @@
     background-color: #fee2e2;
     color: #b91c1c;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .add-filter-button {

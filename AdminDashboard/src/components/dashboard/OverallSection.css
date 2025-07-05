@@ -3,7 +3,7 @@
     background-color: transparent; /* blue-500 */
     border: none;
     border-radius: 6px;
-    color: rgb(188, 188, 188);
+    color: var(--edit-display-button);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
@@ -11,5 +11,5 @@
 }
 
 .edit-button:hover {
-    color: rgb(0, 25, 139);
+    color: var(--edit-display-button-hover);
 }

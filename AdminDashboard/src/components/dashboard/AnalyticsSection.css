@@ -1,7 +1,7 @@
 
 .analytics-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-columns: 2fr 1.5fr 6fr;
 }
 
 .analytics-grid .icon-container {
@@ -16,6 +16,7 @@
 .analytics-content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: start;
     gap: 0.5rem;
 }
 
@@ -30,7 +31,7 @@
 }
 
 .stats-title {
-    color: #6b7280;
+    color: var(--stats-title);
     font-size: 16px;
     font-weight: 500;
     border-bottom: solid 1px #6b7280;
@@ -39,7 +40,7 @@
 .stats-value {
     font-size: 25px;
     font-weight: 500;
-    color: #1f2937;
+    color: var(--dash-card-number);
 }
 
 .analytics-settings {
@@ -50,7 +51,7 @@
 
 .analytics-settings label {
     font-weight: bold;
-    color: #333;
+    color: var(--stats-title);
     font-size: 20px;
     display: flex;
     gap: 0.3rem;
@@ -61,10 +62,11 @@
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: #fff;
-    color: #333;
+    background: var(--dash-card);
+    color: var(--dash-card-title);
     transition: border 0.2s ease;
     width: 200px;
+    margin-top: 0.5rem;
 }
 
 .analytics-settings input[type="date"]:focus {

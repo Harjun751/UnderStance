@@ -27,6 +27,29 @@
     --table-hover: #bfe0ff;
     --table-selected: #7fc1ff;
 
+    /* For Dashboard */
+    --dash-card: #f1f1f1c8;
+    --dash-card-shadow: rgba(0, 0, 0, 0.05);
+    --dash-card-title: #6b7280;
+    --dash-card-number: #1f2937;
+    --edit-display-button: rgb(188, 188, 188);
+    --edit-display-button-hover: rgb(0, 25, 139);
+
+    /* Inside Edit Display */
+    --edit-card-item: #e5e7eb;
+    --edit-card-input-text: ;
+    --edit-card-input-border: ;
+
+    /* Tab Section */
+    --tabs-header: rgb(182, 182, 182);
+    --tabs-header-li: #ffffff;
+    --tabs-header-li-hover: rgba(255, 255, 255, 0.9);
+
+    /* Analytics */
+    --stats-title: #6b7280;
+
+
+    /* General */
     --green: green;
     --red: #ac0000;
 
@@ -59,6 +82,23 @@
     --table-odd: #393a3f;
     --table-hover: #1f1f22;
     --table-selected: #121212;
+    --dash-card: linear-gradient(
+        225deg,
+        rgba(55, 61, 74, 1) 0%,
+        rgba(32, 52, 80, 1) 100%
+    );
+    --dash-card-shadow: rgba(255, 255, 255, 0.05);
+    --dash-card-title: #c8d0dd;
+    --dash-card-number: #8ab3ee;
+    --edit-display-button: rgb(104, 104, 104);
+    --edit-display-button-hover: #8ab3ee;
+    --edit-card-item: #d2d2d2;
+    --edit-card-input-text: ;
+    --edit-card-input-border: ;
+    --tabs-header: rgb(106, 106, 106);
+    --tabs-header-li: #b1b1b1;
+    --tabs-header-li-hover: rgba(33, 33, 33, 0.9);
+    --stats-title: #ccdbf9;
 }
 
 * {

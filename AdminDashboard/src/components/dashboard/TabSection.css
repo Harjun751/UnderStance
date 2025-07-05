@@ -1,12 +1,12 @@
 .tab-container {
     border-radius: 10px;
-    background: #ffffff;
+    background: var(--surface-container);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     margin-bottom: 1rem;
 }
 
 .tab-headers {
-    background: rgb(182, 182, 182);
+    background: var(--tabs-header);
     margin-top: 1rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -23,7 +23,7 @@
 .tab-header li {
     flex: 1;
     padding: 1rem;
-    color: white;
+    color: var(--tabs-header-li);
     font-weight: bold;
     cursor: pointer;
     border-bottom: 3px solid transparent;
@@ -31,12 +31,12 @@
 }
 
 .tab-header li:hover {
-    border-bottom: 3px solid rgba(255, 255, 255, 0.9);
+    border-bottom: 3px solid var(--tabs-header-li-hover);
 }
 
 .tab-header li.active {
-    background: #ffffff;
-    color: black;
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
