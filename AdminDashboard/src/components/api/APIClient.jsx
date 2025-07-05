@@ -18,8 +18,10 @@ export const createAPIClient = (getAccessTokenSilently) => {
 };
 
 class APIClientWrapper {
-    constructor(axiosClient) {
+    constructor(axiosClient, userClient, userID) {
         this.client = axiosClient;
+        this.userClient = userClient;
+        this.userID = userID;
     }
 
     getQuestions() {
@@ -124,6 +126,44 @@ class APIClientWrapper {
 
     deleteStance(id) {
         return this.client.delete(`/stances/${id}`);
+    }
+
+    getUsers() {
+        return this.client.get("/users").then((resp) => resp.data);
+    }
+
+    getRoles() {
+        return this.client.get("/roles").then((resp) => resp.data);
+    }
+
+    updateUser(id, name, picture, role) {
+        return this.client.patch("/users", {
+            ID: id,
+            Role: role,
+            Name: name,
+            Picture: picture,
+        });
+    }
+
+    updateUserNoRole(id, name, picture) {
+        return this.client.patch("/users", {
+            ID: id,
+            Name: name,
+            Picture: picture,
+        });
+    }
+
+    addUser(name, picture, email, role) {
+        return this.client.post("/users", {
+            Role: role,
+            Name: name,
+            Picture: picture,
+            Email: email,
+        });
+    }
+
+    deleteUser(id) {
+        return this.client.delete(`/users/${id}`);
     }
 
     getAnalytics() {

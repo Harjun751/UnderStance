@@ -30,6 +30,7 @@ describe("mocked auth authorized endpoint", () => {
                 req.auth = {
                     sub: "user-123",
                     scope: "read:messages",
+                    permissions: ["read:messages"],
                 };
                 next();
             }),
@@ -44,6 +45,43 @@ describe("mocked auth authorized endpoint", () => {
             .get("/authorized")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
+            });
+    });
+});
+
+describe("mocked", () => {
+    let app;
+    let request;
+
+    beforeAll(() => {
+        jest.resetModules();
+
+        jest.mock("express-oauth2-jwt-bearer", () => ({
+            auth: jest.fn(() => (req, _res, next) => {
+                req.auth = {
+                    sub: "user-123",
+                    scope: "read:messages",
+                    permissions: ["read:messages"],
+                };
+                next();
+            }),
+            claimCheck: jest.fn((fn) => {
+                return (req, res, next) => {
+                    fn(req.auth);
+                };
+            }),
+        }));
+
+        app = require("../../app");
+        request = require("supertest");
+    });
+
+    test("should return 403 if insufficient perms", () => {
+        return request(app)
+            .post("/parties")
+            .send({ data: "none" })
+            .then((response) => {
+                expect(response.statusCode).toBe(403);
             });
     });
 });

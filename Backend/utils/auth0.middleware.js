@@ -10,6 +10,9 @@ const permissions = {
     read: "read:resources",
     write: "write:resources",
     delete: "delete:resources",
+    readUsers: "read:users",
+    writeUsers: "write:users",
+    deleteUsers: "delete:users",
 };
 
 const checkValidAccessToken = auth({
@@ -36,7 +39,11 @@ const checkRequiredPermissions = (requiredPermissions) => {
             );
 
             if (!hasPermissions) {
-                throw new InsufficientScopeError();
+                const perms = requiredPermissions.join(", ");
+                return res.status(403).send({
+                    error: "You don't have permissions to access this resource.",
+                    details: `You need the scope(s): ${perms}`,
+                });
             }
 
             return hasPermissions;

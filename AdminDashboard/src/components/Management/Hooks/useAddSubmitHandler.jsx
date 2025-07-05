@@ -1,12 +1,12 @@
-import { useState } from "react";
-
-export function useAddSubmitHandler({ addFunction, setResource, key }) {
-    const [addSubmitLoading, setAddSubmitLoading] = useState(false);
-    const [addSubmitError, setAddSubmitError] = useState(null);
-
+export function useAddSubmitHandler({
+    addFunction,
+    setResource,
+    key,
+    setError,
+    setIsLoading,
+}) {
     const handleAddSubmit = async (form) => {
-        setAddSubmitLoading(true);
-
+        setIsLoading(true);
         try {
             const resp = await addFunction(form);
             // create new object based on form and returned value
@@ -15,27 +15,14 @@ export function useAddSubmitHandler({ addFunction, setResource, key }) {
                 newObject[field] = value;
             });
             newObject[key] = resp.data[key];
-            console.log(newObject);
             // set new object
             setResource((prevItems) => [...prevItems, newObject]);
         } catch (err) {
-            // Alert with details given from backend
-            if (err.response?.data?.error) {
-                const info = err.response.data;
-                if (info.details) {
-                    alert(`${info.error} \n${info.details}`);
-                } else {
-                    alert(`${info.error}`);
-                }
-            } else {
-                // Other error: just alert with code
-                alert(`${err}`);
-            }
-            setAddSubmitError(err);
+            setError(err);
         } finally {
-            setAddSubmitLoading(false);
+            setIsLoading(false);
         }
     };
 
-    return { handleAddSubmit, addSubmitLoading, addSubmitError };
+    return { handleAddSubmit };
 }

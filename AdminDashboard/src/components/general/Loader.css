@@ -31,7 +31,7 @@
     height: 40px;
     border-radius: 50%;
     border: 3px solid;
-    border-color: var(--on-primary-alt) transparent;
+    border-color: var(--on-surface-container) transparent;
 }
 
 @keyframes rotation {

@@ -8,6 +8,7 @@ import { useDeleteSubmitHandler } from "../Hooks/useDeleteSubmitHandler";
 const Party = () => {
     const [parties, setParties] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [latestError, setLatestError] = useState(null);
 
     const apiClient = useAPIClient();
 
@@ -16,20 +17,21 @@ const Party = () => {
      * Passes anon functions to general component to call
      */
     // Update data
-    const { handleUpdateSubmit, _updateSubmitLoading, _updateSubmitError } =
-        useUpdateSubmitHandler({
-            updateFunction: (form) =>
-                apiClient.updateParty(
-                    form.PartyID,
-                    form.Name,
-                    form.ShortName,
-                    form.Icon,
-                    form.PartyColor,
-                    form.Active,
-                ),
-            setResource: setParties,
-            key: "PartyID",
-        });
+    const { handleUpdateSubmit } = useUpdateSubmitHandler({
+        updateFunction: (form) =>
+            apiClient.updateParty(
+                form.PartyID,
+                form.Name,
+                form.ShortName,
+                form.Icon,
+                form.PartyColor,
+                form.Active,
+            ),
+        setResource: setParties,
+        key: "PartyID",
+        setError: setLatestError,
+        setIsLoading: setIsLoading,
+    });
     // Add data
     const { handleAddSubmit, _addSubmitLoading, _addSubmitError } =
         useAddSubmitHandler({
@@ -43,6 +45,8 @@ const Party = () => {
                 ),
             setResource: setParties,
             key: "PartyID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
     // Delete data
     const { handleDeleteSubmit, _deleteSubmitLoading, _deleteSubmitError } =
@@ -50,18 +54,26 @@ const Party = () => {
             deleteFunction: (form) => apiClient.deleteParty(form.PartyID),
             setResource: setParties,
             key: "PartyID",
+            setError: setLatestError,
+            setIsLoading: setIsLoading,
         });
 
     useEffect(() => {
         // ignore var to prevent race condition
         let ignore = false;
 
-        apiClient.getParties().then((result) => {
-            if (!ignore) {
-                setParties(result);
+        apiClient
+            .getParties()
+            .then((result) => {
+                if (!ignore) {
+                    setParties(result);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
                 setIsLoading(false);
-            }
-        });
+                setLatestError(err);
+            });
 
         return () => {
             ignore = true;
@@ -81,11 +93,13 @@ const Party = () => {
         <Management_Layout
             title={<> Party </>}
             data={parties}
+            dataKey="PartyID"
             schema={schema}
             isLoading={isLoading}
             updateSubmitHandler={(form) => handleUpdateSubmit(form)}
             addSubmitHandler={(form) => handleAddSubmit(form)}
             deleteSubmitHandler={(form) => handleDeleteSubmit(form)}
+            error={latestError}
         />
     );
 };
