@@ -4,6 +4,7 @@ const { securedQuestionRoutes } = require("./questions.route.js");
 const { securedStanceRoutes } = require("./stances.route.js");
 const { securedCategoryRoutes } = require("./categories.route.js");
 const { securedPartyRoutes } = require("./parties.route.js");
+const analyticsRoutes = require("./parties.route.js");
 const config = require("../utils/app-config");
 const { requireValidAccessToken } = require("../utils/auth0.middleware");
 const securedRoutes = express.Router();
@@ -24,6 +25,7 @@ securedRoutes.use(securedQuestionRoutes);
 securedRoutes.use(securedStanceRoutes);
 securedRoutes.use(securedPartyRoutes);
 securedRoutes.use(securedCategoryRoutes);
+securedRoutes.use(analyticsRoutes);
 
 securedRoutes.get("/authorized", async (req, res) => {
     const auth = req.auth;

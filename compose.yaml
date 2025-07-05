@@ -26,6 +26,8 @@ services:
       ADMIN_ORIGIN: "http://localhost:5173"
       SECRET_USER_PATH: "/run/secrets/db_user"
       SECRET_PASSWORD_PATH: "/run/secrets/db_password"
+      SECRET_GA4_ACC_PATH: "/run/secrets/ga4_service_account"
+      SECRET_GA4_PROP_ID_PATH: "/run/secrets/ga4_property_id"
     ports:
       - 3000:3000
     secrets:

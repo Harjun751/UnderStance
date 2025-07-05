@@ -1,15 +1,17 @@
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
+const secrets = require("./secrets");
 
 let analyticsDataClient;
 
 function initAnalyticsClient() {
     if (!analyticsDataClient) {
         try {
-            if (!process.env.GA4_SERVICE_ACCOUNT_JSON) {
+            let serviceAccountRaw = secrets.getGa4ServiceAcc();
+            if (serviceAccountRaw === null) {
                 throw new Error("GA4_SERVICE_ACCOUNT_JSON is not defined");
             }
 
-            const serviceAccount = JSON.parse(process.env.GA4_SERVICE_ACCOUNT_JSON);
+            const serviceAccount = JSON.parse(serviceAccountRaw);
             analyticsDataClient = new BetaAnalyticsDataClient({
                 credentials: serviceAccount,
             });
@@ -20,12 +22,10 @@ function initAnalyticsClient() {
     }
 }
 
-//const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID;
-
 async function getAnalyticsReport() {
     initAnalyticsClient();
 
-    const propertyId = process.env.GA4_PROPERTY_ID;
+    const propertyId = secrets.getGa4PropID();
     if (!propertyId) {
         throw new Error("GA4_PROPERTY_ID is undefined");
     }
