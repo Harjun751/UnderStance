@@ -136,11 +136,11 @@
 }
 
 .table-row:hover {
-    background-color: var(--table-hover);
+    background: var(--table-hover);
 }
 
 .table-row-selected {
-    background-color: var(--table-selected) !important;
+    background: var(--table-selected) !important;
 }
 
 .table-cell {
@@ -168,19 +168,31 @@
     right: 0;
     width: 450px;
     height: calc(100% - 66px);
-    background: linear-gradient(
+    /* background: linear-gradient(
         90deg,
         rgba(191, 191, 191, 0.95) 0%,
         rgba(86, 172, 255, 1) 100%
-    );
+    ); */
+    /* background: var(--navbar-surface); */
+    /* background: rgb(193, 193, 193); */
+    /* background: linear-gradient(
+        90deg, 
+        rgba(215, 223, 255, 0.95) 0%,
+        rgb(209, 243, 255) 100%
+    ); */
+    background: var(--update-item-panel);
     transform: translateX(100%); /* start off-screen on the right */
     transition:
         transform 0.2s ease-in-out,
         width 0.2s ease-in-out;
     overflow-y: auto;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); */
     border-top-left-radius: 10px;
     z-index: 1000;
+    /* box-shadow: -9px 5px 5px rgb(146, 146, 146,0.9); */
+    /* box-shadow: -9px 5px 5px rgba(190, 196, 225, 0.95); */
+    box-shadow: -9px 5px 5px var(--update-item-panel-shadow);
+    /* color: white; */
 }
 
 /* When panel is active (shown) */
@@ -202,7 +214,9 @@
     border: none;
     cursor: pointer;
     z-index: 1100;
-    color: #333;
+    /* color: #333; */
+    /* color: white; */
+    color: var(--update-item-panel-button);
 }
 
 .panel-wrapper .expand-btn {
@@ -214,12 +228,14 @@
     border: none;
     font-size: 1.25rem;
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.4);
+    color: var(--update-item-panel-button);
+    /* color: rgba(255, 255, 255, 1); */
     z-index: 1100;
 }
 
 .panel-wrapper.expanded .expand-btn {
-    color: rgba(0, 0, 0, 0.8);
+    color: var(--update-item-panel-button);
+    /* color: rgba(255, 255, 255, 1); */
 }
 
 @media (max-width: 1080px) {

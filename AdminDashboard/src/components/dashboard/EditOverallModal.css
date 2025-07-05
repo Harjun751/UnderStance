@@ -18,6 +18,9 @@
     max-width: 90%;
     max-height: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .header-row {
@@ -90,6 +93,13 @@
     color: var(--on-gradient);
     color: white;
     border-color: var(--gradient);
+}
+
+.content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    min-height: 0;
 }
 
 .edit-list {
@@ -180,6 +190,7 @@
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 1rem;
+    overflow-y: auto;
 }
 
 .display-modal-form h3 {
@@ -241,6 +252,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 0.5fr;
     gap: 0.5rem;
+}
+
+.filter-row select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .filter-row .remove-button {

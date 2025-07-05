@@ -53,11 +53,18 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
     //Move modal to follow mouse moves
     const handleMouseMove = (e) => {
         if (isDragging) {
-            setPosition({
-                x: e.clientX - offset.x,
-                y: e.clientY - offset.y,
-            });
-        }
+            const modalWidth = 600;
+            const modalHeight = 600;
+
+            let newX = e.clientX - offset.x;
+            let newY = e.clientY - offset.y;
+
+            // Clamp values to stay within window bounds
+            newX = Math.max(0, Math.min(window.innerWidth - modalWidth, newX));
+            newY = Math.max(0, Math.min(window.innerHeight - modalHeight, newY));
+
+            setPosition({ x: newX, y: newY });
+            }
     };
 
     //Stop dragging when mouse is released
@@ -69,8 +76,8 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
     useEffect(() => {
         const modalWidth = 600;
         const modalHeight = 600;
-        const centerX = window.innerWidth / 2 - modalWidth / 2;
-        const centerY = window.innerHeight / 2 - modalHeight / 2;
+        const centerX = window.innerWidth / 2 - modalWidth/2;
+        const centerY = window.innerHeight / 2 - modalHeight/1.5;
 
         setPosition({ x: centerX, y: centerY });
     }, []);
@@ -184,185 +191,187 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                         Edit Card
                     </button>
                 </div>
-
-                {mode === "edit" && editIndex === null && (
-                    <div className="edit-list">
-                        {cards.length === 0 && <p>No cards to edit.</p>}
-                        {cards.map((card, idx) => (
-                            <div key={card} className="edit-item">
-                                <strong>{card.title}</strong>
-                                <div className="edit-actions">
-                                    <button type="button" className="edit-button" onClick={() => handleEditClick(card, idx)}>Edit</button>
-                                    <button type="button" className="delete-button" onClick={() => onDelete(idx)}>Delete</button>
-                                    <button 
-                                        type="button" 
-                                        className="up-button"
-                                        disabled={idx === 0} 
-                                        onClick={() => {
-                                            const updated = [...cards];
-                                            [updated[idx - 1], updated[idx]] = [updated[idx], updated[idx - 1]];
-                                            onReorder(updated);
-                                        }}
-                                    >
-                                        ↑
-                                    </button>
-                                    <button 
-                                        type="button"
-                                        className="down-button"
-                                        disabled={idx === cards.length - 1} 
-                                        onClick={() => {
-                                            const updated = [...cards];
-                                            [updated[idx], updated[idx + 1]] = [updated[idx + 1], updated[idx]];
-                                            onReorder(updated);
-                                        }}
-                                    >
-                                        ↓
-                                    </button>
+                <div className="content-wrapper">
+                    {mode === "edit" && editIndex === null && (
+                        <div className="edit-list">
+                            {cards.length === 0 && <p>No cards to edit.</p>}
+                            {cards.map((card, idx) => (
+                                <div key={card} className="edit-item">
+                                    <strong>{card.title}</strong>
+                                    <div className="edit-actions">
+                                        <button type="button" className="edit-button" onClick={() => handleEditClick(card, idx)}>Edit</button>
+                                        <button type="button" className="delete-button" onClick={() => onDelete(idx)}>Delete</button>
+                                        <button 
+                                            type="button" 
+                                            className="up-button"
+                                            disabled={idx === 0} 
+                                            onClick={() => {
+                                                const updated = [...cards];
+                                                [updated[idx - 1], updated[idx]] = [updated[idx], updated[idx - 1]];
+                                                onReorder(updated);
+                                            }}
+                                        >
+                                            ↑
+                                        </button>
+                                        <button 
+                                            type="button"
+                                            className="down-button"
+                                            disabled={idx === cards.length - 1} 
+                                            onClick={() => {
+                                                const updated = [...cards];
+                                                [updated[idx], updated[idx + 1]] = [updated[idx + 1], updated[idx]];
+                                                onReorder(updated);
+                                            }}
+                                        >
+                                            ↓
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {/* For Adding */}
-                {(mode === "add" || (mode === "edit" && editIndex !== null)) && (
-                    <form onSubmit={handleSubmit} className="display-modal-form">
-                        <h3>
-                            Currently {" "}
-                            {mode === "add"
-                                ? "Adding a new Card"
-                                : `Editing "${title}" Card`}
-                        </h3>
-                        {/* Data Type */}
-                        <label>Table selection:</label>
-                        <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
-                            <option value="questions">Questions</option>
-                            <option value="categories">Categories</option>
-                            <option value="parties">Parties</option>
-                            <option value="stances">Stances</option>
-                        </select>
-
-                        {/* Field */}
-                        <label>Target Field:</label>
-                        <select value={field} onChange={(e) => setField(e.target.value)} disabled={fields.length === 0}>
-                            {fields.map((f) => (
-                                <option value={f} key={f}>
-                                    {f}
-                                </option>
                             ))}
-                        </select>
-
-                        {/* Action */}
-                        <label>Action:</label>
-                        <select value={action} onChange={(e) => setAction(e.target.value)}>
-                            <option value="count">Count All</option>
-                            <option value="countUnique">Count Unique</option>
-                        </select>
-                        
-                        {/* Filter for Valuue */}
-                        <label>Filter for:</label>
-                        <div className="filter-titles">
-                            <h4>Filter Field</h4>
-                            <h4>Filter Value</h4>
                         </div>
-                        {/* <select
-                            value={filterValue}
-                            onChange={(e) => setFilterValue(e.target.value)}
-                            disabled={filterOptions.length === 0}
-                        >
-                            <option value="">-- No Filter --</option>
-                            {filterOptions.map((value) => (
-                                <option key={value} value={value}>
-                                    {String(value)}
-                                </option>
-                            ))}
-                        </select> */}
-                        {filters.map((f, index) => (
-                            <div key={index} className="filter-row">
-                                 
-                                <select
-                                    value={f.filterField}
-                                    onChange={(e) => {
-                                        const updated = [...filters];
-                                        updated[index].filterField = e.target.value;
-                                        updated[index].filterValue = "";
-                                        setFilters(updated);
-                                    }}
-                                >
-                                    <option value="">-- Select Field --</option>
-                                    {fields.map((fieldOpt) => (
-                                        <option key={fieldOpt} value={fieldOpt}>
-                                            {fieldOpt}
-                                        </option>
-                                    ))}
-                                </select>
+                    )}
 
-                                <select
-                                    value={f.filterValue}
-                                    onChange={(e) => {
-                                        const updated = [...filters];
-                                        updated[index].filterValue = e.target.value;
-                                        setFilters(updated);
-                                    }}
-                                    disabled={!f.filterField}
-                                >
-                                    <option value="">-- Select Value --</option>
-                                    {getUniqueValues(f.filterField).map((val) => (
-                                        <option key={val} value={val}>
-                                            {String(val)}
-                                        </option>
-                                    ))}
-                                </select>
+                    {/* For Adding */}
+                    {(mode === "add" || (mode === "edit" && editIndex !== null)) && (
+                        <form onSubmit={handleSubmit} className="display-modal-form">
+                            <h3>
+                                Currently {" "}
+                                {mode === "add"
+                                    ? "Adding a new Card"
+                                    : `Editing "${title}" Card`}
+                            </h3>
+                            {/* Data Type */}
+                            <label>Table selection:</label>
+                            <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
+                                <option value="questions">Questions</option>
+                                <option value="categories">Categories</option>
+                                <option value="parties">Parties</option>
+                                <option value="stances">Stances</option>
+                            </select>
 
-                                <button
-                                    type="button"
-                                    className="remove-button"
-                                    onClick={() => {
-                                        const updated = filters.filter((_, i) => i !== index);
-                                        setFilters(updated);
-                                    }}
-                                >
-                                    Remove
-                                </button>
-                                
+                            {/* Field */}
+                            <label>Target Field:</label>
+                            <select value={field} onChange={(e) => setField(e.target.value)} disabled={fields.length === 0}>
+                                {fields.map((f) => (
+                                    <option value={f} key={f}>
+                                        {f}
+                                    </option>
+                                ))}
+                            </select>
+
+                            {/* Action */}
+                            <label>Action:</label>
+                            <select value={action} onChange={(e) => setAction(e.target.value)}>
+                                <option value="count">Count All</option>
+                                <option value="countUnique">Count Unique</option>
+                            </select>
+                            
+                            {/* Filter for Valuue */}
+                            <label>Filter for:</label>
+                            <div className="filter-titles">
+                                <h4>Filter Field</h4>
+                                <h4>Filter Value</h4>
                             </div>
-                        ))}
-                        <button
-                            type="button"
-                            className="add-filter-button"
-                            onClick={() => setFilters([...filters, { filterField: "", filterValue: "" }])}
-                        >
-                            + Add Filter
-                        </button>
-                        
-                        {/* Color */}
-                        <label>Card Color:</label>
-                        <select value={color} onChange={(e) => setColor(e.target.value)}>
-                            <option value="blue">Blue</option>
-                            <option value="green">Green</option>
-                            <option value="yellow">Yellow</option>
-                            <option value="red">Red</option>
-                        </select>
+                            {/* <select
+                                value={filterValue}
+                                onChange={(e) => setFilterValue(e.target.value)}
+                                disabled={filterOptions.length === 0}
+                            >
+                                <option value="">-- No Filter --</option>
+                                {filterOptions.map((value) => (
+                                    <option key={value} value={value}>
+                                        {String(value)}
+                                    </option>
+                                ))}
+                            </select> */}
+                            {filters.map((f, index) => (
+                                <div key={index} className="filter-row">
+                                    
+                                    <select
+                                        value={f.filterField}
+                                        onChange={(e) => {
+                                            const updated = [...filters];
+                                            updated[index].filterField = e.target.value;
+                                            updated[index].filterValue = "";
+                                            setFilters(updated);
+                                        }}
+                                    >
+                                        <option value="">-- Select Field --</option>
+                                        {fields.map((fieldOpt) => (
+                                            <option key={fieldOpt} value={fieldOpt}>
+                                                {fieldOpt}
+                                            </option>
+                                        ))}
+                                    </select>
 
-                        {/* Title */}
-                        <label>Card Title:</label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Enter card title"
-                            required
-                        />
+                                    <select
+                                        value={f.filterValue}
+                                        onChange={(e) => {
+                                            const updated = [...filters];
+                                            updated[index].filterValue = e.target.value;
+                                            setFilters(updated);
+                                        }}
+                                        disabled={!f.filterField}
+                                    >
+                                        <option value="">-- Select Value --</option>
+                                        {getUniqueValues(f.filterField).map((val) => (
+                                            <option key={val} value={val}>
+                                                {String(val)}
+                                            </option>
+                                        ))}
+                                    </select>
 
-                        {/* Buttons */}
-                        <div className="display-modal-buttons">
-                            <button type="submit">Save</button>
-                            <button type="button" onClick={onClose} className="cancel-btn">
-                                Cancel
+                                    <button
+                                        type="button"
+                                        className="remove-button"
+                                        onClick={() => {
+                                            const updated = filters.filter((_, i) => i !== index);
+                                            setFilters(updated);
+                                        }}
+                                    >
+                                        Remove
+                                    </button>
+                                    
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                className="add-filter-button"
+                                onClick={() => setFilters([...filters, { filterField: "", filterValue: "" }])}
+                            >
+                                + Add Filter
                             </button>
-                        </div>
-                    </form>
-                )}
+                            
+                            {/* Color */}
+                            <label>Card Color:</label>
+                            <select value={color} onChange={(e) => setColor(e.target.value)}>
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="red">Red</option>
+                            </select>
+
+                            {/* Title */}
+                            <label>Card Title:</label>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Enter card title"
+                                required
+                            />
+
+                            {/* Buttons */}
+                            <div className="display-modal-buttons">
+                                <button type="submit">Save</button>
+                                <button type="button" onClick={onClose} className="cancel-btn">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+
             </div>
         </div>
     );

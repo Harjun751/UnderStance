@@ -12,7 +12,8 @@
 
 .side-panel-content h4 {
     margin-bottom: 1rem;
-    color: #3b3b3b;
+    /* color: #3b3b3b; */
+    color: var(--update-item-panel-h4);
 }
 
 .panel-scrollable {
