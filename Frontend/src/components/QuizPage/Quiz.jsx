@@ -9,6 +9,7 @@ const Quiz = () => {
     //
     const [issues, setIssues] = useState([]); // State to store quiz questions
     const [error, setError] = useState(null); // State to store any errors during fetch
+    const [isLoading, setIsLoading] = useState(true); // State to store any errors during fetch
 
     const [currentIndex, setCurrentIndex] = useState(0); // Current index of the question the user is on
     const [answers, setAnswers] = useState({}); // Object to store user's answers: { questionIndex: answer }
@@ -24,6 +25,7 @@ const Quiz = () => {
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
+        setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/questions`)
             // fetch('https://understance-backend.onrender.com/questions') //debugging
             .then((res) => {
@@ -33,7 +35,8 @@ const Quiz = () => {
                 return res.json();
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
-            .catch((err) => setError(err.message)); // Store any fetch error
+            .catch((err) => setError(err.message)) // Store any fetch error
+            .finally(() => { setIsLoading(false); });
     }, []);
 
     useEffect(() => {
@@ -85,7 +88,7 @@ const Quiz = () => {
 
     // Render error or loading states
     if (error) return <div className="content">Error: {error}</div>;
-    if (!issues.length) {
+    if (isLoading) {
         return (
             <div className="content">
                 Loading... The servers are all free-tier so the loading might be
