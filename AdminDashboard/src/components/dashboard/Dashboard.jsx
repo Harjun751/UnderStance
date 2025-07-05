@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../general/Layout";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -17,6 +17,7 @@ const Dashboard = () => {
     const [categories, setCategories] = useState([]);
     const [parties, setParties] = useState([]);
     const [stances, setStances] = useState([]);
+    const [analytics, setAnalytics] = useState([]);
 
     const apiClient = useAPIClient();
 
@@ -51,14 +52,16 @@ const Dashboard = () => {
             apiClient.getQuestions(), 
             apiClient.getCategories(), 
             apiClient.getParties(), 
-            apiClient.getStances()
+            apiClient.getStances(),
+            apiClient.getAnalytics(),
         ]).then(
-            ([questions, categories, parties, stances]) => {
+            ([questions, categories, parties, stances, analytics]) => {
                 if (!cancelled) {
                     setQuestions(questions);
                     setCategories(categories);
-                    setParties(parties)
-                    setStances(stances)
+                    setParties(parties);
+                    setStances(stances);
+                    setAnalytics(analytics);
                     setIsLoading(false);
                 }
             },
@@ -102,37 +105,38 @@ const Dashboard = () => {
                     parties={parties}
                     stances={stances}
                 />
-                <AnalyticsSection 
-                    data={[
-                        {
-                            date: "20250704",
-                            activeUsers: "3",
-                            newUsers: "3",
-                            sessions: "4",
-                            screenPageViews: "24"
-                        },
-                        {
-                            date: "20250705",
-                            activeUsers: "5",
-                            newUsers: "1",
-                            sessions: "5",
-                            screenPageViews: "30"
-                        },
-                        {
-                            date: "20250706",
-                            activeUsers: "2",
-                            newUsers: "2",
-                            sessions: "3",
-                            screenPageViews: "5"
-                        },
-                        {
-                            date: "20250707",
-                            activeUsers: "3",
-                            newUsers: "2",
-                            sessions: "6",
-                            screenPageViews: "15"
-                        },
-                    ]}
+                <AnalyticsSection
+                    data={analytics} 
+                    // data={[
+                    //     {
+                    //         date: "20250704",
+                    //         activeUsers: "3",
+                    //         newUsers: "3",
+                    //         sessions: "4",
+                    //         screenPageViews: "24"
+                    //     },
+                    //     {
+                    //         date: "20250705",
+                    //         activeUsers: "5",
+                    //         newUsers: "1",
+                    //         sessions: "5",
+                    //         screenPageViews: "30"
+                    //     },
+                    //     {
+                    //         date: "20250706",
+                    //         activeUsers: "2",
+                    //         newUsers: "2",
+                    //         sessions: "3",
+                    //         screenPageViews: "5"
+                    //     },
+                    //     {
+                    //         date: "20250707",
+                    //         activeUsers: "3",
+                    //         newUsers: "2",
+                    //         sessions: "6",
+                    //         screenPageViews: "15"
+                    //     },
+                    // ]}
                 />
             </div>
         </Layout>

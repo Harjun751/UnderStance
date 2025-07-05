@@ -125,4 +125,8 @@ class APIClientWrapper {
     deleteStance(id) {
         return this.client.delete(`/stances/${id}`);
     }
+
+    getAnalytics() {
+        return this.client.get("/analytics").then((resp) => resp.data);
+    }
 }
