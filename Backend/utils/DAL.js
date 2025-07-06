@@ -495,7 +495,7 @@ async function getDashboard(userID) {
     }
 }
 
-async function createDashboard(userID, overall, tabs) {
+async function updateDashboard(userID, overall, tabs) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
     };
@@ -512,7 +512,7 @@ async function createDashboard(userID, overall, tabs) {
     } catch (err) {
         // psql foreign key constraint violation error code
         if (err.code === "22030") {
-            throw new Error("Invalid JSON: duplicate key");
+            throw new Error("Invalid JSON text");
         } else if (err.code === "22032") {
             throw new Error("Invalid JSON text");
         }
@@ -521,7 +521,7 @@ async function createDashboard(userID, overall, tabs) {
     }
 }
 
-async function updateDashboard(userID, overall, tabs) {
+async function createDashboard(userID, overall, tabs) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
     };
@@ -540,7 +540,7 @@ async function updateDashboard(userID, overall, tabs) {
     } catch (err) {
         // psql foreign key constraint violation error code
         if (err.code === "22030") {
-            throw new Error("Invalid JSON: duplicate key");
+            throw new Error("Invalid JSON text");
         } else if (err.code === "22032") {
             throw new Error("Invalid JSON text");
         }

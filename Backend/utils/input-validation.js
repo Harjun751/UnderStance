@@ -158,6 +158,15 @@ function validateReason(reason) {
     }
 }
 
+function validateJSON(json) {
+    try {
+        JSON.parse(json);
+        return null;
+    } catch (e) {
+        return e.message;
+    }
+}
+
 module.exports = {
     validateDescription,
     validateSummary,
@@ -171,4 +180,5 @@ module.exports = {
     validateShortName,
     validateReason,
     validateData,
+    validateJSON
 };

@@ -690,7 +690,7 @@ describe("mock create dashboard", () => {
         error.code = "22030"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
         await expect(dal.createDashboard("auth0|user", '{"Bingus":1, "Bingus": 2}', '{}')).rejects.toThrow(
-            "Invalid JSON: duplicate key",
+            "Invalid JSON text",
         );
     });
 
@@ -753,7 +753,7 @@ describe("mock update dashboard", () => {
         error.code = "22030"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
         await expect(dal.updateDashboard("auth0|user", '{"Bingus":1, "Bingus": 2}', '{}')).rejects.toThrow(
-            "Invalid JSON: duplicate key",
+            "Invalid JSON text",
         );
     });
 

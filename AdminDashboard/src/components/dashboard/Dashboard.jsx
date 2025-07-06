@@ -18,6 +18,7 @@ const Dashboard = () => {
     const [parties, setParties] = useState([]);
     const [stances, setStances] = useState([]);
     const [analytics, setAnalytics] = useState([]);
+    const [dashInfo, setDashInfo] = useState([]);
 
     const apiClient = useAPIClient();
 
@@ -40,6 +41,19 @@ const Dashboard = () => {
             );
             const authData = await authRes.json();
             setAuthInfo(authData);
+
+            const dashRes = await fetch(
+                `${import.meta.env.VITE_API_URL}/me/dashboard`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            const dashData = await dashRes.json();
+            console.log(dashData);
+            setDashInfo(JSON.stringify(dashData));
+
             setLoading(false);
         };
         fetchData();
@@ -62,7 +76,8 @@ const Dashboard = () => {
                     setParties(parties);
                     setStances(stances);
                     setAnalytics(analytics);
-                    setIsLoading(false);
+                    //setIsLoading(false);
+                    setLoading(false);
                 }
             },
         );
@@ -92,6 +107,9 @@ const Dashboard = () => {
                 </>
             }
         >
+            <div>
+                <p>Dash Data: {dashInfo}</p>
+            </div>
             <div className="dashboard">
                 <OverallSection 
                     questions={questions}
