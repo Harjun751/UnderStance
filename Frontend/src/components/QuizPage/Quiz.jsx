@@ -3,6 +3,9 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
 import { useNavigate } from "react-router-dom";
 import WeightageSlider from "../WeightageSlider/WeightageSlider";
+import Loader from "../Loader/Loader";
+import ErrorPage from "../Error/Error";
+import { FetchError } from "../Error/FetchError";
 //import { useId } from "react";
 
 const Quiz = () => {
@@ -22,6 +25,10 @@ const Quiz = () => {
     //useId
     const id = useId();
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
@@ -30,12 +37,12 @@ const Quiz = () => {
             // fetch('https://understance-backend.onrender.com/questions') //debugging
             .then((res) => {
                 if (!res.ok) {
-                    throw new Error("Network response was not ok");
+                    throw new FetchError("Error in attempt to fetch resource", res);
                 }
                 return res.json();
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
-            .catch((err) => setError(err.message)) // Store any fetch error
+            .catch((err) => setError(err)) // Store any fetch error
             .finally(() => { setIsLoading(false); });
     }, []);
 
@@ -87,12 +94,11 @@ const Quiz = () => {
     };
 
     // Render error or loading states
-    if (error) return <div className="content">Error: {error}</div>;
+    if (error) return <ErrorPage err={error} />;
     if (isLoading) {
         return (
             <div className="content">
-                Loading... The servers are all free-tier so the loading might be
-                pretty long, give it patience :)
+                <Loader message="Loading..." style={{marginTop: "50px"}} />
             </div>
         );
     }
