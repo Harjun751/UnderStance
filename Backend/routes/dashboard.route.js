@@ -24,6 +24,7 @@ securedDashboardRoutes.get(
 securedDashboardRoutes.put(
     "/me/dashboard",
     async (req, res) => {
+        // console.log("Received req.body:", req.body);
         const validators = {
             Overall: validator.validateJSON,
             Tabs: validator.validateJSON,

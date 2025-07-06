@@ -1,67 +1,87 @@
 import "./OverallSection.css";
 import "./Dashboard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditOverallModal from "./EditOverallModal";
 import CardDisplay from "./CardDisplay";
 
 
-const OverallSection = ({ questions, categories, parties, stances }) => {
+const OverallSection = ({ questions, categories, parties, stances, dashData, updateDashDataHandler }) => {
     const [showModal, setShowModal] = useState(false);
 
-    // Load user's display cards set.
-    const [cards, setCards] = useState([
+    //Default set of Cards, meant for user's without any data in their card deck.
+    const defaultCards = [
         {
             dataType: "questions",
-            field: "IssueId",
+            field: "IssueID",
             action: "count",
-            filter: null,
+            filter: [],
             color: "blue",
             title: "Total Questions",
         },
         {
             dataType: "categories",
-            field: "id",
+            field: "CategoryID",
             action: "count",
-            filter: null,
+            filter: [],
             color: "green",
             title: "Total Categories",
         },
         {
             dataType: "parties",
-            field: "id",
+            field: "PartyID",
             action: "count",
-            filter: null,
+            filter: [],
             color: "yellow",
             title: "Total Parties",
         },
         {
             dataType: "stances",
-            field: "id",
+            field: "StanceID",
             action: "count",
-            filter: null,
+            filter: [],
             color: "red",
             title: "Total Stances",
         },
-    ]);
+    ]
+
+    //Load user's default cards by default.
+    const [cards, setCards] = useState(defaultCards);
+
+    //Update cards if dashData.overall is not empty
+    useEffect(() => {
+        if (dashData?.overall?.length > 0) {
+            setCards(dashData.overall);
+        }
+    }, [dashData?.overall]);
 
     const dataMap = { questions, categories, parties, stances };
-    console.log("DataMap:", dataMap);
-    // Handles adding new card into the display cards set.
+
     const handleSave = (newCard) => {
-        setCards((prev) => [...prev, newCard]);
+        const updatedCards = [...cards, newCard];
+        setCards(updatedCards);
+        saveDashData(updatedCards);
         setShowModal(false);
     };
 
     const handleUpdate = (index, updatedCard) => {
-        setCards(prev => prev.map((c, i) => (i === index ? updatedCard : c)));
+        const updatedCards = cards.map((c, i) => (i === index ? updatedCard : c));
+        setCards(updatedCards);
+        saveDashData(updatedCards);
     };
 
     const handleDelete = (index) => {
-        setCards(prev => prev.filter((_, i) => i !== index));
+        const updatedCards = cards.filter((_, i) => i !== index);
+        setCards(updatedCards);
+        saveDashData(updatedCards);
     };
 
     const handleReorder = (newCardList) => {
         setCards(newCardList);
+        saveDashData(newCardList);
+    };
+
+    const saveDashData = (newCards) => {
+        updateDashDataHandler(newCards, dashData?.tabs ?? []);
     };
 
     return (

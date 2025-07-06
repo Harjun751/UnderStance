@@ -169,4 +169,29 @@ class APIClientWrapper {
     getAnalytics() {
         return this.client.get("/analytics").then((resp) => resp.data);
     }
+
+    updateDashData(overall, tabs) {
+        console.log("updateDashData called with:", { overall, tabs });
+        const payload = {
+            Overall: overall,
+            Tabs: tabs ?? [],
+        };
+        console.log("????????")
+        console.log("Submitting payload to /me/dashboard", payload);
+
+        return this.client.put("/me/dashboard", payload, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res) => {
+            console.log("Successfully updated dashboard");
+            console.log("Returned from backend:", res.data);
+            return res.data;
+        })
+        .catch((err) => {
+            console.error("Update dashboard failed:", err.response?.data || err.message);
+            throw err;
+        });
+    }
 }

@@ -50,9 +50,14 @@ const Dashboard = () => {
                     },
                 },
             );
-            const dashData = await dashRes.json();
-            console.log(dashData);
-            setDashInfo(JSON.stringify(dashData));
+            const initData = await dashRes.json();
+            console.log("Init Data:" + initData);
+            const dashData = {
+                overall: Array.isArray(initData?.Overall) ? initData.Overall : [],
+                tabs: initData?.Tabs ?? {}
+            };
+            console.log("Dash Data:" + dashData)
+            setDashInfo(dashData);
 
             setLoading(false);
         };
@@ -86,6 +91,14 @@ const Dashboard = () => {
         };
     }, [apiClient]);
 
+    const updateDashDataHandler = async (overall, tabs) => {
+        const updated = await apiClient.updateDashData(overall, tabs);
+        setDashInfo({
+            overall: Array.isArray(updated.Overall) ? updated.Overall : [],
+            tabs: typeof updated.Tabs === "object" && updated.Tabs !== null ? updated.Tabs : {}
+        });
+    };
+
     if (loading)
         return (
             <Layout
@@ -107,54 +120,28 @@ const Dashboard = () => {
                 </>
             }
         >
-            <div>
+            {/* <div>
                 <p>Dash Data: {dashInfo}</p>
-            </div>
+            </div> */}
             <div className="dashboard">
                 <OverallSection 
                     questions={questions}
                     categories={categories}
                     parties={parties}
                     stances={stances}
+                    dashData={dashInfo}
+                    updateDashDataHandler={updateDashDataHandler}
                 />
                 <TabSection 
                     questions={questions}
                     categories={categories}
                     parties={parties}
                     stances={stances}
+                    dashData={dashInfo}
+                    updateDashDataHandler={updateDashDataHandler}
                 />
                 <AnalyticsSection
                     data={analytics} 
-                    // data={[
-                    //     {
-                    //         date: "20250704",
-                    //         activeUsers: "3",
-                    //         newUsers: "3",
-                    //         sessions: "4",
-                    //         screenPageViews: "24"
-                    //     },
-                    //     {
-                    //         date: "20250705",
-                    //         activeUsers: "5",
-                    //         newUsers: "1",
-                    //         sessions: "5",
-                    //         screenPageViews: "30"
-                    //     },
-                    //     {
-                    //         date: "20250706",
-                    //         activeUsers: "2",
-                    //         newUsers: "2",
-                    //         sessions: "3",
-                    //         screenPageViews: "5"
-                    //     },
-                    //     {
-                    //         date: "20250707",
-                    //         activeUsers: "3",
-                    //         newUsers: "2",
-                    //         sessions: "6",
-                    //         screenPageViews: "15"
-                    //     },
-                    // ]}
                 />
             </div>
         </Layout>

@@ -1,11 +1,11 @@
 import "./TabSection.css";
 import "./Dashboard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CardDisplay from "./CardDisplay";
 import EditOverallModal from "./EditOverallModal";
 
-const TabSection = ({ questions, categories, parties, stances }) => {
+const TabSection = ({ questions, categories, parties, stances, dashData, updateDashDataHandler }) => {
     const [selectedTab, setSelectedTab] = useState("quiz");
     const [showModal, setShowModal] = useState(false);
 
@@ -16,8 +16,8 @@ const TabSection = ({ questions, categories, parties, stances }) => {
         { id: "stance", label: "Stance" },
     ];
 
-    // Load user's display cards set.
-    const [cards, setCards] = useState({
+    //Default set of Cards, again meant for users without any data in their tabs card deck.
+    const defaultCards = {
         quiz: [
             {
                 dataType: "questions",
@@ -108,39 +108,65 @@ const TabSection = ({ questions, categories, parties, stances }) => {
                 title: "Filter Party CFS and IssueID 2",
             },
         ],
-    });
+    }
 
-    //Handles for updating individual tabs
+    //Load default cards by default.
+    const [cards, setCards] = useState(defaultCards);
+
+    //If ALL tabs are not empty, then load tabs card data instead.
+    useEffect(() => {
+        if (dashData?.tabs && 
+            Object.keys(dashData.tabs.quiz).length > 0 &&
+            Object.keys(dashData.tabs.category).length > 0 &&
+            Object.keys(dashData.tabs.party).length > 0 &&
+            Object.keys(dashData.tabs.stance).length > 0
+        ) {
+            setCards(dashData.tabs);
+        }
+    }, [dashData?.tabs]);
+
     const handleSave = (newCard) => {
-        setCards((prev) => ({
-            ...prev,
-            [selectedTab]: [...prev[selectedTab], newCard],
-        }));
+        const updated = {
+            ...cards,
+            [selectedTab]: [...cards[selectedTab], newCard],
+        };
+        setCards(updated);
+        saveDashData(updated);
         setShowModal(false);
     };
 
     const handleUpdate = (index, updatedCard) => {
-        setCards((prev) => ({
-            ...prev,
-            [selectedTab]: prev[selectedTab].map((c, i) => (i === index ? updatedCard : c)),
-        }));
+        const updated = {
+            ...cards,
+            [selectedTab]: cards[selectedTab].map((c, i) =>
+                i === index ? updatedCard : c
+            ),
+        };
+        setCards(updated);
+        saveDashData(updated);
     };
 
     const handleDelete = (index) => {
-        setCards((prev) => ({
-            ...prev,
-            [selectedTab]: prev[selectedTab].filter((_, i) => i !== index),
-        }));
+        const updated = {
+            ...cards,
+            [selectedTab]: cards[selectedTab].filter((_, i) => i !== index),
+        };
+        setCards(updated);
+        saveDashData(updated);
     };
 
     const handleReorder = (newCardList) => {
-        setCards((prev) => ({
-            ...prev,
+        const updated = {
+            ...cards,
             [selectedTab]: newCardList,
-        }));
+        };
+        setCards(updated);
+        saveDashData(updated);
     };
 
-    //Maybe consider implementing tab management.
+    const saveDashData = (newTabs) => {
+        updateDashDataHandler(dashData?.overall ?? [], newTabs);
+    };
 
     return (
         <div className="tab-container">

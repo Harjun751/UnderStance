@@ -500,13 +500,15 @@ async function updateDashboard(userID, overall, tabs) {
         throw new Error("Invalid Argument");
     };
     try {
+        const overallStr = JSON.stringify(overall);
+        const tabsStr = JSON.stringify(tabs);
         const rows = await pool.query(
             `UPDATE "DashboardConfig"
              SET "Overall" = $2, "Tabs" = $3
              WHERE "UserID" = $1
              RETURNING *
             `,
-            [userID, overall, tabs],
+            [userID, overallStr, tabsStr],
         );
         return rows.rows[0];
     } catch (err) {
@@ -525,13 +527,16 @@ async function createDashboard(userID, overall, tabs) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
     };
+
     try {
+        const overallStr = JSON.stringify(overall);
+        const tabsStr = JSON.stringify(tabs);
         const rows = await pool.query(
             `INSERT INTO "DashboardConfig" ("UserID", "Overall", "Tabs")
              VALUES ($1, $2, $3)
              RETURNING *
             `,
-            [userID, overall, tabs],
+            [userID, overallStr, tabsStr],
         );
         if (rows.rows.length === 0) {
             throw new Error("Invalid Resource");

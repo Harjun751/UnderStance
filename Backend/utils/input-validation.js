@@ -158,13 +158,16 @@ function validateReason(reason) {
     }
 }
 
-function validateJSON(json) {
-    try {
-        JSON.parse(json);
-        return null;
-    } catch (e) {
-        return e.message;
+function validateJSON(val) {
+    if (val === undefined) {
+        return "value is not defined";
     }
+
+    if (typeof val !== "object") {
+        return "value must be an object or array";
+    }
+
+    return null;
 }
 
 module.exports = {
