@@ -52,14 +52,13 @@ async function getQuestions(isAuthenticated) {
 async function getQuestionWithID(isAuthenticated, id) {
     let query;
     if (isAuthenticated) {
-        query = 'SELECT * FROM "Issue" WHERE "IssueID" = $1';
         query = `
             SELECT
             i.*, c."Name" AS "Category"
             FROM "Issue" i
             INNER JOIN "Category" c
             ON i."CategoryID" = c."CategoryID"
-            AND "IssueID" = $1
+            WHERE "IssueID" = $1
         `;
     } else {
         query = `
@@ -479,6 +478,98 @@ async function getCategories() {
     }
 }
 
+async function getDashboard(userID) {
+    query = `
+        SELECT * FROM "DashboardConfig"
+        WHERE "UserID" = $1
+    `;
+    try {
+        const rows = await pool.query(query, [userID]);
+        if (rows.rows.length === 0) {
+            return null;
+        }
+        return rows.rows[0];
+    } catch (err) {
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function createDashboard(userID, overall, tabs) {
+    if (typeof userID !== "string") {
+        throw new Error("Invalid Argument");
+    };
+    try {
+        const rows = await pool.query(
+            `UPDATE "DashboardConfig"
+             SET "Overall" = $2, "Tabs" = $3
+             WHERE "UserID" = $1
+             RETURNING *
+            `,
+            [userID, overall, tabs],
+        );
+        return rows.rows[0];
+    } catch (err) {
+        // psql foreign key constraint violation error code
+        if (err.code === "22030") {
+            throw new Error("Invalid JSON: duplicate key");
+        } else if (err.code === "22032") {
+            throw new Error("Invalid JSON text");
+        }
+        logger.error(err.stack);
+        throw err;
+    }
+}
+
+async function updateDashboard(userID, overall, tabs) {
+    if (typeof userID !== "string") {
+        throw new Error("Invalid Argument");
+    };
+    try {
+        const rows = await pool.query(
+            `INSERT INTO "DashboardConfig" ("UserID", "Overall", "Tabs")
+             VALUES ($1, $2, $3)
+             RETURNING *
+            `,
+            [userID, overall, tabs],
+        );
+        if (rows.rows.length === 0) {
+            throw new Error("Invalid Resource");
+        }
+        return rows.rows[0];
+    } catch (err) {
+        // psql foreign key constraint violation error code
+        if (err.code === "22030") {
+            throw new Error("Invalid JSON: duplicate key");
+        } else if (err.code === "22032") {
+            throw new Error("Invalid JSON text");
+        }
+        logger.error(err.stack);
+        throw err;
+    }
+
+}
+
+async function deleteDashboard(userID) {
+    if (typeof userID !== "string") {
+        throw new Error("Invalid Argument");
+    };
+    try {
+        const rows = await pool.query(
+            `DELETE FROM "DashboardConfig" WHERE "UserID" = $1`,
+            [userID],
+        );
+        if (rows.rowCount === 0) {
+            throw new Error("Invalid Resource");
+        }
+        return;
+    } catch (err) {
+        logger.error(err.stack);
+        logger.error(err.code);
+        throw err;
+    }
+}
+
 module.exports = {
     getStancesFiltered,
     getStances,
@@ -499,4 +590,8 @@ module.exports = {
     updateCategory,
     deleteCategory,
     getCategories,
+    getDashboard,
+    createDashboard,
+    updateDashboard,
+    deleteDashboard,
 };

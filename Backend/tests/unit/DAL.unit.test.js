@@ -630,14 +630,22 @@ describe("mock DELETE category", () => {
 
 describe("mock GET dashboard", () => {
     const fakeDashboardData = [
-        { UserID: "auth0|user1", Overall: { "dingus": "wingus" }, Tabs: { "bingus": "lingus" }
+        { UserID: "auth0|user1", Overall: { "dingus": "wingus" }, Tabs: { "bingus": "lingus" }},
     ];
     test("should return rows from DashboardConfig", async () => {
         mockQuery.mockResolvedValueOnce({
-            rows: fakeDashboardData[0],
+            rows: fakeDashboardData,
         });
-        const result = await dal.getDashboard(123);
-        expect(result).toEqual(fakeDashboardData);
+        const result = await dal.getDashboard("auth0|user1");
+        expect(result).toEqual(fakeDashboardData[0]);
+    });
+
+    test("should return empty object if no data", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [],
+        });
+        const result = await dal.getDashboard("auth0|user1");
+        expect(result).toEqual(null);
     });
 });
 
@@ -652,7 +660,7 @@ describe("mock create dashboard", () => {
                 },
             ],
         });
-        const result = await dal.createDashbaord(
+        const result = await dal.createDashboard(
             "auth0|user1",
             '{}',
             '{}',
@@ -664,13 +672,6 @@ describe("mock create dashboard", () => {
         });
     });
 
-    test("should throw error if resource does not exist", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [] });
-        await expect(dal.createDashboard("1", '{}', '{}')).rejects.toThrow(
-            "Invalid Resource",
-        );
-    });
-
     test("should throw error with invalid arguments", async () => {
         await expect(dal.createDashboard(1, '{}', '{}')).rejects.toThrow(
             new Error("Invalid Argument"),
@@ -679,7 +680,7 @@ describe("mock create dashboard", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.createDashboard(1, '{}', '{}')).rejects.toThrow(
+        await expect(dal.createDashboard("1", '{}', '{}')).rejects.toThrow(
             "DB kaput",
         );
     });
@@ -715,7 +716,7 @@ describe("mock update dashboard", () => {
                 },
             ],
         });
-        const result = await dal.updateDashbaord(
+        const result = await dal.updateDashboard(
             "auth0|user1",
             '{}',
             '{}',
@@ -742,7 +743,7 @@ describe("mock update dashboard", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.updateDashboard(1, '{}', '{}')).rejects.toThrow(
+        await expect(dal.updateDashboard("1", '{}', '{}')).rejects.toThrow(
             "DB kaput",
         );
     });
@@ -790,7 +791,7 @@ describe("mock DELETE dashboard", () => {
 
     test("should throw error on DB fail", async () => {
         mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
-        await expect(dal.deleteDashboard(1)).rejects.toThrow("DB kaput");
+        await expect(dal.deleteDashboard("1")).rejects.toThrow("DB kaput");
     });
 });
 
