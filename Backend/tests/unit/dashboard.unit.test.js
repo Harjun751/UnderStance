@@ -8,6 +8,7 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
     }),
 }));
 const middleware = require("../../utils/auth0.middleware");
+jest.mock("../../utils/DAL");
 const db = require("../../utils/DAL");
 const app = require("../../app");
 const request = require("supertest");
@@ -15,15 +16,16 @@ const request = require("supertest");
 describe("authenticated mock GET dashboard data", () => {
     const dashboardData = {
         "UserID":"auth0|user1",
-        "Overall": '{"Bingus":"wingus"}'
+        "Overall": '{"Bingus":"wingus"}',
+        "Tabs": '{"Bingus":"wingus"}'
     };
     test("should return 200 OK", () => {
         db.getDashboard.mockResolvedValue(dashboardData);
         return request(app)
             .get("/me/dashboard")
             .then((response) => {
-                expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(dashboardData);
+                expect(response.statusCode).toBe(200);
                 expect(db.getDashboard).toHaveBeenLastCalledWith("auth0|user1");
             });
     });
