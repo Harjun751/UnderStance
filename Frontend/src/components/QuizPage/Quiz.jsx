@@ -22,13 +22,6 @@ const Quiz = () => {
 
     const [weightage, setWeightage] = useState(3); // State to store Weightage
 
-    //useId
-    const id = useId();
-
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
@@ -108,7 +101,6 @@ const Quiz = () => {
     const selected = answers[currentIssue.IssueID]?.answer;
 
     //useId
-    //const id = useId();
     return (
         <div className="quiz">
             {/* Confirmation Modal */}
@@ -145,7 +137,7 @@ const Quiz = () => {
 
             {/* Main Question Display */}
             <div className="content">
-                <div id={`${id}-content-container`} key={currentIssue.IssueID}>
+                <div className="content-container" key={currentIssue.IssueID}>
                     <h2>
                         Question {currentIndex + 1}/{issues.length}
                     </h2>
@@ -193,7 +185,6 @@ const Quiz = () => {
                     </div>
                 </div>
                 <ProgressBar progress={currentIndex / issues.length} />
-                <footer />
             </div>
         </div>
     );

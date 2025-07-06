@@ -89,7 +89,7 @@ const Footer = () => {
                         </ul>
                     </div> */}
 
-                    <div className="footer-column">
+                    <div className="footer-column connect">
                         <h3 className="footer-heading">Connect</h3>
                         <div className="footer-social">
                             <a

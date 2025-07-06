@@ -6,12 +6,14 @@ nav {
     padding-top: 70px;
     position: fixed;
     gap: 30px;
-    background: rgba(0, 0, 0, 0.1);
     height: 100%;
     transition: width 0.5s;
     overflow: clip;
-    backdrop-filter: blur(10px);
     z-index: 1;
+    box-shadow: 3px 0px 5px rgba(0,0,0,0.4);
+    background-color: #d9d9d9;
+background-image: url("https://www.transparenttextures.com/patterns/paper-2.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 .burger {
     position: fixed;

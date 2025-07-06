@@ -106,7 +106,7 @@ const ReadStances = () => {
     return (
         <div className="content">
             <div
-                className={`read-stances ${Object.keys(userAnswers).length === 0 ? "unanswered" : ""}`}
+                className={`read-stances content-container ${Object.keys(userAnswers).length === 0 ? "unanswered" : ""}`}
             >
                 <AlignmentChart
                     parties={parties}
