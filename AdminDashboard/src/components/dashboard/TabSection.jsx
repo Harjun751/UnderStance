@@ -113,13 +113,20 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
     //Load default cards by default.
     const [cards, setCards] = useState(defaultCards);
 
+    console.log(dashData);
+
     //If ALL tabs are not empty, then load tabs card data instead.
+
     useEffect(() => {
-        if (dashData?.tabs && 
-            Object.keys(dashData.tabs.quiz).length > 0 &&
-            Object.keys(dashData.tabs.category).length > 0 &&
-            Object.keys(dashData.tabs.party).length > 0 &&
-            Object.keys(dashData.tabs.stance).length > 0
+        const quiz = dashData?.tabs?.quiz ?? [];
+        const category = dashData?.tabs?.category ?? [];
+        const party = dashData?.tabs?.party ?? [];
+        const stance = dashData?.tabs?.stance ?? [];
+        if (
+            quiz.length > 0 &&
+            category.length > 0 &&
+            party.length > 0 &&
+            stance.length > 0
         ) {
             setCards(dashData.tabs);
         }
