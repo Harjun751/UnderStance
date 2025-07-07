@@ -5,7 +5,7 @@ import { BiSolidError } from "react-icons/bi";
 const Error = ({ err }) => {
     let errorInfo = err.message;
     if (err instanceof FetchError) {
-        let details = err.details;
+        const details = err.details;
         details.message = err.message;
         errorInfo = JSON.stringify(details);
     }
