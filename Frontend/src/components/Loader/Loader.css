@@ -1,45 +1,26 @@
-.loader-container {
-    display: flex;
-    justify-content: center;
-}
-.loader-container > div {
-    display: inline-block;
+/* HTML: <div class="loader"></div> */
+.loader-container { 
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 20%;
     text-align: center;
 }
-.loader-container h3 {
-    margin-top: 8px;
+.loader-container > h3 { 
+    margin-top: 15px;
 }
-
 .loader {
-    width: 48px;
-    height: 48px;
-    border: 3px solid #AC0000;
-    border-radius: 50%;
-    display: inline-block;
     position: relative;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-}
-.loader::after {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 10px solid;
-    border-color: black transparent;
-}
+    height: 50%;
+    margin: auto;
 
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    margin-top: 50px;
+  width: 120px;
+  height: 20px;
+  -webkit-mask: radial-gradient(circle closest-side,#000 94%,#0000) left/20% 100%;
+  background: linear-gradient(#AC0000 0 0) left/0% 100% no-repeat black;
+  animation: l17 2s infinite steps(6);
 }
-
+@keyframes l17 {
+    100% {background-size:120% 100%}
+}

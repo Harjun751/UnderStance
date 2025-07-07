@@ -28,7 +28,7 @@ const Quiz = () => {
         setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/questions`)
             // fetch('https://understance-backend.onrender.com/questions') //debugging
-            .then((res) => {
+            .then(async (res) => {
                 if (!res.ok) {
                     throw new FetchError("Error in attempt to fetch resource", res);
                 }

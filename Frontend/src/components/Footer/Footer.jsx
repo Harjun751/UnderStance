@@ -26,8 +26,10 @@ const Footer = () => {
                                 </li>
                             </Link>
                             {/* add actual link & page next time, for now enjoy what i've left behind */}
-                            <Link>
-                                <li>About</li>
+                            <Link to="/">
+                                <li>
+                                    <div className="footer-link">About</div>
+                                </li>
                             </Link>
                         </ul>
                     </div>
