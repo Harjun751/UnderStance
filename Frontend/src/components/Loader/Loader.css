@@ -1,12 +1,12 @@
 /* HTML: <div class="loader"></div> */
-.loader-container { 
+.loader-container {
     position: absolute;
     display: block;
     width: 100%;
     top: 20%;
     text-align: center;
 }
-.loader-container > h3 { 
+.loader-container > h3 {
     margin-top: 15px;
 }
 .loader {
@@ -14,12 +14,15 @@
     margin: auto;
 
     margin-top: 50px;
-  width: 120px;
-  height: 20px;
-  -webkit-mask: radial-gradient(circle closest-side,#000 94%,#0000) left/20% 100%;
-  background: linear-gradient(#AC0000 0 0) left/0% 100% no-repeat black;
-  animation: l17 2s infinite steps(6);
+    width: 120px;
+    height: 20px;
+    -webkit-mask:
+        radial-gradient(circle closest-side, #000 94%, #0000) left / 20% 100%;
+    background: linear-gradient(#ac0000 0 0) left / 0% 100% no-repeat black;
+    animation: l17 2s infinite steps(6);
 }
 @keyframes l17 {
-    100% {background-size:120% 100%}
+    100% {
+        background-size: 120% 100%;
+    }
 }

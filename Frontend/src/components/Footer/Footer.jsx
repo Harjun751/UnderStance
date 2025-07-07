@@ -22,7 +22,9 @@ const Footer = () => {
                             </Link>
                             <Link to="/read-stances">
                                 <li>
-                                    <div className="footer-link">Read Stances</div>
+                                    <div className="footer-link">
+                                        Read Stances
+                                    </div>
                                 </li>
                             </Link>
                             {/* add actual link & page next time, for now enjoy what i've left behind */}

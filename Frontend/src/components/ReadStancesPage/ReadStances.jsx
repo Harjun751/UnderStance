@@ -39,13 +39,22 @@ const ReadStances = () => {
                     ]);
 
                 if (!stancesRes.ok) {
-                    throw new FetchError("Error in attempt to fetch resource", stancesRes);
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        stancesRes,
+                    );
                 }
                 if (!partiesRes.ok) {
-                    throw new FetchError("Error in attempt to fetch resource", partiesRes);
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        partiesRes,
+                    );
                 }
                 if (!questionsRes.ok) {
-                    throw new FetchError("Error in attempt to fetch resource", questionsRes);
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        questionsRes,
+                    );
                 }
 
                 const [stancesData, partiesData, questionsData] =
@@ -98,7 +107,7 @@ const ReadStances = () => {
     if (loading) {
         return (
             <div className="content">
-                <Loader message="Loading..." style={{marginTop: "50px"}} />
+                <Loader message="Loading..." style={{ marginTop: "50px" }} />
             </div>
         );
     }

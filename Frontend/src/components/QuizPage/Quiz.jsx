@@ -30,13 +30,18 @@ const Quiz = () => {
             // fetch('https://understance-backend.onrender.com/questions') //debugging
             .then(async (res) => {
                 if (!res.ok) {
-                    throw new FetchError("Error in attempt to fetch resource", res);
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        res,
+                    );
                 }
                 return res.json();
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
             .catch((err) => setError(err)) // Store any fetch error
-            .finally(() => { setIsLoading(false); });
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, []);
 
     useEffect(() => {
@@ -91,7 +96,7 @@ const Quiz = () => {
     if (isLoading) {
         return (
             <div className="content">
-                <Loader message="Loading..." style={{marginTop: "50px"}} />
+                <Loader message="Loading..." style={{ marginTop: "50px" }} />
             </div>
         );
     }
