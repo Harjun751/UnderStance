@@ -1,4 +1,4 @@
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
 import { useNavigate } from "react-router-dom";

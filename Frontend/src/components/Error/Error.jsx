@@ -2,10 +2,10 @@ import "./Error.css"
 import { FetchError } from "./FetchError";
 import { BiSolidError } from "react-icons/bi";
 
-const Error = ({ err }) => {
+const ErrorComponent = ({ err }) => {
     let errorInfo = err.message;
     if (err instanceof FetchError) {
-        let details = err.details;
+        const details = err.details;
         details.message = err.message;
         errorInfo = JSON.stringify(details);
     }
@@ -16,8 +16,7 @@ const Error = ({ err }) => {
         url: window.location.href,
         error: errorInfo
     };
-    const detailsEncoded = encodeURIComponent(JSON.stringify(bugDetails) + "\n\n +Additional details of the error please...");
-    const ghUrl = "https://github.com/Harjun751/UnderStance/issues/new?title=Bug Title&body="+detailsEncoded;
+    const ghUrl = `https://github.com/Harjun751/UnderStance/issues/new?title=Bug Title&body=${encodeURIComponent(JSON.stringify(bugDetails))}+Additional details of the error please...`;
     return (
         <div className="error-container">
             <div className="info">
@@ -30,11 +29,11 @@ const Error = ({ err }) => {
                     <p>{errorInfo}</p>
                 </details>
                 <h2>Submit a bug on Github</h2>
-                <a target="_blank" href={ghUrl}>>Create an Issue</a>
+                <a target="_blank" href={ghUrl}>&gt;Create an Issue</a>
             </div>
         </div>
     );
 };
 
 
-export default Error;
+export default ErrorComponent;
