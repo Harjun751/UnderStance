@@ -3,7 +3,6 @@ const config = require("./app-config");
 const {
     auth,
     claimCheck,
-    InsufficientScopeError,
 } = require("express-oauth2-jwt-bearer");
 
 const permissions = {

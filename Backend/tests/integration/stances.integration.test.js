@@ -132,8 +132,8 @@ describe("authenticated GET stances", () => {
     // verify that inactive parties show up in the response too
     extendedFakeStances[0]["Issue Summary"] = "On the anthem";
     extendedFakeStances[1]["Issue Summary"] = "On the anthem";
-    extendedFakeStances[0]["Party"] = "Coalition for Shakira";
-    extendedFakeStances[1]["Party"] = "Traditionalists' Party";
+    extendedFakeStances[0].Party = "Coalition for Shakira";
+    extendedFakeStances[1].Party = "Traditionalists' Party";
     extendedFakeStances.push({
         StanceID: 3,
         Stand: false,

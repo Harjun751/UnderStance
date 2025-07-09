@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const routes = require("./routes/router");
 const securedRoutes = require("./routes/secured.router");
-const analyticsRoutes = require("./routes/analytics.route");
+const _analyticsRoutes = require("./routes/analytics.route");
 
-const fs = require("fs");
+const _fs = require("node:fs");
 
 const morgan = require("morgan");
 

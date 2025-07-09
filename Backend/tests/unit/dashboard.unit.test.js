@@ -9,7 +9,7 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
         next();
     }),
 }));
-const middleware = require("../../utils/auth0.middleware");
+const _middleware = require("../../utils/auth0.middleware");
 jest.mock("../../utils/DAL");
 const db = require("../../utils/DAL");
 const app = require("../../app");

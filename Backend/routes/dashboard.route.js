@@ -2,7 +2,7 @@ const express = require("express");
 const securedDashboardRoutes = express.Router();
 const validator = require("../utils/input-validation");
 const logger = require("../utils/logger");
-const { management } = require("../utils/management-client");
+// const { management } = require("../utils/management-client");
 const db = require("../utils/DAL");
 
 securedDashboardRoutes.get(

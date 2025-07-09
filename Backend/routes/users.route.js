@@ -11,7 +11,7 @@ const {
 securedUserRoutes.get(
     "/users",
     checkRequiredPermissions([permissions.readUsers]),
-    async (req, res) => {
+    async (_req, res) => {
         try {
             const allUsers = await management.users
                 .getAll()
@@ -33,7 +33,7 @@ securedUserRoutes.get(
 securedUserRoutes.get(
     "/roles",
     checkRequiredPermissions([permissions.readUsers]),
-    async (req, res) => {
+    async (_req, res) => {
         try {
             const roles = await management.roles.getAll();
             res.status(200).send(roles.data);
@@ -60,7 +60,7 @@ securedUserRoutes.post(
 
         // temporary validate with party name validator
         // reasonable for most strings
-        const validators = {
+        const _validators = {
             Name: validator.validatePartyName,
             Email: validator.validatePartyName,
             Role: validator.validatePartyName,

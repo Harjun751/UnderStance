@@ -752,7 +752,7 @@ describe("mock update dashboard", () => {
         const error = new Error("Duplicate json object key");
         error.code = "22030"; //as per psql guideline
         mockQuery.mockRejectedValueOnce(error);
-        await expect(dal.updateDashboard("auth0|user", { Bingus:1, Bingus: 2 }, {})).rejects.toThrow(
+        await expect(dal.updateDashboard("auth0|user", { Bingus:1, Bingus2: 2 }, {})).rejects.toThrow(
             "Invalid JSON text",
         );
     });

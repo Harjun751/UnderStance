@@ -345,7 +345,7 @@ describe("JSON validator", () => {
     });
 
     test("should fail for invalid JSON", () => {
-        let invalidJsonStr = '{dingus":"wingus"}';
+        const invalidJsonStr = '{dingus":"wingus"}';
         let parsed;
         try {
             parsed = JSON.parse(invalidJsonStr);
