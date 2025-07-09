@@ -6,7 +6,7 @@ let analyticsDataClient;
 function initAnalyticsClient() {
     if (!analyticsDataClient) {
         try {
-            let serviceAccountRaw = secrets.getGa4ServiceAcc();
+            const serviceAccountRaw = secrets.getGa4ServiceAcc();
             if (serviceAccountRaw === null) {
                 throw new Error("GA4_SERVICE_ACCOUNT_JSON is not defined");
             }

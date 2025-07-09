@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./EditOverallModal.css";
 import { FaTimes } from "react-icons/fa";
 
@@ -28,7 +28,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
             setFields([]);
             setField("");
         }
-    }, [dataType, data]);
+    }, [dataType, data, field]);
 
     const getUniqueValues = (field) => {
         if (!data[dataType] || !field) return [];
@@ -42,16 +42,16 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     //Begins dragging the modal
-    const handleMouseDown = (e) => {
+    const handleMouseDown = useCallback((e) => {
         setIsDragging(true);
         setOffset({
             x: e.clientX - position.x,
             y: e.clientY - position.y,
         });
-    };
+    }, [position]);
 
     //Move modal to follow mouse moves
-    const handleMouseMove = (e) => {
+    const handleMouseMove = useCallback((e) => {
         if (isDragging) {
             const modalWidth = 600;
             const modalHeight = 600;
@@ -65,12 +65,12 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
 
             setPosition({ x: newX, y: newY });
             }
-    };
+    }, [isDragging, offset]);
 
     //Stop dragging when mouse is released
-    const handleMouseUp = () => {
+    const handleMouseUp = useCallback(() => {
         setIsDragging(false);
-    };
+    }, []);
 
     //Sets the modal's inital position to be center of the screen
     useEffect(() => {
@@ -96,7 +96,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", handleMouseUp);
         };
-    }, [isDragging]);
+    }, [isDragging, handleMouseMove, handleMouseUp]);
 
 
     //Resets form fields to initial values
@@ -123,7 +123,6 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
             color,
             title,
         };
-        console.log(card);
         if (mode === "add") {
             onSave(card);
         } else if (mode === "edit" && editIndex !== null) {
@@ -154,7 +153,8 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                     cursor: isDragging ? "grabbing" : "grab",
                 }}
             >
-                <div 
+                <button 
+                    type="button"
                     className="header-row"
                     onMouseDown={handleMouseDown} //this will make sure it only drags when moving the header.
                 >
@@ -168,7 +168,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             <FaTimes />
                         </button>
                     </div>
-                </div>
+                </button>
                 <div className="toggle-button-group">
                     <button
                         type="button"
@@ -241,7 +241,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                                     : `Editing "${title}" Card`}
                             </h3>
                             {/* Data Type */}
-                            <label>Table selection:</label>
+                            <label htmlFor="field-select">Table selection:</label>
                             <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
                                 <option value="questions">Questions</option>
                                 <option value="categories">Categories</option>
@@ -250,7 +250,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             </select>
 
                             {/* Field */}
-                            <label>Target Field:</label>
+                            <label htmlFor="field-select">Target Field:</label>
                             <select value={field} onChange={(e) => setField(e.target.value)} disabled={fields.length === 0}>
                                 {fields.map((f) => (
                                     <option value={f} key={f}>
@@ -260,14 +260,14 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             </select>
 
                             {/* Action */}
-                            <label>Action:</label>
+                            <label htmlFor="field-select">Action:</label>
                             <select value={action} onChange={(e) => setAction(e.target.value)}>
                                 <option value="count">Count All</option>
                                 <option value="countUnique">Count Unique</option>
                             </select>
                             
                             {/* Filter for Valuue */}
-                            <label>Filter for:</label>
+                            <label htmlFor="field-select">Filter for:</label>
                             <div className="filter-titles">
                                 <h4>Filter Field</h4>
                                 <h4>Filter Value</h4>
@@ -285,7 +285,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                                 ))}
                             </select> */}
                             {filters.map((f, index) => (
-                                <div key={index} className="filter-row">
+                                <div key={f} className="filter-row">
                                     
                                     <select
                                         value={f.filterField}
@@ -343,7 +343,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             </button>
                             
                             {/* Color */}
-                            <label>Card Color:</label>
+                            <label htmlFor="field-select">Card Color:</label>
                             <select value={color} onChange={(e) => setColor(e.target.value)}>
                                 <option value="blue">Blue</option>
                                 <option value="green">Green</option>
@@ -352,7 +352,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             </select>
 
                             {/* Title */}
-                            <label>Card Title:</label>
+                            <label htmlFor="field-input">Card Title:</label>
                             <input
                                 type="text"
                                 value={title}

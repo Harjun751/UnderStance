@@ -90,6 +90,7 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
                 <h3>Overall Breakdown</h3>
                 <div className="section-header-end">    
                     <button 
+                        type="button"
                         className="edit-button"
                         onClick={() => setShowModal(true)}
                     >

@@ -33,8 +33,8 @@
         "testcov": "jest --coverage"
     },
     "dependencies": {
-        "auth0": "^4.27.0",
         "@google-analytics/data": "^5.1.0",
+        "auth0": "^4.27.0",
         "cors": "^2.8.5",
         "express": "^5.1.0",
         "express-oauth2-jwt-bearer": "^1.6.1",

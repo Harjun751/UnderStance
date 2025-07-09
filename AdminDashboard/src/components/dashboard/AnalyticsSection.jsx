@@ -1,18 +1,30 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { format, isAfter, isBefore, isEqual, parse, startOfDay } from "date-fns";
+import { format, isAfter, isBefore, isEqual, parse, startOfDay, isValid } from "date-fns";
 import "./AnalyticsSection.css";
 import "./Dashboard.css"
 import { FaUsers } from "react-icons/fa6";
 import { TbUsersPlus } from "react-icons/tb";
 import { RiNotificationBadgeFill } from "react-icons/ri";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useId } from "react";
 
-const AnalyticsSection = ({ data }) => {
-    if (!data || data.length === 0) return <div className="section-container">No data available</div>;
+const AnalyticsSection = ({ initData }) => {
+    const [fromDate, setFromDate] = useState("");
+    const [toDate, setToDate] = useState("");
+    const [minDate, setMinDate] = useState("");
+    const [maxDate, setMaxDate] = useState("");
+    const [initialized, setInitialized] = useState(false);
+
+    const fromId = useId();
+    const toId = useId();
     
+    const data = initData || [];
     //Format dates and parse numbers
     const parsedData = data.map((item) => {
         const rawDate = parse(item.date, "yyyyMMdd", new Date());
+        if (!isValid(rawDate)) {
+            console.warn("Skipping invalid date:", item.date);
+            return null;
+        }
         const dateObj = startOfDay(rawDate); // strip time
         return {
             ...item,
@@ -22,25 +34,33 @@ const AnalyticsSection = ({ data }) => {
             newUsers: parseInt(item.newUsers, 10),
             screenPageViews: parseInt(item.screenPageViews, 10),
         };
-    });
+    }).filter(Boolean);
 
-     //Initial dates: Full range from data
-    const allDates = parsedData.map(d => d.dateObj);
-    const timestamps = allDates.map(d => d.getTime());
-    const minDate = format(new Date(Math.min(...timestamps)), "yyyy-MM-dd");
-    const maxDate = format(new Date(Math.max(...timestamps)), "yyyy-MM-dd");
+    //Initial dates: Full range from data
+    useEffect(() => {
+        if (initialized || parsedData.length === 0) return;
 
-    const [fromDate, setFromDate] = useState(minDate);
-    const [toDate, setToDate] = useState(maxDate);
+        const allDates = parsedData.map(d => d.dateObj.getTime());
+        const min = format(new Date(Math.min(...allDates)), "yyyy-MM-dd");
+        const max = format(new Date(Math.max(...allDates)), "yyyy-MM-dd");
+
+        setFromDate(min);
+        setToDate(max);
+        setMinDate(min);
+        setMaxDate(max);
+        setInitialized(true);       //ensure its only called once.
+    }, [parsedData, initialized]);
+
 
     //Filter data based on selected range
     const filteredData = useMemo(() => {
+        if (!fromDate || !toDate) return [];
         const from = startOfDay(new Date(fromDate));
         const to = startOfDay(new Date(toDate));
         return parsedData.filter(d =>
             (isAfter(d.dateObj, from) || isEqual(d.dateObj, from)) &&
             (isBefore(d.dateObj, to) || isEqual(d.dateObj, to))
-        );
+        ).sort((a, b) => a.dateObj - b.dateObj);
     }, [fromDate, toDate, parsedData]);
 
     //Calculate statistics
@@ -48,6 +68,8 @@ const AnalyticsSection = ({ data }) => {
     const totalNewUsers = filteredData.reduce((sum, d) => sum + d.newUsers, 0);
     const totalPageViews = filteredData.reduce((sum, d) => sum + d.screenPageViews, 0);
 
+    if (!data || data.length === 0) return <div className="section-container">No data available</div>;
+    
     return (
         <div className="section-container">
             <div className="section-header">
@@ -85,10 +107,11 @@ const AnalyticsSection = ({ data }) => {
                 </div>
                 <div className="analytics-settings">
                     <div className="settings-item">
-                        <label>
+                        <label htmlFor={fromId}>
                             From:
                         </label>
                         <input
+                            id={fromId}
                             type="date"
                             value={fromDate}
                             min={minDate}
@@ -97,10 +120,11 @@ const AnalyticsSection = ({ data }) => {
                         />
                     </div>
                     <div className="settings-item">
-                        <label>
+                        <label htmlFor={toId}>
                             To:
                         </label>
                         <input
+                            id={toId}
                             type="date"
                             value={toDate}
                             min={fromDate}

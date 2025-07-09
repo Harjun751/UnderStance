@@ -341,11 +341,18 @@ According to all known lawsof aviation,there is no way a beeshould be able to fl
 
 describe("JSON validator", () => {
     test("should pass for valid JSON", () => {
-        expect(validator.validateJSON('{"dingus":"wingus"}')).toBe(null);
+        expect(validator.validateJSON(JSON.parse('{"dingus":"wingus"}'))).toBe(null);
     });
 
     test("should fail for invalid JSON", () => {
-        expect(validator.validateJSON('{dingus":"wingus"}')).not.toBe(null);
+        let invalidJsonStr = '{dingus":"wingus"}';
+        let parsed;
+        try {
+            parsed = JSON.parse(invalidJsonStr);
+        } catch {
+            parsed = invalidJsonStr; // Keep as string (invalid)
+        }
+        expect(validator.validateJSON(parsed)).toBe("value must be an object or array");
     });
 
 });

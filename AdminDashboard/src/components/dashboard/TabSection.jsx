@@ -113,8 +113,6 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
     //Load default cards by default.
     const [cards, setCards] = useState(defaultCards);
 
-    console.log(dashData);
-
     //If ALL tabs are not empty, then load tabs card data instead.
 
     useEffect(() => {
@@ -180,12 +178,19 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
             <div className="tab-headers">
                 <ul className="tab-header">
                     {tabs.map((tab) => (
-                        <li
-                            key={tab.id}
+                        <li 
+                            key={tab.id} 
                             className={selectedTab === tab.id ? "active" : ""}
-                            onClick={() => setSelectedTab(tab.id)}
                         >
-                            {tab.label}
+                            <button
+                                type="button"
+                                role="tab"
+                                aria-selected={selectedTab === tab.id}
+                                onClick={() => setSelectedTab(tab.id)}
+                                className="tab-button"
+                            >
+                                {tab.label}
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -194,6 +199,7 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
             <div className="tab-content">
                 <div className="section-header-end">    
                     <button 
+                        type="button"
                         className="edit-button"
                         onClick={() => setShowModal(true)}
                     >

@@ -18,8 +18,8 @@ const request = require("supertest");
 describe("authenticated mock GET dashboard data", () => {
     const dashboardData = {
         "UserID":"auth0|user1",
-        "Overall": '{"Bingus":"wingus"}',
-        "Tabs": '{"Bingus":"wingus"}'
+        "Overall": {Bingus:"wingus"},
+        "Tabs": {Bingus:"wingus"}
     };
     test("should return 200 OK", () => {
         db.getDashboard.mockResolvedValue(dashboardData);
@@ -48,8 +48,8 @@ describe("authenticated mock GET dashboard data", () => {
 describe("authenticated mock PUT dashboard data", () => {
     const dashboardData = {
         UserID:"auth0|user1",
-        Overall: '{"Bingus":"wingus"}',
-        Tabs: '{"Bingus":"wingus"}'
+        Overall: {Bingus:"wingus"},
+        Tabs: {Bingus:"wingus"}
     };
     test("should return 200 OK if no previous resource", () => {
         db.getDashboard.mockResolvedValue(null);

@@ -14,7 +14,7 @@ const iconMap = {
 const CardDisplay = ({ cards, dataMap }) => {
     return (
         <div className="stats-grid">
-            {cards.map((card, idx) => {
+            {cards.map((card) => {
                 const init_data = dataMap[card.dataType] || [];
                 let cardValue = 0;
 
@@ -36,7 +36,7 @@ const CardDisplay = ({ cards, dataMap }) => {
                 }
 
                 return (
-                    <div className="card" key={idx}>
+                    <div className="card" key={card}>
                         <div className="card-content">
                             <div className="text-block">
                                 <p className="card-title">{card.title}</p>

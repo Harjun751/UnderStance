@@ -510,6 +510,11 @@ async function updateDashboard(userID, overall, tabs) {
             `,
             [userID, overallStr, tabsStr],
         );
+
+        if (rows.rows.length === 0) {
+            throw new Error("Invalid Resource");
+        }
+
         return rows.rows[0];
     } catch (err) {
         // psql foreign key constraint violation error code

@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../general/Layout";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -10,7 +10,7 @@ import TabSection from "./TabSection";
 import AnalyticsSection from "./AnalyticsSection";
 
 const Dashboard = () => {
-    const [authInfo, setAuthInfo] = useState([]);
+    const [_authInfo, setAuthInfo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { getAccessTokenSilently } = useAuth0();
     const [questions, setQuestions] = useState([]);
@@ -51,12 +51,12 @@ const Dashboard = () => {
                 },
             );
             const initData = await dashRes.json();
-            console.log("Init Data:" + initData);
+            // console.log("Init Data:" + initData);
             const dashData = {
                 overall: Array.isArray(initData?.Overall) ? initData.Overall : [],
                 tabs: initData?.Tabs ?? {}
             };
-            console.log("Dash Data:" + dashData)
+            // console.log("Dash Data:" + dashData)
             setDashInfo(dashData);
 
             setLoading(false);
@@ -141,7 +141,7 @@ const Dashboard = () => {
                     updateDashDataHandler={updateDashDataHandler}
                 />
                 <AnalyticsSection
-                    data={analytics} 
+                    initData={analytics} 
                 />
             </div>
         </Layout>
