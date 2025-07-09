@@ -25,7 +25,7 @@ export default function AnimatedNumber({ from, to, text, className, style }) {
             const currentStep =
                 Math.round(progress * totalSteps) * incrementPolarity;
             const newValue = from + currentStep;
-            setValue(newValue);
+            setValue(Math.round(newValue));
 
             if (progress < 1) {
                 ref.current = requestAnimationFrame(animate);

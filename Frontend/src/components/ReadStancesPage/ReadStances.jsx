@@ -8,6 +8,9 @@ import {
     importanceLabels,
     importanceColors,
 } from "../WeightageSlider/WeightageSliderUtils";
+import Loader from "../Loader/Loader";
+import ErrorPage from "../Error/Error";
+import { FetchError } from "../Error/FetchError";
 
 const ReadStances = () => {
     const [stances, setStances] = useState([]);
@@ -35,8 +38,23 @@ const ReadStances = () => {
                         fetch(`${import.meta.env.VITE_API_URL}/questions`),
                     ]);
 
-                if (!stancesRes.ok || !partiesRes.ok || !questionsRes.ok) {
-                    throw new Error("One or more requests failed");
+                if (!stancesRes.ok) {
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        stancesRes,
+                    );
+                }
+                if (!partiesRes.ok) {
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        partiesRes,
+                    );
+                }
+                if (!questionsRes.ok) {
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        questionsRes,
+                    );
                 }
 
                 const [stancesData, partiesData, questionsData] =
@@ -51,7 +69,7 @@ const ReadStances = () => {
                 setQuestions(questionsData);
                 setLoading(false);
             } catch (err) {
-                setError(err.message);
+                setError(err);
                 setLoading(false);
             }
         };
@@ -85,13 +103,19 @@ const ReadStances = () => {
     };
 
     // Show loading or error messages before rendering data
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (error) return <ErrorPage err={error} />;
+    if (loading) {
+        return (
+            <div className="content">
+                <Loader message="Loading..." style={{ marginTop: "50px" }} />
+            </div>
+        );
+    }
 
     return (
         <div className="content">
             <div
-                className={`read-stances ${Object.keys(userAnswers).length === 0 ? "unanswered" : ""}`}
+                className={`read-stances content-container ${Object.keys(userAnswers).length === 0 ? "unanswered" : ""}`}
             >
                 <AlignmentChart
                     parties={parties}

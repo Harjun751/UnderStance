@@ -147,7 +147,6 @@
         width: 100%;
         max-width: 350px;
         justify-content: space-around;
-        margin-top: 50px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -159,5 +158,8 @@
     .control-btns {
         justify-content: center;
         gap: 2rem;
+    }
+    .control-btns > button {
+        margin-top: 0px;
     }
 }

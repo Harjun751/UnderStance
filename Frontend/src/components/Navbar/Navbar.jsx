@@ -14,7 +14,7 @@ const Navbar = () => {
     }
 
     return (
-        <div>
+        <div className="nav-container">
             <Hamburger
                 onClick={toggleNavbar}
                 className={`burger ${isExpanded ? "expanded" : ""}`}
