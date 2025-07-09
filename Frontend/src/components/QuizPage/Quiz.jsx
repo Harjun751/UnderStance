@@ -1,14 +1,18 @@
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import "./Quiz.css";
 import { useNavigate } from "react-router-dom";
 import WeightageSlider from "../WeightageSlider/WeightageSlider";
+import Loader from "../Loader/Loader";
+import ErrorPage from "../Error/Error";
+import { FetchError } from "../Error/FetchError";
 //import { useId } from "react";
 
 const Quiz = () => {
     //
     const [issues, setIssues] = useState([]); // State to store quiz questions
     const [error, setError] = useState(null); // State to store any errors during fetch
+    const [isLoading, setIsLoading] = useState(true); // State to store any errors during fetch
 
     const [currentIndex, setCurrentIndex] = useState(0); // Current index of the question the user is on
     const [answers, setAnswers] = useState({}); // Object to store user's answers: { questionIndex: answer }
@@ -18,22 +22,26 @@ const Quiz = () => {
 
     const [weightage, setWeightage] = useState(3); // State to store Weightage
 
-    //useId
-    const id = useId();
-
     // Fetch questions on component mount
     useEffect(() => {
         // fetch('/questions') //for development
+        setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/questions`)
             // fetch('https://understance-backend.onrender.com/questions') //debugging
-            .then((res) => {
+            .then(async (res) => {
                 if (!res.ok) {
-                    throw new Error("Network response was not ok");
+                    throw new FetchError(
+                        "Error in attempt to fetch resource",
+                        res,
+                    );
                 }
                 return res.json();
             })
             .then((data) => setIssues(data)) // Store fetched questions in state
-            .catch((err) => setError(err.message)); // Store any fetch error
+            .catch((err) => setError(err)) // Store any fetch error
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, []);
 
     useEffect(() => {
@@ -84,12 +92,11 @@ const Quiz = () => {
     };
 
     // Render error or loading states
-    if (error) return <div className="content">Error: {error}</div>;
-    if (!issues.length) {
+    if (error) return <ErrorPage err={error} />;
+    if (isLoading) {
         return (
             <div className="content">
-                Loading... The servers are all free-tier so the loading might be
-                pretty long, give it patience :)
+                <Loader message="Loading..." style={{ marginTop: "50px" }} />
             </div>
         );
     }
@@ -99,7 +106,6 @@ const Quiz = () => {
     const selected = answers[currentIssue.IssueID]?.answer;
 
     //useId
-    //const id = useId();
     return (
         <div className="quiz">
             {/* Confirmation Modal */}
@@ -136,7 +142,7 @@ const Quiz = () => {
 
             {/* Main Question Display */}
             <div className="content">
-                <div id={`${id}-content-container`} key={currentIssue.IssueID}>
+                <div className="content-container" key={currentIssue.IssueID}>
                     <h2>
                         Question {currentIndex + 1}/{issues.length}
                     </h2>
@@ -184,7 +190,6 @@ const Quiz = () => {
                     </div>
                 </div>
                 <ProgressBar progress={currentIndex / issues.length} />
-                <footer />
             </div>
         </div>
     );

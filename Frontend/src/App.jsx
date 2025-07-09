@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Home from "./components/HomePage/Home";
 import ReadStances from "./components/ReadStancesPage/ReadStances";
 import Quiz from "./components/QuizPage/Quiz";
-import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
 import "./App.css";
 import ReactGA from "react-ga4";

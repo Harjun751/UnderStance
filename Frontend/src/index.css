@@ -107,7 +107,7 @@ h3,
         font-size: 1em;
     }
 
-    .content > #content-container {
+    .content > .content-container {
         margin-top: 80px;
         max-width: 1200px;
         position: relative;
@@ -134,11 +134,12 @@ h3,
         font-size: 24px;
     }
 
-    .content > #content-container,
-    .content > #content-container.read-stances {
+    .content > .content-container,
+    .content > .content-container.read-stances {
         margin-top: 20px;
         max-width: 500px;
         width: 92%;
         position: relative;
+        padding: 0px 2px;
     }
 }
