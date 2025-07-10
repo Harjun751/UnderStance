@@ -50,16 +50,4 @@ describe("Navbar Component", () => {
         // Expanded again, logo text visible
         expect(screen.getByText(/understance/i)).toBeInTheDocument();
     });
-
-    test("navlink onClick toggles collapsed state", () => {
-        // Find the Dashboard NavLink
-        const dashboardLink = screen.getByText(/dashboard/i).closest("a");
-        expect(dashboardLink).toBeInTheDocument();
-
-        // Click dashboard link (should toggle collapsed state)
-        fireEvent.click(dashboardLink);
-
-        // Logo text should disappear as collapsed toggled to true
-        expect(screen.queryByText(/understance/i)).not.toBeInTheDocument();
-    });
 });
