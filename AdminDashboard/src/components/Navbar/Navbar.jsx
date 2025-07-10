@@ -28,7 +28,6 @@ const Navbar = () => {
         localStorage.setItem("navbarCollapsed", collapsed.toString());
     }, [collapsed]);
 
-
     const togglenavbar = () => {
         setCollapsed((prev) => !prev);
     };

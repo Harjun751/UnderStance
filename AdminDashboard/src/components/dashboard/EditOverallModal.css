@@ -234,7 +234,7 @@
 }
 
 .display-modal-buttons button[type="submit"] {
-    background-color:var(--accept-button);
+    background-color: var(--accept-button);
     color: var(--on-accept-button);
 }
 
