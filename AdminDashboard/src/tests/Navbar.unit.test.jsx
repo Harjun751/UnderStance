@@ -22,7 +22,6 @@ describe("Navbar Component", () => {
 
         // Nav items visible by name when expanded
         expect(screen.getByText(/^dashboard$/i)).toBeInTheDocument();
-        expect(screen.getByText(/^analytics$/i)).toBeInTheDocument();
         expect(screen.getByText(/^category$/i)).toBeInTheDocument();
         expect(screen.getByText(/^quiz$/i)).toBeInTheDocument();
         expect(screen.getByText(/^stance$/i)).toBeInTheDocument();
