@@ -10,19 +10,28 @@ import {
     IoMdSettings,
 } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { usePermissions } from "../general/usePermissions";
 // LE WALL OF IMPORTS
 
 const Navbar = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(() => {
+        const saved = localStorage.getItem("navbarCollapsed");
+        return saved === "true";
+    });
     const permissions = usePermissions();
+    const { logout } = useAuth0();
+
+    useEffect(() => {
+        localStorage.setItem("navbarCollapsed", collapsed.toString());
+    }, [collapsed]);
+
+
     const togglenavbar = () => {
         setCollapsed((prev) => !prev);
     };
-    const { logout } = useAuth0();
 
     return (
         <div className={`navbar ${collapsed ? "collapsed" : ""}`}>
@@ -61,7 +70,6 @@ const Navbar = () => {
                         className={({ isActive }) =>
                             `nav-item ${isActive ? "active" : ""}`
                         }
-                        onClick={togglenavbar}
                     >
                         <MdSpaceDashboard />
                         {!collapsed && (

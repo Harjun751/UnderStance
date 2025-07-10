@@ -61,8 +61,11 @@
 
     /* Inside Edit Display */
     --edit-card-item: #e5e7eb;
-    --edit-card-input-text: ;
-    --edit-card-input-border: ;
+    --edit-card-item-text: #111827; 
+    --edit-card-delete: #fee2e2;
+    --edit-card-delete-hover: #b91c1c;
+    --edit-card-edit: #e0dfdf;
+    --edit-card-edit-hover: #e5e7eb;
 
     /* Tab Section */
     --tabs-header: rgb(182, 182, 182);
@@ -116,9 +119,7 @@
     --dash-card-number: #8ab3ee;
     --edit-display-button: rgb(104, 104, 104);
     --edit-display-button-hover: #8ab3ee;
-    --edit-card-item: #d2d2d2;
-    --edit-card-input-text: ;
-    --edit-card-input-border: ;
+    
     --tabs-header: rgb(106, 106, 106);
     --tabs-header-li: #b1b1b1;
     --tabs-header-li-hover: rgba(33, 33, 33, 0.9);
@@ -137,7 +138,17 @@
     --on-accept-button: #ededed;
     --on-delete-button: #ededed;
     --on-cancel-button: #ededed;
-    --disabled-container: #1f1f22;
+    --disabled-container: #1f1f22;   
+    --edit-card-item-text: #b0bcd6; 
+    --edit-card-item: linear-gradient(
+        270deg,
+        rgba(55, 61, 74, 1) 0%,
+        rgba(32, 52, 80, 1) 100%
+    );
+    --edit-card-edit: #8d8d8d;
+    --edit-card-edit-hover: #e5e7eb;
+    --edit-card-delete: #9a0000;
+    --edit-card-delete-hover: #d09292;
 }
 
 * {

@@ -119,14 +119,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--edit-card-item);
     border-radius: 6px;
-    background-color: var(--edit-card-item);
+    background: var(--edit-card-item);
 }
 
 .edit-item strong {
     font-weight: 600;
-    color: #111827;
+    color: var(--edit-card-item-text);
 }
 
 .edit-actions {
@@ -150,22 +150,22 @@
 }
 
 .edit-actions .edit-button {
-    background-color: #e0dfdf;
+    background-color: var(--edit-card-edit);
     color: rgb(0, 0, 0);
 }
 
 .edit-actions .edit-button:hover {
-    background-color: #e5e7eb;
+    background-color: var(--edit-card-edit-hover);
 }
 
 .edit-actions .delete-button {
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background-color: var(--edit-card-delete);
+    color: var(--edit-card-delete-hover);
 }
 
 .edit-actions .delete-button:hover {
-    background-color: #b91c1c;
-    color: #fee2e2;
+    background-color: var(--edit-card-delete-hover);
+    color: var(--edit-card-delete);
 }
 
 .edit-actions .up-button {
@@ -209,8 +209,10 @@
 .display-modal-form input,
 .display-modal-form select {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
     border-radius: 4px;
+    background-color: var(--surface-container);
+    color: var(--on-surface-container);
 }
 
 .display-modal-buttons {
@@ -232,13 +234,13 @@
 }
 
 .display-modal-buttons button[type="submit"] {
-    background-color: #3b82f6;
-    color: white;
+    background-color:var(--accept-button);
+    color: var(--on-accept-button);
 }
 
 .display-modal-buttons .cancel-btn {
-    background-color: #e5e7eb;
-    color: #374151;
+    background-color: var(--cancel-button);
+    color: var(--on-cancel-button);
 }
 
 /* For Filter Section */
@@ -265,14 +267,18 @@
 }
 
 .filter-row .remove-button {
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background-color: var(--edit-card-delete);
+    color: var(--edit-card-delete-hover);
+    border: var(--edit-card-delete-hover);
     cursor: pointer;
     border-radius: 4px;
 }
 
 .add-filter-button {
-    color: rgb(0, 0, 0);
+    color: var(--on-cancel-button);
+    background-color: var(--cancel-button);
+    /* color: rgb(0, 0, 0); */
     border-radius: 5px;
+    border: 1px solid var(--surface-container-outline);
     cursor: pointer;
 }
