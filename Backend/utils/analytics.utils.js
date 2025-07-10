@@ -38,17 +38,15 @@ async function getAnalyticsReport() {
                 { name: "activeUsers" },
                 { name: "newUsers" },
                 { name: "sessions" },
-                { name: "screenPageViews" }
+                { name: "screenPageViews" },
             ],
-            dimensions: [
-                { name: "date" }
-            ]
+            dimensions: [{ name: "date" }],
         });
 
-        const metricHeaders = response.metricHeaders.map(h => h.name);
-        const dimensionHeaders = response.dimensionHeaders.map(h => h.name);
+        const metricHeaders = response.metricHeaders.map((h) => h.name);
+        const dimensionHeaders = response.dimensionHeaders.map((h) => h.name);
 
-        const results = response.rows.map(row => {
+        const results = response.rows.map((row) => {
             const rowData = {};
 
             // Add dimension values

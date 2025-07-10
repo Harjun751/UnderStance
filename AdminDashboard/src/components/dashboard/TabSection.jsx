@@ -5,7 +5,14 @@ import { Link } from "react-router-dom";
 import CardDisplay from "./CardDisplay";
 import EditOverallModal from "./EditOverallModal";
 
-const TabSection = ({ questions, categories, parties, stances, dashData, updateDashDataHandler }) => {
+const TabSection = ({
+    questions,
+    categories,
+    parties,
+    stances,
+    dashData,
+    updateDashDataHandler,
+}) => {
     const [selectedTab, setSelectedTab] = useState("quiz");
     const [showModal, setShowModal] = useState(false);
 
@@ -108,7 +115,7 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
                 title: "Filter Party CFS and IssueID 2",
             },
         ],
-    }
+    };
 
     //Load default cards by default.
     const [cards, setCards] = useState(defaultCards);
@@ -144,7 +151,7 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
         const updated = {
             ...cards,
             [selectedTab]: cards[selectedTab].map((c, i) =>
-                i === index ? updatedCard : c
+                i === index ? updatedCard : c,
             ),
         };
         setCards(updated);
@@ -178,8 +185,8 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
             <div className="tab-headers">
                 <ul className="tab-header">
                     {tabs.map((tab) => (
-                        <li 
-                            key={tab.id} 
+                        <li
+                            key={tab.id}
                             className={selectedTab === tab.id ? "active" : ""}
                         >
                             <button
@@ -197,8 +204,8 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
             </div>
 
             <div className="tab-content">
-                <div className="section-header-end">    
-                    <button 
+                <div className="section-header-end">
+                    <button
                         type="button"
                         className="edit-button"
                         onClick={() => setShowModal(true)}
@@ -206,14 +213,16 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
                         Edit Display
                     </button>
                 </div>
-                <CardDisplay 
+                <CardDisplay
                     cards={cards[selectedTab]}
                     dataMap={{ questions, categories, parties, stances }}
                 />
                 <div className="footer-links">
                     <Link to={`/${selectedTab}`}>
                         <button type="button" className="redirect-button">
-                            View {tabs.find(tab => tab.id === selectedTab)?.label} Management Page →
+                            View{" "}
+                            {tabs.find((tab) => tab.id === selectedTab)?.label}{" "}
+                            Management Page →
                         </button>
                     </Link>
                 </div>
@@ -230,8 +239,7 @@ const TabSection = ({ questions, categories, parties, stances, dashData, updateD
                 )}
             </div>
         </div>
-        
-    )
-}
+    );
+};
 
 export default TabSection;

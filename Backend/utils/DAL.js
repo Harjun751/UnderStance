@@ -498,7 +498,7 @@ async function getDashboard(userID) {
 async function updateDashboard(userID, overall, tabs) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
-    };
+    }
     try {
         const overallStr = JSON.stringify(overall);
         const tabsStr = JSON.stringify(tabs);
@@ -531,7 +531,7 @@ async function updateDashboard(userID, overall, tabs) {
 async function createDashboard(userID, overall, tabs) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
-    };
+    }
 
     try {
         const overallStr = JSON.stringify(overall);
@@ -557,13 +557,12 @@ async function createDashboard(userID, overall, tabs) {
         logger.error(err.stack);
         throw err;
     }
-
 }
 
 async function deleteDashboard(userID) {
     if (typeof userID !== "string") {
         throw new Error("Invalid Argument");
-    };
+    }
     try {
         const rows = await pool.query(
             `DELETE FROM "DashboardConfig" WHERE "UserID" = $1`,

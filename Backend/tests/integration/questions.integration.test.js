@@ -58,4 +58,3 @@ describe("GET quiz question", () => {
         expect(response.body).toEqual({ error: "Invalid Arguments" });
     });
 });
-

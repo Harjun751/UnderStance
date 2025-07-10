@@ -27,4 +27,3 @@ describe("GET categories", () => {
         expect(response.body).toEqual(categories);
     });
 });
-

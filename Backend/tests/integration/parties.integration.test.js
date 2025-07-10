@@ -69,4 +69,3 @@ describe("GET parties", () => {
         expect(response.body).toEqual({ error: "Invalid Arguments" });
     });
 });
-

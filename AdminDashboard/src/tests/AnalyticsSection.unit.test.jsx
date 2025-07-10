@@ -3,9 +3,24 @@ import AnalyticsSection from "../components/dashboard/AnalyticsSection";
 import { vi } from "vitest";
 
 const sampleData = [
-  { date: "20250101", activeUsers: "10", newUsers: "5", screenPageViews: "50" },
-  { date: "20250102", activeUsers: "15", newUsers: "10", screenPageViews: "70" },
-  { date: "20250103", activeUsers: "5", newUsers: "3", screenPageViews: "30" },
+    {
+        date: "20250101",
+        activeUsers: "10",
+        newUsers: "5",
+        screenPageViews: "50",
+    },
+    {
+        date: "20250102",
+        activeUsers: "15",
+        newUsers: "10",
+        screenPageViews: "70",
+    },
+    {
+        date: "20250103",
+        activeUsers: "5",
+        newUsers: "3",
+        screenPageViews: "30",
+    },
 ];
 
 describe("AnalyticsSection", () => {
@@ -61,13 +76,23 @@ describe("AnalyticsSection", () => {
     });
 
     it("skips invalid date entries", () => {
-        const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const consoleSpy = vi
+            .spyOn(console, "warn")
+            .mockImplementation(() => {});
         const invalidData = [
-            ...sampleData, 
-            { date: "invalid", activeUsers: "1", newUsers: "1", screenPageViews: "1" }
+            ...sampleData,
+            {
+                date: "invalid",
+                activeUsers: "1",
+                newUsers: "1",
+                screenPageViews: "1",
+            },
         ];
         render(<AnalyticsSection initData={invalidData} />);
-        expect(consoleSpy).toHaveBeenCalledWith("Skipping invalid date:", "invalid");
+        expect(consoleSpy).toHaveBeenCalledWith(
+            "Skipping invalid date:",
+            "invalid",
+        );
         consoleSpy.mockRestore();
     });
 });

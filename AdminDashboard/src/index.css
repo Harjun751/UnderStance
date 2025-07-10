@@ -27,17 +27,17 @@
     /* --table-hover: #bfe0ff; */
     /* --table-selected: #7fc1ff; */
     --table-hover: linear-gradient(
-        90deg, 
-        rgba(215, 223, 255,0.4) 0%,
-        rgba(209, 243, 255,0.4) 100%
+        90deg,
+        rgba(215, 223, 255, 0.4) 0%,
+        rgba(209, 243, 255, 0.4) 100%
     );
     --table-selected: linear-gradient(
-        90deg, 
+        90deg,
         rgba(215, 223, 255) 0%,
         rgb(209, 243, 255) 100%
     );
     --update-item-panel: linear-gradient(
-        90deg, 
+        90deg,
         rgba(215, 223, 255, 0.95) 0%,
         rgb(209, 243, 255) 100%
     );
@@ -72,11 +72,10 @@
     /* Analytics */
     --stats-title: #6b7280;
 
-
     /* General */
     --green: green;
     --red: #ac0000;
-    --disabled-container: #E9F7FF;
+    --disabled-container: #e9f7ff;
 
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
@@ -138,7 +137,7 @@
     --on-accept-button: #ededed;
     --on-delete-button: #ededed;
     --on-cancel-button: #ededed;
-    --disabled-container: #1F1F22;
+    --disabled-container: #1f1f22;
 }
 
 * {

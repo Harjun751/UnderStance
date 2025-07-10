@@ -4,8 +4,14 @@ import { useEffect, useState } from "react";
 import EditOverallModal from "./EditOverallModal";
 import CardDisplay from "./CardDisplay";
 
-
-const OverallSection = ({ questions, categories, parties, stances, dashData, updateDashDataHandler }) => {
+const OverallSection = ({
+    questions,
+    categories,
+    parties,
+    stances,
+    dashData,
+    updateDashDataHandler,
+}) => {
     const [showModal, setShowModal] = useState(false);
 
     //Default set of Cards, meant for user's without any data in their card deck.
@@ -42,7 +48,7 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
             color: "red",
             title: "Total Stances",
         },
-    ]
+    ];
 
     //Load user's default cards by default.
     const [cards, setCards] = useState(defaultCards);
@@ -64,7 +70,9 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
     };
 
     const handleUpdate = (index, updatedCard) => {
-        const updatedCards = cards.map((c, i) => (i === index ? updatedCard : c));
+        const updatedCards = cards.map((c, i) =>
+            i === index ? updatedCard : c,
+        );
         setCards(updatedCards);
         saveDashData(updatedCards);
     };
@@ -88,8 +96,8 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
         <div className="section-container">
             <div className="section-header">
                 <h3>Overall Breakdown</h3>
-                <div className="section-header-end">    
-                    <button 
+                <div className="section-header-end">
+                    <button
                         type="button"
                         className="edit-button"
                         onClick={() => setShowModal(true)}
@@ -98,10 +106,7 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
                     </button>
                 </div>
             </div>
-            <CardDisplay 
-                cards={cards}
-                dataMap={dataMap}
-            />
+            <CardDisplay cards={cards} dataMap={dataMap} />
             {showModal && (
                 <EditOverallModal
                     onClose={() => setShowModal(false)}
@@ -114,7 +119,7 @@ const OverallSection = ({ questions, categories, parties, stances, dashData, upd
                 />
             )}
         </div>
-    )
-}
+    );
+};
 
 export default OverallSection;

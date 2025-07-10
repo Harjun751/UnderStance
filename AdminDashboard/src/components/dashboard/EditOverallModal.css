@@ -84,7 +84,9 @@
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .toggle-button-group button:hover {
@@ -239,7 +241,7 @@
     color: #374151;
 }
 
- /* For Filter Section */
+/* For Filter Section */
 .filter-titles {
     display: grid;
     grid-template-columns: 1fr 1fr 0.5fr;

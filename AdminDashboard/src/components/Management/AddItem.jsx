@@ -35,17 +35,17 @@ const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <div className="modal-header-row">   
+                <div className="modal-header-row">
                     <h2>Add New {title}</h2>
                     <div className="modal-header-row-right">
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="modal-close-button"
-                    >
-                        <FaTimes />
-                    </button>
-                </div>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="modal-close-button"
+                        >
+                            <FaTimes />
+                        </button>
+                    </div>
                 </div>
                 <div className="modal-body">
                     <form onSubmit={handleSubmit} className="modal-form">

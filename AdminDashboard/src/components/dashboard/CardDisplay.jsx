@@ -3,7 +3,6 @@ import { FaFlag } from "react-icons/fa";
 import { GiInjustice } from "react-icons/gi";
 import { MdQuiz } from "react-icons/md";
 
-
 const iconMap = {
     questions: <MdQuiz />,
     categories: <BiSolidCategoryAlt />,
@@ -19,19 +18,25 @@ const CardDisplay = ({ cards, dataMap }) => {
                 let cardValue = 0;
 
                 let data = init_data;
-                
-                console.log(data)
+
+                console.log(data);
 
                 if (card.filter !== null) {
-                    data = data.filter(item =>
-                        card.filter.every(f => String(item[f.filterField]) === String(f.filterValue))
+                    data = data.filter((item) =>
+                        card.filter.every(
+                            (f) =>
+                                String(item[f.filterField]) ===
+                                String(f.filterValue),
+                        ),
                     );
                 }
 
                 if (card.action === "count") {
                     cardValue = data.length;
                 } else if (card.action === "countUnique") {
-                    const uniqueValues = new Set(data.map((item) => item[card.field]));
+                    const uniqueValues = new Set(
+                        data.map((item) => item[card.field]),
+                    );
                     cardValue = uniqueValues.size;
                 }
 
@@ -50,8 +55,7 @@ const CardDisplay = ({ cards, dataMap }) => {
                 );
             })}
         </div>
-    )
-}
+    );
+};
 
 export default CardDisplay;
-

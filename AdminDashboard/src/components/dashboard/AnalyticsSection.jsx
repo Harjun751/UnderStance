@@ -1,7 +1,23 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { format, isAfter, isBefore, isEqual, parse, startOfDay, isValid } from "date-fns";
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from "recharts";
+import {
+    format,
+    isAfter,
+    isBefore,
+    isEqual,
+    parse,
+    startOfDay,
+    isValid,
+} from "date-fns";
 import "./AnalyticsSection.css";
-import "./Dashboard.css"
+import "./Dashboard.css";
 import { FaUsers } from "react-icons/fa6";
 import { TbUsersPlus } from "react-icons/tb";
 import { RiNotificationBadgeFill } from "react-icons/ri";
@@ -16,31 +32,33 @@ const AnalyticsSection = ({ initData }) => {
 
     const fromId = useId();
     const toId = useId();
-    
+
     const data = initData || [];
     //Format dates and parse numbers
-    const parsedData = data.map((item) => {
-        const rawDate = parse(item.date, "yyyyMMdd", new Date());
-        if (!isValid(rawDate)) {
-            console.warn("Skipping invalid date:", item.date);
-            return null;
-        }
-        const dateObj = startOfDay(rawDate); // strip time
-        return {
-            ...item,
-            dateObj,
-            dateFormatted: format(dateObj, "MMM dd"),
-            activeUsers: parseInt(item.activeUsers, 10),
-            newUsers: parseInt(item.newUsers, 10),
-            screenPageViews: parseInt(item.screenPageViews, 10),
-        };
-    }).filter(Boolean);
+    const parsedData = data
+        .map((item) => {
+            const rawDate = parse(item.date, "yyyyMMdd", new Date());
+            if (!isValid(rawDate)) {
+                console.warn("Skipping invalid date:", item.date);
+                return null;
+            }
+            const dateObj = startOfDay(rawDate); // strip time
+            return {
+                ...item,
+                dateObj,
+                dateFormatted: format(dateObj, "MMM dd"),
+                activeUsers: parseInt(item.activeUsers, 10),
+                newUsers: parseInt(item.newUsers, 10),
+                screenPageViews: parseInt(item.screenPageViews, 10),
+            };
+        })
+        .filter(Boolean);
 
     //Initial dates: Full range from data
     useEffect(() => {
         if (initialized || parsedData.length === 0) return;
 
-        const allDates = parsedData.map(d => d.dateObj.getTime());
+        const allDates = parsedData.map((d) => d.dateObj.getTime());
         const min = format(new Date(Math.min(...allDates)), "yyyy-MM-dd");
         const max = format(new Date(Math.max(...allDates)), "yyyy-MM-dd");
 
@@ -48,28 +66,37 @@ const AnalyticsSection = ({ initData }) => {
         setToDate(max);
         setMinDate(min);
         setMaxDate(max);
-        setInitialized(true);       //ensure its only called once.
+        setInitialized(true); //ensure its only called once.
     }, [parsedData, initialized]);
-
 
     //Filter data based on selected range
     const filteredData = useMemo(() => {
         if (!fromDate || !toDate) return [];
         const from = startOfDay(new Date(fromDate));
         const to = startOfDay(new Date(toDate));
-        return parsedData.filter(d =>
-            (isAfter(d.dateObj, from) || isEqual(d.dateObj, from)) &&
-            (isBefore(d.dateObj, to) || isEqual(d.dateObj, to))
-        ).sort((a, b) => a.dateObj - b.dateObj);
+        return parsedData
+            .filter(
+                (d) =>
+                    (isAfter(d.dateObj, from) || isEqual(d.dateObj, from)) &&
+                    (isBefore(d.dateObj, to) || isEqual(d.dateObj, to)),
+            )
+            .sort((a, b) => a.dateObj - b.dateObj);
     }, [fromDate, toDate, parsedData]);
 
     //Calculate statistics
-    const totalActiveUsers = filteredData.reduce((sum, d) => sum + d.activeUsers, 0);
+    const totalActiveUsers = filteredData.reduce(
+        (sum, d) => sum + d.activeUsers,
+        0,
+    );
     const totalNewUsers = filteredData.reduce((sum, d) => sum + d.newUsers, 0);
-    const totalPageViews = filteredData.reduce((sum, d) => sum + d.screenPageViews, 0);
+    const totalPageViews = filteredData.reduce(
+        (sum, d) => sum + d.screenPageViews,
+        0,
+    );
 
-    if (!data || data.length === 0) return <div className="section-container">No data available</div>;
-    
+    if (!data || data.length === 0)
+        return <div className="section-container">No data available</div>;
+
     return (
         <div className="section-container">
             <div className="section-header">
@@ -107,9 +134,7 @@ const AnalyticsSection = ({ initData }) => {
                 </div>
                 <div className="analytics-settings">
                     <div className="settings-item">
-                        <label htmlFor={fromId}>
-                            From:
-                        </label>
+                        <label htmlFor={fromId}>From:</label>
                         <input
                             id={fromId}
                             type="date"
@@ -120,9 +145,7 @@ const AnalyticsSection = ({ initData }) => {
                         />
                     </div>
                     <div className="settings-item">
-                        <label htmlFor={toId}>
-                            To:
-                        </label>
+                        <label htmlFor={toId}>To:</label>
                         <input
                             id={toId}
                             type="date"
@@ -134,20 +157,27 @@ const AnalyticsSection = ({ initData }) => {
                     </div>
                 </div>
                 <div className="analytics-graph">
-                    <h4><u>Active Users Over Time</u></h4>
+                    <h4>
+                        <u>Active Users Over Time</u>
+                    </h4>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={filteredData}>
-                            <CartesianGrid vertical={false} horizontal={true}/>
+                            <CartesianGrid vertical={false} horizontal={true} />
                             <XAxis dataKey="dateFormatted" />
-                            <YAxis/>
+                            <YAxis />
                             <Tooltip />
-                            <Line type="monotone" dataKey="activeUsers" stroke="#8884d8" strokeWidth={2} />
+                            <Line
+                                type="monotone"
+                                dataKey="activeUsers"
+                                stroke="#8884d8"
+                                strokeWidth={2}
+                            />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default AnalyticsSection;

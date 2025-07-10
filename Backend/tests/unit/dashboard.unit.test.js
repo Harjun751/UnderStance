@@ -4,7 +4,7 @@ jest.mock("express-oauth2-jwt-bearer", () => ({
             payload: {
                 sub: "auth0|user1",
                 scope: "read:messages",
-            }
+            },
         };
         next();
     }),
@@ -17,9 +17,9 @@ const request = require("supertest");
 
 describe("authenticated mock GET dashboard data", () => {
     const dashboardData = {
-        "UserID":"auth0|user1",
-        "Overall": {Bingus:"wingus"},
-        "Tabs": {Bingus:"wingus"}
+        UserID: "auth0|user1",
+        Overall: { Bingus: "wingus" },
+        Tabs: { Bingus: "wingus" },
     };
     test("should return 200 OK", () => {
         db.getDashboard.mockResolvedValue(dashboardData);
@@ -47,9 +47,9 @@ describe("authenticated mock GET dashboard data", () => {
 
 describe("authenticated mock PUT dashboard data", () => {
     const dashboardData = {
-        UserID:"auth0|user1",
-        Overall: {Bingus:"wingus"},
-        Tabs: {Bingus:"wingus"}
+        UserID: "auth0|user1",
+        Overall: { Bingus: "wingus" },
+        Tabs: { Bingus: "wingus" },
     };
     test("should return 200 OK if no previous resource", () => {
         db.getDashboard.mockResolvedValue(null);
@@ -79,26 +79,30 @@ describe("authenticated mock PUT dashboard data", () => {
 
     test("should return 400 if invalid JSON", () => {
         const body = { ...dashboardData };
-        body.Overall = '{"bingus: wingus"}' //invalid json string
+        body.Overall = '{"bingus: wingus"}'; //invalid json string
         db.getDashboard.mockResolvedValue(dashboardData);
         db.updateDashboard.mockRejectedValue(new Error("Invalid JSON text"));
         return request(app)
             .put("/me/dashboard")
             .send(body)
             .then((response) => {
-                expect(response.body).toMatchObject({ "error": "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
                 expect(response.statusCode).toBe(400);
                 expect(db.getDashboard).toHaveBeenLastCalledWith("auth0|user1");
             });
     });
 
     test("should return 400 if missing fields", () => {
-        const body = { "UserID": "bingus" };
+        const body = { UserID: "bingus" };
         return request(app)
             .put("/me/dashboard")
             .send(body)
             .then((response) => {
-                expect(response.body).toMatchObject({ "error": "Invalid Arguments" });
+                expect(response.body).toMatchObject({
+                    error: "Invalid Arguments",
+                });
                 expect(response.statusCode).toBe(400);
             });
     });

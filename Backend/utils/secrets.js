@@ -28,13 +28,13 @@ function getConnString() {
 function getGa4ServiceAcc() {
     let service_acc = getSecret(process.env.SECRET_GA4_ACC_PATH);
     if (service_acc === null) {
-         service_acc = process.env.GA4_SERVICE_ACCOUNT_JSON;
+        service_acc = process.env.GA4_SERVICE_ACCOUNT_JSON;
     }
-    return service_acc
+    return service_acc;
 }
 
 function getGa4PropID() {
-    let ga4_prop_id = getSecret(process.env.SECRET_GA4_PROP_ID_PATH); 
+    let ga4_prop_id = getSecret(process.env.SECRET_GA4_PROP_ID_PATH);
     if (ga4_prop_id === null) {
         ga4_prop_id = process.env.GA4_PROPERTY_ID;
     }

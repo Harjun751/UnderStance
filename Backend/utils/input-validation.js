@@ -183,5 +183,5 @@ module.exports = {
     validateShortName,
     validateReason,
     validateData,
-    validateJSON
+    validateJSON,
 };

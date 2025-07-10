@@ -22,7 +22,6 @@ const Dashboard = () => {
 
     const apiClient = useAPIClient();
 
-
     useEffect(() => {
         const fetchData = async () => {
             const token = await getAccessTokenSilently({
@@ -53,8 +52,10 @@ const Dashboard = () => {
             const initData = await dashRes.json();
             // console.log("Init Data:" + initData);
             const dashData = {
-                overall: Array.isArray(initData?.Overall) ? initData.Overall : [],
-                tabs: initData?.Tabs ?? {}
+                overall: Array.isArray(initData?.Overall)
+                    ? initData.Overall
+                    : [],
+                tabs: initData?.Tabs ?? {},
             };
             // console.log("Dash Data:" + dashData)
             setDashInfo(dashData);
@@ -68,24 +69,22 @@ const Dashboard = () => {
         let cancelled = false;
 
         Promise.all([
-            apiClient.getQuestions(), 
-            apiClient.getCategories(), 
-            apiClient.getParties(), 
+            apiClient.getQuestions(),
+            apiClient.getCategories(),
+            apiClient.getParties(),
             apiClient.getStances(),
             apiClient.getAnalytics(),
-        ]).then(
-            ([questions, categories, parties, stances, analytics]) => {
-                if (!cancelled) {
-                    setQuestions(questions);
-                    setCategories(categories);
-                    setParties(parties);
-                    setStances(stances);
-                    setAnalytics(analytics);
-                    //setIsLoading(false);
-                    setLoading(false);
-                }
-            },
-        );
+        ]).then(([questions, categories, parties, stances, analytics]) => {
+            if (!cancelled) {
+                setQuestions(questions);
+                setCategories(categories);
+                setParties(parties);
+                setStances(stances);
+                setAnalytics(analytics);
+                //setIsLoading(false);
+                setLoading(false);
+            }
+        });
         return () => {
             cancelled = true;
         };
@@ -95,7 +94,10 @@ const Dashboard = () => {
         const updated = await apiClient.updateDashData(overall, tabs);
         setDashInfo({
             overall: Array.isArray(updated.Overall) ? updated.Overall : [],
-            tabs: typeof updated.Tabs === "object" && updated.Tabs !== null ? updated.Tabs : {}
+            tabs:
+                typeof updated.Tabs === "object" && updated.Tabs !== null
+                    ? updated.Tabs
+                    : {},
         });
     };
 
@@ -114,7 +116,7 @@ const Dashboard = () => {
 
     return (
         <Layout
-             title={
+            title={
                 <>
                     <MdSpaceDashboard /> Dashboard
                 </>
@@ -124,7 +126,7 @@ const Dashboard = () => {
                 <p>Dash Data: {dashInfo}</p>
             </div> */}
             <div className="dashboard">
-                <OverallSection 
+                <OverallSection
                     questions={questions}
                     categories={categories}
                     parties={parties}
@@ -132,7 +134,7 @@ const Dashboard = () => {
                     dashData={dashInfo}
                     updateDashDataHandler={updateDashDataHandler}
                 />
-                <TabSection 
+                <TabSection
                     questions={questions}
                     categories={categories}
                     parties={parties}
@@ -140,9 +142,7 @@ const Dashboard = () => {
                     dashData={dashInfo}
                     updateDashDataHandler={updateDashDataHandler}
                 />
-                <AnalyticsSection
-                    initData={analytics} 
-                />
+                <AnalyticsSection initData={analytics} />
             </div>
         </Layout>
 

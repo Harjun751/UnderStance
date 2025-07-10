@@ -2,7 +2,15 @@ import { useState, useEffect, useCallback } from "react";
 import "./EditOverallModal.css";
 import { FaTimes } from "react-icons/fa";
 
-const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, onReorder }) => {
+const EditOverallModal = ({
+    onClose,
+    onSave,
+    data,
+    cards,
+    onUpdate,
+    onDelete,
+    onReorder,
+}) => {
     //Form field states for creating/updating a card
     const [dataType, setDataType] = useState("questions");
     const [field, setField] = useState("");
@@ -32,8 +40,10 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
 
     const getUniqueValues = (field) => {
         if (!data[dataType] || !field) return [];
-        const values = data[dataType].map(item => item[field]);
-        return [...new Set(values)].filter(v => v !== undefined && v !== null);
+        const values = data[dataType].map((item) => item[field]);
+        return [...new Set(values)].filter(
+            (v) => v !== undefined && v !== null,
+        );
     };
 
     //For handling modal draggability state
@@ -42,30 +52,42 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     //Begins dragging the modal
-    const handleMouseDown = useCallback((e) => {
-        setIsDragging(true);
-        setOffset({
-            x: e.clientX - position.x,
-            y: e.clientY - position.y,
-        });
-    }, [position]);
+    const handleMouseDown = useCallback(
+        (e) => {
+            setIsDragging(true);
+            setOffset({
+                x: e.clientX - position.x,
+                y: e.clientY - position.y,
+            });
+        },
+        [position],
+    );
 
     //Move modal to follow mouse moves
-    const handleMouseMove = useCallback((e) => {
-        if (isDragging) {
-            const modalWidth = 600;
-            const modalHeight = 600;
+    const handleMouseMove = useCallback(
+        (e) => {
+            if (isDragging) {
+                const modalWidth = 600;
+                const modalHeight = 600;
 
-            let newX = e.clientX - offset.x;
-            let newY = e.clientY - offset.y;
+                let newX = e.clientX - offset.x;
+                let newY = e.clientY - offset.y;
 
-            // Clamp values to stay within window bounds
-            newX = Math.max(0, Math.min(window.innerWidth - modalWidth, newX));
-            newY = Math.max(0, Math.min(window.innerHeight - modalHeight, newY));
+                // Clamp values to stay within window bounds
+                newX = Math.max(
+                    0,
+                    Math.min(window.innerWidth - modalWidth, newX),
+                );
+                newY = Math.max(
+                    0,
+                    Math.min(window.innerHeight - modalHeight, newY),
+                );
 
-            setPosition({ x: newX, y: newY });
+                setPosition({ x: newX, y: newY });
             }
-    }, [isDragging, offset]);
+        },
+        [isDragging, offset],
+    );
 
     //Stop dragging when mouse is released
     const handleMouseUp = useCallback(() => {
@@ -76,8 +98,8 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
     useEffect(() => {
         const modalWidth = 600;
         const modalHeight = 600;
-        const centerX = window.innerWidth / 2 - modalWidth/2;
-        const centerY = window.innerHeight / 2 - modalHeight/1.5;
+        const centerX = window.innerWidth / 2 - modalWidth / 2;
+        const centerY = window.innerHeight / 2 - modalHeight / 1.5;
 
         setPosition({ x: centerX, y: centerY });
     }, []);
@@ -97,7 +119,6 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
             window.removeEventListener("mouseup", handleMouseUp);
         };
     }, [isDragging, handleMouseMove, handleMouseUp]);
-
 
     //Resets form fields to initial values
     const resetForm = () => {
@@ -119,7 +140,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
             dataType,
             field,
             action,
-            filter: filters.filter(f => f.filterField && f.filterValue),
+            filter: filters.filter((f) => f.filterField && f.filterValue),
             color,
             title,
         };
@@ -144,16 +165,16 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
 
     return (
         <div className="display-modal-background">
-            <div 
+            <div
                 className="display-modal-content"
                 style={{
-                    position : "absolute",
+                    position: "absolute",
                     top: `${position.y}px`,
                     left: `${position.x}px`,
                     cursor: isDragging ? "grabbing" : "grab",
                 }}
             >
-                <button 
+                <button
                     type="button"
                     className="header-row"
                     onMouseDown={handleMouseDown} //this will make sure it only drags when moving the header.
@@ -176,7 +197,7 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                         onClick={() => {
                             setMode("add");
                             resetForm();
-                        }}    
+                        }}
                     >
                         Add New Card
                     </button>
@@ -199,27 +220,53 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                                 <div key={card} className="edit-item">
                                     <strong>{card.title}</strong>
                                     <div className="edit-actions">
-                                        <button type="button" className="edit-button" onClick={() => handleEditClick(card, idx)}>Edit</button>
-                                        <button type="button" className="delete-button" onClick={() => onDelete(idx)}>Delete</button>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
+                                            className="edit-button"
+                                            onClick={() =>
+                                                handleEditClick(card, idx)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="delete-button"
+                                            onClick={() => onDelete(idx)}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            type="button"
                                             className="up-button"
-                                            disabled={idx === 0} 
+                                            disabled={idx === 0}
                                             onClick={() => {
                                                 const updated = [...cards];
-                                                [updated[idx - 1], updated[idx]] = [updated[idx], updated[idx - 1]];
+                                                [
+                                                    updated[idx - 1],
+                                                    updated[idx],
+                                                ] = [
+                                                    updated[idx],
+                                                    updated[idx - 1],
+                                                ];
                                                 onReorder(updated);
                                             }}
                                         >
                                             ↑
                                         </button>
-                                        <button 
+                                        <button
                                             type="button"
                                             className="down-button"
-                                            disabled={idx === cards.length - 1} 
+                                            disabled={idx === cards.length - 1}
                                             onClick={() => {
                                                 const updated = [...cards];
-                                                [updated[idx], updated[idx + 1]] = [updated[idx + 1], updated[idx]];
+                                                [
+                                                    updated[idx],
+                                                    updated[idx + 1],
+                                                ] = [
+                                                    updated[idx + 1],
+                                                    updated[idx],
+                                                ];
                                                 onReorder(updated);
                                             }}
                                         >
@@ -232,17 +279,26 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                     )}
 
                     {/* For Adding */}
-                    {(mode === "add" || (mode === "edit" && editIndex !== null)) && (
-                        <form onSubmit={handleSubmit} className="display-modal-form">
+                    {(mode === "add" ||
+                        (mode === "edit" && editIndex !== null)) && (
+                        <form
+                            onSubmit={handleSubmit}
+                            className="display-modal-form"
+                        >
                             <h3>
-                                Currently {" "}
+                                Currently{" "}
                                 {mode === "add"
                                     ? "Adding a new Card"
                                     : `Editing "${title}" Card`}
                             </h3>
                             {/* Data Type */}
-                            <label htmlFor="field-select">Table selection:</label>
-                            <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
+                            <label htmlFor="field-select">
+                                Table selection:
+                            </label>
+                            <select
+                                value={dataType}
+                                onChange={(e) => setDataType(e.target.value)}
+                            >
                                 <option value="questions">Questions</option>
                                 <option value="categories">Categories</option>
                                 <option value="parties">Parties</option>
@@ -251,7 +307,11 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
 
                             {/* Field */}
                             <label htmlFor="field-select">Target Field:</label>
-                            <select value={field} onChange={(e) => setField(e.target.value)} disabled={fields.length === 0}>
+                            <select
+                                value={field}
+                                onChange={(e) => setField(e.target.value)}
+                                disabled={fields.length === 0}
+                            >
                                 {fields.map((f) => (
                                     <option value={f} key={f}>
                                         {f}
@@ -261,11 +321,16 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
 
                             {/* Action */}
                             <label htmlFor="field-select">Action:</label>
-                            <select value={action} onChange={(e) => setAction(e.target.value)}>
+                            <select
+                                value={action}
+                                onChange={(e) => setAction(e.target.value)}
+                            >
                                 <option value="count">Count All</option>
-                                <option value="countUnique">Count Unique</option>
+                                <option value="countUnique">
+                                    Count Unique
+                                </option>
                             </select>
-                            
+
                             {/* Filter for Valuue */}
                             <label htmlFor="field-select">Filter for:</label>
                             <div className="filter-titles">
@@ -286,19 +351,24 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             </select> */}
                             {filters.map((f, index) => (
                                 <div key={f} className="filter-row">
-                                    
                                     <select
                                         value={f.filterField}
                                         onChange={(e) => {
                                             const updated = [...filters];
-                                            updated[index].filterField = e.target.value;
+                                            updated[index].filterField =
+                                                e.target.value;
                                             updated[index].filterValue = "";
                                             setFilters(updated);
                                         }}
                                     >
-                                        <option value="">-- Select Field --</option>
+                                        <option value="">
+                                            -- Select Field --
+                                        </option>
                                         {fields.map((fieldOpt) => (
-                                            <option key={fieldOpt} value={fieldOpt}>
+                                            <option
+                                                key={fieldOpt}
+                                                value={fieldOpt}
+                                            >
                                                 {fieldOpt}
                                             </option>
                                         ))}
@@ -308,43 +378,57 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                                         value={f.filterValue}
                                         onChange={(e) => {
                                             const updated = [...filters];
-                                            updated[index].filterValue = e.target.value;
+                                            updated[index].filterValue =
+                                                e.target.value;
                                             setFilters(updated);
                                         }}
                                         disabled={!f.filterField}
                                     >
-                                        <option value="">-- Select Value --</option>
-                                        {getUniqueValues(f.filterField).map((val) => (
-                                            <option key={val} value={val}>
-                                                {String(val)}
-                                            </option>
-                                        ))}
+                                        <option value="">
+                                            -- Select Value --
+                                        </option>
+                                        {getUniqueValues(f.filterField).map(
+                                            (val) => (
+                                                <option key={val} value={val}>
+                                                    {String(val)}
+                                                </option>
+                                            ),
+                                        )}
                                     </select>
 
                                     <button
                                         type="button"
                                         className="remove-button"
                                         onClick={() => {
-                                            const updated = filters.filter((_, i) => i !== index);
+                                            const updated = filters.filter(
+                                                (_, i) => i !== index,
+                                            );
                                             setFilters(updated);
                                         }}
                                     >
                                         Remove
                                     </button>
-                                    
                                 </div>
                             ))}
                             <button
                                 type="button"
                                 className="add-filter-button"
-                                onClick={() => setFilters([...filters, { filterField: "", filterValue: "" }])}
+                                onClick={() =>
+                                    setFilters([
+                                        ...filters,
+                                        { filterField: "", filterValue: "" },
+                                    ])
+                                }
                             >
                                 + Add Filter
                             </button>
-                            
+
                             {/* Color */}
                             <label htmlFor="field-select">Card Color:</label>
-                            <select value={color} onChange={(e) => setColor(e.target.value)}>
+                            <select
+                                value={color}
+                                onChange={(e) => setColor(e.target.value)}
+                            >
                                 <option value="blue">Blue</option>
                                 <option value="green">Green</option>
                                 <option value="yellow">Yellow</option>
@@ -364,14 +448,17 @@ const EditOverallModal = ({ onClose, onSave, data, cards, onUpdate, onDelete, on
                             {/* Buttons */}
                             <div className="display-modal-buttons">
                                 <button type="submit">Save</button>
-                                <button type="button" onClick={onClose} className="cancel-btn">
+                                <button
+                                    type="button"
+                                    onClick={onClose}
+                                    className="cancel-btn"
+                                >
                                     Cancel
                                 </button>
                             </div>
                         </form>
                     )}
                 </div>
-
             </div>
         </div>
     );

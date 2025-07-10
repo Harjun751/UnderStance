@@ -125,4 +125,3 @@ describe("GET stances", () => {
         expect(response.body).toEqual({ error: "Invalid Arguments" });
     });
 });
-
