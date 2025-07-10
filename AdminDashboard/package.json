@@ -7,9 +7,9 @@
         "dev": "vite",
         "dockerdev": "vite --host",
         "build": "vite build",
-        "lint": "eslint .",
         "preview": "vite preview",
-        "test": "vitest"
+        "test": "vitest",
+        "lint": "find ./src/ -type f ! -path './src/index.css' ! -path './src/tests/*' | xargs npx @biomejs/biome lint --write"
     },
     "dependencies": {
         "@auth0/auth0-react": "^2.3.0",
@@ -27,6 +27,7 @@
         "recharts": "^3.0.2"
     },
     "devDependencies": {
+        "@biomejs/biome": "2.1.1",
         "@eslint/js": "^9.25.0",
         "@types/react": "^19.1.2",
         "@types/react-dom": "^19.1.2",

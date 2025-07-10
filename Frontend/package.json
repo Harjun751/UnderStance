@@ -7,7 +7,7 @@
         "dev": "vite",
         "dockerdev": "vite --host",
         "build": "vite build",
-        "lint": "eslint .",
+        "lint": "find ./src/ -type f ! -path './src/index.css' ! -path './src/utils/tests/*' | xargs npx @biomejs/biome lint --write",
         "preview": "vite preview",
         "test": "vitest",
         "coverage": "vitest run --coverage"
@@ -23,6 +23,7 @@
         "@babel/core": "^7.27.3",
         "@babel/preset-env": "^7.27.2",
         "@babel/preset-react": "^7.27.1",
+        "@biomejs/biome": "2.1.1",
         "@eslint/js": "^9.25.0",
         "@testing-library/dom": "^10.4.0",
         "@testing-library/jest-dom": "^6.6.3",
