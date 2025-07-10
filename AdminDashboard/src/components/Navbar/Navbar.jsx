@@ -4,26 +4,33 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { GiInjustice } from "react-icons/gi";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
 import { FaFlag, FaUser } from "react-icons/fa";
-import { SiGoogleanalytics } from "react-icons/si";
 import {
     IoMdArrowDropright,
     IoMdArrowDropleft,
     IoMdSettings,
 } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { usePermissions } from "../general/usePermissions";
-// LE WALL OF IMPORTS
+// LE WALL OF IMPORTS cool
 
 const Navbar = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(() => {
+        const saved = localStorage.getItem("navbarCollapsed");
+        return saved === "true";
+    });
     const permissions = usePermissions();
+    const { logout } = useAuth0();
+
+    useEffect(() => {
+        localStorage.setItem("navbarCollapsed", collapsed.toString());
+    }, [collapsed]);
+
     const togglenavbar = () => {
         setCollapsed((prev) => !prev);
     };
-    const { logout } = useAuth0();
 
     return (
         <div className={`navbar ${collapsed ? "collapsed" : ""}`}>
@@ -62,17 +69,10 @@ const Navbar = () => {
                         className={({ isActive }) =>
                             `nav-item ${isActive ? "active" : ""}`
                         }
-                        onClick={togglenavbar}
                     >
                         <MdSpaceDashboard />
                         {!collapsed && (
                             <span className="nav-text">Dashboard</span>
-                        )}
-                    </NavLink>
-                    <NavLink to="/analytics" className="nav-item">
-                        <SiGoogleanalytics />
-                        {!collapsed && (
-                            <span className="nav-text">Analytics</span>
                         )}
                     </NavLink>
                 </nav>

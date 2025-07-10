@@ -287,7 +287,7 @@ describe("mock DELETE users", () => {
 
 describe("mock GET roles", () => {
     test("should return 200 OK", () => {
-        const expected = fakeRoles;
+        //const _expected = fakeRoles;
         return request(app)
             .get("/roles")
             .then((response) => {

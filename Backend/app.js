@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const routes = require("./routes/router");
 const securedRoutes = require("./routes/secured.router");
+
 const morgan = require("morgan");
 
 app.use(morgan("combined"));

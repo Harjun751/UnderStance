@@ -2,6 +2,9 @@
 .config/.prod
 .config/.dev/auth*
 .env.test
+# GA4 credentials (development only)
+.config/.dev/ga4-*
+
 # Logs
 logs
 *.log

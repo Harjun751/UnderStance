@@ -627,3 +627,170 @@ describe("mock DELETE category", () => {
         await expect(dal.deleteCategory(1)).rejects.toThrow("DB kaput");
     });
 });
+
+describe("mock GET dashboard", () => {
+    const fakeDashboardData = [
+        {
+            UserID: "auth0|user1",
+            Overall: { dingus: "wingus" },
+            Tabs: { bingus: "lingus" },
+        },
+    ];
+    test("should return rows from DashboardConfig", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: fakeDashboardData,
+        });
+        const result = await dal.getDashboard("auth0|user1");
+        expect(result).toEqual(fakeDashboardData[0]);
+    });
+
+    test("should return empty object if no data", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [],
+        });
+        const result = await dal.getDashboard("auth0|user1");
+        expect(result).toEqual(null);
+    });
+});
+
+describe("mock create dashboard", () => {
+    test("should create and return config", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [
+                {
+                    UserID: "auth0|user1",
+                    Overall: "{}",
+                    Tabs: "{}",
+                },
+            ],
+        });
+        const result = await dal.createDashboard("auth0|user1", "{}", "{}");
+        expect(result).toEqual({
+            UserID: "auth0|user1",
+            Overall: "{}",
+            Tabs: "{}",
+        });
+    });
+
+    test("should throw error with invalid arguments", async () => {
+        await expect(dal.createDashboard(1, "{}", "{}")).rejects.toThrow(
+            new Error("Invalid Argument"),
+        );
+    });
+
+    test("should throw error on DB fail", async () => {
+        mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
+        await expect(dal.createDashboard("1", "{}", "{}")).rejects.toThrow(
+            "DB kaput",
+        );
+    });
+
+    test("should throw error on invalid json: duplicate key", async () => {
+        const error = new Error("Duplicate json object key");
+        error.code = "22030"; //as per psql guideline
+        mockQuery.mockRejectedValueOnce(error);
+        await expect(
+            dal.createDashboard(
+                "auth0|user",
+                '{"Bingus":1, "Bingus": 2}',
+                "{}",
+            ),
+        ).rejects.toThrow("Invalid JSON text");
+    });
+
+    test("should throw error on invalid json text", async () => {
+        const error = new Error("Duplicate json object key");
+        error.code = "22032"; //as per psql guideline
+        mockQuery.mockRejectedValueOnce(error);
+        await expect(
+            dal.createDashboard("auth0|user", '{"Bingus:1}', "{}"),
+        ).rejects.toThrow("Invalid JSON text");
+    });
+});
+
+describe("mock update dashboard", () => {
+    test("should update and return config", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rows: [
+                {
+                    UserID: "auth0|user1",
+                    Overall: {},
+                    Tabs: {},
+                },
+            ],
+        });
+        const result = await dal.updateDashboard("auth0|user1", {}, {});
+        expect(result).toEqual({
+            UserID: "auth0|user1",
+            Overall: {},
+            Tabs: {},
+        });
+    });
+
+    test("should throw error if resource does not exist", async () => {
+        mockQuery.mockResolvedValueOnce({ rows: [] });
+        await expect(dal.updateDashboard("1", {}, {})).rejects.toThrow(
+            "Invalid Resource",
+        );
+    });
+
+    test("should throw error with invalid arguments", async () => {
+        await expect(dal.updateDashboard(1, {}, {})).rejects.toThrow(
+            new Error("Invalid Argument"),
+        );
+    });
+
+    test("should throw error on DB fail", async () => {
+        mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
+        await expect(dal.updateDashboard("1", {}, {})).rejects.toThrow(
+            "DB kaput",
+        );
+    });
+
+    test("should throw error on invalid json: duplicate key", async () => {
+        const error = new Error("Duplicate json object key");
+        error.code = "22030"; //as per psql guideline
+        mockQuery.mockRejectedValueOnce(error);
+        await expect(
+            dal.updateDashboard("auth0|user", { Bingus: 1, Bingus2: 2 }, {}),
+        ).rejects.toThrow("Invalid JSON text");
+    });
+
+    test("should throw error on invalid json text", async () => {
+        const error = new Error("Duplicate json object key");
+        error.code = "22032"; //as per psql guideline
+        mockQuery.mockRejectedValueOnce(error);
+        await expect(
+            dal.updateDashboard("auth0|user", { Bingus: 1 }, {}),
+        ).rejects.toThrow("Invalid JSON text");
+    });
+});
+
+describe("mock DELETE dashboard", () => {
+    test("should delete dashboard", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rowCount: 1,
+        });
+        const result = await dal.deleteDashboard("1");
+        expect(result).toEqual();
+    });
+    test("should throw error if no rows affected", async () => {
+        mockQuery.mockResolvedValueOnce({
+            rowCount: 0,
+        });
+        await expect(dal.deleteDashboard("1")).rejects.toThrow(
+            "Invalid Resource",
+        );
+    });
+
+    test("should throw error on invalid argument", async () => {
+        await expect(dal.deleteDashboard({})).rejects.toThrow(
+            "Invalid Argument",
+        );
+    });
+
+    test("should throw error on DB fail", async () => {
+        mockQuery.mockRejectedValueOnce(new Error("DB kaput"));
+        await expect(dal.deleteDashboard("1")).rejects.toThrow("DB kaput");
+    });
+});

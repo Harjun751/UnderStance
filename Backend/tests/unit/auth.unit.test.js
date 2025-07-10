@@ -66,7 +66,7 @@ describe("mocked", () => {
                 next();
             }),
             claimCheck: jest.fn((fn) => {
-                return (req, res, next) => {
+                return (req, _res, _next) => {
                     fn(req.auth);
                 };
             }),

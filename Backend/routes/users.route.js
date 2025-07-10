@@ -11,7 +11,7 @@ const {
 securedUserRoutes.get(
     "/users",
     checkRequiredPermissions([permissions.readUsers]),
-    async (req, res) => {
+    async (_req, res) => {
         try {
             const allUsers = await management.users
                 .getAll()
@@ -33,7 +33,7 @@ securedUserRoutes.get(
 securedUserRoutes.get(
     "/roles",
     checkRequiredPermissions([permissions.readUsers]),
-    async (req, res) => {
+    async (_req, res) => {
         try {
             const roles = await management.roles.getAll();
             res.status(200).send(roles.data);
@@ -65,6 +65,12 @@ securedUserRoutes.post(
             Email: validator.validatePartyName,
             Role: validator.validatePartyName,
         };
+        const errors = validator.validateData(validators, req.body);
+        if (errors !== null) {
+            return res
+                .status(400)
+                .send({ error: "Invalid Arguments", details: errors });
+        }
 
         try {
             const resp = await management.users

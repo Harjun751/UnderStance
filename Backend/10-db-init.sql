@@ -35,3 +35,10 @@ CREATE TABLE "Stance" (
     FOREIGN KEY ("PartyID") REFERENCES "Party"("PartyID"),
     UNIQUE ("IssueID", "PartyID")
 );
+
+CREATE TABLE "DashboardConfig" (
+    "UserID" varchar(100),
+    "Overall" json,
+    "Tabs" json,
+    PRIMARY KEY("UserID")
+)

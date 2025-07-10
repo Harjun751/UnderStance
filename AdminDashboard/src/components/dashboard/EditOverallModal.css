@@ -1,0 +1,284 @@
+.display-modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.display-modal-content {
+    background: var(--surface-container);
+    border-radius: 8px;
+    width: 800px;
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-row {
+    margin-top: -2px;
+    margin-left: -2px;
+    margin-right: -2px;
+    margin-bottom: 1rem;
+    border-bottom: solid 1px black;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(
+        90deg,
+        rgba(29, 45, 69, 1) 0%,
+        rgba(34, 50, 73, 1) 100%
+    );
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    cursor: grab;
+}
+
+.header-row h2 {
+    font-size: 30px;
+}
+
+.header-row-right {
+    justify-content: flex-end;
+}
+
+.close-button {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.close-button svg {
+    font-size: 30px;
+}
+
+.toggle-button-group {
+    display: flex;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 1rem;
+    border-bottom: 2px dotted #e5e7eb;
+    padding-bottom: 0.3rem;
+    justify-content: center;
+    align-content: center;
+}
+
+.toggle-button-group button {
+    padding: 8px 16px;
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.toggle-button-group button:hover {
+    background-color: #e5e7eb;
+}
+
+.toggle-button-group button.active {
+    background: var(--gradient);
+    color: var(--on-gradient);
+    border-color: var(--gradient);
+}
+
+.content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    min-height: 0;
+}
+
+.edit-list {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+}
+
+.edit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--edit-card-item);
+    border-radius: 6px;
+    background: var(--edit-card-item);
+}
+
+.edit-item strong {
+    font-weight: 600;
+    color: var(--edit-card-item-text);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.edit-actions button:disabled {
+    background-color: #bbbbbb;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+.edit-actions .edit-button {
+    background-color: var(--edit-card-edit);
+    color: rgb(0, 0, 0);
+}
+
+.edit-actions .edit-button:hover {
+    background-color: var(--edit-card-edit-hover);
+}
+
+.edit-actions .delete-button {
+    background-color: var(--edit-card-delete);
+    color: var(--edit-card-delete-hover);
+}
+
+.edit-actions .delete-button:hover {
+    background-color: var(--edit-card-delete-hover);
+    color: var(--edit-card-delete);
+}
+
+.edit-actions .up-button {
+    background-color: #a9f9a2;
+    color: #31b825;
+}
+
+.edit-actions .up-button:hover {
+    background-color: #31b825;
+    color: #a9f9a2;
+}
+
+.edit-actions .down-button {
+    background-color: #e0dfdf;
+    color: rgb(0, 0, 0);
+}
+
+.edit-actions .down-button:hover {
+    background-color: #e5e7eb;
+}
+
+.display-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    overflow-y: auto;
+}
+
+.display-modal-form h3 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.display-modal-form label {
+    font-weight: 500;
+}
+
+.display-modal-form input,
+.display-modal-form select {
+    padding: 8px;
+    border: 1px solid var(--surface-container-outline);
+    border-radius: 4px;
+    background-color: var(--surface-container);
+    color: var(--on-surface-container);
+}
+
+.display-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.display-modal-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.display-modal-buttons button[type="submit"] {
+    background-color: var(--accept-button);
+    color: var(--on-accept-button);
+}
+
+.display-modal-buttons .cancel-btn {
+    background-color: var(--cancel-button);
+    color: var(--on-cancel-button);
+}
+
+/* For Filter Section */
+.filter-titles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr;
+    border-bottom: solid 1px #7b7b7b;
+}
+
+.filter-titles h4 {
+    color: #7b7b7b;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr;
+    gap: 0.5rem;
+}
+
+.filter-row select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.filter-row .remove-button {
+    background-color: var(--edit-card-delete);
+    color: var(--edit-card-delete-hover);
+    border: var(--edit-card-delete-hover);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.add-filter-button {
+    color: var(--on-cancel-button);
+    background-color: var(--cancel-button);
+    /* color: rgb(0, 0, 0); */
+    border-radius: 5px;
+    border: 1px solid var(--surface-container-outline);
+    cursor: pointer;
+}

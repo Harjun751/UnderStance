@@ -1,0 +1,81 @@
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 6fr;
+}
+
+.analytics-grid .icon-container {
+    width: 80px;
+    height: 80px;
+}
+
+.analytics-grid .icon-container svg {
+    font-size: 33px;
+}
+
+.analytics-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: start;
+    gap: 0.5rem;
+}
+
+.analytics-content-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stats-content {
+    display: grid;
+}
+
+.stats-title {
+    color: var(--stats-title);
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: solid 1px #6b7280;
+}
+
+.stats-value {
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--dash-card-number);
+}
+
+.analytics-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.analytics-settings label {
+    font-weight: bold;
+    color: var(--stats-title);
+    font-size: 20px;
+    display: flex;
+    gap: 0.3rem;
+}
+
+.analytics-settings input[type="date"] {
+    padding: 0.4rem 0.6rem;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: var(--dash-card);
+    color: var(--dash-card-title);
+    transition: border 0.2s ease;
+    width: 200px;
+    margin-top: 0.5rem;
+}
+
+.analytics-settings input[type="date"]:focus {
+    border-color: #8884d8;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(136, 132, 216, 0.2);
+}
+
+.analytics-graph h4 {
+    font-size: 20px;
+    padding-left: 3rem;
+    margin-bottom: 1rem;
+}

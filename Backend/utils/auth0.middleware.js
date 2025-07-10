@@ -1,10 +1,6 @@
 const config = require("./app-config");
 
-const {
-    auth,
-    claimCheck,
-    InsufficientScopeError,
-} = require("express-oauth2-jwt-bearer");
+const { auth, claimCheck } = require("express-oauth2-jwt-bearer");
 
 const permissions = {
     read: "read:resources",

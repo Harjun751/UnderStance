@@ -44,7 +44,7 @@ describe("AddItem Component", () => {
 
         // Save button should initially be disabled
         expect(
-            screen.getByRole("button", { name: /save question/i }),
+            screen.getByRole("button", { name: /save Test Item/i }),
         ).toBeDisabled();
     });
 
@@ -61,7 +61,7 @@ describe("AddItem Component", () => {
         const nameInput = screen.getByRole("textbox", { name: /name/i });
         const activeSelect = screen.getByRole("combobox", { name: /active/i });
         const submitBtn = screen.getByRole("button", {
-            name: /save question/i,
+            name: /save Test Item/i,
         });
 
         // Fill form

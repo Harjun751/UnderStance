@@ -1,0 +1,15 @@
+.edit-button {
+    padding: 6px 12px;
+    background-color: transparent; /* blue-500 */
+    border: none;
+    border-radius: 6px;
+    color: var(--edit-display-button);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+    color: var(--edit-display-button-hover);
+}

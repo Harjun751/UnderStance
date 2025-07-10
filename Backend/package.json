@@ -9,8 +9,7 @@
     "jest": {
         "setupFilesAfterEnv": [
             "./tests/setup/jest.setup.js",
-            "dotenv/config",
-            "./tests/setup/auth.setup.js"
+            "dotenv/config"
         ],
         "coverageReporters": [
             "lcov",
@@ -30,9 +29,11 @@
     "scripts": {
         "test": "jest unit",
         "testall": "jest",
-        "testcov": "jest --coverage"
+        "testcov": "jest --coverage --testPathIgnorePatterns='tests/integration/auth/'",
+        "lint": "npx @biomejs/biome lint ./ --write"
     },
     "dependencies": {
+        "@google-analytics/data": "^5.1.0",
         "auth0": "^4.27.0",
         "cors": "^2.8.5",
         "express": "^5.1.0",
@@ -42,6 +43,7 @@
         "winston": "^3.17.0"
     },
     "devDependencies": {
+        "@biomejs/biome": "2.1.1",
         "dotenv": "^16.5.0",
         "jest": "^29.7.0",
         "jest-junit": "^16.0.0",

@@ -1,0 +1,83 @@
+.tab-container {
+    border-radius: 10px;
+    background: var(--surface-container);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+}
+
+.tab-headers {
+    background: var(--tabs-header);
+    margin-top: 1rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tab-header li {
+    flex: 1;
+    /* padding: 1rem; */
+    /* padding-left: 1rem; */
+    color: var(--tabs-header-li);
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.tab-header li:hover {
+    border-bottom: 3px solid var(--tabs-header-li-hover);
+}
+
+.tab-header li.active {
+    background: var(--surface-container);
+    color: var(--on-surface-container);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 1rem;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
+.tab-content .stats-grid {
+    padding: 1rem;
+}
+
+.tab-content .footer-links {
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.redirect-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgb(188, 188, 188);
+}
+
+.redirect-button:hover {
+    color: rgb(0, 25, 139);
+}
+
+.tab-content > .section-header-end {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+}

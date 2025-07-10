@@ -1,6 +1,7 @@
 import "./AddItem.css";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
+import { FaTimes } from "react-icons/fa";
 
 const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
     const initialState = {};
@@ -34,7 +35,18 @@ const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h3>Add New {title}</h3>
+                <div className="modal-header-row">
+                    <h2>Add New {title}</h2>
+                    <div className="modal-header-row-right">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="modal-close-button"
+                        >
+                            <FaTimes />
+                        </button>
+                    </div>
+                </div>
                 <div className="modal-body">
                     <form onSubmit={handleSubmit} className="modal-form">
                         {schema
@@ -206,7 +218,7 @@ const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
                                 className="modal-submit"
                                 disabled={!formValid}
                             >
-                                Save Question
+                                Save {title}
                             </button>
                         </div>
                     </form>

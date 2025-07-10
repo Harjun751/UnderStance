@@ -158,6 +158,18 @@ function validateReason(reason) {
     }
 }
 
+function validateJSON(val) {
+    if (val === undefined) {
+        return "value is not defined";
+    }
+
+    if (typeof val !== "object") {
+        return "value must be an object or array";
+    }
+
+    return null;
+}
+
 module.exports = {
     validateDescription,
     validateSummary,
@@ -171,4 +183,5 @@ module.exports = {
     validateShortName,
     validateReason,
     validateData,
+    validateJSON,
 };

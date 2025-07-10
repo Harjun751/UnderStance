@@ -29,6 +29,8 @@ services:
       SECRET_AUTH0_DOMAIN_PATH: "/run/secrets/auth0_domain"
       SECRET_AUTH0_CLIENT_ID_PATH: "/run/secrets/auth0_client_id"
       SECRET_AUTH0_CLIENT_SECRET_PATH: "/run/secrets/auth0_client_secret"
+      SECRET_GA4_ACC_PATH: "/run/secrets/ga4_service_account"
+      SECRET_GA4_PROP_ID_PATH: "/run/secrets/ga4_property_id"
     ports:
       - 3000:3000
     secrets:
@@ -37,6 +39,8 @@ services:
       - auth0_domain
       - auth0_client_id
       - auth0_client_secret
+      - ga4_service_account
+      - ga4_property_id
     develop:
       watch:
         - action: rebuild
@@ -84,3 +88,7 @@ secrets:
     file: ./Backend/.config/.dev/auth0-client-id
   auth0_client_secret:
     file: ./Backend/.config/.dev/auth0-client-secret
+  ga4_service_account:
+    file: ./Backend/.config/.dev/ga4-service-account.json
+  ga4_property_id:
+    file: ./Backend/.config/.dev/ga4-property-id

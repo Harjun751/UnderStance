@@ -12,37 +12,76 @@
 }
 
 .modal-content {
-    background: linear-gradient(
+    /* background: linear-gradient(
         45deg,
         rgb(135, 197, 255) 0%,
         rgba(191, 191, 191, 0.95) 100%
-    );
-    padding: 1.75rem;
+    ); */
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 10px;
     width: 80%;
     height: 80%;
     max-width: 700px;
     max-height: 700px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    font-size: 30px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    padding-bottom: 2rem;
 }
 
-.modal-content h3 {
-    border-bottom: solid rgba(0, 0, 0, 0.28);
+.modal-header-row {
+    margin-top: 0;
+    border-bottom: solid 1px black;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(
+        90deg,
+        rgba(29, 45, 69, 1) 0%,
+        rgba(34, 50, 73, 1) 100%
+    );
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-header-row h2 {
+    font-size: 30px;
+}
+
+.modal-header-row-right {
+    justify-content: flex-end;
+}
+
+.modal-close-button {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.modal-close-button svg {
+    font-size: 30px;
 }
 
 .modal-body {
     flex-grow: 1;
     overflow-y: auto;
-    margin-top: 1rem;
     padding-right: 2rem; /* gives space for scrollbar */
 }
 
 .modal-form {
-    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
 }
 
 .modal-form .form-group {
@@ -50,16 +89,18 @@
 }
 
 .modal-form label {
+    font-family: "Roboto Flex", sans-serif;
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
-    text-transform: capitalize;
+    font-weight: 500;
 }
 
 .modal-form textarea {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     resize: vertical;
     line-height: 1.4;
@@ -70,7 +111,9 @@
 .modal-form select {
     width: 100%; /* Jank Again */
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
 }
 
@@ -78,7 +121,9 @@
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     box-sizing: border-box;
 }
@@ -93,16 +138,16 @@
     height: 150px;
 }
 
-.image-preview-box {
+.modal-overlay .image-preview-box {
     margin-top: 8px;
     width: 150px;
     height: 150px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f8f8;
+    background-color: var(--surface-container);
     overflow: hidden;
 }
 
@@ -118,13 +163,13 @@
     gap: 0.5rem;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--surface-container-outline);
 }
 
 .modal-submit {
     padding: 8px 16px;
-    background-color: #007acc;
-    color: white;
+    background-color: var(--accept-button);
+    color: var(--on-accept-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -138,8 +183,8 @@
 
 .modal-cancel {
     padding: 8px 16px;
-    background-color: #eee;
-    color: #333;
+    background-color: var(--cancel-button);
+    color: var(--on-cancel-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;
