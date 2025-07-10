@@ -2,7 +2,6 @@ const express = require("express");
 const securedDashboardRoutes = express.Router();
 const validator = require("../utils/input-validation");
 const logger = require("../utils/logger");
-// const { management } = require("../utils/management-client");
 const db = require("../utils/DAL");
 
 securedDashboardRoutes.get(
@@ -24,7 +23,6 @@ securedDashboardRoutes.get(
 securedDashboardRoutes.put(
     "/me/dashboard",
     async (req, res) => {
-        // console.log("Received req.body:", req.body);
         const validators = {
             Overall: validator.validateJSON,
             Tabs: validator.validateJSON,

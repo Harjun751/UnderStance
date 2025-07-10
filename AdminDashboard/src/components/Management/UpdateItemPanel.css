@@ -39,7 +39,9 @@
 .panel-form textarea {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     resize: vertical; /* Locks resizing to vertical only */
     line-height: 1.4;
@@ -48,9 +50,11 @@
 }
 
 .panel-form select {
-    width: 104%; /* Jank to make it look the same */
+    width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
 }
 
@@ -84,15 +88,21 @@
 }
 
 .panel-form input[type="text"] {
-    width: 103%;
+    width: 100%;
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     box-sizing: border-box;
     transition:
         border-color 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out;
+}
+.panel-form input[type="text"]:disabled {
+    background: var(--disabled-container);
+    opacity: 0.6;
 }
 
 .color-hex-code {
@@ -114,23 +124,23 @@
 
 .panel-submit {
     padding: 8px 16px;
-    background-color: #007acc;
-    color: white;
+    background-color: var(--accept-button);
+    color: var(--on-accept-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;
 }
 
 .panel-submit:disabled {
-    background-color: #ccc;
+    background-color: var(--surface-container-outline);
     cursor: not-allowed;
     opacity: 0.6;
 }
 
 .panel-delete {
     padding: 6px 16px;
-    background-color: #cc0000;
-    color: white;
+    background-color: var(--delete-button);
+    color: var(--on-delete-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -138,8 +148,8 @@
 
 .panel-cancel {
     padding: 8px 16px;
-    background-color: #eee;
-    color: #333;
+    background-color: var(--cancel-button);
+    color: var(--on-cancel-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;

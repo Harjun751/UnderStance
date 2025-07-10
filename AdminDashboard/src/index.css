@@ -44,6 +44,12 @@
     --update-item-panel-shadow: rgba(190, 196, 225, 0.95);
     --update-item-panel-button: rgba(0, 0, 0, 0.8);
     --update-item-panel-h4: #3b3b3b;
+    --accept-button: #007acc;
+    --on-accept-button: white;
+    --delete-button: #cc0000;
+    --on-delete-button: white;
+    --cancel-button: #eee;
+    --on-cancel-button: #333;
 
     /* For Dashboard */
     --dash-card: #f1f1f1c8;
@@ -70,6 +76,7 @@
     /* General */
     --green: green;
     --red: #ac0000;
+    --disabled-container: #E9F7FF;
 
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
@@ -125,6 +132,13 @@
     --update-item-panel-shadow: rgba(18, 33, 53, 0.95);
     --update-item-panel-button: rgba(255, 255, 255, 0.95);
     --update-item-panel-h4: #d4d4d4;
+    --accept-button: #003b62;
+    --delete-button: #970000;
+    --cancel-button: #4d4d4d;
+    --on-accept-button: #ededed;
+    --on-delete-button: #ededed;
+    --on-cancel-button: #ededed;
+    --disabled-container: #1F1F22;
 }
 
 * {

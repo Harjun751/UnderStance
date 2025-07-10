@@ -60,11 +60,17 @@ securedUserRoutes.post(
 
         // temporary validate with party name validator
         // reasonable for most strings
-        const _validators = {
+        const validators = {
             Name: validator.validatePartyName,
             Email: validator.validatePartyName,
             Role: validator.validatePartyName,
         };
+        const errors = validator.validateData(validators, req.body);
+        if (errors !== null) {
+            return res
+                .status(400)
+                .send({ error: "Invalid Arguments", details: errors });
+        }
 
         try {
             const resp = await management.users

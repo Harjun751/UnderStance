@@ -4,7 +4,6 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { GiInjustice } from "react-icons/gi";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
 import { FaFlag, FaUser } from "react-icons/fa";
-import { SiGoogleanalytics } from "react-icons/si";
 import {
     IoMdArrowDropright,
     IoMdArrowDropleft,
@@ -67,12 +66,6 @@ const Navbar = () => {
                         <MdSpaceDashboard />
                         {!collapsed && (
                             <span className="nav-text">Dashboard</span>
-                        )}
-                    </NavLink>
-                    <NavLink to="/analytics" className="nav-item">
-                        <SiGoogleanalytics />
-                        {!collapsed && (
-                            <span className="nav-text">Analytics</span>
                         )}
                     </NavLink>
                 </nav>

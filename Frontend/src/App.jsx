@@ -20,7 +20,6 @@ function AnalyticsWrapper() {
     
     return (
         <div className="app-container">
-            <Navbar />
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />

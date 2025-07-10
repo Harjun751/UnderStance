@@ -218,7 +218,7 @@ const AddItem = ({ title = "Item", onClose, onSubmit, schema = [] }) => {
                                 className="modal-submit"
                                 disabled={!formValid}
                             >
-                                Save Question
+                                Save {title}
                             </button>
                         </div>
                     </form>

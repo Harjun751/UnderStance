@@ -2,9 +2,6 @@ const express = require("express");
 const app = express();
 const routes = require("./routes/router");
 const securedRoutes = require("./routes/secured.router");
-const _analyticsRoutes = require("./routes/analytics.route");
-
-const _fs = require("node:fs");
 
 const morgan = require("morgan");
 

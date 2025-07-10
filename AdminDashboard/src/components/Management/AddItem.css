@@ -17,7 +17,8 @@
         rgb(135, 197, 255) 0%,
         rgba(191, 191, 191, 0.95) 100%
     ); */
-    background: #ffffff;
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 10px;
     width: 80%;
     height: 80%;
@@ -97,7 +98,9 @@
 .modal-form textarea {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     resize: vertical;
     line-height: 1.4;
@@ -108,7 +111,9 @@
 .modal-form select {
     width: 100%; /* Jank Again */
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
 }
 
@@ -116,7 +121,9 @@
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
+    background: var(--surface-container);
+    color: var(--on-surface-container);
     border-radius: 6px;
     box-sizing: border-box;
 }
@@ -131,16 +138,16 @@
     height: 150px;
 }
 
-.image-preview-box {
+.modal-overlay .image-preview-box {
     margin-top: 8px;
     width: 150px;
     height: 150px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--surface-container-outline);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f8f8;
+    background-color: var(--surface-container);
     overflow: hidden;
 }
 
@@ -156,13 +163,13 @@
     gap: 0.5rem;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--surface-container-outline);
 }
 
 .modal-submit {
     padding: 8px 16px;
-    background-color: #007acc;
-    color: white;
+    background-color: var(--accept-button);
+    color: var(--on-accept-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -176,8 +183,8 @@
 
 .modal-cancel {
     padding: 8px 16px;
-    background-color: #eee;
-    color: #333;
+    background-color: var(--cancel-button);
+    color: var(--on-cancel-button);
     border: none;
     border-radius: 6px;
     cursor: pointer;

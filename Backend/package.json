@@ -9,8 +9,7 @@
     "jest": {
         "setupFilesAfterEnv": [
             "./tests/setup/jest.setup.js",
-            "dotenv/config",
-            "./tests/setup/auth.setup.js"
+            "dotenv/config"
         ],
         "coverageReporters": [
             "lcov",
@@ -30,7 +29,7 @@
     "scripts": {
         "test": "jest unit",
         "testall": "jest",
-        "testcov": "jest --coverage"
+        "testcov": "jest --coverage --testPathIgnorePatterns='tests/integration/auth/'"
     },
     "dependencies": {
         "@google-analytics/data": "^5.1.0",
