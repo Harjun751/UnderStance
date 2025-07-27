@@ -106,7 +106,7 @@ const Footer = () => {
                             </a>
                             {/* add actual link next time, for now enjoy what i've left behind */}
                             <a
-                                href="https://drive.google.com/drive/folders/1ng0SbyCBXA9R_t_X6sa0VSiRyDYCwJeu?usp=sharing"
+                                href="https://docs.google.com/document/d/1z0Gtlh0FeqNAVAOSh_NjCHuAHqm-_sV4XCGCb14MrWI/edit?usp=sharing"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="footer-icon"
@@ -114,7 +114,7 @@ const Footer = () => {
                                 <FaGoogleDrive />
                             </a>
                             <a
-                                href="https://drive.google.com/file/d/15bZYKrSL7GOCpdxfzyzgFJd1GSbpPT2r/view?usp=drive_link"
+                                href="https://drive.google.com/file/d/1C9GSJBkcab39OmJ8_tm7-54eaIUD_S3s/view?usp=sharing"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="footer-icon"
