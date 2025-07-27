@@ -26,7 +26,7 @@ body:has(> #root > .login-container)::before {
 }
 
 .login-container {
-    background: var(--primary);
+    background: #e0dfdf;
     width: 500px;
     height: 500px;
     margin: auto;
