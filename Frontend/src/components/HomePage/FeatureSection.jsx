@@ -23,8 +23,7 @@ const FeatureSection = () => {
                         <div className="feature-text">
                             <h3 className="feature-heading">Simple Quiz</h3>
                             <p className="feature-description">
-                                Our quiz covers all major political issue! Each
-                                question ...... add more in post
+                                Our quiz covers all major political issue!
                             </p>
                         </div>
                     </div>
